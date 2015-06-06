@@ -216,7 +216,7 @@ transmission(){
 		--name transmission \
 		jess/transmission
 
-	chrome-exec "http://localhost:9091/"
+	chrome-exec "http://127.0.0.1:9091/transmission"
 }
 virtualbox(){
 	del_stopped virtualbox
