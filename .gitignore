@@ -1,0 +1,23 @@
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+.extra
+.i3/logfile
+.irssi/away.log
+.irssi/config*
+.irssi/nicknames_whitelist
+.irssi/saved_colors
+.irssi/scripts/autorun/blocker.pl
+.rainbow_oauth

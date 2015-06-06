@@ -1,0 +1,314 @@
+# When testing changes, the easiest way to reload the theme is with /RELOAD.
+# This reloads the configuration file too, so if you did any changes remember
+# to /SAVE it first. Remember also that /SAVE overwrites the theme file with
+# old data so keep backups :)
+
+# TEMPLATES:
+
+# The real text formats that irssi uses are the ones you can find with
+# /FORMAT command. Back in the old days all the colors and texts were mixed
+# up in those formats, and it was really hard to change the colors since you
+# might have had to change them in tens of different places. So, then came
+# this templating system.
+
+# Now the /FORMATs don't have any colors in them, and they also have very
+# little other styling. Most of the stuff you need to change is in this
+# theme file. If you can't change something here, you can always go back
+# to change the /FORMATs directly, they're also saved in these .theme files.
+
+# So .. the templates. They're those {blahblah} parts you see all over the
+# /FORMATs and here. Their usage is simply {name parameter1 parameter2}.
+# When irssi sees this kind of text, it goes to find "name" from abstracts
+# block below and sets "parameter1" into $0 and "parameter2" into $1 (you
+# can have more parameters of course). Templates can have subtemplates.
+# Here's a small example:
+#   /FORMAT format hello {colorify {underline world}}
+#   abstracts = { colorify = "%G$0-%n"; underline = "%U$0-%U"; }
+# When irssi expands the templates in "format", the final string would be:
+#   hello %G%Uworld%U%n
+# ie. underlined bright green "world" text.
+# and why "$0-", why not "$0"? $0 would only mean the first parameter,
+# $0- means all the parameters. With {underline hello world} you'd really
+# want to underline both of the words, not just the hello (and world would
+# actually be removed entirely).
+
+# COLORS:
+
+# You can find definitions for the color format codes in docs/formats.txt.
+
+# There's one difference here though. %n format. Normally it means the
+# default color of the terminal (white mostly), but here it means the
+# "reset color back to the one it was in higher template". For example
+# if there was /FORMAT test %g{foo}bar, and foo = "%Y$0%n", irssi would
+# print yellow "foo" (as set with %Y) but "bar" would be green, which was
+# set at the beginning before the {foo} template. If there wasn't the %g
+# at start, the normal behaviour of %n would occur. If you _really_ want
+# to use the terminal's default color, use %N.
+
+#############################################################################
+
+# default foreground color (%N) - -1 is the "default terminal color"
+default_color = "-1";
+
+# print timestamp/servertag at the end of line, not at beginning
+info_eol = "false";
+
+# these characters are automatically replaced with specified color
+# (dark grey by default)
+replaces = { "[]=" = "%K$*%n"; };
+
+abstracts = {
+  ##
+  ## generic
+  ##
+
+  # text to insert at the beginning of each non-message line
+  line_start = "%B-%n!%B-%n ";
+
+  # timestamp styling, nothing by default
+  timestamp = "$*";
+
+  # any kind of text that needs hilighting, default is to bold
+  hilight = "%_$*%_";
+
+  # any kind of error message, default is bright red
+  error = "%R$*%n";
+
+  # channel name is printed
+  channel = "%_$*%_";
+
+  # nick is printed
+  nick = "%_$*%_";
+
+  # nick host is printed
+  nickhost = "[$*]";
+
+  # server name is printed
+  server = "%_$*%_";
+
+  # some kind of comment is printed
+  comment = "[$*]";
+
+  # reason for something is printed (part, quit, kick, ..)
+  reason = "{comment $*}";
+
+  # mode change is printed ([+o nick])
+  mode = "{comment $*}";
+
+  ##
+  ## channel specific messages
+  ##
+
+  # highlighted nick/host is printed (joins)
+  channick_hilight = "%C$*%n";
+  chanhost_hilight = "{nickhost %c$*%n}";
+
+  # nick/host is printed (parts, quits, etc.)
+  channick = "%c$*%n";
+  chanhost = "{nickhost $*}";
+
+  # highlighted channel name is printed
+  channelhilight = "%c$*%n";
+
+  # ban/ban exception/invite list mask is printed
+  ban = "%c$*%n";
+
+  ##
+  ## messages
+  ##
+
+  # the basic styling of how to print message, $0 = nick mode, $1 = nick
+  msgnick = "%K<%n$0$1-%K>%n %|";
+
+  # message from you is printed. "msgownnick" specifies the styling of the
+  # nick ($0 part in msgnick) and "ownmsgnick" specifies the styling of the
+  # whole line.
+
+  # Example1: You want the message text to be green:
+  #  ownmsgnick = "{msgnick $0 $1-}%g";
+  # Example2.1: You want < and > chars to be yellow:
+  #  ownmsgnick = "%Y{msgnick $0 $1-%Y}%n";
+  #  (you'll also have to remove <> from replaces list above)
+  # Example2.2: But you still want to keep <> grey for other messages:
+  #  pubmsgnick = "%K{msgnick $0 $1-%K}%n";
+  #  pubmsgmenick = "%K{msgnick $0 $1-%K}%n";
+  #  pubmsghinick = "%K{msgnick $1 $0$2-%n%K}%n";
+  #  ownprivmsgnick = "%K{msgnick  $*%K}%n";
+  #  privmsgnick = "%K{msgnick  %R$*%K}%n";
+
+  # $0 = nick mode, $1 = nick
+  ownmsgnick = "{msgnick $0 $1-}";
+  ownnick = "%_$*%n";
+
+  # public message in channel, $0 = nick mode, $1 = nick
+  pubmsgnick = "{msgnick $0 $1-}";
+  pubnick = "%N$*%n";
+
+  # public message in channel meant for me, $0 = nick mode, $1 = nick
+  pubmsgmenick = "{msgnick $0 $1-}";
+  menick = "%Y$*%n";
+
+  # public highlighted message in channel
+  # $0 = highlight color, $1 = nick mode, $2 = nick
+  pubmsghinick = "{msgnick $1 $0$2-%n}";
+
+  # channel name is printed with message
+  msgchannel = "%K:%c$*%n";
+
+  # private message, $0 = nick, $1 = host
+  privmsg = "[%R$0%K(%r$1-%K)%n] ";
+
+  # private message from you, $0 = "msg", $1 = target nick
+  ownprivmsg = "[%r$0%K(%R$1-%K)%n] ";
+
+  # own private message in query
+  ownprivmsgnick = "{msgnick  $*}";
+  ownprivnick = "%_$*%n";
+
+  # private message in query
+  privmsgnick = "{msgnick  %R$*%n}";
+
+  ##
+  ## Actions (/ME stuff)
+  ##
+
+  # used internally by this theme
+  action_core = "%_ * $*%n";
+
+  # generic one that's used by most actions
+  action = "{action_core $*} ";
+
+  # own action, both private/public
+  ownaction = "{action $*}";
+
+  # own action with target, both private/public
+  ownaction_target = "{action_core $0}%K:%c$1%n ";
+
+  # private action sent by others
+  pvtaction = "%_ (*) $*%n ";
+  pvtaction_query = "{action $*}";
+
+  # public action sent by others
+  pubaction = "{action $*}";
+
+
+  ##
+  ## other IRC events
+  ##
+
+  # whois
+  whois = "%# $[8]0 : $1-";
+
+  # notices
+  ownnotice = "[%r$0%K(%R$1-%K)]%n ";
+  notice = "%K-%M$*%K-%n ";
+  pubnotice_channel = "%K:%m$*";
+  pvtnotice_host = "%K(%m$*%K)";
+  servernotice = "%g!$*%n ";
+
+  # CTCPs
+  ownctcp = "[%r$0%K(%R$1-%K)] ";
+  ctcp = "%g$*%n";
+
+  # wallops
+  wallop = "%_$*%n: ";
+  wallop_nick = "%n$*";
+  wallop_action = "%_ * $*%n ";
+
+  # netsplits
+  netsplit = "%R$*%n";
+  netjoin = "%C$*%n";
+
+  # /names list
+  names_prefix = "";
+  names_nick = "[%_$0%_$1-] ";
+  names_nick_op = "{names_nick $*}";
+  names_nick_halfop = "{names_nick $*}";
+  names_nick_voice = "{names_nick $*}";
+  names_users = "[%g$*%n]";
+  names_channel = "%G$*%n";
+
+  # DCC
+  dcc = "%g$*%n";
+  dccfile = "%_$*%_";
+
+  # DCC chat, own msg/action
+  dccownmsg = "[%r$0%K($1-%K)%n] ";
+  dccownnick = "%R$*%n";
+  dccownquerynick = "%_$*%n";
+  dccownaction = "{action $*}";
+  dccownaction_target = "{action_core $0}%K:%c$1%n ";
+
+  # DCC chat, others
+  dccmsg = "[%G$1-%K(%g$0%K)%n] ";
+  dccquerynick = "%G$*%n";
+  dccaction = "%_ (*dcc*) $*%n %|";
+
+  ##
+  ## statusbar
+  ##
+
+  # default background for all statusbars. You can also give
+  # the default foreground color for statusbar items.
+  sb_background = "%4%w";
+
+  # default backround for "default" statusbar group
+  #sb_default_bg = "%4";
+  # background for prompt / input line
+  sb_prompt_bg = "%n";
+  # background for info statusbar
+  sb_info_bg = "%8";
+  # background for topicbar (same default)
+  #sb_topic_bg = "%4";
+
+  # text at the beginning of statusbars. sb-item already puts
+  # space there,so we don't use anything by default.
+  sbstart = "";
+  # text at the end of statusbars. Use space so that it's never
+  # used for anything.
+  sbend = " ";
+
+  topicsbstart = "{sbstart $*}";
+  topicsbend = "{sbend $*}";
+
+  prompt = "[$*] ";
+
+  sb = " %c[%n$*%c]%n";
+  sbmode = "(%c+%n$*)";
+  sbaway = " (%GzZzZ%n)";
+  sbservertag = ":$0 (change with ^X)";
+  sbnickmode = "$0";
+
+  # activity in statusbar
+
+  # ',' separator
+  sb_act_sep = "%c$*";
+  # normal text
+  sb_act_text = "%c$*";
+  # public message
+  sb_act_msg = "%W$*";
+  # hilight
+  sb_act_hilight = "%M$*";
+  # hilight with specified color, $0 = color, $1 = text
+  sb_act_hilight_color = "$0$1-%n";
+};
+formats = {
+  "fe-common/core" = {
+    own_msg = "{ownmsgnick {ownnick $[-0]0$2}}$1";
+    own_msg_channel = "{ownmsgnick {ownnick $[-0]0$3}{msgchannel $1}}$2";
+    own_msg_private_query = "{ownprivmsgnick {ownprivnick $[-0]2}}$1";
+    pubmsg_me = "{pubmsgmenick {menick $[-0]0}$2}$1";
+    pubmsg_me_channel = "{pubmsgmenick {menick $[-0]0$3}{msgchannel $1}}$2";
+    pubmsg_hilight = "{pubmsghinick $0 $0 $[-0]1$3%n}$2";
+    pubmsg_hilight_channel = "{pubmsghinick $0 $[-0]1$4{msgchannel $2}}$3";
+    pubmsg = "{pubmsgnick {pubnick %w$[-0]0}$2}$1";
+    pubmsg_channel = "{pubmsgnick {pubnick %w$[-0]0}$2}$1";
+    msg_private_query = "{privmsgnick $[-0]0}$2";
+  };
+  "fe-common/irc" = {
+    own_action = "{ownaction $[-0]0} $1";
+    action_private = "{pvtaction $[-0]0}$1";
+    action_private_query = "{pvtaction_query $[-0]0} $2";
+    action_public = "{pubaction $[-0]0}$1";
+  };
+};

@@ -1,0 +1,235 @@
+#!/bin/bash
+# bash wrappers for docker run commands
+
+# 
+# Helper Functions
+#
+dcleanup(){
+	docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+del_stopped(){
+	local name=$1
+	local state=$(docker inspect --format "{{.State.Running}}" $name 2>/dev/null)
+
+	if [[ "$state" == "false" ]]; then
+		docker rm $name
+	fi
+}
+
+# 
+# Container Aliases
+#
+aws(){
+	docker run -t --rm \
+		-v $HOME/.aws:/root/.aws \
+		--log-driver none \
+		jess/awscli "$@"
+}
+cadvisor(){
+	docker run -d \
+		--volume=/:/rootfs:ro \
+		--volume=/var/run:/var/run:rw \
+		--volume=/sys:/sys:ro  \
+		--volume=/var/lib/docker/:/var/lib/docker:ro \
+		--publish=1212:8080 \
+		--name=cadvisor \
+		google/cadvisor
+}
+chrome(){
+	del_stopped chrome
+
+	docker run -d \
+		--memory 2gb \
+		--net host \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v $HOME/Downloads:/root/Downloads \
+		-v $HOME/Pictures:/root/Pictures \
+		-v $HOME/Torrents:/root/Torrents \
+		-v $HOME/.chrome:/data \
+		--device /dev/snd:/dev/snd \
+		--device /dev/dri:/dev/dri \
+		--name chrome \
+		jess/chrome --user-data-dir=/data "$@"
+}
+cloudapp(){
+	docker run -t --rm \
+		-v $HOME/pics/$@:/root/$@ \
+		--log-driver none \
+		jess/cloudapp "$@"
+}
+firefox(){
+	del_stopped firefox
+
+	docker run -d \
+		--memory 2gb \
+		--net host \
+		--cpuset-cpus 0 \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v $HOME/.firefox/cache:/root/.cache/mozilla \
+		-v $HOME/.firefox/mozilla:/root/.mozilla \
+		-v $HOME/Downloads:/root/Downloads \
+		-v $HOME/Pictures:/root/Pictures \
+		-v $HOME/Torrents:/root/Torrents \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/snd:/dev/snd \
+		--device /dev/dri:/dev/dri \
+		--name firefox \
+		jess/firefox "$@"
+}
+gimp(){
+	del_stopped gimp
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v $HOME/Pictures:/root/Pictures \
+		--name gimp \
+		jess/gimp
+}
+http(){
+	docker run -t --rm \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		--log-driver none \
+		jess/httpie "$@"
+}
+imagemin(){
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v $HOME/Pictures:/root/Pictures \
+		--entrypoint bash \
+		jess/imagemin
+}
+irssi(){
+	del_stopped irssi
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-e TERM \
+		-u $(id -u):$(id -g) \
+		-v $HOME/.irssi:/home/user/.irssi \
+		--read-only \
+		--name irssi \
+		irssi
+}
+mutt(){
+	local account=$1
+
+	if [[ "$account" == "docker" ]]; then
+		GMAIL=$GMAIL2
+		GMAIL_NAME=$GMAIL2_NAME
+		GMAIL_PASS=$GMAIL2_PASS
+		GMAIL_FROM=$GMAIL2_FROM
+	fi
+
+	docker run -it --rm \
+		-e GMAIL \
+		-e GMAIL_NAME \
+		-e GMAIL_PASS \
+		-e GMAIL_FROM \
+		-v $HOME/.gnupg:/home/user/.gnupg \
+		-v /etc/localtime:/etc/localtime:ro \
+		--name mutt-me \
+		jess/mutt
+}
+rainbowstream(){
+	docker run -it --rm \
+		-v /etc/localtime:/etc/localtime \
+		-v $HOME/.rainbow_oauth:/root/.rainbow_oauth \
+		-v $HOME/.rainbow_config.json:/root/.rainbow_config.json \
+		--name rainbowstream \
+		jess/rainbowstream
+}
+remmina(){
+	del_stopped remmina
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v $HOME/.remmina:/root/.remmina \
+		--name remmina \
+		jess/remmina
+}
+reviewed(){
+	docker run -t --rm \
+		-e IDT_USERNAME \
+		-e IDT_PASSWORD \
+		-e IDT_ADDRESS \
+		jess/idonethis "reviewed #${1}"
+}
+slack(){
+	del_stopped slack
+
+	docker run -d \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/snd:/dev/snd \
+		--name slack \
+		jess/slack
+}
+spotify(){
+	del_stopped spotify
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/snd:/dev/snd \
+		-v $HOME/.spotify/config:/root/.config/spotify \
+		-v $HOME/.spotify/cache:/root/.cache/spotify \
+		--name spotify \
+		jess/spotify
+}
+t(){
+	docker run -t --rm \
+		-v $HOME/.trc:/root/.trc \
+		--log-driver none \
+		jess/t "$@"
+}
+tor-browser(){
+	del_stopped tor-browser
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/snd:/dev/snd \
+		--name tor-browser \
+		jess/tor-browser
+}
+transmission(){
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v $HOME/Torrents:/transmission/download \
+		-v $HOME/.transmission:/transmission/config \
+		-p 9091:9091 \
+		-p 51413:51413 \
+		-p 51413:51413/udp \
+		--name transmission \
+		jess/transmission
+
+	chrome-exec "http://localhost:9091/"
+}
+virtualbox(){
+	del_stopped virtualbox
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix  \
+		-e DISPLAY=unix$DISPLAY \
+		--name virtualbox \
+		-p 3022:3022 \
+		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
+		-v $HOME/.vbox/config:/root/.config/VirtualBox \
+		--privileged \
+		jess/virtualbox
+}
+
