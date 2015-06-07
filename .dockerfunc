@@ -262,4 +262,15 @@ virtualbox(){
 		--privileged \
 		jess/virtualbox
 }
+vlc(){
+	del_stopped vlc
 
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/dri \
+		--device /dev/snd \
+		--name vlc \
+		jess/vlc
+}

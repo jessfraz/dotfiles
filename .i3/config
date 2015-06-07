@@ -164,7 +164,8 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	status_command i3status
+	font pango:monospace 8
+	status_command i3status --config ~/.i3/status.conf
 }
 
 # auto run commands
