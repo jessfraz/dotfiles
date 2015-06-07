@@ -117,16 +117,18 @@ irssi(){
 		irssi
 }
 mpd(){
+	del_stopped mpd
+
 	# adding cap sys_admin so I can use nfs mount
 	# the container runs as a unpriviledged user mpd
 	docker run -d \
 		--device /dev/snd \
 		--cap-add SYS_ADMIN \
+		-e MPD_HOST=/var/lib/mpd/socket \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /etc/exports:/etc/exports:ro \
 		-v $HOME/.mpd:/var/lib/mpd \
 		-v $HOME/.mpd.conf:/etc/mpd.conf \
-		--net host \
 		--name mpd \
 		jess/mpd
 }
@@ -154,17 +156,19 @@ ncmpc(){
 	del_stopped ncmpc
 
 	docker run --rm -it \
-		--net host \
+		-v $HOME/.mpd/socket:/var/run/mpd/socket \
+		-e MPD_HOST=/var/run/mpd/socket \
 		--name ncmpc \
-		jess/ncmpc
+		jess/ncmpc "$@"
 }
 pms(){
 	del_stopped pms
 
 	docker run --rm -it \
-		--net host \
+		-v $HOME/.mpd/socket:/var/run/mpd/socket \
+		-e MPD_HOST=/var/run/mpd/socket \
 		--name pms \
-		jess/pms
+		jess/pms "$@"
 }
 rainbowstream(){
 	docker run -it --rm \
