@@ -28,12 +28,12 @@ aws(){
 }
 cadvisor(){
 	docker run -d \
-		--volume=/:/rootfs:ro \
-		--volume=/var/run:/var/run:rw \
-		--volume=/sys:/sys:ro  \
-		--volume=/var/lib/docker/:/var/lib/docker:ro \
-		--publish=1212:8080 \
-		--name=cadvisor \
+		-v /:/rootfs:ro \
+		-v /var/run:/var/run:rw \
+		-v /sys:/sys:ro  \
+		-v /var/lib/docker/:/var/lib/docker:ro \
+		-p 1212:8080 \
+		--name cadvisor \
 		google/cadvisor
 }
 chrome(){
@@ -49,8 +49,8 @@ chrome(){
 		-v $HOME/Pictures:/root/Pictures \
 		-v $HOME/Torrents:/root/Torrents \
 		-v $HOME/.chrome:/data \
-		--device /dev/snd:/dev/snd \
-		--device /dev/dri:/dev/dri \
+		--device /dev/snd \
+		--device /dev/dri \
 		--name chrome \
 		jess/chrome --user-data-dir=/data "$@"
 }
@@ -75,8 +75,8 @@ firefox(){
 		-v $HOME/Pictures:/root/Pictures \
 		-v $HOME/Torrents:/root/Torrents \
 		-e DISPLAY=unix$DISPLAY \
-		--device /dev/snd:/dev/snd \
-		--device /dev/dri:/dev/dri \
+		--device /dev/snd \
+		--device /dev/dri \
 		--name firefox \
 		jess/firefox "$@"
 }
@@ -116,6 +116,20 @@ irssi(){
 		--name irssi \
 		irssi
 }
+mpd(){
+	# adding cap sys_admin so I can use nfs mount
+	# the container runs as a unpriviledged user mpd
+	docker run -d \
+		--device /dev/snd \
+		--cap-add SYS_ADMIN \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /etc/exports:/etc/exports:ro \
+		-v $HOME/.mpd:/var/lib/mpd \
+		-v $HOME/.mpd.conf:/etc/mpd.conf \
+		--net host \
+		--name mpd \
+		jess/mpd
+}
 mutt(){
 	local account=$1
 
@@ -133,8 +147,24 @@ mutt(){
 		-e GMAIL_FROM \
 		-v $HOME/.gnupg:/home/user/.gnupg \
 		-v /etc/localtime:/etc/localtime:ro \
-		--name mutt-me \
+		--name mutt${account} \
 		jess/mutt
+}
+ncmpc(){
+	del_stopped ncmpc
+
+	docker run --rm -it \
+		--net host \
+		--name ncmpc \
+		jess/ncmpc
+}
+pms(){
+	del_stopped pms
+
+	docker run --rm -it \
+		--net host \
+		--name pms \
+		jess/pms
 }
 rainbowstream(){
 	docker run -it --rm \
@@ -171,7 +201,7 @@ slack(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
-		--device /dev/snd:/dev/snd \
+		--device /dev/snd \
 		--name slack \
 		jess/slack
 }
@@ -182,7 +212,7 @@ spotify(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
-		--device /dev/snd:/dev/snd \
+		--device /dev/snd \
 		-v $HOME/.spotify/config:/root/.config/spotify \
 		-v $HOME/.spotify/cache:/root/.cache/spotify \
 		--name spotify \
@@ -201,7 +231,7 @@ tor-browser(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
-		--device /dev/snd:/dev/snd \
+		--device /dev/snd \
 		--name tor-browser \
 		jess/tor-browser
 }
