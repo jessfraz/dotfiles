@@ -17,9 +17,10 @@ install:
 		echo "Creating symlink for $$file to /usr/local/bin/$$f"; \
     	sudo ln -sf $$file /usr/local/bin/$$f; \
 	done
-	# add aliases for init scripts
+	# install init scripts
+	# of course systemd hates aliases or some bullshit
 	for file in $(shell find $(CURDIR)/init -type f); do \
 		f=$$(basename $$file); \
-		echo "Creating symlink for $$file to /lib/systemd/system/$$f"; \
-    	sudo ln -sf $$file /lib/systemd/system/$$f; \
+		echo "Installing $$file to /lib/systemd/system/$$f"; \
+    	sudo install -p -m 644 $$file /lib/systemd/system/$$f; \
 	done
