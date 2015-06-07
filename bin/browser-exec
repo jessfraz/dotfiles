@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 #	browser-exec
 #		This script opens a hyperlink in the browser that is
