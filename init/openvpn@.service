@@ -4,11 +4,13 @@ PartOf=openvpn.service
 ReloadPropagatedFrom=openvpn.service
 
 [Service]
+Environment=HOME=/home/jessie
+Environment=DISPLAY=:0
 Type=forking
 # Start OpenVPN
 ExecStart=/usr/sbin/openvpn --daemon ovpn-%i --status /run/openvpn/%i.status 10 --cd /etc/openvpn --writepid /var/run/openvpn.pid --config /etc/openvpn/%i.conf
 # Change your background to wherever you are... this is an example, not where my vpn is ;)
-ExecStartPost=/usr/bin/feh --bg-fill /home/jessie/Pictures/Paris.jpg
+ExecStartPost=/usr/bin/feh --bg-fill ${HOME}/Pictures/Paris.jpg
 ExecReload=/bin/kill -HUP $MAINPID
 # Change your background back when you are done
 ExecStopPost=/usr/bin/feh --bg-fill /usr/share/slim/themes/default/background.jpg
