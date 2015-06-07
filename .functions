@@ -1,15 +1,15 @@
 # Simple calculator
-function calc() {
+calc() {
 	local result="";
 	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')";
-	#                       └─ default (when `--mathlib` is used) is 20
+	#						└─ default (when `--mathlib` is used) is 20
 	#
 	if [[ "$result" == *.* ]]; then
 		# improve the output for decimal numbers
 		printf "$result" |
-		sed -e 's/^\./0./'        `# add "0" for cases like ".5"` \
-		    -e 's/^-\./-0./'      `# add "0" for cases like "-.5"`\
-		    -e 's/0*$//;s/\.$//';  # remove trailing zeros
+		sed -e 's/^\./0./'		  `# add "0" for cases like ".5"` \
+			-e 's/^-\./-0./'	  `# add "0" for cases like "-.5"`\
+			-e 's/0*$//;s/\.$//';  # remove trailing zeros
 	else
 		printf "$result";
 	fi;
@@ -17,12 +17,12 @@ function calc() {
 }
 
 # Create a new directory and enter it
-function mkd() {
+mkd() {
 	mkdir -p "$@" && cd "$@";
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
-function targz() {
+targz() {
 	local tmpFile="${@%/}.tar";
 	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
 
@@ -50,7 +50,7 @@ function targz() {
 }
 
 # Determine size of a file or total size of a directory
-function fs() {
+fs() {
 	if du -b /dev/null > /dev/null 2>&1; then
 		local arg=-sbh;
 	else
@@ -66,13 +66,13 @@ function fs() {
 # Use Git’s colored diff when available
 hash git &>/dev/null;
 if [ $? -eq 0 ]; then
-	function diff() {
+	diff() {
 		git diff --no-index --color-words "$@";
 	}
 fi;
 
 # Create a data URL from a file
-function dataurl() {
+dataurl() {
 	local mimeType=$(file -b --mime-type "$1");
 	if [[ $mimeType == text/* ]]; then
 		mimeType="${mimeType};charset=utf-8";
@@ -81,7 +81,7 @@ function dataurl() {
 }
 
 # Create a git.io short URL
-function gitio() {
+gitio() {
 	if [ -z "${1}" -o -z "${2}" ]; then
 		echo "Usage: \`gitio slug url\`";
 		return 1;
@@ -90,7 +90,7 @@ function gitio() {
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
-function server() {
+server() {
 	local port="${1:-8000}";
 	sleep 1 && open "http://localhost:${port}/" &
 	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
@@ -99,7 +99,7 @@ function server() {
 }
 
 # Compare original and gzipped file size
-function gz() {
+gz() {
 	local origsize=$(wc -c < "$1");
 	local gzipsize=$(gzip -c "$1" | wc -c);
 	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
@@ -109,7 +109,7 @@ function gz() {
 
 # Syntax-highlight JSON strings or files
 # Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
-function json() {
+json() {
 	if [ -t 0 ]; then # argument
 		python -mjson.tool <<< "$*" | pygmentize -l javascript;
 	else # pipe
@@ -118,12 +118,12 @@ function json() {
 }
 
 # Run `dig` and display the most useful info
-function digga() {
+digga() {
 	dig +nocmd "$1" any +multiline +noall +answer;
 }
 
 # UTF-8-encode a string of Unicode symbols
-function escape() {
+escape() {
 	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -132,7 +132,7 @@ function escape() {
 }
 
 # Decode \x{ABCD}-style Unicode escape sequences
-function unidecode() {
+unidecode() {
 	perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -141,7 +141,7 @@ function unidecode() {
 }
 
 # Get a character’s Unicode code point
-function codepoint() {
+codepoint() {
 	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -151,7 +151,7 @@ function codepoint() {
 
 # Show all the names (CNs and SANs) listed in the SSL certificate
 # for a given domain
-function getcertnames() {
+getcertnames() {
 	if [ -z "${1}" ]; then
 		echo "ERROR: No domain specified.";
 		return 1;
@@ -185,7 +185,7 @@ function getcertnames() {
 
 # `v` with no arguments opens the current directory in Vim, otherwise opens the
 # given location
-function v() {
+v() {
 	if [ $# -eq 0 ]; then
 		vim .;
 	else
@@ -195,38 +195,38 @@ function v() {
 
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
-function o() {
-    if [ $# -eq 0 ]; then
-        xdg-open .  > /dev/null 2>&1;
-    else
-        xdg-open "$@" > /dev/null 2>&1;
-    fi;
+o() {
+	if [ $# -eq 0 ]; then
+		xdg-open .	> /dev/null 2>&1;
+	else
+		xdg-open "$@" > /dev/null 2>&1;
+	fi;
 }
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
-function tre() {
+tre() {
 	tree -aC -I '.git' --dirsfirst "$@" | less -FRNX;
 }
 
 # Call from a local repo to open the repository on github/bitbucket in browser
-function repo() {
-    local giturl=$(git config --get remote.origin.url | sed 's/git@/\/\//g' | sed 's/.git$//' | sed 's/https://g' | sed 's/:/\//g')
-    if [[ $giturl == "" ]]; then
-        echo "Not a git repository or no remote.origin.url is set."
-    else
-        local gitbranch=$(git rev-parse --abbrev-ref HEAD)
-        local giturl="http:${giturl}"
+repo() {
+	local giturl=$(git config --get remote.origin.url | sed 's/git@/\/\//g' | sed 's/.git$//' | sed 's/https://g' | sed 's/:/\//g')
+	if [[ $giturl == "" ]]; then
+		echo "Not a git repository or no remote.origin.url is set."
+	else
+		local gitbranch=$(git rev-parse --abbrev-ref HEAD)
+		local giturl="http:${giturl}"
 
-        if [[ $gitbranch != "master" ]]; then
-            local giturl="${giturl}/tree/${gitbranch}"
-        fi
+		if [[ $gitbranch != "master" ]]; then
+			local giturl="${giturl}/tree/${gitbranch}"
+		fi
 
-        echo $giturl
-        open $giturl
-    fi
+		echo $giturl
+		open $giturl
+	fi
 }
 
 # Query Wikipedia via console over DNS
@@ -234,13 +234,27 @@ mwiki() { dig +short txt "$*".wp.dg.cx; }
 
 # Get colors in manual pages
 man() {
-    env \
-    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-    LESS_TERMCAP_md=$(printf "\e[1;31m") \
-    LESS_TERMCAP_me=$(printf "\e[0m") \
-    LESS_TERMCAP_se=$(printf "\e[0m") \
-    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-    LESS_TERMCAP_ue=$(printf "\e[0m") \
-    LESS_TERMCAP_us=$(printf "\e[1;32m") \
-    man "$@"
+	env \
+	LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+	LESS_TERMCAP_md=$(printf "\e[1;31m") \
+	LESS_TERMCAP_me=$(printf "\e[0m") \
+	LESS_TERMCAP_se=$(printf "\e[0m") \
+	LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+	LESS_TERMCAP_ue=$(printf "\e[0m") \
+	LESS_TERMCAP_us=$(printf "\e[1;32m") \
+	man "$@"
+}
+
+# Use feh to nicely view images
+openimage() {
+	local types='*.jpg *.JPG *.png *.PNG *.gif *.GIF *.jpeg *.JPEG'
+
+	cd $(dirname "$1")
+	local file=$(basename "$1")
+	
+	feh -q $types --auto-zoom \
+		--sort filename --borderless \
+		--scale-down --draw-filename \
+		--image-bg black \
+		--start-at "$file"
 }
