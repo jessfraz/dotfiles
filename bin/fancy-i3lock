@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+#	fancy-i3lock
+#		Based on the awesome sauce of https://github.com/meskarune/i3lock-fancy
+#		This just uses imagemagick in a container...
+#		because reasons...
+#
+#		Dependencies:
+#		- docker
+#		- i3lock
+# 		- scrot
+
+# subshell this shiz
+(
+ 
+	IMAGE=/tmp/i3lock.png
+ 
+	# All options are here: http://www.imagemagick.org/Usage/blur/#blur_args
+	# BLURTYPE="0x5" # 7.52s
+	# BLURTYPE="0x2" # 4.39s
+	BLURTYPE="5x3" # 3.80s
+	# BLURTYPE="2x8" # 2.90s
+	# BLURTYPE="2x3" # 2.92s
+
+	scrot $IMAGE
+
+	docker run --rm \
+		-v $IMAGE:$IMAGE \
+		-v $HOME/Pictures/lock.png:/root/lock.png \
+		jess/imagemagick \
+		sh -c "convert $IMAGE -brightness-contrast -30x10 -level 0%,100%,0.6 -blur $BLURTYPE -gravity center - | composite -gravity center /root/lock.png - $IMAGE"
+
+	i3lock -i $IMAGE
+
+	rm $IMAGE
+
+)

@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+
+#	browser-exec
+#		This script opens a hyperlink in the browser that is
+#		currently being run in a container.
+#		It first checks if chrome is running then firefox.
+#		
+#		TODO: If neither are running it should start chrome container
+#
+#	Usage:
+#		browser-exec $uri
+#
+	
+browser_exec(){
+	# check if chrome container is running
+	chrome_state=$(docker inspect --format "{{.State.Running}}" chrome 2>/dev/null)
+	if [[ "$chrome_state" == "true" ]]; then
+		docker exec -i chrome /usr/bin/google-chrome --user-data-dir=/data "$@" 2>/dev/null
+	else
+		# check if firefox container is running
+		firefox_state=$(docker inspect --format "{{.State.Running}}" firefox 2>/dev/null)
+		if [[ "$firefox_state" == "true" ]]; then
+			docker exec -i firefox /usr/bin/firefox "$@" 2>/dev/null
+		else
+			echo "[browser_exec]: chrome or firefox is not currently running in a container"
+		fi
+	fi
+}
+
+browser_exec $@

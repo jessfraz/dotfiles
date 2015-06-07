@@ -1,0 +1,59 @@
+#!/bin/bash
+set -e
+
+#	keyboard-backlight
+#		For when you are running leeenux on a Mac and it needs some help
+#
+#	Usage:
+#		keyboard-backlight	{up,down,total,off}
+#
+
+BACKLIGHT=$(cat /sys/class/leds/smc::kbd_backlight/brightness)
+INCREMENT=15
+
+if [ $UID -ne 0 ]; then
+	echo "Please run this program as superuser"
+	exit 1
+fi
+
+SET_VALUE=0
+case $1 in
+
+	up)
+		TOTAL=`expr $BACKLIGHT + $INCREMENT`
+		if [ $TOTAL -gt "255" ]; then
+			exit 1
+		fi
+		SET_VALUE=1
+		;;
+	down)
+		TOTAL=`expr $BACKLIGHT - $INCREMENT`
+		if [ $TOTAL -lt "0" ]; then
+			exit 1
+		fi
+		SET_VALUE=1
+		;;
+	total)
+	TEMP_VALUE=$BACKLIGHT
+	while [ $TEMP_VALUE -lt "255" ]; do
+		TEMP_VALUE=`expr $TEMP_VALUE + 1`
+		if [ $TEMP_VALUE -gt "255" ]; then TEMP_VALUE=255; fi
+		echo $TEMP_VALUE > /sys/class/leds/smc::kbd_backlight/brightness
+	done
+		;;
+	off)
+	TEMP_VALUE=$BACKLIGHT
+	while [ $TEMP_VALUE -gt "0" ]; do
+		TEMP_VALUE=`expr $TEMP_VALUE - 1`
+		if [ $TEMP_VALUE -lt "0" ]; then TEMP_VALUE=0; fi
+		echo $TEMP_VALUE > /sys/class/leds/smc::kbd_backlight/brightness
+	done
+		;;
+	*)
+		echo "Use: keyboard-backlight up|down|total|off"
+		;;
+esac
+
+if [ $SET_VALUE -eq "1" ]; then
+	echo $TOTAL > /sys/class/leds/smc::kbd_backlight/brightness
+fi
