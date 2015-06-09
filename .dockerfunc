@@ -35,6 +35,8 @@ cadvisor(){
 		-p 1212:8080 \
 		--name cadvisor \
 		google/cadvisor
+
+	browser-exec "http://127.0.0.1:1212"
 }
 chrome(){
 	del_stopped chrome
@@ -53,6 +55,9 @@ chrome(){
 		--device /dev/dri \
 		--name chrome \
 		jess/chrome --user-data-dir=/data "$@"
+
+	# exit current shell
+	exit 0
 }
 cloudapp(){
 	docker run -t --rm \
@@ -79,6 +84,18 @@ firefox(){
 		--device /dev/dri \
 		--name firefox \
 		jess/firefox "$@"
+
+	# exit current shell
+	exit 0
+}
+gcalcli(){
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v $HOME/.gcalcli/home:/home/gcalcli/home \
+		-v $HOME/.gcalcli/work/oauth:/home/gcalcli/.gcalcli_oauth \
+		-v $HOME/.gcalcli/work/gcalclirc:/home/gcalcli/.gcalclirc \
+		--name gcalcli \
+		jess/gcalcli "$@"
 }
 gimp(){
 	del_stopped gimp
@@ -115,6 +132,18 @@ irssi(){
 		--read-only \
 		--name irssi \
 		irssi
+}
+itunes(){
+	del_stopped itunes
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v /tmp/itunes:/root/ \
+		--device /dev/snd \
+		--name itunes \
+		jess/itunes
 }
 mpd(){
 	del_stopped mpd
@@ -228,7 +257,7 @@ t(){
 		--log-driver none \
 		jess/t "$@"
 }
-tor-browser(){
+tor_browser(){
 	del_stopped tor-browser
 
 	docker run -d \
@@ -238,6 +267,9 @@ tor-browser(){
 		--device /dev/snd \
 		--name tor-browser \
 		jess/tor-browser
+
+	# exit current shell
+	exit 0
 }
 transmission(){
 	docker run -d \

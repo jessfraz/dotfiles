@@ -2,4 +2,4 @@
 export GOPATH=$HOME/.go
 
 # update path
-export PATH=/usr/local/bin:/usr/local/go/bin:$PATH:$GOPATH/bin
+export PATH=/usr/local/bin:/usr/local/go/bin:$PATH:$GOPATH/bin:/sbin
