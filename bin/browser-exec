@@ -10,7 +10,7 @@
 #	Usage:
 #		browser-exec $uri
 #
-	
+
 browser_exec(){
 	# check if chrome container is running
 	chrome_state=$(docker inspect --format "{{.State.Running}}" chrome 2>/dev/null)

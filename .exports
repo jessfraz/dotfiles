@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Make vim the default editor
 export EDITOR=/usr/bin/vim;
 export TERMINAL="urxvt";

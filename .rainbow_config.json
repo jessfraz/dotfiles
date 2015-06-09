@@ -14,7 +14,7 @@
     "THREAD_META_LEFT": "(#id) #clock",
     "THREAD_META_RIGHT": "#clock (#id)",
     "THREAD_MIN_WIDTH": 20,
-    "NOTIFY_FORMAT": "  #source_user #notify #clock",
+    "NOTIFY_FORMAT": "	#source_user #notify #clock",
     "MESSAGES_DISPLAY": 5,
     "TREND_MAX": 10,
     "LIST_MAX": 5,
@@ -30,11 +30,11 @@
     "FORMAT": {
         "TWEET": {
             "CLOCK_FORMAT": "%Y/%m/%d %H:%M:%S",
-            "DISPLAY": "\n  #name #nick #clock \n  \u20aa:#rt_count \u2665:#fa_count id:#id via #client #fav\n  #tweet"
+            "DISPLAY": "\n	#name #nick #clock \n  \u20aa:#rt_count \u2665:#fa_count id:#id via #client #fav\n	#tweet"
         },
         "MESSAGE": {
             "CLOCK_FORMAT": "%Y/%m/%d %H:%M:%S",
-            "DISPLAY": "\n  #sender_name #sender_nick #to #recipient_name #recipient_nick :\n  #clock message_id:#id\n  #message"
+            "DISPLAY": "\n	#sender_name #sender_nick #to #recipient_name #recipient_nick :\n  #clock message_id:#id\n	#message"
         }
     }
 }

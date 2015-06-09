@@ -249,7 +249,7 @@ install_golang() {
 install_graphics() {
 	local system=$1
 
-	if [[ -z "$1" ]]; then
+	if [[ -z "$system" ]]; then
 		echo "You need to specify whether it's dell, mac or lenovo"
 		exit 1
 	fi
@@ -291,7 +291,7 @@ install_syncthing() {
 install_wifi() {
 	local system=$1
 
-	if [[ -z "$1" ]]; then
+	if [[ -z "$system" ]]; then
 		echo "You need to specify whether it's dell, mac or lenovo"
 		exit 1
 	fi

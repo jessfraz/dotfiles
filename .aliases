@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # debian specific aliases
 alias open='browser-exec "$@"'
 alias pbcopy='xclip -selection clipboard'

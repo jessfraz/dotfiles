@@ -99,16 +99,16 @@ URxvt.boldFont:xft:Source Code Pro:pixelSize=10,style=Bold
 
 !! scroll
 !! do not scroll with output
-URxvt*scrollTtyOutput: false
+URxvt*scrollTtyOutput:      false
 !! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-URxvt*scrollWithBuffer: true
+URxvt*scrollWithBuffer:     true
 !! scroll back to the bottom on keypress
-URxvt*scrollTtyKeypress: true
+URxvt*scrollTtyKeypress:    true
 
 !! scrollback buffer
-URxvt.secondaryScreen: 1
-URxvt.secondaryScroll: 0
-URxvt.secondaryWheel: 1
+URxvt.secondaryScreen:  1
+URxvt.secondaryScroll:  0
+URxvt.secondaryWheel:   1
 
 !! scrollbar
 *scrollBar:             false
@@ -116,17 +116,17 @@ URxvt.secondaryWheel: 1
 URxvt*termName:         rxvt
 
 !! copy paste
-URxvt*clipboard.copycmd:  xclip -i -selection clipboard
-URxvt*clipboard.pastecmd: xclip -o -selection clipboard
+URxvt*clipboard.copycmd:    xclip -i -selection clipboard
+URxvt*clipboard.pastecmd:   xclip -o -selection clipboard
 
 !! clickable urls
-URxvt.perl-ext-common: default,matcher,selection-to-clipboard
-URxvt.url-launcher: /usr/local/bin/browser-exec
-URxvt.matcher.button: 1
+URxvt.perl-ext-common:      default,matcher,selection-to-clipboard
+URxvt.url-launcher:         /usr/local/bin/browser-exec
+URxvt.matcher.button:       1
 URxvt.url-select.underline: true
 
 !! get option over to work
-URxvt.keysym.M-Left:          \033[1;5D
-URxvt.keysym.M-Right:         \033[1;5C
-URxvt.keysym.Control-Left:      \033[1;5D
-URxvt.keysym.Control-Right:     \033[1;5C
+URxvt.keysym.M-Left:        \033[1;5D
+URxvt.keysym.M-Right:       \033[1;5C
+URxvt.keysym.Control-Left:  \033[1;5D
+URxvt.keysym.Control-Right: \033[1;5C
