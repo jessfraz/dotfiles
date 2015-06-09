@@ -235,14 +235,17 @@ install_golang() {
 	sudo ./make.bash --no-clean 2>&1
 	)
 
+	# get commandline tools
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/pastebinit
 	go get -u github.com/jfrazelle/udict
 	go get -u github.com/jfrazelle/weather
+	go get -u github.com/cloudflare/cfssl/cmd/cfssl
 	go get -u github.com/crosbymichael/slex
-	go get -u golang.org/x/tools/cmd/goimports
 	go get -u github.com/docker/gordon/{pulls,issues}
+	go get -u github.com/rossdylan/sslcheck
+	go get -u golang.org/x/tools/cmd/goimports
 }
 
 # install graphics drivers

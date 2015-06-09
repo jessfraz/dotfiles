@@ -262,3 +262,15 @@ openimage() {
 		--image-bg black \
 		--start-at "$file"
 }
+
+# get dbus session
+dbs() {
+	local t=$1
+	if [[  -z "$t" ]]; then
+		local t="session"
+	fi
+
+	dbus-send --$t --dest=org.freedesktop.DBus \
+		--type=method_call	--print-reply \
+		/org/freedesktop/DBus org.freedesktop.DBus.ListNames
+}

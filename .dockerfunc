@@ -115,20 +115,28 @@ http(){
 		jess/httpie "$@"
 }
 imagemin(){
+	local image=$1
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Pictures:/root/Pictures \
-		--entrypoint bash \
-		jess/imagemin
+		jess/imagemin "/root/Pictures/${image} > /root/Pictures/${image}.edited"
 }
 irssi(){
 	del_stopped irssi
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v /var/run/user/$(id -u):/var/run/user/$(id -u) \
 		-e TERM \
-		-u $(id -u):$(id -g) \
-		-v $HOME/.irssi:/home/user/.irssi \
+		-e XAUTHORITY \
+		-e DBUS_SESSION_BUS_ADDRESS \
+		-v /etc/passwd:/etc/passwd:ro \
+		-v /etc/group:/etc/group:ro \
+		-u $(whoami) -w "$HOME" \
+		-v $HOME/.Xauthority:$HOME/.Xauthority \
+		-v $HOME/.irssi:$HOME/.irssi \
 		--read-only \
 		--name irssi \
 		irssi
@@ -189,6 +197,26 @@ ncmpc(){
 		-e MPD_HOST=/var/run/mpd/socket \
 		--name ncmpc \
 		jess/ncmpc "$@"
+}
+notify_osd(){
+	del_stopped notify-osd
+
+	docker run -d \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v /var/run/user/$(id -u):/var/run/user/$(id -u) \
+		-v /etc/localtime:/etc/localtime:ro \
+		-e XAUTHORITY \
+		-e DBUS_SESSION_BUS_ADDRESS \
+		-v /etc/passwd:/etc/passwd:ro \
+		-v /etc/group:/etc/group:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-u $(whoami) -w "$HOME" \
+		-v $HOME/.Xauthority:$HOME/.Xauthority \
+		-v /tmp/.cache:$HOME/.cache \
+		--name notify-osd \
+		jess/notify-osd
 }
 pms(){
 	del_stopped pms
