@@ -30,8 +30,6 @@ bindsym $mod+Shift+q kill
 # spotify can float
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
-for_window [class="^Wine$"] floating enable
-for_window [class="^Oracle$"] floating enable
 
 # lock screen
 bindsym $mod+l exec fancy-i3lock

@@ -292,7 +292,7 @@ virtualbox(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix  \
 		-e DISPLAY=unix$DISPLAY \
 		--name virtualbox \
-		-p 3022:3022 \
+		--net host \
 		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
 		-v $HOME/.vbox/config:/root/.config/VirtualBox \
 		--privileged \
