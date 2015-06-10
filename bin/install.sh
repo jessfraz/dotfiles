@@ -242,6 +242,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/udict
 	go get -u github.com/jfrazelle/weather
 	go get -u github.com/cloudflare/cfssl/cmd/cfssl
+	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/slex
 	go get -u github.com/docker/gordon/{pulls,issues}
 	go get -u github.com/rossdylan/sslcheck
@@ -343,7 +344,12 @@ get_dotfiles() {
 	# install dotfiles from repo
 	git clone git@github.com:jfrazelle/dotfiles.git /home/$USERNAME/dotfiles
 	cd /home/$USERNAME/dotfiles
+
+	# installs all the things
 	make
+
+	# enable dbus for the user session
+	systemctl --user enable dbus.socket
 
 	cd /home/$USERNAME
 

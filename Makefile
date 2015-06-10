@@ -16,7 +16,7 @@ bin:
 
 dotfiles:
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".git"); do \
+	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".*.swp"); do \
 		f=$$(basename $$file); \
 		echo "Creating symlink for $$file to $(HOME)/$$f"; \
 		ln -sfn $$file $(HOME)/$$f; \
@@ -28,6 +28,7 @@ etc:
 		echo "Installing $$file to $$f"; \
 		sudo install -p -m 644 $$file $$f; \
 	done
+	systemctl --user daemon-reload
 
 init:
 	# install init scripts

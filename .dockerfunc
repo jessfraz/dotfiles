@@ -54,7 +54,7 @@ chrome(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--name chrome \
-		jess/chrome --user-data-dir=/data "$@"
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1.5 "$@"
 
 	# exit current shell
 	exit 0
@@ -80,6 +80,8 @@ firefox(){
 		-v $HOME/Pictures:/root/Pictures \
 		-v $HOME/Torrents:/root/Torrents \
 		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
 		--device /dev/snd \
 		--device /dev/dri \
 		--name firefox \
@@ -105,6 +107,9 @@ gimp(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
 		-v $HOME/Pictures:/root/Pictures \
+		-v $HOME/.gtkrc:/root/.gtkrc \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
 		--name gimp \
 		jess/gimp
 }
@@ -132,6 +137,7 @@ irssi(){
 		-e TERM \
 		-e XAUTHORITY \
 		-e DBUS_SESSION_BUS_ADDRESS \
+		-e HOME \
 		-v /etc/passwd:/etc/passwd:ro \
 		-v /etc/group:/etc/group:ro \
 		-u $(whoami) -w "$HOME" \
@@ -141,17 +147,11 @@ irssi(){
 		--name irssi \
 		irssi
 }
-itunes(){
-	del_stopped itunes
-
-	docker run -d \
-		-v /etc/localtime:/etc/localtime:ro \
-		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		-e DISPLAY=unix$DISPLAY \
-		-v /tmp/itunes:/root/ \
-		--device /dev/snd \
-		--name itunes \
-		jess/itunes
+kernel_builder(){
+	docker run --rm -it \
+		-v /usr/src:/usr/src \
+		--name kernel-builder \
+		jess/kernel-builder
 }
 mpd(){
 	del_stopped mpd
@@ -242,6 +242,8 @@ remmina(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
 		-v $HOME/.remmina:/root/.remmina \
 		--name remmina \
 		jess/remmina
@@ -273,6 +275,7 @@ spotify(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
+		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/snd \
 		-v $HOME/.spotify/config:/root/.config/spotify \
 		-v $HOME/.spotify/cache:/root/.cache/spotify \
@@ -292,6 +295,8 @@ tor_browser(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
 		--device /dev/snd \
 		--name tor-browser \
 		jess/tor-browser
@@ -319,6 +324,8 @@ virtualbox(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix  \
 		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
 		--name virtualbox \
 		--net host \
 		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
@@ -333,6 +340,9 @@ vlc(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/dri \
 		--device /dev/snd \
 		--name vlc \

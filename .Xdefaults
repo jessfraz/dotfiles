@@ -84,10 +84,12 @@ URxvt*background:       [95]S_base04
 
 !-- Xft settings -- !
 Xft.dpi:        144
-Xft.antialias:  true
 Xft.rgba:       rgb
-Xft.hinting:    true
+Xft.autohint:   0
+Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
+Xft.hinting:    1
+Xft.antialias:  1
 
 ! -- Fonts -- !
 !! *fontName:              Source Code Pro Medium:size=10,antialias=true
