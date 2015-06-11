@@ -54,7 +54,8 @@ chrome(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1.5 --touch-devices=10 "$@"
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1.5 --touch-devices=10 
+
 
 	# exit current shell
 	exit 0
@@ -113,6 +114,12 @@ gimp(){
 		--name gimp \
 		jess/gimp
 }
+htop(){
+	docker run --rm -it \
+		--pid host \
+		--name htop \
+		jess/htop
+}
 http(){
 	docker run -t --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
@@ -170,6 +177,8 @@ mpd(){
 		jess/mpd
 }
 mutt(){
+	# subshell so we dont overwrite variables
+	(
 	local account=$1
 
 	if [[ "$account" == "docker" ]]; then
@@ -188,6 +197,7 @@ mutt(){
 		-v /etc/localtime:/etc/localtime:ro \
 		--name mutt${account} \
 		jess/mutt
+	)
 }
 ncmpc(){
 	del_stopped ncmpc
