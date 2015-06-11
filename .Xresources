@@ -38,7 +38,7 @@
 #define S_green         #859900
 
 *background:            S_base04
-URxvt*background:       [95]S_base04
+URxvt*background:       [88]S_base04
 *foreground:            S_base00
 *depth:                 32
 !!*fading:                40

@@ -38,11 +38,17 @@ setup_sources() {
 	# hack for latest git (don't judge)
 	deb http://ppa.launchpad.net/git-core/ppa/ubuntu vivid main
 	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu vivid main
+
+	# tlp: Advanced Linux Power Management
+	# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
+	deb http://repo.linrunner.de/debian sid main
 	EOF
 
 	# add the git-core ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys adv E1DD270288B4E6030699E45FA1715D88E1DF1F24
 
+	# add the tlp apt-repo gpg key
+	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
 }
 
 # installs base packages
@@ -53,8 +59,6 @@ base() {
 	apt-get install -y \
 		adduser \
 		alsa-utils \
-		acpid \
-		acpi-support \
 		automake \
 		bash-completion \
 		bc \
@@ -101,8 +105,12 @@ base() {
 		unzip \
 		xclip \
 		xcompmgr \
+		xz-utils \
 		zip \
 		--no-install-recommends
+
+	# install tlp with recommends
+	apt-get install -y tlp tlp-rdw
 
 	setup_sudo
 
@@ -161,7 +169,8 @@ install_docker() {
 	systemctl daemon-reload
 	systemctl enable docker
 
-	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/g' /etc/default/grub
+	# update grub with docker configs and power-saving items
+	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 i915.enable_psr=0 pcie_asm=force i915.i915_enable_fbc=1 i915.i915_enable_rc6=7 i915.lvds_downclock=1"/g' /etc/default/grub
 	echo "Docker has been installed. If you want memory management & swap"
 	echo "run update-grub & reboot"
 }

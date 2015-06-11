@@ -54,7 +54,7 @@ chrome(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1.5 "$@"
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1.5 --touch-devices=10 "$@"
 
 	# exit current shell
 	exit 0
@@ -145,7 +145,7 @@ irssi(){
 		-v $HOME/.irssi:$HOME/.irssi \
 		--read-only \
 		--name irssi \
-		irssi
+		jess/irssi
 }
 kernel_builder(){
 	docker run --rm -it \
