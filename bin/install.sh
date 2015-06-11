@@ -68,7 +68,6 @@ base() {
 		cgroupfs-mount \
 		cmake \
 		coreutils \
-		cron \
 		curl \
 		dnsutils \
 		file \
