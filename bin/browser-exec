@@ -5,7 +5,7 @@
 #		currently being run in a container.
 #		It first checks if chrome is running then firefox.
 #		
-#		TODO: If neither are running it should start chrome container
+#		If neither are running it starts a chrome container
 #
 #	Usage:
 #		browser-exec $uri
@@ -22,7 +22,9 @@ browser_exec(){
 		if [[ "$firefox_state" == "true" ]]; then
 			docker exec -i firefox /usr/bin/firefox "$@" 2>/dev/null
 		else
-			echo "[browser_exec]: chrome or firefox is not currently running in a container"
+			# neither are currently running so lets start chrome and open the page
+			source $HOME/.dockerfunc
+			chrome "$@"
 		fi
 	fi
 }

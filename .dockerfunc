@@ -54,8 +54,7 @@ chrome(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1.5 --touch-devices=10 
-
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 "$@"
 
 	# exit current shell
 	exit 0
