@@ -23,7 +23,7 @@ ExecStart=/usr/bin/docker run -d --restart always -v /etc/machine-id:/etc/machin
 	-e DISPLAY=unix${DISPLAY} \
 	-u "%u" -w "%h" \
 	-v %h/.Xauthority:%h/.Xauthority \
-	-v /tmp/notify-osd:%h/.cache/dconf \
+	-v %h/.cache/dconf:%h/.cache/dconf \
 	--name notify-osd \
 	jess/notify-osd
 

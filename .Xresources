@@ -93,8 +93,10 @@ Xft.antialias:  1
 
 ! -- Fonts -- !
 !! *fontName:              Source Code Pro Medium:size=10,antialias=true
-URxvt.font:xft:Source Code Pro,Source Code Pro Medium:pixelSize=10,style=Medium,Regular
-URxvt.boldFont:xft:Source Code Pro:pixelSize=10,style=Bold
+#URxvt.font:xft:Source Code Pro,Source Code Pro Medium:pixelSize=10,style=Medium,Regular
+URxvt.font:xft:Ayuthaya:pixelSize=10,style=Regular
+#URxvt.boldFont:xft:Source Code Pro:style=Bold,pixelSize=10
+URxvt.boldFont:xft:Ayuthaya:style=Bold,pixelSize=10
 
 *faceSize:              10
 *bellIsUrgent:          true

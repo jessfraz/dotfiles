@@ -114,6 +114,11 @@ gimp(){
 		--name gimp \
 		jess/gimp
 }
+hollywood(){
+	docker run --rm -it \
+		--name hollywood \
+		jess/hollywood
+}
 htop(){
 	docker run --rm -it \
 		--pid host \
@@ -224,7 +229,7 @@ notify_osd(){
 		-e DISPLAY=unix$DISPLAY \
 		-u $(whoami) -w "$HOME" \
 		-v $HOME/.Xauthority:$HOME/.Xauthority \
-		-v /tmp/.cache:$HOME/.cache \
+		-v $HOME/.cache/dconf:$HOME/.cache/dconf \
 		--name notify-osd \
 		jess/notify-osd
 }
@@ -287,8 +292,8 @@ spotify(){
 		-e DISPLAY=unix$DISPLAY \
 		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/snd \
-		-v $HOME/.spotify/config:/root/.config/spotify \
-		-v $HOME/.spotify/cache:/root/.cache/spotify \
+		-v $HOME/.spotify/config:/home/spotify/.config/spotify \
+		-v $HOME/.spotify/cache:/home/spotify/.cache/spotify \
 		--name spotify \
 		jess/spotify
 }

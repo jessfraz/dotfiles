@@ -7,7 +7,7 @@ Description=i3lock
 [Service]
 User=jessie
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/i3lock -c 222222
+ExecStart=/usr/bin/i3lock -c 111111
 
 [Install]
 WantedBy=suspend.target

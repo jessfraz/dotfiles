@@ -127,6 +127,8 @@ base() {
 # because fuck typing that shit all the time
 # just have a decent password
 # and lock your computer when you aren't using it
+# if they have your password they can sudo anyways
+# so its pointless
 # i know what the fuck im doing ;)
 setup_sudo() {
 	# add user to sudoers

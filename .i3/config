@@ -32,7 +32,7 @@ for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
 # lock screen
-bindsym $mod+l exec fancy-i3lock
+bindsym $mod+l exec i3lock -c 111111
 
 # change focus
 bindsym $mod+j focus left
