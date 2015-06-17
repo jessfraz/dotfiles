@@ -45,7 +45,7 @@ setup_sources() {
 	EOF
 
 	# add the git-core ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys adv E1DD270288B4E6030699E45FA1715D88E1DF1F24
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
 
 	# add the tlp apt-repo gpg key
 	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
@@ -142,10 +142,10 @@ setup_sudo() {
 	echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR PATH"' >> /etc/sudoers
 
 	# don't require a password
-	echo -e "${USERNAME}	ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+	echo -e "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 	# allow mounts if* commands because im lazy af
-	echo -e "${USERNAME}	ALL=NOPASSWD: jessie	ALL=NOPASSWD: /bin/mount, /sbin/mount.nfs, /bin/umount, /sbin/umount.nfs, /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery" >> /etc/sudoers
+	echo -e "${USERNAME} ALL=NOPASSWD: ${USERNAME} ALL=NOPASSWD: /bin/mount, /sbin/mount.nfs, /bin/umount, /sbin/umount.nfs, /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery" >> /etc/sudoers
 
 	# setup downloads folder as tmpfs
 	# that way things are removed on reboot
@@ -161,11 +161,11 @@ install_docker() {
 	sudo groupadd docker
 	sudo gpasswd -a $USERNAME docker
 
-	curl -sSL -O https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
+	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
 	chmod +x /usr/bin/docker
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.service > /etc/systemd/system/docker.service
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.socket > /etc/systemd/system/docker.socket
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.service > /lib/systemd/system/docker.service
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.socket > /lib/systemd/system/docker.socket
 
 	systemctl daemon-reload
 	systemctl enable docker
@@ -295,7 +295,7 @@ install_syncthing() {
 	curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
 	chmod +x /usr/local/bin/syncthing
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/syncthing@.service > /etc/systemd/system/syncthing@.service
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/syncthing@.service > /lib/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"
