@@ -24,7 +24,7 @@ ExecStart=/usr/bin/docker run -d --restart always -v /etc/machine-id:/etc/machin
 	-u "%u" -w "%h" \
 	-v %h/.Xauthority:%h/.Xauthority \
 	-v %h/.cache/dconf:%h/.cache/dconf \
-	--name notify-osd \
+	--name notify_osd \
 	jess/notify-osd
 
 [Install]

@@ -78,6 +78,16 @@ cloudapp(){
 		--log-driver none \
 		jess/cloudapp "$@"
 }
+documentserver(){
+	del_stopped documentserver
+
+	docker run -d \
+		-p 1234:80 \
+		--name documentserver \
+		onlyoffice/documentserver
+
+	browser-exec "http://127.0.0.1:1234/"
+}
 firefox(){
 	del_stopped firefox
 
@@ -152,6 +162,7 @@ imagemin(){
 }
 irssi(){
 	del_stopped irssi
+	relies_on notify_osd
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -242,7 +253,7 @@ notify_osd(){
 		-u $(whoami) -w "$HOME" \
 		-v $HOME/.Xauthority:$HOME/.Xauthority \
 		-v $HOME/.cache/dconf:$HOME/.cache/dconf \
-		--name notify-osd \
+		--name notify_osd \
 		jess/notify-osd
 }
 pms(){
