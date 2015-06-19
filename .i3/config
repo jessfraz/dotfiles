@@ -27,9 +27,15 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# spotify can float
+# spotify: no border
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
+
+# skype, steam, wine: float
+for_window [class="Portal"] floating enable
+for_window [class="Skype"] floating enable
+for_window [class="Steam"] floating enable
+for_window [class="Wine"] floating enable
 
 # lock screen
 bindsym $mod+l exec i3lock -c 111111

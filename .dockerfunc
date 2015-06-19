@@ -16,6 +16,18 @@ del_stopped(){
 		docker rm $name
 	fi
 }
+relies_on(){
+	local containers=$@
+
+	for container in $containers; do
+		local state=$(docker inspect --format "{{.State.Running}}" $container 2>/dev/null)
+
+		if [[ "$state" == "false" ]]; then
+			echo "$container is not running, starting it for you."
+			$container
+		fi
+	done
+}
 
 # 
 # Container Aliases
@@ -53,6 +65,7 @@ chrome(){
 		-v $HOME/.chrome:/data \
 		--device /dev/snd \
 		--device /dev/dri \
+		--device /dev/video0 \
 		--name chrome \
 		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 "$@"
 
@@ -241,6 +254,17 @@ pms(){
 		--name pms \
 		jess/pms "$@"
 }
+pulseaudio(){
+	del_stopped pulseaudio
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime \
+		--device /dev/snd \
+		-p 4713:4713 \
+		--restart always \
+		--name pulseaudio \
+		jess/pulseaudio
+}
 rainbowstream(){
 	docker run -it --rm \
 		-v /etc/localtime:/etc/localtime \
@@ -269,6 +293,20 @@ reviewed(){
 		-e IDT_ADDRESS \
 		jess/idonethis "reviewed #${1}"
 }
+skype(){
+	del_stopped skype
+	relies_on pulseaudio
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--link pulseaudio:pulseaudio \
+		-e PULSE_SERVER=pulseaudio \
+		--device /dev/video0 \
+		--name skype \
+		jess/skype
+}
 slack(){
 	del_stopped slack
 
@@ -295,6 +333,23 @@ spotify(){
 		-v $HOME/.spotify/cache:/home/spotify/.cache/spotify \
 		--name spotify \
 		jess/spotify
+}
+steam(){
+	del_stopped steam
+	relies_on pulseaudio
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v $HOME/.steam:/home/steam \
+		-e DISPLAY=unix$DISPLAY \
+		--link pulseaudio:pulseaudio \
+		-e PULSE_SERVER=pulseaudio \
+		--device /dev/dri \
+		--name steam \
+		jess/steam
 }
 t(){
 	docker run -t --rm \
@@ -349,6 +404,7 @@ virtualbox(){
 }
 vlc(){
 	del_stopped vlc
+	relies_on pulseaudio
 
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -357,8 +413,9 @@ vlc(){
 		-e GDK_SCALE \
 		-e GDK_DPI_SCALE \
 		-e QT_DEVICE_PIXEL_RATIO \
+		--link pulseaudio:pulseaudio \
+		-e PULSE_SERVER=pulseaudio \
 		--device /dev/dri \
-		--device /dev/snd \
 		--name vlc \
 		jess/vlc
 }

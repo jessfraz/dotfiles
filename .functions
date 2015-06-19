@@ -279,8 +279,7 @@ dbs() {
 isup() {
 	local uri=$1
 
-	curl -sSL --connect-timeout 10 $uri > /dev/null 2>&1
-	if [ $? -ne 0 ]; then
+	if curl -s --head  --request GET "$uri" | grep "200 OK" > /dev/null ; then
 		notify-send --urgency=critical "$uri is down"
 	else
 		notify-send --urgency=low "$uri is up"
