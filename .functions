@@ -285,3 +285,41 @@ isup() {
 		notify-send --urgency=low "$uri is up"
 	fi
 }
+
+# build go static binary from root of project
+gostatic(){
+	local dir=$1
+
+	if [[ -z $dir ]]; then
+		dir=$(pwd)
+	fi
+
+	local name=$(basename "$dir")
+	(
+	cd $dir
+	echo "Building static binary for $name in $dir"
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o "$name" .
+	)
+}
+
+# go to a folder easily in your gopath
+gogo(){
+	local d=$1
+
+	if [[ -z $d ]]; then
+		echo "You need to specify a project name."
+		return 1
+	fi
+
+	# search for the project dir in the GOPATH
+	local path=( `find "${GOPATH}/src" -iname "$d" -type d` )
+
+	if [[ "$path" == "" ]]; then
+		echo "Could not find a directory named $d in $GOPATH"
+		echo "Maybe you need to 'go get' it ;)"
+		return 1
+	fi
+
+	# enter the first path found
+	cd "${path[0]}"
+}

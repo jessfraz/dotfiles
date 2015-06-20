@@ -251,8 +251,10 @@ install_golang() {
 	go get -u github.com/jfrazelle/pastebinit
 	go get -u github.com/jfrazelle/udict
 	go get -u github.com/jfrazelle/weather
+
 	go get -u github.com/cloudflare/cfssl/cmd/cfssl
 	go get -u github.com/crosbymichael/gistit
+	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
 	go get -u github.com/docker/gordon/{pulls,issues}
 	go get -u github.com/rossdylan/sslcheck
