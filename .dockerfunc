@@ -396,6 +396,20 @@ termboy(){
 		--name termboy \
 		jess/nes /games/${game}.rom
 }
+tor(){
+	del_stopped tor
+
+	docker run -d \
+		--net host \
+		--name tor \
+		jess/tor
+
+	# set up the redirect iptables rules
+	sudo tor-ips
+
+	# validate we are running through tor
+	browser-exec "https://check.torproject.org/"
+}
 torbrowser(){
 	del_stopped torbrowser
 
