@@ -22,7 +22,7 @@ relies_on(){
 	for container in $containers; do
 		local state=$(docker inspect --format "{{.State.Running}}" $container 2>/dev/null)
 
-		if [[ "$state" == "false" ]]; then
+		if [[ "$state" == "false" ]] || [[ "$state" == "" ]]; then
 			echo "$container is not running, starting it for you."
 			$container
 		fi
@@ -32,10 +32,17 @@ relies_on(){
 # 
 # Container Aliases
 #
+apt_file(){
+	docker run --rm -it \
+		--name apt-file \
+		jess/apt-file
+}
+alias apt-file="apt_file"
 aws(){
 	docker run -t --rm \
 		-v $HOME/.aws:/root/.aws \
 		--log-driver none \
+		--name aws \
 		jess/awscli "$@"
 }
 cadvisor(){
@@ -236,6 +243,18 @@ ncmpc(){
 		--name ncmpc \
 		jess/ncmpc "$@"
 }
+nes(){
+	del_stopped nes
+	local game=$1
+
+	docker run -d \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/dri \
+		--device /dev/snd \
+		--name nes \
+		jess/nes /games/${game}.rom
+}
 notify_osd(){
 	del_stopped notify-osd
 
@@ -368,8 +387,17 @@ t(){
 		--log-driver none \
 		jess/t "$@"
 }
-tor_browser(){
-	del_stopped tor-browser
+termboy(){
+	del_stopped termboy
+	local game=$1
+
+	docker run --rm -it \
+		--device /dev/snd \
+		--name termboy \
+		jess/nes /games/${game}.rom
+}
+torbrowser(){
+	del_stopped torbrowser
 
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -378,7 +406,7 @@ tor_browser(){
 		-e GDK_SCALE \
 		-e GDK_DPI_SCALE \
 		--device /dev/snd \
-		--name tor-browser \
+		--name torbrowser \
 		jess/tor-browser
 
 	# exit current shell
@@ -426,6 +454,7 @@ vlc(){
 		-e QT_DEVICE_PIXEL_RATIO \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
+		-v $HOME/Torrents:/home/vlc/Torrents \
 		--device /dev/dri \
 		--name vlc \
 		jess/vlc

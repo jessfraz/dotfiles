@@ -85,6 +85,7 @@ base() {
 		less \
 		libc6-dev \
 		locales \
+		lsof \
 		make \
 		mercurial \
 		mount \
