@@ -61,7 +61,7 @@ chrome(){
 	del_stopped chrome
 
 	docker run -d \
-		--memory 2gb \
+		--memory 5gb \
 		--net host \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -88,8 +88,9 @@ cloudapp(){
 documentserver(){
 	del_stopped documentserver
 
-	docker run -d \
+	docker run --rm -it \
 		-p 1234:80 \
+		-v $HOME/slides:/slides \
 		--name documentserver \
 		onlyoffice/documentserver
 
@@ -194,6 +195,19 @@ kernel_builder(){
 		-v /usr/src:/usr/src \
 		--name kernel-builder \
 		jess/kernel-builder
+}
+libreoffice(){
+	del_stopped libreoffice
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v $HOME/slides:/root/slides \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--name libreoffice \
+		jess/libreoffice
 }
 mpd(){
 	del_stopped mpd
@@ -454,6 +468,16 @@ virtualbox(){
 		-v $HOME/.vbox/config:/root/.config/VirtualBox \
 		--privileged \
 		jess/virtualbox
+}
+visualstudio(){
+	del_stopped visualstudio
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix  \
+		-e DISPLAY=unix$DISPLAY \
+		--name visualstudio \
+		jess/visualstudio
 }
 vlc(){
 	del_stopped vlc

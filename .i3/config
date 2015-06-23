@@ -32,6 +32,7 @@ for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
 # skype, steam, wine: float Gimp
+for_window [class="Code"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="NES"] floating enable
 for_window [class="Portal"] floating enable
