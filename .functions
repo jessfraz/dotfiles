@@ -298,7 +298,13 @@ gostatic(){
 	(
 	cd $dir
 	echo "Building static binary for $name in $dir"
-	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o "$name" .
+	GOOS=linux go build -a \
+		-tags 'netgo static_build' \
+		-installsuffix netgo \
+		-ldflags "
+			-w
+		" \
+		-o "$name" .
 	)
 }
 

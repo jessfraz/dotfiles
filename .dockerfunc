@@ -166,7 +166,7 @@ imagemin(){
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Pictures:/root/Pictures \
-		jess/imagemin "/root/Pictures/${image} > /root/Pictures/${image}.edited"
+		jess/imagemin /root/Pictures/${image} "> /root/Pictures/${image}.edited"
 }
 irssi(){
 	del_stopped irssi
@@ -208,6 +208,11 @@ libreoffice(){
 		-e GDK_DPI_SCALE \
 		--name libreoffice \
 		jess/libreoffice
+}
+lynx(){
+	docker run --rm -it \
+		--name lynx \
+		jess/lynx "$@"
 }
 mpd(){
 	del_stopped mpd
@@ -288,6 +293,20 @@ notify_osd(){
 		-v $HOME/.cache/dconf:$HOME/.cache/dconf \
 		--name notify_osd \
 		jess/notify-osd
+}
+pandoc(){
+	local file=${@: -1}
+	local lfile=$(readlink -m "$(pwd)/${file}")
+	local rfile=$(readlink -m "/$(basename $file)")
+	local args=${@:1:${#@}-1}
+
+	set -x
+	docker run --rm \
+		-v ${lfile}:${rfile} \
+		-v /tmp:/tmp \
+		--name pandoc \
+		jess/pandoc ${args} ${rfile}
+	set +x
 }
 pms(){
 	del_stopped pms
