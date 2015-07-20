@@ -487,8 +487,32 @@ transmission(){
 
 	browser-exec "http://127.0.0.1:9091/transmission"
 }
+vagrant(){
+	del_stopped vagrant
+
+	# modprobe the module
+	sudo modprobe vboxdrv
+
+	docker run -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix  \
+		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--name vagrant \
+		--net host \
+		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
+		-v $HOME/.vbox/config:/root/.config/VirtualBox \
+		-v $HOME/oscon:/root/oscon \
+		--privileged \
+		--entrypoint bash \
+		jess/vagrant
+}
 virtualbox(){
 	del_stopped virtualbox
+
+	# modprobe the module
+	sudo modprobe vboxdrv
 
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
