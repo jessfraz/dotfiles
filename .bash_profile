@@ -26,4 +26,4 @@ done
 [[ -e "$HOME/.ssh/config" ]] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2 | tr ' ' '\n')" scp sftp ssh
 
 # print a fortune when the terminal opens
-fortune -a -s | lolcat
+#fortune -a -s | lolcat

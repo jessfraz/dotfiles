@@ -435,6 +435,11 @@ t(){
 		--log-driver none \
 		jess/t "$@"
 }
+telnet(){
+	docker run -it --rm \
+		--log-driver none \
+		jess/telnet "$@"
+}
 termboy(){
 	del_stopped termboy
 	local game=$1
