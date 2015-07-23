@@ -1,0 +1,6 @@
+[Unit]
+Description=Annoy diogo and nathan
+
+[Service]
+Type=oneshot
+ExecStart=/home/jessie/annoy.sh
