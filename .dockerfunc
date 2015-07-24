@@ -209,6 +209,11 @@ libreoffice(){
 		--name libreoffice \
 		jess/libreoffice
 }
+lpass(){
+	docker run --rm -it \
+		--name lpass \
+		jess/lpass "$@"
+}
 lynx(){
 	docker run --rm -it \
 		--name lynx \
