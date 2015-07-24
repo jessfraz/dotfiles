@@ -5,7 +5,7 @@ After=network.target docker.socket
 Requires=docker.socket
 
 [Service]
-ExecStart=/usr/bin/docker -d -D -s overlay -H fd:// --exec-opt=native.cgroupdriver=cgroupfs --userland-proxy=false 
+ExecStart=/usr/bin/docker daemon -D -s overlay -H fd:// --exec-opt=native.cgroupdriver=cgroupfs --userland-proxy=false 
 MountFlags=slave
 LimitNOFILE=1048576
 LimitNPROC=1048576
