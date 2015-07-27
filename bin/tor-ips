@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Most of this is credited to 
 # https://trac.torproject.org/projects/tor/wiki/doc/TransparentProxy
 # With a few minor edits
