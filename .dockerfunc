@@ -438,7 +438,7 @@ t(){
 	docker run -t --rm \
 		-v $HOME/.trc:/root/.trc \
 		--log-driver none \
-		jess/t "$@"
+		jess/tcli "$@"
 }
 telnet(){
 	docker run -it --rm \
