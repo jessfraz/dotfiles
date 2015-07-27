@@ -39,7 +39,7 @@ apt_file(){
 }
 alias apt-file="apt_file"
 aws(){
-	docker run -t --rm \
+	docker run -it --rm \
 		-v $HOME/.aws:/root/.aws \
 		--log-driver none \
 		--name aws \
@@ -163,10 +163,13 @@ http(){
 }
 imagemin(){
 	local image=$1
+	local extension="${image##*.}"
+	local filename="${image%.*}"
+
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Pictures:/root/Pictures \
-		jess/imagemin /root/Pictures/${image} "> /root/Pictures/${image}.edited"
+		jess/imagemin sh -c "imagemin /root/Pictures/${image} > /root/Pictures/${filename}_min.${extension}"
 }
 irssi(){
 	del_stopped irssi
