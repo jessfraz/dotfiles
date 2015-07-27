@@ -259,6 +259,7 @@ install_golang() {
 	go get -u github.com/crosbymichael/slex
 	go get -u github.com/docker/gordon/{pulls,issues}
 	go get -u github.com/rossdylan/sslcheck
+	go get -u github.com/cbednarski/hostess/cmd/hostess
 	go get -u golang.org/x/tools/cmd/goimports
 }
 
