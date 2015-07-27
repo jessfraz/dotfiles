@@ -74,7 +74,7 @@ chrome(){
 		--device /dev/dri \
 		--device /dev/video0 \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 "$@"
+		jess/chrome:old --user-data-dir=/data --force-device-scale-factor=1 "$@"
 
 	# exit current shell
 	exit 0
@@ -211,6 +211,7 @@ libreoffice(){
 }
 lpass(){
 	docker run --rm -it \
+		-v $HOME/.lpass:/root/.lpass \
 		--name lpass \
 		jess/lpass "$@"
 }
