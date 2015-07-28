@@ -1,0 +1,18 @@
+[Unit]
+Description=Shorewall
+Documentation=http://shorewall.net/
+After=network.target docker.socket
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=-/usr/bin/docker rm -f shorewall
+ExecStart=/usr/bin/docker run --rm \
+		  --net host \
+		  --cap-add NET_ADMIN \
+		  --privileged \
+		  --name shorewall \
+		  jess/shorewall start
+
+[Install]
+WantedBy=default.target
