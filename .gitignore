@@ -21,3 +21,4 @@ Session.vim
 .irssi/saved_colors
 .irssi/scripts/autorun/blocker.pl
 .rainbow_oauth
+.nginx/conf.d/*
