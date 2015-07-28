@@ -1,0 +1,18 @@
+[Unit]
+Description=nginx
+Documentation=http://nginx.org/en/docs/
+After=network.target docker.socket
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=-/usr/bin/docker rm -f nginx
+ExecStart=/usr/bin/docker run -d --restart always \
+		  -v %h/.nginx:/etc/nginx \
+		  --net host \
+		  --name nginx \
+		  nginx
+ExecStart=-hostess add nginx 127.0.0.1
+
+[Install]
+WantedBy=default.target
