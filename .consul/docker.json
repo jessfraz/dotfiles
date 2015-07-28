@@ -1,0 +1,10 @@
+{
+  "service": {
+    "name": "docker",
+    "tags": ["debian", "overlay", "runc"],
+    "check": {
+      "script": "curl-unix-socket unix:///var/run/docker.sock:/version",
+      "interval": "10s"
+    }
+  }
+}

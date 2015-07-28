@@ -132,8 +132,8 @@ consul(){
 		-v $HOME/.consul:/etc/consul.d \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		--net host \
-		--name consul \
 		-e GOMAXPROCS=2 \
+		--name consul \
 		jess/consul agent \
 		-bootstrap-expect 1 \
 		-config-dir /etc/consul.d \
