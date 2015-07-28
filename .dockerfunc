@@ -115,11 +115,27 @@ chrome(){
 	# exit current shell
 	exit 0
 }
-cloudapp(){
-	docker run -t --rm \
-		-v $HOME/pics/$@:/root/$@ \
-		--log-driver none \
-		jess/cloudapp "$@"
+consul(){
+	del_stopped consul
+
+	docker run -d \
+		--restart always \
+		-v $HOME/.consul:/etc/consul.d \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		--net host \
+		--name consul \
+		-e GOMAXPROCS=2 \
+		jess/consul agent \
+		-bootstrap-expect 1 \
+		-config-dir /etc/consul.d \
+		-data-dir /data \
+		-encrypt $(docker run --rm jess/consul keygen) \
+		-ui-dir /usr/src/consul \
+		-server \
+		-dc neverland \
+		-bind 0.0.0.0
+
+	nginx_config consul 127.0.0.1:8500
 }
 docserver(){
 	del_stopped docserver
@@ -323,6 +339,7 @@ nginx(){
 	del_stopped nginx
 
 	docker run -d \
+		--restart always \
 		-v $HOME/.nginx:/etc/nginx \
 		--net host \
 		--name nginx \
@@ -330,7 +347,6 @@ nginx(){
 
 	# add domain to hosts & open nginx
 	sudo hostess add jess 127.0.0.1
-	browser-exec "http://jess"
 }
 notify_osd(){
 	del_stopped notify-osd

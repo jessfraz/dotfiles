@@ -153,7 +153,7 @@
 	insteadOf = "gist:"
 [user]
 	name = Jessica Frazelle
-	email = princess@docker.com
+	email = acidburn@docker.com
 #[remote "origin"]
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
 [github]

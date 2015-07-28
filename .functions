@@ -289,6 +289,7 @@ isup() {
 # build go static binary from root of project
 gostatic(){
 	local dir=$1
+	local arg=$2
 
 	if [[ -z $dir ]]; then
 		dir=$(pwd)
@@ -297,14 +298,23 @@ gostatic(){
 	local name=$(basename "$dir")
 	(
 	cd $dir
+	export GOOS=linux
 	echo "Building static binary for $name in $dir"
-	GOOS=linux go build -a \
-		-tags 'netgo static_build' \
-		-installsuffix netgo \
-		-ldflags "
-			-w
-		" \
-		-o "$name" .
+
+	if [[ $arg = "netgo" ]]; then
+		set -x
+		go build -a \
+			-tags 'netgo static_build' \
+			-installsuffix netgo \
+			-ldflags "-w" \
+			-o "$name" .
+	else
+		set -x
+		CGO_ENABLED=0 go build -a \
+			-installsuffix cgo \
+			-ldflags "-w" \
+			-o "$name" .
+	fi
 	)
 }
 

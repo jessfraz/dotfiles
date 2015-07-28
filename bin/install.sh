@@ -250,13 +250,14 @@ install_golang() {
 	)
 
 	# get commandline tools
+	(
+	set -x
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/pastebinit
 	go get -u github.com/jfrazelle/udict
 	go get -u github.com/jfrazelle/weather
 
-	go get -u github.com/cloudflare/cfssl/cmd/cfssl
 	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
@@ -264,6 +265,7 @@ install_golang() {
 	go get -u github.com/rossdylan/sslcheck
 	go get -u github.com/cbednarski/hostess/cmd/hostess
 	go get -u golang.org/x/tools/cmd/goimports
+	)
 }
 
 # install graphics drivers
