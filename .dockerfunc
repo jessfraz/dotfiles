@@ -28,6 +28,39 @@ relies_on(){
 		fi
 	done
 }
+# creates an nginx config for a local route
+nginx_config(){
+	server=$1
+	route=$2
+
+	cat >${HOME}/.nginx/conf.d/${server}.conf <<-EOF
+	upstream ${server} { server ${route}; }
+	server {
+	server_name ${server};
+
+	location / {
+	proxy_pass  http://${server};
+	proxy_http_version 1.1;
+	proxy_set_header Upgrade \$http_upgrade;
+	proxy_set_header Connection "upgrade";
+	proxy_set_header Host \$http_host;
+	proxy_set_header X-Forwarded-Proto \$scheme;
+	proxy_set_header X-Forwarded-For \$remote_addr;
+	proxy_set_header X-Forwarded-Port \$server_port;
+	proxy_set_header X-Request-Start \$msec;
+}
+	}
+	EOF
+
+	# restart nginx
+	docker restart nginx
+
+	# add host to /etc/hosts
+	sudo hostess add $server ${route%:*}
+
+	# open browser
+	browser-exec "http://${server}"
+}
 
 # 
 # Container Aliases
@@ -55,11 +88,13 @@ cadvisor(){
 		--name cadvisor \
 		google/cadvisor
 
-	browser-exec "http://127.0.0.1:1212"
+	nginx_config cadvisor 127.0.0.1:1212
 }
 chrome(){
 	del_stopped chrome
 
+	# one day remove /etc/hosts bind mount when effing
+	# overlay support inotify, such bullshit
 	docker run -d \
 		--memory 5gb \
 		--net host \
@@ -70,6 +105,7 @@ chrome(){
 		-v $HOME/Pictures:/root/Pictures \
 		-v $HOME/Torrents:/root/Torrents \
 		-v $HOME/.chrome:/data \
+		-v /etc/hosts:/etc/hosts \
 		--device /dev/snd \
 		--device /dev/dri \
 		--device /dev/video0 \
@@ -85,16 +121,16 @@ cloudapp(){
 		--log-driver none \
 		jess/cloudapp "$@"
 }
-documentserver(){
-	del_stopped documentserver
+docserver(){
+	del_stopped docserver
 
 	docker run --rm -it \
 		-p 1234:80 \
 		-v $HOME/slides:/slides \
-		--name documentserver \
-		onlyoffice/documentserver
+		--name docserver \
+		onlyoffice/docserver
 
-	browser-exec "http://127.0.0.1:1234/"
+	nginx_config docserver 127.0.0.1:1234
 }
 firefox(){
 	del_stopped firefox
@@ -283,6 +319,19 @@ nes(){
 		--name nes \
 		jess/nes /games/${game}.rom
 }
+nginx(){
+	del_stopped nginx
+
+	docker run -d \
+		-v $HOME/.nginx:/etc/nginx \
+		--net host \
+		--name nginx \
+		nginx
+
+	# add domain to hosts & open nginx
+	sudo hostess add jess 127.0.0.1
+	browser-exec "http://jess"
+}
 notify_osd(){
 	del_stopped notify-osd
 
@@ -309,13 +358,11 @@ pandoc(){
 	local rfile=$(readlink -m "/$(basename $file)")
 	local args=${@:1:${#@}-1}
 
-	set -x
 	docker run --rm \
 		-v ${lfile}:${rfile} \
 		-v /tmp:/tmp \
 		--name pandoc \
 		jess/pandoc ${args} ${rfile}
-	set +x
 }
 pms(){
 	del_stopped pms
@@ -499,7 +546,7 @@ transmission(){
 		--name transmission \
 		jess/transmission
 
-	browser-exec "http://127.0.0.1:9091/transmission"
+	nginx_config transmission 127.0.0.1:9091
 }
 vagrant(){
 	del_stopped vagrant

@@ -139,8 +139,11 @@ setup_sudo() {
 	gpasswd -a $USERNAME systemd-journal
 	gpasswd -a $USERNAME systemd-network
 
+	# add go path to secure path
+	echo -e 'Defaults	secure_path="/usr/local/go/bin:/home/jessie/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' >> /etc/sudoers
+
 	# keep some enviornment variables
-	echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR PATH"' >> /etc/sudoers
+	echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"' >> /etc/sudoers
 
 	# don't require a password
 	echo -e "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
