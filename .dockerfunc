@@ -80,6 +80,7 @@ aws(){
 }
 cadvisor(){
 	docker run -d \
+		--restart always \
 		-v /:/rootfs:ro \
 		-v /var/run:/var/run:rw \
 		-v /sys:/sys:ro  \
@@ -117,6 +118,14 @@ chrome(){
 }
 consul(){
 	del_stopped consul
+
+	# check if we passed args and if consul is running
+	local args=$@
+	local state=$(docker inspect --format "{{.State.Running}}" consul 2>/dev/null)
+	if [[ "$state" == "true" ]] && [[ ! -z "$args" ]]; then
+		docker exec -it consul consul "$@"
+		return 0
+	fi
 
 	docker run -d \
 		--restart always \
@@ -210,6 +219,7 @@ htop(){
 http(){
 	docker run -t --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
+		--net host \
 		--log-driver none \
 		jess/httpie "$@"
 }
@@ -420,13 +430,6 @@ remmina(){
 		-v $HOME/.remmina:/root/.remmina \
 		--name remmina \
 		jess/remmina
-}
-reviewed(){
-	docker run -t --rm \
-		-e IDT_USERNAME \
-		-e IDT_PASSWORD \
-		-e IDT_ADDRESS \
-		jess/idonethis "reviewed #${1}"
 }
 skype(){
 	del_stopped skype
