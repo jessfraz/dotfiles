@@ -1,5 +1,6 @@
 #!/bin/bash
-# bash wrappers for docker run commands
+# Bash wrappers for docker run commands
+
 
 # 
 # Helper Functions
@@ -56,7 +57,7 @@ nginx_config(){
 	docker restart nginx
 
 	# add host to /etc/hosts
-	sudo hostess add $server ${route%:*}
+	sudo hostess add $server 127.0.0.1
 
 	# open browser
 	browser-exec "http://${server}"
@@ -85,11 +86,11 @@ cadvisor(){
 		-v /var/run:/var/run:rw \
 		-v /sys:/sys:ro  \
 		-v /var/lib/docker/:/var/lib/docker:ro \
-		-p 1212:8080 \
+		--expose 8080 \
 		--name cadvisor \
 		google/cadvisor
 
-	nginx_config cadvisor 127.0.0.1:1212
+	nginx_config cadvisor $(docker inspect --format "{{.NetworkSettings.IPAddress}}" cadvisor):8080
 }
 chrome(){
 	del_stopped chrome
@@ -145,17 +146,6 @@ consul(){
 		-bind 0.0.0.0
 
 	nginx_config consul 127.0.0.1:8500
-}
-docserver(){
-	del_stopped docserver
-
-	docker run --rm -it \
-		-p 1234:80 \
-		-v $HOME/slides:/slides \
-		--name docserver \
-		onlyoffice/docserver
-
-	nginx_config docserver 127.0.0.1:1234
 }
 firefox(){
 	del_stopped firefox
@@ -418,6 +408,15 @@ rainbowstream(){
 		--name rainbowstream \
 		jess/rainbowstream
 }
+registrator(){
+	del_stopped registrator
+
+	docker run -d --restart always \
+		-v /var/run/docker.sock:/tmp/docker.sock \
+		--net host \
+		--name registrator \
+		gliderlabs/registrator consul:
+}
 remmina(){
 	del_stopped remmina
 
@@ -430,6 +429,16 @@ remmina(){
 		-v $HOME/.remmina:/root/.remmina \
 		--name remmina \
 		jess/remmina
+}
+shorewall(){
+	del_stopped shorewall
+
+	docker run --rm -it \
+		--net host \
+		--cap-add NET_ADMIN \
+		--privileged \
+		--name shorewall \
+		jess/shorewall "$@"
 }
 skype(){
 	del_stopped skype
@@ -555,17 +564,20 @@ torbrowser(){
 	exit 0
 }
 transmission(){
+	del_stopped transmission
+
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Torrents:/transmission/download \
 		-v $HOME/.transmission:/transmission/config \
-		-p 9091:9091 \
-		-p 51413:51413 \
-		-p 51413:51413/udp \
+		--expose 9091 \
+		--expose 51413 \
+		--expose 51413/udp \
 		--name transmission \
 		jess/transmission
 
-	nginx_config transmission 127.0.0.1:9091
+
+	nginx_config transmission $(docker inspect --format "{{.NetworkSettings.IPAddress}}" transmission):9091
 }
 vagrant(){
 	del_stopped vagrant
