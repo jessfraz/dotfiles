@@ -5,12 +5,16 @@ After=network.target docker.socket
 Requires=docker.socket
 
 [Service]
+ExecStartPre=-/sbin/iptables -F DOCKER
+ExecStartPre=-/sbin/iptables -X DOCKER
+ExecStartPre=-/sbin/iptables -N DOCKER
+ExecStartPre=-/sbin/iptables -I DOCKER -i ext_if ! -s 127.0.0.1 -j DROP
 ExecStart=/usr/bin/docker daemon -D \
 		  -s overlay \
 		  -H fd:// \
 		  --exec-opt=native.cgroupdriver=cgroupfs \
 		  --userland-proxy=false \
-		  --iptables=false
+		  --iptables=true
 MountFlags=slave
 LimitNOFILE=1048576
 LimitNPROC=1048576
