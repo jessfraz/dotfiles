@@ -98,7 +98,8 @@ chrome(){
 	# one day remove /etc/hosts bind mount when effing
 	# overlay support inotify, such bullshit
 	docker run -d \
-		--memory 5gb \
+		--cpuset-cpus 0 \
+		--memory 3gb \
 		--net host \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
