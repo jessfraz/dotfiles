@@ -79,6 +79,15 @@ aws(){
 		--name aws \
 		jess/awscli "$@"
 }
+bees(){
+	docker run -it --rm \
+		-v $HOME/.bees:/root/.bees \
+		-v $HOME/.boto:/root/.boto \
+		-v $HOME/.dev:/root/.ssh:ro \
+		--log-driver none \
+		--name bees \
+		jess/beeswithmachineguns "$@"
+}
 cadvisor(){
 	docker run -d \
 		--restart always \

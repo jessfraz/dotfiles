@@ -1,0 +1,20 @@
+[Unit]
+Description=Firewall
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/iptables -F
+ExecStart=/sbin/iptables -P INPUT DROP
+ExecStart=/sbin/iptables -P OUTPUT DROP
+ExecStart=/sbin/iptables -P FORWARD DROP
+ExecStart=/sbin/iptables -A INPUT -i lo -j ACCEPT
+ExecStart=/sbin/iptables -A OUTPUT -o lo -j ACCEPT
+ExecStart=/sbin/iptables -A OUTPUT -o eth0 -j ACCEPT
+ExecStart=/sbin/iptables -A INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+ExecStart=/sbin/iptables -A OUTPUT -o wlan0 -j ACCEPT
+ExecStart=/sbin/iptables -A INPUT -i wlan0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+[Install]
+WantedBy=multi-user.target
