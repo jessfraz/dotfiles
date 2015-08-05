@@ -81,6 +81,7 @@ aws(){
 }
 bees(){
 	docker run -it --rm \
+		-e NOTARY_TOKEN \
 		-v $HOME/.bees:/root/.bees \
 		-v $HOME/.boto:/root/.boto \
 		-v $HOME/.dev:/root/.ssh:ro \
@@ -656,6 +657,12 @@ vlc(){
 		--device /dev/dri \
 		--name vlc \
 		jess/vlc
+}
+wrk(){
+	docker run -it --rm \
+		--log-driver none \
+		--name wrk \
+		jess/wrk "$@"
 }
 
 ###
