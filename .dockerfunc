@@ -96,11 +96,11 @@ cadvisor(){
 		-v /var/run:/var/run:rw \
 		-v /sys:/sys:ro  \
 		-v /var/lib/docker/:/var/lib/docker:ro \
-		--expose 8080 \
+		-p 1234:8080 \
 		--name cadvisor \
 		google/cadvisor
 
-	nginx_config cadvisor $(docker inspect --format "{{.NetworkSettings.IPAddress}}" cadvisor):8080
+	nginx_config cadvisor 127.0.0.1:1234
 }
 chrome(){
 	del_stopped chrome
@@ -108,7 +108,6 @@ chrome(){
 	# one day remove /etc/hosts bind mount when effing
 	# overlay support inotify, such bullshit
 	docker run -d \
-		--cpuset-cpus 0 \
 		--memory 3gb \
 		--net host \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -285,6 +284,14 @@ lynx(){
 	docker run --rm -it \
 		--name lynx \
 		jess/lynx "$@"
+}
+masscan(){
+	docker run -it --rm \
+		--log-driver none \
+		--net host \
+		--cap-add NET_ADMIN \
+		--name masscan \
+		jess/masscan "$@"
 }
 mpd(){
 	del_stopped mpd
@@ -581,14 +588,14 @@ transmission(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Torrents:/transmission/download \
 		-v $HOME/.transmission:/transmission/config \
-		--expose 9091 \
-		--expose 51413 \
-		--expose 51413/udp \
+		-p 9091:9091 \
+		-p 51413:51413 \
+		-p 51413:51413/udp \
 		--name transmission \
 		jess/transmission
 
 
-	nginx_config transmission $(docker inspect --format "{{.NetworkSettings.IPAddress}}" transmission):9091
+	nginx_config transmission 127.0.0.1:9091
 }
 vagrant(){
 	del_stopped vagrant
@@ -616,6 +623,8 @@ virtualbox(){
 
 	# modprobe the module
 	sudo modprobe vboxdrv
+	# and the extras for networking
+	sudo insmod /lib/modules/$(uname -r)/misc/vboxnet*.ko
 
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
