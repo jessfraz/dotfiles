@@ -100,7 +100,8 @@ cadvisor(){
 		--name cadvisor \
 		google/cadvisor
 
-	nginx_config cadvisor 127.0.0.1:1234
+	sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.IPAddress}}" cadvisor)
+	browser-exec "http://cadvisor:8080"
 }
 chrome(){
 	del_stopped chrome
@@ -155,7 +156,8 @@ consul(){
 		-dc neverland \
 		-bind 0.0.0.0
 
-	nginx_config consul 127.0.0.1:8500
+	sudo hostess add consul $(docker inspect --format "{{.NetworkSettings.IPAddress}}" consul)
+	browser-exec "http://consul:8500"
 }
 firefox(){
 	del_stopped firefox
@@ -595,7 +597,8 @@ transmission(){
 		jess/transmission
 
 
-	nginx_config transmission 127.0.0.1:9091
+	sudo hostess add transmission $(docker inspect --format "{{.NetworkSettings.IPAddress}}" transmission)
+	browser-exec "http://transmission:9091"
 }
 vagrant(){
 	del_stopped vagrant
