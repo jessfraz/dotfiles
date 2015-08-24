@@ -244,9 +244,7 @@ install_golang() {
 
 	# subshell because we `cd`
 	(
-	curl -sSL https://golang.org/dl/go${GO_VERSION}.src.tar.gz | sudo tar -v -C /usr/local -xz
-	cd ${GO_SRC}/src
-	sudo ./make.bash --no-clean 2>&1
+	curl -sSL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | sudo tar -v -C /usr/local -xz
 	)
 
 	# get commandline tools
@@ -262,6 +260,7 @@ install_golang() {
 	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
+	go get -u github.com/digitalocean/doctl
 	go get -u github.com/docker/gordon/{pulls,issues}
 	go get -u github.com/rakyll/boom
 	go get -u github.com/rossdylan/sslcheck
