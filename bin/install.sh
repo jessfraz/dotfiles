@@ -250,6 +250,10 @@ install_golang() {
 	# get commandline tools
 	(
 	set -x
+	go get -u github.com/golang/lint/golint
+	go get -u golang.org/x/tools/cmd/cover
+	go get -u golang.org/x/tools/cmd/vet
+
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/netscan
