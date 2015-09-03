@@ -328,9 +328,9 @@ gogo(){
 	fi
 
 	# search for the project dir in the GOPATH
-	local path=( `find "${GOPATH}/src" -iname "$d" -type d` )
+	local path=( `find "${GOPATH}/src" -iname "$d" -type d | awk '{print length, $0;}' | sort -n | awk '{print $2}'` )
 
-	if [[ "$path" == "" ]]; then
+	if [ "$path" == "" ] || [ "${path[*]}" == "" ]; then
 		echo "Could not find a directory named $d in $GOPATH"
 		echo "Maybe you need to 'go get' it ;)"
 		return 1
