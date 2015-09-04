@@ -228,7 +228,7 @@ install_git() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.4.2
+	export GO_VERSION=1.5
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -258,8 +258,34 @@ install_golang() {
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/netscan
 	go get -u github.com/jfrazelle/pastebinit
+	go get -u github.com/jfrazelle/pony
 	go get -u github.com/jfrazelle/udict
 	go get -u github.com/jfrazelle/weather
+
+	# create symlinks from personal projects to
+	# the ${HOME} directory
+	projectsdir=$GOPATH/src/github.com/jfrazelle
+	for D in `find $projectsdir -maxdepth 1 -not -name "$(basename $projectsdir)" -type d`; do
+		ln -snvf "$D" "${HOME}/$(basename $D)"
+	done
+
+	# create aliases for notary, libnetwork, leeroy and runc
+	if [[ -d $HOME/notary ]]; then
+		rm -rf $GOPATH/src/github.com/docker/notary
+		ln -snvf $HOME/notary $GOPATH/src/github.com/docker/notary
+	fi
+	if [[ -d $HOME/libnetwork ]]; then
+		rm -rf $GOPATH/src/github.com/docker/libnetwork
+		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/libnetwork
+	fi
+	if [[ -d $HOME/leeroy ]]; then
+		rm -rf $GOPATH/src/github.com/docker/leeroy
+		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/leeroy
+	fi
+	if [[ -d $HOME/runc ]]; then
+		rm -rf $GOPATH/src/github.com/opencontainers/runc
+		ln -snvf $HOME/runc $GOPATH/src/github.com/opencontainers/runc
+	fi
 
 	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/ip-addr

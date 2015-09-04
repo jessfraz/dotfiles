@@ -327,6 +327,11 @@ gogo(){
 		return 1
 	fi
 
+	if [[ "$d" = github* ]]; then
+		d=$(echo $d | sed 's/.*\///')
+	fi
+	d=${d%/}
+
 	# search for the project dir in the GOPATH
 	local path=( `find "${GOPATH}/src" -iname "$d" -type d | awk '{print length, $0;}' | sort -n | awk '{print $2}'` )
 
@@ -338,6 +343,14 @@ gogo(){
 
 	# enter the first path found
 	cd "${path[0]}"
+}
+
+golistdeps(){
+	(
+	gogo $@
+
+	go list -e -f '{{join .Deps "\n"}}' ./... | xargs go list -e -f '{{if not .Standard}}{{.ImportPath}}{{end}}'
+	)
 }
 
 # get the name of a x window
