@@ -257,6 +257,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/netscan
+	go get -u github.com/jfrazelle/nsqexec
 	go get -u github.com/jfrazelle/pastebinit
 	go get -u github.com/jfrazelle/pony
 	go get -u github.com/jfrazelle/udict
@@ -269,18 +270,22 @@ install_golang() {
 		ln -snvf "$D" "${HOME}/$(basename $D)"
 	done
 
-	# create aliases for notary, libnetwork, leeroy and runc
-	if [[ -d $HOME/notary ]]; then
-		rm -rf $GOPATH/src/github.com/docker/notary
-		ln -snvf $HOME/notary $GOPATH/src/github.com/docker/notary
+	# create aliases for docker, leeroy, libnetwork, notary and runc
+	if [[ -d $HOME/docker ]]; then
+		rm -rf $GOPATH/src/github.com/docker/docker
+		ln -snvf $HOME/docker $GOPATH/src/github.com/docker/docker
+	fi
+	if [[ -d $HOME/leeroy ]]; then
+		rm -rf $GOPATH/src/github.com/docker/leeroy
+		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/leeroy
 	fi
 	if [[ -d $HOME/libnetwork ]]; then
 		rm -rf $GOPATH/src/github.com/docker/libnetwork
 		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/libnetwork
 	fi
-	if [[ -d $HOME/leeroy ]]; then
-		rm -rf $GOPATH/src/github.com/docker/leeroy
-		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/leeroy
+	if [[ -d $HOME/notary ]]; then
+		rm -rf $GOPATH/src/github.com/docker/notary
+		ln -snvf $HOME/notary $GOPATH/src/github.com/docker/notary
 	fi
 	if [[ -d $HOME/runc ]]; then
 		rm -rf $GOPATH/src/github.com/opencontainers/runc
@@ -291,7 +296,7 @@ install_golang() {
 	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
 	go get -u github.com/digitalocean/doctl
-	go get -u github.com/docker/gordon/{pulls,issues}
+	go get -u github.com/docker/gordon/pulls
 	go get -u github.com/rakyll/boom
 	go get -u github.com/rossdylan/sslcheck
 	go get -u github.com/cbednarski/hostess/cmd/hostess
