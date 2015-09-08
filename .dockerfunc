@@ -118,12 +118,13 @@ chrome(){
 		-v $HOME/Pictures:/root/Pictures \
 		-v $HOME/Torrents:/root/Torrents \
 		-v $HOME/.chrome:/data \
+		-v /dev/shm:/dev/shm \
 		-v /etc/hosts:/etc/hosts \
 		--device /dev/snd \
 		--device /dev/dri \
 		--device /dev/video0 \
 		--name chrome \
-		jess/chrome:old --user-data-dir=/data --force-device-scale-factor=1 "$@"
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 "$@"
 
 	# exit current shell
 	exit 0
