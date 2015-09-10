@@ -92,11 +92,8 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 ! -- Fonts -- !
-!! *fontName:              Source Code Pro Medium:size=10,antialias=true
-!!URxvt.font:xft:Source Code Pro,Source Code Pro Medium:pixelSize=10,style=Medium,Regular
-URxvt.font:xft:Hack:pixelSize=10,style=Regular
-!!URxvt.boldFont:xft:Source Code Pro:style=Bold,pixelSize=10
-URxvt.boldFont:xft:Hack:style=Bold,pixelSize=10
+URxvt.font:xft:Hack:pixelSize=10,style=Regular, xft:Symbola:pixelsize=19,style=Regular
+URxvt.boldFont:xft:Hack:style=Bold,pixelSize=10, xft:Symbola:pixelsize=19,style=Regular
 
 *faceSize:              10
 *bellIsUrgent:          true
