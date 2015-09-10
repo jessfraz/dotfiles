@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+
+update_iwlwifi(){
+	if [ "$EUID" -ne 0 ]; then
+		echo "Please run as root."
+		return 1
+	fi
+
+	(
+	# make a temp dir for the clone
+	local tdir=`mktemp -d`
+
+	cd $tdir
+
+	# clone the repo
+	git clone git://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git
+
+	# copy the firmware
+	cd linux-firmware
+	cp iwlwifi-7265*.ucode /lib/firmware
+	)
+
+	# cleanup
+	rm -rf $tdir
+}
+
+update_iwlwifi $@

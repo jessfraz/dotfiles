@@ -351,17 +351,17 @@ install_wifi() {
 	local system=$1
 
 	if [[ -z "$system" ]]; then
-		echo "You need to specify whether it's dell, mac or lenovo"
+		echo "You need to specify whether it's broadcom or intel"
 		exit 1
 	fi
 
-	local pkg="firmware-iwlwifi"
-
-	if [[ $system == "mac" ]] || [[ $system == "dell" ]]; then
+	if [[ $system == "broadcom" ]]; then
 		local pkg="broadcom-sta-dkms"
-	fi
 
-	apt-get install -y $pkg --no-install-recommends
+		apt-get install -y $pkg --no-install-recommends
+	else 
+		update-iwlwifi
+	fi
 }
 
 # install stuff for i3 window manager
@@ -424,7 +424,7 @@ usage() {
 	echo -e "install.sh\n\tThis script installs my basic setup for a debian laptop\n"
 	echo "Usage:"
 	echo "  sources                     - setup sources & install base pkgs"
-	echo "  wifi {dell,mac,lenovo}      - install wifi drivers"
+	echo "  wifi {broadcom,intel}       - install wifi drivers"
 	echo "  graphics {dell,mac,lenovo}  - install graphics drivers"
 	echo "  wm                          - install window manager/desktop pkgs"
 	echo "  dotfiles                    - get dotfiles"
