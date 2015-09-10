@@ -465,6 +465,16 @@ rstudio(){
 		--name rstudio \
 		jess/rstudio
 }
+s3cmdocker(){
+	del_stopped s3cmd
+
+	docker run --rm -it \
+		-e AWS_ACCESS_KEY="${DOCKER_AWS_ACCESS_KEY}" \
+		-e AWS_SECRET_KEY="${DOCKER_AWS_ACCESS_SECRET}" \
+		-v $(pwd):/root/s3cmd-workspace \
+		--name s3cmd \
+		jess/s3cmd "$@"
+}
 shorewall(){
 	del_stopped shorewall
 
