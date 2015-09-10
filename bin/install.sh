@@ -228,7 +228,7 @@ install_git() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.5
+	export GO_VERSION=1.5.1
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
