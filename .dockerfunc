@@ -451,6 +451,20 @@ remmina(){
 		--name remmina \
 		jess/remmina
 }
+rstudio(){
+	del_stopped rstudio
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v $HOME/fastly-logs:/root/fastly-logs \
+		-v /dev/shm:/dev/shm \
+		-e DISPLAY=unix$DISPLAY \
+		-e QT_DEVICE_PIXEL_RATIO \
+		--device /dev/dri \
+		--name rstudio \
+		jess/rstudio
+}
 shorewall(){
 	del_stopped shorewall
 
