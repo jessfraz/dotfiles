@@ -333,7 +333,7 @@ gogo(){
 	d=${d%/}
 
 	# search for the project dir in the GOPATH
-	local path=( `find "${GOPATH}/src" -iname "$d" -type d | awk '{print length, $0;}' | sort -n | awk '{print $2}'` )
+	local path=( `find "${GOPATH}/src" \( -type d -o -type l \) -iname "$d"  | awk '{print length, $0;}' | sort -n | awk '{print $2}'` )
 
 	if [ "$path" == "" ] || [ "${path[*]}" == "" ]; then
 		echo "Could not find a directory named $d in $GOPATH"
