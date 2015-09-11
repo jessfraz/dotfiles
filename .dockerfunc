@@ -410,11 +410,25 @@ pms(){
 		--name pms \
 		jess/pms "$@"
 }
+privoxy(){
+	del_stopped privoxy
+	relies_on torproxy
+
+	docker run -d \
+		--restart always \
+		--link torproxy:torproxy \
+		-v /etc/localtime:/etc/localtime:ro \
+		-p 8118:8118 \
+		--name privoxy \
+		jess/privoxy
+
+	sudo hostess add privoxy $(docker inspect --format "{{.NetworkSettings.IPAddress}}" privoxy)
+}
 pulseaudio(){
 	del_stopped pulseaudio
 
 	docker run -d \
-		-v /etc/localtime:/etc/localtime \
+		-v /etc/localtime:/etc/localtime:ro \
 		--device /dev/snd \
 		-p 4713:4713 \
 		--restart always \
@@ -423,7 +437,7 @@ pulseaudio(){
 }
 rainbowstream(){
 	docker run -it --rm \
-		-v /etc/localtime:/etc/localtime \
+		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/.rainbow_oauth:/root/.rainbow_oauth \
 		-v $HOME/.rainbow_config.json:/root/.rainbow_config.json \
 		--name rainbowstream \
@@ -607,6 +621,18 @@ torbrowser(){
 
 	# exit current shell
 	exit 0
+}
+torproxy(){
+	del_stopped torproxy
+
+	docker run -d \
+		--restart always \
+		-v /etc/localtime:/etc/localtime:ro \
+		-p 9050:9050 \
+		--name torproxy \
+		jess/tor-proxy
+
+	sudo hostess add torproxy $(docker inspect --format "{{.NetworkSettings.IPAddress}}" torproxy)
 }
 transmission(){
 	del_stopped transmission

@@ -76,6 +76,7 @@ base() {
 		fortunes-off \
 		git \
 		gnupg \
+		gnupg-curl \
 		grep \
 		gzip \
 		hostname \

@@ -1,0 +1,17 @@
+[Unit]
+Description=Tor socks proxy
+Documentation=https://torproject.org
+After=network.target docker.socket
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=-/usr/bin/docker rm -f torproxy
+ExecStart=/usr/bin/docker run -d --restart always \
+		  -v /etc/localtime:/etc/localtime:ro \
+		  -p 9050:9050 \
+		  --name torproxy \
+		  jess/tor-proxy
+
+[Install]
+WantedBy=default.target

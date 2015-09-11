@@ -1,0 +1,19 @@
+[Unit]
+Description=A non-caching web proxy
+Documentation=http://www.privoxy.org/
+After=network.target docker.socket
+Requires=torproxy.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=-/usr/bin/docker rm -f privoxy
+ExecStart=/usr/bin/docker run -d --restart always \
+		  -v /etc/localtime:/etc/localtime:ro \
+		  --link torproxy:torproxy \
+		  -p 8118:8118 \
+		  --name privoxy \
+		  jess/privoxy
+
+[Install]
+WantedBy=default.target
