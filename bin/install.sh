@@ -277,7 +277,7 @@ install_golang() {
 	fi
 	if [[ -d $HOME/leeroy ]]; then
 		rm -rf $GOPATH/src/github.com/docker/leeroy
-		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/leeroy
+		ln -snvf $HOME/leeroy $GOPATH/src/github.com/docker/leeroy
 	fi
 	if [[ -d $HOME/libnetwork ]]; then
 		rm -rf $GOPATH/src/github.com/docker/libnetwork
