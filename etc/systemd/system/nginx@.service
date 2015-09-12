@@ -8,11 +8,11 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStartPre=-/usr/bin/docker rm -f nginx
 ExecStart=/usr/bin/docker run -d --restart always \
-		  -v %h/.nginx:/etc/nginx \
+		  -v /home/%i/.nginx:/etc/nginx \
 		  --net host \
 		  --name nginx \
 		  nginx
 ExecStart=-hostess add nginx 127.0.0.1
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

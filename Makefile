@@ -1,6 +1,6 @@
 .PHONY: all bin default dotfiles etc init install
 
-all: bin dotfiles etc init
+all: bin dotfiles etc
 
 default: install
 
@@ -26,12 +26,4 @@ etc:
 		sudo install -p -m 644 $$file $$f; \
 	done
 	systemctl --user daemon-reload
-
-init:
-	# install init scripts
-	# of course systemd hates aliases or some bullshit
-	for file in $(shell find $(CURDIR)/init -type f); do \
-		f=$$(basename $$file); \
-		sudo install -p -m 644 $$file /lib/systemd/system/$$f; \
-	done
 	sudo systemctl daemon-reload

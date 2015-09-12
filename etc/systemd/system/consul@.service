@@ -7,9 +7,9 @@ After=network.target docker.socket
 Type=oneshot
 RemainAfterExit=yes
 ExecStartPre=-/usr/bin/docker rm -f consul
-ExecStartPre=/bin/bash -c "/bin/systemctl --user set-environment ENCRYPTKEY=$(docker run --rm jess/consul keygen)"
+ExecStartPre=/bin/bash -c "/bin/systemctl set-environment ENCRYPTKEY=$(docker run --rm jess/consul keygen)"
 ExecStart=/usr/bin/docker run -d --restart always \
-		  -v %h/.consul:/etc/consul.d \
+		  -v /home/%i/.consul:/etc/consul.d \
 		  -v /var/run/docker.sock:/var/run/docker.sock \
 		  -e GOMAXPROCS=2 \
 		  --net host \
@@ -22,4 +22,4 @@ ExecStart=/usr/bin/docker run -d --restart always \
 ExecStart=-hostess add consul 127.0.0.1
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

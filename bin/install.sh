@@ -169,8 +169,8 @@ install_docker() {
 	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
 	chmod +x /usr/bin/docker
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.service > /lib/systemd/system/docker.service
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.socket > /lib/systemd/system/docker.socket
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.service > /etc/systemd/system/docker.service
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.socket > /etc/systemd/system/docker.socket
 
 	systemctl daemon-reload
 	systemctl enable docker
@@ -341,7 +341,7 @@ install_syncthing() {
 	curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
 	chmod +x /usr/local/bin/syncthing
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/syncthing@.service > /lib/systemd/system/syncthing@.service
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/syncthing@.service > /etc/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"

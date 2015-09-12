@@ -15,4 +15,4 @@ ExecStart=/usr/bin/docker run --rm \
 		  jess/shorewall start
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
