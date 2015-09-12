@@ -104,6 +104,16 @@ cadvisor(){
 	browser-exec "http://cadvisor:8080"
 }
 chrome(){
+	# add flags for proxy if passed
+	local proxy=
+	local map=
+	local args=$@
+	if [[ "$1" == "tor" ]]; then
+		map="MAP * ~NOTFOUND , EXCLUDE torproxy"
+		proxy="socks5://torproxy:9050"
+		args=${@:2}
+	fi
+
 	del_stopped chrome
 
 	# one day remove /etc/hosts bind mount when effing
@@ -124,7 +134,7 @@ chrome(){
 		--device /dev/dri \
 		--device /dev/video0 \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 "$@"
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 --proxy-server="$proxy" --host-resolver-rules="$map" "$args"
 
 	# exit current shell
 	exit 0
