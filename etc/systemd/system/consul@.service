@@ -19,7 +19,7 @@ ExecStart=/usr/bin/docker run -d --restart always \
 		  -config-dir /etc/consul.d -data-dir /data \
 		  -encrypt ${ENCRYPTKEY} \
 		  -ui-dir /usr/src/consul -dc neverland -bind 0.0.0.0
-ExecStart=-hostess add consul 127.0.0.1
+ExecStartPost=-/usr/local/bin/hostess add consul 127.0.0.1
 
 [Install]
 WantedBy=multi-user.target

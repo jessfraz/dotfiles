@@ -109,9 +109,11 @@ chrome(){
 	local map=
 	local args=$@
 	if [[ "$1" == "tor" ]]; then
+		relies_on torproxy
+
 		map="MAP * ~NOTFOUND , EXCLUDE torproxy"
 		proxy="socks5://torproxy:9050"
-		args=${@:2}
+		args="https://check.torproject.org/api/ip ${@:2}"
 	fi
 
 	del_stopped chrome
@@ -134,10 +136,9 @@ chrome(){
 		--device /dev/dri \
 		--device /dev/video0 \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 --proxy-server="$proxy" --host-resolver-rules="$map" "$args"
+		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 \
+		--proxy-server="$proxy" --host-resolver-rules="$map" "$args"
 
-	# exit current shell
-	exit 0
 }
 consul(){
 	del_stopped consul

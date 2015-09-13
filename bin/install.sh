@@ -302,6 +302,11 @@ install_golang() {
 	go get -u github.com/rossdylan/sslcheck
 	go get -u github.com/cbednarski/hostess/cmd/hostess
 	go get -u golang.org/x/tools/cmd/goimports
+
+	# add the binaries as aliases to /usr/local/bin
+	for B in `find ${GOPATH}/bin -maxdepth 1  -executable -type f`; do
+		sudo ln -snvf "$B" "/usr/local/bin/$(basename $B)"
+	done
 	)
 }
 
