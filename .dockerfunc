@@ -2,7 +2,7 @@
 # Bash wrappers for docker run commands
 
 
-# 
+#
 # Helper Functions
 #
 dcleanup(){
@@ -63,7 +63,7 @@ nginx_config(){
 	browser-exec "http://${server}"
 }
 
-# 
+#
 # Container Aliases
 #
 apt_file(){
@@ -475,6 +475,20 @@ remmina(){
 		-v $HOME/.remmina:/root/.remmina \
 		--name remmina \
 		jess/remmina
+}
+ricochet(){
+	del_stopped ricochet
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		-e QT_DEVICE_PIXEL_RATIO \
+		--device /dev/dri \
+		--name ricochet \
+		jess/ricochet
 }
 rstudio(){
 	del_stopped rstudio
