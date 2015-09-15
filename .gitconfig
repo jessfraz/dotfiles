@@ -158,7 +158,7 @@
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
 [github]
 	user = jfrazelle
-[init]
-	templatedir = ~/.git_template/template
+#[init]
+#	templatedir = ~/.git_template/template
 [commit]
 	gpgsign = true
