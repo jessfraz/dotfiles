@@ -98,6 +98,7 @@ base() {
 		jq \
 		less \
 		libc6-dev \
+		libnotify-bin \
 		locales \
 		lsof \
 		make \
