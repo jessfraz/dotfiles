@@ -55,6 +55,7 @@ setup_sources() {
 # the utter bare minimal shit
 base() {
 	apt-get update
+	apt-get -y upgrade
 
 	apt-get install -y \
 		adduser \
@@ -348,6 +349,8 @@ install_syncthing() {
 	chmod +x /usr/local/bin/syncthing
 
 	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
+
+	syncthing -upgrade
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"

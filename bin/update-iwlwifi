@@ -19,6 +19,7 @@ update_iwlwifi(){
 
 	# copy the firmware
 	cd linux-firmware
+	mkdir -p /lib/firmware
 	cp iwlwifi-7265*.ucode /lib/firmware
 	)
 
