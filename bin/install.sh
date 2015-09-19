@@ -74,6 +74,7 @@ base() {
 		findutils \
 		fortune-mod \
 		fortunes-off \
+		gcc \
 		git \
 		gnupg \
 		gnupg-curl \
@@ -150,7 +151,7 @@ setup_sudo() {
 	echo -e "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 	# allow mounts if* commands because im lazy af
-	echo -e "${USERNAME} ALL=NOPASSWD: ${USERNAME} ALL=NOPASSWD: /bin/mount, /sbin/mount.nfs, /bin/umount, /sbin/umount.nfs, /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery" >> /etc/sudoers
+	echo -e "${USERNAME} ALL=NOPASSWD: /bin/mount, /sbin/mount.nfs, /bin/umount, /sbin/umount.nfs, /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery" >> /etc/sudoers
 
 	# setup downloads folder as tmpfs
 	# that way things are removed on reboot
@@ -169,8 +170,8 @@ install_docker() {
 	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
 	chmod +x /usr/bin/docker
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.service > /etc/systemd/system/docker.service
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/docker.socket > /etc/systemd/system/docker.socket
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
 
 	systemctl daemon-reload
 	systemctl enable docker
@@ -333,11 +334,11 @@ install_scripts() {
 	local scripts=( asciinema curl-unix-socket gist git-icdiff go-md2man have htotheizzo icdiff light lolcat speedtest todo )
 
 	for script in "${scripts[@]}"; do
-		curl http://jesss.s3.amazonaws.com/binaries/$script > /usr/local/bin/$script
+		curl -sSL "http://jesss.s3.amazonaws.com/binaries/$script" > /usr/local/bin/$script
 		chmod +x /usr/local/bin/$script
 	done
 
-	curl http://jesss.s3.amazonaws.com/binaries/todo_completions > /etc/bash_completion.d/todo 
+	curl -sSL http://jesss.s3.amazonaws.com/binaries/todo_completions > /etc/bash_completion.d/todo
 }
 
 # install syncthing
@@ -346,7 +347,7 @@ install_syncthing() {
 	curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
 	chmod +x /usr/local/bin/syncthing
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/init/syncthing@.service > /etc/systemd/system/syncthing@.service
+	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"
@@ -365,7 +366,7 @@ install_wifi() {
 		local pkg="broadcom-sta-dkms"
 
 		apt-get install -y $pkg --no-install-recommends
-	else 
+	else
 		update-iwlwifi
 	fi
 }
@@ -412,6 +413,9 @@ get_dotfiles() {
 	# enable dbus for the user session
 	systemctl --user enable dbus.socket
 
+	sudo systemctl enable i3lock
+	sudo systemctl enable suspend-sedation.service
+
 	cd /home/$USERNAME
 
 	# install .vim files
@@ -443,7 +447,7 @@ main() {
 
 	if [[ -z "$cmd" ]]; then
 		usage
-		exit 1 
+		exit 1
 	fi
 
 	if [[ $cmd == "sources" ]]; then
@@ -470,7 +474,7 @@ main() {
 	elif [[ $cmd == "git" ]]; then
 		install_git $2
 	elif [[ $cmd == "syncthing" ]]; then
-		install_syncthing $2
+		install_syncthing
 	else
 		usage
 	fi
