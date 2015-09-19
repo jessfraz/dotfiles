@@ -44,6 +44,16 @@ setup_sources() {
 	deb http://repo.linrunner.de/debian sid main
 	EOF
 
+	# add docker apt repo
+	cat <<-EOF > /etc/apt/sources.list.d/docker.list
+	deb https://apt.dockerproject.org/repo debian-stretch main
+	deb https://apt.dockerproject.org/repo debian-stretch testing
+	deb https://apt.dockerproject.org/repo debian-stretch experimental
+	EOF
+
+	# add docker gpg key
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
 	# add the git-core ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
 
@@ -60,6 +70,7 @@ base() {
 	apt-get install -y \
 		adduser \
 		alsa-utils \
+		apt-transport-https \
 		automake \
 		bash-completion \
 		bc \
