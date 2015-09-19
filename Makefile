@@ -1,4 +1,4 @@
-.PHONY: all bin default dotfiles etc init install
+.PHONY: all bin default dotfiles etc install
 
 all: bin dotfiles etc
 
@@ -23,7 +23,7 @@ dotfiles:
 etc:
 	for file in $(shell find $(CURDIR)/etc -type f); do \
 		f=$$(echo $$file | sed -e 's|$(CURDIR)||'); \
-		sudo install -p -m 644 $$file $$f; \
+		sudo ln -f $$file $$f; \
 	done
 	systemctl --user daemon-reload
 	sudo systemctl daemon-reload
