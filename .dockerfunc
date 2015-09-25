@@ -637,7 +637,7 @@ tor(){
 		jess/tor
 
 	# set up the redirect iptables rules
-	sudo tor-ips
+	sudo setup-tor-iptables
 
 	# validate we are running through tor
 	browser-exec "https://check.torproject.org/"

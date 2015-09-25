@@ -1,13 +1,20 @@
 #!/bin/bash
-set -e
+##############################################################################
 # update-forks
-#
+# -----------
 # This script assumes you have paths in your $HOME that are
 # git repos (which are forks). It will check this based off
 # if you have set the remote origin as no_push.
 #
 # It will then fetch the remotes, and update the master
 # branch of your fork.
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
 
 update_forks() {
 	local githubuser=$(git config --global --get github.user 2>/dev/null)

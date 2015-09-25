@@ -1,5 +1,15 @@
 #!/bin/bash
+##############################################################################
+# openprs
+# -----------
+# Get the openprs for all of a users github repos
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
 set -e
+set -o pipefail
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
 	echo "Set the GITHUB_TOKEN env variable."

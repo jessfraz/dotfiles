@@ -1,13 +1,18 @@
 #!/bin/bash
+##############################################################################
+# screen-backlight
+# -----------
+# For when you are running leeenux on a Mac and it needs some help
+#
+# Usage:
+# 	screen-backlight {up,down,total,off}
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
 set -e
-
-#	screen-backlight
-#		For when you are running leeenux on a Mac and it needs some help
-#
-#	Usage:
-#		screen-backlight	{up,down,total,off}
-#
-
+set -o pipefail
 
 if [ $UID -ne 0 ]; then
 	echo "Please run this program as superuser"

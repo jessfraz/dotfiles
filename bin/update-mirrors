@@ -1,11 +1,18 @@
 #!/bin/bash
-set -e
+##############################################################################
 # update-mirrors
-#
+# -----------
 # This script assumes you have paths in your $HOME that are
 # git repos (which are mirrors).
 #
 # It will fetch from origin and push the changes to the mirror.
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
 
 update_mirrors() {
 	# find all the dirs in $HOME

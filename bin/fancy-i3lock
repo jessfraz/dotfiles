@@ -1,15 +1,18 @@
 #!/bin/bash
-set -e
-
-#	fancy-i3lock
-#		Based on the awesome sauce of https://github.com/meskarune/i3lock-fancy
-#		This just uses imagemagick in a container...
-#		because reasons...
+##############################################################################
+# fancy-i3lock
+# -----------
+# Based on the awesome sauce of https://github.com/meskarune/i3lock-fancy
+# This just uses imagemagick in a container...
+# because reasons...
 #
-#		Dependencies:
-#		- docker
-#		- i3lock
-# 		- scrot
+# Dependencies: docker, i3lock, scrot
+
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
+set -e
 
 # subshell this shiz
 (

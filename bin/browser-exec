@@ -1,15 +1,20 @@
 #!/bin/bash
-
-#	browser-exec
-#		This script opens a hyperlink in the browser that is
-#		currently being run in a container.
-#		It first checks if chrome is running then firefox.
-#		
-#		If neither are running it starts a chrome container
+##############################################################################
+# browser-exec
+# -----------
+# Opens a hyperlink in the browser that is currently being run in a container.
+# First checks if chrome is running then firefox.
+# If neither are running it starts a chrome container.
 #
-#	Usage:
-#		browser-exec $uri
+# Usage:
+#	browser-exec $uri
 #
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
 
 browser_exec(){
 	# check if chrome container is running

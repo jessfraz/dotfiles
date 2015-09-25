@@ -1,12 +1,18 @@
 #!/bin/bash
+##############################################################################
+# keyboard-backlight
+# -----------
+# For when you are running leeenux on a Mac and it needs some help
+#
+# Usage:
+# 	keyboard-backlight {up,down,total,off}
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
 set -e
-
-#	keyboard-backlight
-#		For when you are running leeenux on a Mac and it needs some help
-#
-#	Usage:
-#		keyboard-backlight	{up,down,total,off}
-#
+set -o pipefail
 
 BACKLIGHT=$(cat /sys/class/leds/smc::kbd_backlight/brightness)
 INCREMENT=15

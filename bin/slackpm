@@ -1,8 +1,18 @@
 #!/bin/bash
-set -e
-
+##############################################################################
+# slackpm
+# -----------
 # Send a private message to someone on slack
-# from the command line.
+#
+# Usage:
+# 	slackpm [user] [message]
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 8 June 2015
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
 
 # Print a usage message and exit.
 usage(){
