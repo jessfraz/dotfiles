@@ -516,6 +516,34 @@ s3cmdocker(){
 		--name s3cmd \
 		jess/s3cmd "$@"
 }
+scudcloud(){
+	del_stopped scudcloud
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v /var/run/user/$(id -u):/var/run/user/$(id -u) \
+		-e TERM \
+		-e XAUTHORITY \
+		-e DBUS_SESSION_BUS_ADDRESS \
+		-e HOME \
+		-e QT_DEVICE_PIXEL_RATIO \
+		-v /etc/passwd:/etc/passwd:ro \
+		-v /etc/group:/etc/group:ro \
+		-u $(whoami) -w "$HOME" \
+		-v $HOME/.Xauthority:$HOME/.Xauthority \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v $HOME/.scudcloud:/home/jessie/.config/scudcloud \
+		--device /dev/snd \
+		--name scudcloud \
+		jess/scudcloud
+
+	# exit current shell
+	exit 0
+}
 shorewall(){
 	del_stopped shorewall
 
@@ -543,30 +571,13 @@ skype(){
 slack(){
 	del_stopped slack
 
-	docker run -d \
+	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
-		-v /etc/machine-id:/etc/machine-id:ro \
-		-v /var/run/dbus:/var/run/dbus \
-		-v /var/run/user/$(id -u):/var/run/user/$(id -u) \
-		-e TERM \
-		-e XAUTHORITY \
-		-e DBUS_SESSION_BUS_ADDRESS \
-		-e HOME \
-		-e QT_DEVICE_PIXEL_RATIO \
-		-v /etc/passwd:/etc/passwd:ro \
-		-v /etc/group:/etc/group:ro \
-		-u $(whoami) -w "$HOME" \
-		-v $HOME/.Xauthority:$HOME/.Xauthority \
-		-v /etc/machine-id:/etc/machine-id:ro \
-		-v $HOME/.scudcloud:/home/jessie/.config/scudcloud \
 		--device /dev/snd \
 		--name slack \
 		jess/slack
-
-	# exit current shell
-	exit 0
 }
 spotify(){
 	del_stopped spotify
@@ -577,8 +588,6 @@ spotify(){
 		-e DISPLAY=unix$DISPLAY \
 		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/snd \
-		-v $HOME/.spotify/config:/home/spotify/.config/spotify \
-		-v $HOME/.spotify/cache:/home/spotify/.cache/spotify \
 		--name spotify \
 		jess/spotify
 }
@@ -747,6 +756,15 @@ vlc(){
 		--device /dev/dri \
 		--name vlc \
 		jess/vlc
+}
+watchman(){
+	del_stopped watchman
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v $HOME/Downloads:/root/Downloads \
+		--name watchman \
+		jess/watchman --foreground
 }
 wrk(){
 	docker run -it --rm \
