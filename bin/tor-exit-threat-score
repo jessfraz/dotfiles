@@ -1,0 +1,98 @@
+#!/bin/bash
+##############################################################################
+# tor-exit-threat-score
+# -----------
+# Get the Cloudflare threat score of all tor exit nodes that can read a given ip.
+#
+# Output is tab deliminated and looks like the following:
+# IP                SCORE    TOR?   RAW
+# 109.14.225.68     false    0      false
+# 109.163.234.2     1        1      TOR:1
+# 109.163.234.4     50       1      TOR:50
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 17 September 2015
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+# Print a usage message and exit.
+usage() {
+	cat >&2 <<-EOF
+	To run, I need:
+	- to be provided with a Cloudflare email, in environment variable
+	CLOUDFLARE_EMAIL;
+	- to be provided with a Cloudflare apikey for this email, in environment
+	variables CLOUDFLARE_APIKEY;
+	- a generous amount of good will and nice manners.
+	EOF
+	exit 1
+}
+
+
+[ "$CLOUDFLARE_APIKEY" ] || usage
+[ "$CLOUDFLARE_EMAIL" ] || usage
+
+# get all the tor exit nodes that can reach a given IP
+get_tor_exits(){
+	local ip=$1
+
+	if [[ -z "$ip" ]]; then
+		>&2 echo "pass an ip to return the tor nodes that can reach it."
+		return 1
+	fi
+
+	curl -sSL "https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=${ip}" | sed '/^#/ d'
+}
+
+# get the cloudflare threat score for the exit node
+get_threat_score(){
+	local exit=$1
+
+	if [[ -z "$exit" ]]; then
+		>&2 echo "pass an exit node ip to get the cloudflare threat score."
+		return 1
+	fi
+
+	response=$(curl -sSL "https://www.cloudflare.com/api_json.html" \
+		-d "a=ip_lkup" \
+		-d "tkn=${CLOUDFLARE_APIKEY}" \
+		-d "email=${CLOUDFLARE_EMAIL}" \
+		-d "ip=${exit}"
+	)
+
+	# check the result was success
+	result=$(echo $response | jq --raw-output '.result')
+	if [[ "$result" != "success" ]]; then
+		msg=$(echo $response | jq --raw-output '.msg')
+		>&2 echo "[ERROR]: api response for exit node: ${exit} failed with:"
+		>&2 echo "        status:  ${status}"
+		>&2 echo "        message: ${msg}"
+		exit 1
+	fi
+
+	echo $response | jq --raw-output '.response."'${exit}'"'
+}
+
+main() {
+	local ip=$1  # ip to check exit nodes reach
+
+	exitnodes=( $(get_tor_exits "${ip}") )
+
+	echo -e "IP\t\t\tSCORE\t\tTOR?\tRAW"
+
+	for exit in "${exitnodes[@]}"; do
+		score=$(get_threat_score "${exit}")
+
+		tor=0
+		if [[ "$score" == TOR:* ]]; then
+			tor=1
+		fi
+
+		s=${score#*:}
+		echo -e "${exit}\t\t${s}\t\t${tor}\t${score}"
+	done
+}
+
+main $@
