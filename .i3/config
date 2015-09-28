@@ -132,8 +132,8 @@ bindsym XF86AudioMute exec amixer set Master 1+ toggle # mute sound
 bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
 
 # screen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec sudo light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
 # Screenshots
 # Screenshot fullscreen
