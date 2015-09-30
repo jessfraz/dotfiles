@@ -31,10 +31,10 @@ update_iwlwifi(){
 	cd linux-firmware
 	mkdir -p /lib/firmware
 	cp iwlwifi-7265*.ucode /lib/firmware
-	)
 
 	# cleanup
 	rm -rf $tdir
+	)
 }
 
 update_iwlwifi $@
