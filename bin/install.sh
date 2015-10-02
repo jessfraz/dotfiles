@@ -98,6 +98,7 @@ base() {
 		jq \
 		less \
 		libc6-dev \
+		libltdl-dev \
 		libnotify-bin \
 		locales \
 		lsof \
@@ -307,13 +308,13 @@ install_golang() {
 		ln -snvf $HOME/runc $GOPATH/src/github.com/opencontainers/runc
 	fi
 
+	go get -u github.com/cloudflare/cfssl/cmd/cfssl
 	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
 	go get -u github.com/digitalocean/doctl
 	go get -u github.com/docker/gordon/pulls
 	go get -u github.com/rakyll/boom
-	go get -u github.com/rossdylan/sslcheck
 	go get -u github.com/cbednarski/hostess/cmd/hostess
 	go get -u golang.org/x/tools/cmd/goimports
 
