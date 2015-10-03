@@ -3,10 +3,12 @@
 #	Also: https://wiki.debian.org/ScreenLockingOnSleep
 [Unit]
 Description=i3lock
+Before=suspend.target
 
 [Service]
+Type=forking
 User=jessie
-Environment=DISPLAY=:0
+Environment=DISPLAY=:0.0
 ExecStart=/usr/bin/i3lock -c 111111
 
 [Install]
