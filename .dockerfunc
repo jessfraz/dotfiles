@@ -382,6 +382,11 @@ nginx(){
 	# add domain to hosts & open nginx
 	sudo hostess add jess 127.0.0.1
 }
+nmap(){
+	docker run --rm -it \
+		--net host \
+		jess/nmap "$@"
+}
 notify_osd(){
 	del_stopped notify-osd
 
@@ -669,6 +674,11 @@ torproxy(){
 		jess/tor-proxy
 
 	sudo hostess add torproxy $(docker inspect --format "{{.NetworkSettings.IPAddress}}" torproxy)
+}
+traceroute(){
+	docker run --rm -it \
+		--net host \
+		jess/traceroute "$@"
 }
 transmission(){
 	del_stopped transmission
