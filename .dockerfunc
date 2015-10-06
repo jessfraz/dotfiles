@@ -329,12 +329,21 @@ mutt(){
 	# subshell so we dont overwrite variables
 	(
 	local account=$1
+	export IMAP_SERVER=""
+	export SMTP_SERVER=""
 
 	if [[ "$account" == "docker" ]]; then
-		GMAIL=$GMAIL2
-		GMAIL_NAME=$GMAIL2_NAME
-		GMAIL_PASS=$GMAIL2_PASS
-		GMAIL_FROM=$GMAIL2_FROM
+		GMAIL=$GMAIL_DOCKER
+		GMAIL_NAME=$GMAIL_DOCKER_NAME
+		GMAIL_PASS=$GMAIL_DOCKER_PASS
+		GMAIL_FROM=$GMAIL_DOCKER_FROM
+	elif [[ "$account" == "riseup" ]]; then
+		GMAIL=$MAIL_RISEUP
+		GMAIL_NAME=$MAIL_RISEUP_NAME
+		GMAIL_PASS=$MAIL_RISEUP_PASS
+		GMAIL_FROM=$MAIL_RISEUP_FROM
+		IMAP_SERVER=mail.riseup.net
+		SMTP_SERVER=$IMAP_SERVER
 	fi
 
 	docker run -it --rm \
@@ -342,6 +351,9 @@ mutt(){
 		-e GMAIL_NAME \
 		-e GMAIL_PASS \
 		-e GMAIL_FROM \
+		-e GPG_ID \
+		-e IMAP_SERVER \
+		-e SMTP_SERVER \
 		-v $HOME/.gnupg:/home/user/.gnupg \
 		-v /etc/localtime:/etc/localtime:ro \
 		--name mutt${account} \
