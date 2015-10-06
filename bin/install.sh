@@ -270,25 +270,10 @@ install_golang() {
 	go get -u golang.org/x/tools/cmd/cover
 	go get -u golang.org/x/tools/cmd/vet
 
-	go get -u github.com/jfrazelle/battery
-	go get -u github.com/jfrazelle/budf
-	go get -u github.com/jfrazelle/netscan
-	go get -u github.com/jfrazelle/nsqexec
-	go get -u github.com/jfrazelle/pastebinit
-	go get -u github.com/jfrazelle/pony
-	go get -u github.com/jfrazelle/udict
-	go get -u github.com/jfrazelle/weather
-
-	# create symlinks from personal projects to
-	# the ${HOME} directory
-	projectsdir=$GOPATH/src/github.com/jfrazelle
-	for D in `find $projectsdir -maxdepth 1 -not -name "$(basename $projectsdir)" -type d`; do
-		ln -snvf "$D" "${HOME}/$(basename $D)"
-	done
-
 	# create aliases for docker, leeroy, libnetwork, notary and runc
 	if [[ -d $HOME/docker ]]; then
 		rm -rf $GOPATH/src/github.com/docker/docker
+		mkdir -p $GOPATH/src/github.com/docker
 		ln -snvf $HOME/docker $GOPATH/src/github.com/docker/docker
 	fi
 	if [[ -d $HOME/leeroy ]]; then
@@ -305,8 +290,26 @@ install_golang() {
 	fi
 	if [[ -d $HOME/runc ]]; then
 		rm -rf $GOPATH/src/github.com/opencontainers/runc
+		mkdir -p $GOPATH/src/github.com/opencontainers
 		ln -snvf $HOME/runc $GOPATH/src/github.com/opencontainers/runc
 	fi
+
+	go get -u github.com/jfrazelle/battery
+	go get -u github.com/jfrazelle/budf
+	go get -u github.com/jfrazelle/netscan
+	go get -u github.com/jfrazelle/nsqexec
+	go get -u github.com/jfrazelle/pastebinit
+	go get -u github.com/jfrazelle/pony
+	go get -u github.com/jfrazelle/s3server
+	go get -u github.com/jfrazelle/udict
+	go get -u github.com/jfrazelle/weather
+
+	# create symlinks from personal projects to
+	# the ${HOME} directory
+	projectsdir=$GOPATH/src/github.com/jfrazelle
+	for D in `find $projectsdir -maxdepth 1 -not -name "$(basename $projectsdir)" -type d`; do
+		ln -snvf "$D" "${HOME}/$(basename $D)"
+	done
 
 	go get -u github.com/cloudflare/cfssl/cmd/cfssl
 	go get -u github.com/crosbymichael/gistit
