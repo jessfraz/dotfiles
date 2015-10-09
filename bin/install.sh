@@ -294,6 +294,7 @@ install_golang() {
 		ln -snvf $HOME/runc $GOPATH/src/github.com/opencontainers/runc
 	fi
 
+	go get -u github.com/jfrazelle/bane
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/netscan
