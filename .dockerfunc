@@ -135,6 +135,8 @@ chrome(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--device /dev/video0 \
+		--device /dev/usb \
+		--device /dev/bus/usb \
 		--group-add audio \
 		--group-add video \
 		--name chrome \
