@@ -6,7 +6,7 @@
 # Helper Functions
 #
 dcleanup(){
-	docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
 	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
 del_stopped(){
@@ -433,6 +433,18 @@ pandoc(){
 		--name pandoc \
 		jess/pandoc ${args} ${rfile}
 }
+pivman(){
+	del_stopped pivman
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/bus/usb \
+		--device /dev/usb \
+		--name pivman \
+		jess/pivman
+}
 pms(){
 	del_stopped pms
 
@@ -796,6 +808,28 @@ wrk(){
 		--name wrk \
 		jess/wrk "$@"
 }
+ykpersonalize(){
+	del_stopped ykpersonalize
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		--device /dev/usb \
+		--device /dev/bus/usb \
+		--name ykpersonalize \
+		jess/ykpersonalize bash
+}
+yubico_piv_tool(){
+	del_stopped yubico-piv-tool
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		--device /dev/usb \
+		--device /dev/bus/usb \
+		--name yubico-piv-tool \
+		jess/yubico-piv-tool bash
+}
+alias yubico-piv-tool="yubico_piv_tool"
+
 
 ###
 ### Awesome sauce by @jpetazzo
