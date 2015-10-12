@@ -371,6 +371,18 @@ ncmpc(){
 		--name ncmpc \
 		jess/ncmpc "$@"
 }
+neoman(){
+	del_stopped neoman
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--device /dev/bus/usb \
+		--device /dev/usb \
+		--name neoman \
+		jess/neoman
+}
 nes(){
 	del_stopped nes
 	local game=$1
