@@ -59,6 +59,10 @@ setup_sources() {
 
 	# add the tlp apt-repo gpg key
 	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
+
+	# turn off translations, speed up apt-get update
+	mkdir -p /etc/apt/apt.conf.d
+	echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
 }
 
 # installs base packages
