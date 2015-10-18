@@ -273,6 +273,13 @@ irssi(){
 		--name irssi \
 		jess/irssi
 }
+john(){
+	local file=$(realpath $1)
+
+	docker run --rm -it \
+		-v ${file}:/root/$(basename ${file}) \
+		jess/john $@
+}
 kernel_builder(){
 	docker run --rm -it \
 		-v /usr/src:/usr/src \
@@ -633,6 +640,14 @@ spotify(){
 		--device /dev/snd \
 		--name spotify \
 		jess/spotify
+}
+ssh2john(){
+	local file=$(realpath $1)
+
+	docker run --rm -it \
+		-v ${file}:/root/$(basename ${file}) \
+		--entrypoint ssh2john \
+		jess/john $@
 }
 steam(){
 	del_stopped steam
