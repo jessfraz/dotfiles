@@ -93,6 +93,7 @@ base() {
 		gcc \
 		git \
 		gnupg \
+		gnupg-agent \
 		gnupg-curl \
 		grep \
 		gzip \
@@ -115,6 +116,7 @@ base() {
 		openvpn \
 		rxvt-unicode-256color \
 		s3cmd \
+		scdaemon \
 		silversearcher-ag \
 		ssh \
 		strace \
