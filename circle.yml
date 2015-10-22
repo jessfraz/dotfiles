@@ -1,8 +1,12 @@
+machine:
+  ghc:
+    version: 7.10.1
+
 dependencies:
   post:
     # install shellcheck
-      - sudo apt-get update; sudo apt-get install -y shellcheck
+    - cabal update; cabal install shellcheck
 
 test:
   override:
-    - ./test.sh
+    - PATH="$HOME/.cabal/bin:$PATH" ./test.sh

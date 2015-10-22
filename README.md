@@ -1,5 +1,7 @@
 ## dotfiles
 
+[![Circle CI](https://circleci.com/gh/jfrazelle/dotfiles.svg?style=svg)](https://circleci.com/gh/jfrazelle/dotfiles)
+
 **To install:**
 
 ```console
