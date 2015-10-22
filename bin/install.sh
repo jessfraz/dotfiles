@@ -7,7 +7,7 @@ set -e
 # get the user that is not root
 # TODO: makes a pretty bad assumption that there is only one other user
 USERNAME=$(find /home/* -maxdepth 0 -printf "%f" -type d)
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 check_is_sudo() {
 	if [ "$EUID" -ne 0 ]; then
@@ -154,29 +154,25 @@ base() {
 # i know what the fuck im doing ;)
 setup_sudo() {
 	# add user to sudoers
-	adduser $USERNAME sudo
+	adduser "$USERNAME" sudo
 
 	# add user to systemd groups
 	# then you wont need sudo to view logs and shit
-	gpasswd -a $USERNAME systemd-journal
-	gpasswd -a $USERNAME systemd-network
+	gpasswd -a "$USERNAME" systemd-journal
+	gpasswd -a "$USERNAME" systemd-network
 
 	# add go path to secure path
-	echo -e 'Defaults	secure_path="/usr/local/go/bin:/home/jessie/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' >> /etc/sudoers
-
-	# keep some enviornment variables
-	echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"' >> /etc/sudoers
-
-	# don't require a password
-	echo -e "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-	# allow mounts if* commands because im lazy af
-	echo -e "${USERNAME} ALL=NOPASSWD: /bin/mount, /sbin/mount.nfs, /bin/umount, /sbin/umount.nfs, /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery" >> /etc/sudoers
+	{ \
+		echo -e 'Defaults	secure_path="/usr/local/go/bin:/home/jessie/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'; \
+		echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
+		echo -e "${USERNAME} ALL=(ALL) NOPASSWD:ALL"; \
+		echo -e "${USERNAME} ALL=NOPASSWD: /bin/mount, /sbin/mount.nfs, /bin/umount, /sbin/umount.nfs, /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
+	} >> /etc/sudoers
 
 	# setup downloads folder as tmpfs
 	# that way things are removed on reboot
 	# i like things clean but you may not want this
-	mkdir -p /home/$USERNAME/Downloads
+	mkdir -p "/home/$USERNAME/Downloads"
 	echo -e "\n# tmpfs for downloads\ntmpfs\t/home/${USERNAME}/Downloads\ttmpfs\tnodev,nosuid,size=2G\t0\t0" >> /etc/fstab
 }
 
@@ -185,7 +181,7 @@ setup_sudo() {
 install_docker() {
 	# create docker group
 	sudo groupadd docker
-	sudo gpasswd -a $USERNAME docker
+	sudo gpasswd -a "$USERNAME" docker
 
 	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
 	chmod +x /usr/bin/docker
@@ -225,14 +221,14 @@ install_git() {
 		--no-install-recommends
 
 	# purge old src
-	if [[ -d $GIT_SRC ]]; then
-		rm -rf $GIT_SRC
+	if [[ -d "$GIT_SRC" ]]; then
+		rm -rf "$GIT_SRC"
 	fi
 
 	# get the new src
 	mkdir -p /usr/src/git
-	curl -sSl https://www.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz | tar -v -C $GIT_SRC -xz --strip-components=1 && \
-		cd $GIT_SRC && \
+	curl -sSl "https://www.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" | tar -v -C $GIT_SRC -xz --strip-components=1 && \
+		cd "$GIT_SRC" && \
 		make prefix=/usr/local all && \
 		make prefix=/usr/local install
 
@@ -240,10 +236,10 @@ install_git() {
 	cp /usr/src/git/contrib/completion/git-completion.bash /etc/bash_completion.d/git
 
 	# get the new man pages
-	curl -sSl https://www.kernel.org/pub/software/scm/git/git-manpages-${GIT_VERSION}.tar.gz | tar -v -C /usr/local/share/man -xz
+	curl -sSl "https://www.kernel.org/pub/software/scm/git/git-manpages-${GIT_VERSION}.tar.gz" | tar -v -C /usr/local/share/man -xz
 
 	# cleanup
-	rm -rf $GIT_SRC
+	rm -rf "$GIT_SRC"
 
 	echo "Git version $GIT_VERSION has been installed"
 }
@@ -259,14 +255,14 @@ install_golang() {
 	fi
 
 	# purge old src
-	if [[ -d $GO_SRC ]]; then
-		sudo rm -rf $GO_SRC
-		sudo rm -rf $GOPATH
+	if [[ -d "$GO_SRC" ]]; then
+		sudo rm -rf "$GO_SRC"
+		sudo rm -rf "$GOPATH"
 	fi
 
 	# subshell because we `cd`
 	(
-	curl -sSL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | sudo tar -v -C /usr/local -xz
+	curl -sSL "https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
 	)
 
 	# get commandline tools
@@ -277,27 +273,27 @@ install_golang() {
 	go get -u golang.org/x/tools/cmd/vet
 
 	# create aliases for docker, leeroy, libnetwork, notary and runc
-	if [[ -d $HOME/docker ]]; then
-		rm -rf $GOPATH/src/github.com/docker/docker
-		mkdir -p $GOPATH/src/github.com/docker
-		ln -snvf $HOME/docker $GOPATH/src/github.com/docker/docker
+	if [[ -d "$HOME/docker" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/docker"
+		mkdir -p "$GOPATH/src/github.com/docker"
+		ln -snvf "$HOME/docker" "$GOPATH/src/github.com/docker/docker"
 	fi
-	if [[ -d $HOME/leeroy ]]; then
-		rm -rf $GOPATH/src/github.com/docker/leeroy
-		ln -snvf $HOME/leeroy $GOPATH/src/github.com/docker/leeroy
+	if [[ -d "$HOME/leeroy" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/leeroy"
+		ln -snvf "$HOME/leeroy $GOPATH/src/github.com/docker/leeroy"
 	fi
-	if [[ -d $HOME/libnetwork ]]; then
-		rm -rf $GOPATH/src/github.com/docker/libnetwork
-		ln -snvf $HOME/libnetwork $GOPATH/src/github.com/docker/libnetwork
+	if [[ -d "$HOME/libnetwork" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/libnetwork"
+		ln -snvf "$HOME/libnetwork $GOPATH/src/github.com/docker/libnetwork"
 	fi
-	if [[ -d $HOME/notary ]]; then
-		rm -rf $GOPATH/src/github.com/docker/notary
-		ln -snvf $HOME/notary $GOPATH/src/github.com/docker/notary
+	if [[ -d "$HOME/notary" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/notary"
+		ln -snvf "$HOME/notary $GOPATH/src/github.com/docker/notary"
 	fi
-	if [[ -d $HOME/runc ]]; then
-		rm -rf $GOPATH/src/github.com/opencontainers/runc
-		mkdir -p $GOPATH/src/github.com/opencontainers
-		ln -snvf $HOME/runc $GOPATH/src/github.com/opencontainers/runc
+	if [[ -d "$HOME/runc" ]]; then
+		rm -rf "$GOPATH/src/github.com/opencontainers/runc"
+		mkdir -p "$GOPATH/src/github.com/opencontainers"
+		ln -snvf "$HOME/runc $GOPATH/src/github.com/opencontainers/runc"
 	fi
 
 	go get -u github.com/jfrazelle/bane
@@ -314,8 +310,9 @@ install_golang() {
 	# create symlinks from personal projects to
 	# the ${HOME} directory
 	projectsdir=$GOPATH/src/github.com/jfrazelle
-	for D in `find $projectsdir -maxdepth 1 -not -name "$(basename $projectsdir)" -type d`; do
-		ln -snvf "$D" "${HOME}/$(basename $D)"
+	base=$(basename "$projectsdir")
+	find "$projectsdir" -maxdepth 1 -not -name "$base" -type d -print0 | while read -d '' -r dir; do
+		ln -snvf "$dir" "${HOME}/$(basename "$dir")"
 	done
 
 	go get -u github.com/cloudflare/cfssl/cmd/cfssl
@@ -345,7 +342,7 @@ install_graphics() {
 		local pkgs="xorg xserver-xorg xserver-xorg-video-intel"
 	fi
 
-	apt-get install -y $pkgs --no-install-recommends
+	apt-get install -y "$pkgs" --no-install-recommends
 }
 
 # install custom scripts/binaries
@@ -386,7 +383,7 @@ install_wifi() {
 	if [[ $system == "broadcom" ]]; then
 		local pkg="broadcom-sta-dkms"
 
-		apt-get install -y $pkg --no-install-recommends
+		apt-get install -y "$pkg" --no-install-recommends
 	else
 		update-iwlwifi
 	fi
@@ -396,7 +393,7 @@ install_wifi() {
 install_wmapps() {
 	local pkgs="feh i3 i3lock i3status scrot slim vim-nox"
 
-	apt-get install -y $pkgs --no-install-recommends
+	apt-get install -y "$pkgs" --no-install-recommends
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
@@ -422,11 +419,11 @@ install_wmapps() {
 get_dotfiles() {
 	# create subshell
 	(
-	cd /home/$USERNAME/
+	cd "/home/$USERNAME"
 
 	# install dotfiles from repo
-	git clone git@github.com:jfrazelle/dotfiles.git /home/$USERNAME/dotfiles
-	cd /home/$USERNAME/dotfiles
+	git clone git@github.com:jfrazelle/dotfiles.git "/home/$USERNAME/dotfiles"
+	cd "/home/$USERNAME/dotfiles"
 
 	# installs all the things
 	make
@@ -437,13 +434,13 @@ get_dotfiles() {
 	sudo systemctl enable i3lock
 	sudo systemctl enable suspend-sedation.service
 
-	cd /home/$USERNAME
+	cd "/home/$USERNAME"
 
 	# install .vim files
-	git clone --recursive git@github.com:jfrazelle/.vim.git /home/$USERNAME/.vim
-	ln -snf /home/$USERNAME/.vim/vimrc /home/$USERNAME/.vimrc
-	sudo ln -snf /home/$USERNAME/.vim /root/.vim
-	sudo ln -snf /home/$USERNAME/.vimrc /root/.vimrc
+	git clone --recursive git@github.com:jfrazelle/.vim.git "/home/$USERNAME/.vim"
+	ln -snf "/home/$USERNAME/.vim/vimrc" "/home/$USERNAME/.vimrc"
+	sudo ln -snf "/home/$USERNAME/.vim" /root/.vim
+	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.vimrc
 
 	mkdir -p ~/Pictures
 	mkdir -p ~/Torrents
@@ -479,11 +476,11 @@ main() {
 
 		base
 	elif [[ $cmd == "wifi" ]]; then
-		install_wifi $2
+		install_wifi "$2"
 	elif [[ $cmd == "graphics" ]]; then
 		check_is_sudo
 
-		install_graphics $2
+		install_graphics "$2"
 	elif [[ $cmd == "wm" ]]; then
 		check_is_sudo
 
@@ -491,9 +488,9 @@ main() {
 	elif [[ $cmd == "dotfiles" ]]; then
 		get_dotfiles
 	elif [[ $cmd == "golang" ]]; then
-		install_golang $2
+		install_golang "$2"
 	elif [[ $cmd == "git" ]]; then
-		install_git $2
+		install_git "$2"
 	elif [[ $cmd == "syncthing" ]]; then
 		install_syncthing
 	else
@@ -501,4 +498,4 @@ main() {
 	fi
 }
 
-main $@
+main "$@"

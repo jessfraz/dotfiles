@@ -16,15 +16,15 @@ set -o pipefail
 
 update_mirrors() {
 	# find all the dirs in $HOME
-	for dir in $(find $HOME -maxdepth 1 -type d -not -path '*/\.*' -not -path "$HOME"); do
+	find "$HOME" -maxdepth 1 -type d -not -path '*/\.*' -not -path "$HOME" -print0 | while read -d '' -r dir; do
 		# subshell because we cd
 		(
-		cd $dir
+		cd "$dir"
 
 		# check the git remote
 		local ismirror=$(git config --get remote.origin.mirror 2>/dev/null)
 		if [[ "$ismirror" == "true" ]]; then
-			echo "$(basename $dir) is a git mirror"
+			echo "$(basename "$dir") is a git mirror"
 
 			# fetch and push
 			git fetch -p origin
@@ -36,4 +36,4 @@ update_mirrors() {
 	done
 }
 
-update_mirrors $@
+update_mirrors "$@"

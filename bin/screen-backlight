@@ -39,33 +39,33 @@ MAX=$(cat "$BLDIR/max_brightness")
 case $1 in
 
 	up)
-		TOTAL=`expr $BACKLIGHT + $INCREMENT`
-		if [ $TOTAL -gt "$MAX" ]; then
+		TOTAL=$((BACKLIGHT + INCREMENT))
+		if [ "$TOTAL" -gt "$MAX" ]; then
 			exit 1
 		fi
 		SET_VALUE=1
 		;;
 	down)
-		TOTAL=`expr $BACKLIGHT - $INCREMENT`
-		if [ $TOTAL -lt "0" ]; then
+		TOTAL=$((BACKLIGHT - INCREMENT))
+		if [ "$TOTAL" -lt "0" ]; then
 			exit 1
 		fi
 		SET_VALUE=1
 		;;
 	total)
 		TEMP_VALUE=$BACKLIGHT
-		while [ $TEMP_VALUE -lt "$MAX" ]; do
-			TEMP_VALUE=`expr $TEMP_VALUE + 1`
-			if [ $TEMP_VALUE -gt "$MAX" ]; then TEMP_VALUE=$MAX; fi
-			echo $TEMP_VALUE > $BLFILE
+		while [ "$TEMP_VALUE" -lt "$MAX" ]; do
+			TEMP_VALUE=$((TEMP_VALUE + 1))
+			if [ "$TEMP_VALUE" -gt "$MAX" ]; then TEMP_VALUE=$MAX; fi
+			echo "$TEMP_VALUE" > $BLFILE
 		done
 		;;
 	off)
 		TEMP_VALUE=$BACKLIGHT
-		while [ $TEMP_VALUE -gt "0" ]; do
-			TEMP_VALUE=`expr $TEMP_VALUE - 1`
-			if [ $TEMP_VALUE -lt "0" ]; then TEMP_VALUE=0; fi
-			echo $TEMP_VALUE > $BLFILE
+		while [ "$TEMP_VALUE" -gt "0" ]; do
+			TEMP_VALUE=$((TEMP_VALUE - 1))
+			if [ "$TEMP_VALUE" -lt "0" ]; then TEMP_VALUE=0; fi
+			echo "$TEMP_VALUE" > $BLFILE
 		done
 		;;
 	*)
@@ -73,6 +73,6 @@ case $1 in
 		;;
 esac
 
-if [ $SET_VALUE -eq "1" ]; then
-	echo $TOTAL > $BLFILE
+if [ "$SET_VALUE" -eq "1" ]; then
+	echo "$TOTAL" > $BLFILE
 fi
