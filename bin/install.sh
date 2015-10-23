@@ -280,20 +280,20 @@ install_golang() {
 	fi
 	if [[ -d "$HOME/leeroy" ]]; then
 		rm -rf "$GOPATH/src/github.com/docker/leeroy"
-		ln -snvf "$HOME/leeroy $GOPATH/src/github.com/docker/leeroy"
+		ln -snvf "$HOME/leeroy" "$GOPATH/src/github.com/docker/leeroy"
 	fi
 	if [[ -d "$HOME/libnetwork" ]]; then
 		rm -rf "$GOPATH/src/github.com/docker/libnetwork"
-		ln -snvf "$HOME/libnetwork $GOPATH/src/github.com/docker/libnetwork"
+		ln -snvf "$HOME/libnetwork" "$GOPATH/src/github.com/docker/libnetwork"
 	fi
 	if [[ -d "$HOME/notary" ]]; then
 		rm -rf "$GOPATH/src/github.com/docker/notary"
-		ln -snvf "$HOME/notary $GOPATH/src/github.com/docker/notary"
+		ln -snvf "$HOME/notary" "$GOPATH/src/github.com/docker/notary"
 	fi
 	if [[ -d "$HOME/runc" ]]; then
 		rm -rf "$GOPATH/src/github.com/opencontainers/runc"
 		mkdir -p "$GOPATH/src/github.com/opencontainers"
-		ln -snvf "$HOME/runc $GOPATH/src/github.com/opencontainers/runc"
+		ln -snvf "$HOME/runc" "$GOPATH/src/github.com/opencontainers/runc"
 	fi
 
 	go get -u github.com/jfrazelle/bane
@@ -305,6 +305,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/pony
 	go get -u github.com/jfrazelle/s3server
 	go get -u github.com/jfrazelle/udict
+	go get -u github.com/jfrazelle/vidalia
 	go get -u github.com/jfrazelle/weather
 
 	# create symlinks from personal projects to
@@ -312,7 +313,8 @@ install_golang() {
 	projectsdir=$GOPATH/src/github.com/jfrazelle
 	base=$(basename "$projectsdir")
 	find "$projectsdir" -maxdepth 1 -not -name "$base" -type d -print0 | while read -d '' -r dir; do
-		ln -snvf "$dir" "${HOME}/$(basename "$dir")"
+		base=$(basename "$dir")
+		ln -snvf "$dir" "${HOME}/${base}"
 	done
 
 	go get -u github.com/cloudflare/cfssl/cmd/cfssl
