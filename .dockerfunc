@@ -626,8 +626,13 @@ slack(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
 		--device /dev/snd \
+		--device /dev/dri \
+		--group-add audio \
+		-v /home/jessie/.slack:/root/.config/Slack \
 		--name slack \
 		jess/slack
+
+	exit
 }
 spotify(){
 	del_stopped spotify
