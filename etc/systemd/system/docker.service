@@ -5,6 +5,7 @@ After=network.target docker.socket firewall.service
 Requires=docker.socket
 
 [Service]
+Environment=GOMAXPROCS=1
 ExecStartPre=-/sbin/iptables -F DOCKER
 ExecStartPre=-/sbin/iptables -X DOCKER
 ExecStartPre=-/sbin/iptables -N DOCKER
