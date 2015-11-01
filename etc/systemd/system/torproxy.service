@@ -12,7 +12,7 @@ ExecStart=/usr/bin/docker run -d --restart always \
 		  -p 9050:9050 \
 		  --name torproxy \
 		  jess/tor-proxy
-ExecStartPost=-/bin/bash -c "hostess add torproxy $(docker inspect --format \"{{.NetworkSettings.IPAddress}}\" torproxy)"
+ExecStartPost=-/bin/bash -c "hostess add torproxy $(docker inspect --format \"{{.NetworkSettings.Networks.bridge.IPAddress}}\" torproxy)"
 
 [Install]
 WantedBy=multi-user.target

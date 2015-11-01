@@ -100,7 +100,7 @@ cadvisor(){
 		--name cadvisor \
 		google/cadvisor
 
-	sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.IPAddress}}" cadvisor)
+	sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" cadvisor)
 	browser-exec "http://cadvisor:8080"
 }
 chrome(){
@@ -172,7 +172,7 @@ consul(){
 		-dc neverland \
 		-bind 0.0.0.0
 
-	sudo hostess add consul $(docker inspect --format "{{.NetworkSettings.IPAddress}}" consul)
+	sudo hostess add consul $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" consul)
 	browser-exec "http://consul:8500"
 }
 firefox(){
@@ -485,7 +485,7 @@ privoxy(){
 		--name privoxy \
 		jess/privoxy
 
-	sudo hostess add privoxy $(docker inspect --format "{{.NetworkSettings.IPAddress}}" privoxy)
+	sudo hostess add privoxy $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" privoxy)
 }
 pulseaudio(){
 	del_stopped pulseaudio
@@ -721,6 +721,22 @@ torbrowser(){
 	# exit current shell
 	exit 0
 }
+tormessenger(){
+	del_stopped tormessenger
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--device /dev/snd \
+		--name tormessenger \
+		jess/tor-messenger
+
+	# exit current shell
+	exit 0
+}
 torproxy(){
 	del_stopped torproxy
 
@@ -731,7 +747,7 @@ torproxy(){
 		--name torproxy \
 		jess/tor-proxy
 
-	sudo hostess add torproxy $(docker inspect --format "{{.NetworkSettings.IPAddress}}" torproxy)
+	sudo hostess add torproxy $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" torproxy)
 }
 traceroute(){
 	docker run --rm -it \
@@ -752,7 +768,7 @@ transmission(){
 		jess/transmission
 
 
-	sudo hostess add transmission $(docker inspect --format "{{.NetworkSettings.IPAddress}}" transmission)
+	sudo hostess add transmission $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" transmission)
 	browser-exec "http://transmission:9091"
 }
 vagrant(){
@@ -857,6 +873,7 @@ yubico_piv_tool(){
 		-v /etc/localtime:/etc/localtime:ro \
 		--device /dev/usb \
 		--device /dev/bus/usb \
+		--privileged \
 		--name yubico-piv-tool \
 		jess/yubico-piv-tool bash
 }

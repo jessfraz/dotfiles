@@ -14,7 +14,7 @@ ExecStart=/usr/bin/docker run -d --restart always \
 		  -p 8118:8118 \
 		  --name privoxy \
 		  jess/privoxy
-ExecStartPost=-/bin/bash -c "hostess add privoxy $(docker inspect --format \"{{.NetworkSettings.IPAddress}}\" privoxy)"
+ExecStartPost=-/bin/bash -c "hostess add privoxy $(docker inspect --format \"{{.NetworkSettings.Networks.bridge.IPAddress}}\" privoxy)"
 
 [Install]
 WantedBy=multi-user.target
