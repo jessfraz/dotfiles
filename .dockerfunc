@@ -873,7 +873,6 @@ yubico_piv_tool(){
 		-v /etc/localtime:/etc/localtime:ro \
 		--device /dev/usb \
 		--device /dev/bus/usb \
-		--privileged \
 		--name yubico-piv-tool \
 		jess/yubico-piv-tool bash
 }

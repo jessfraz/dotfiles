@@ -39,6 +39,10 @@ setup_sources() {
 	deb http://ppa.launchpad.net/git-core/ppa/ubuntu vivid main
 	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu vivid main
 
+	# neovim
+	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu vivid main
+	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu vivid main
+
 	# tlp: Advanced Linux Power Management
 	# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
 	deb http://repo.linrunner.de/debian sid main
@@ -56,6 +60,9 @@ setup_sources() {
 
 	# add the git-core ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
+
+	# add the neovim ppa gpg key
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
 
 	# add the tlp apt-repo gpg key
 	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
@@ -301,6 +308,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/netscan
 	go get -u github.com/jfrazelle/nsqexec
+	go get -u github.com/jfrazelle/macgyver
 	go get -u github.com/jfrazelle/pastebinit
 	go get -u github.com/jfrazelle/pony
 	go get -u github.com/jfrazelle/s3server
@@ -393,7 +401,7 @@ install_wifi() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	local pkgs="feh i3 i3lock i3status scrot slim vim-nox"
+	local pkgs="feh i3 i3lock i3status scrot slim neovim"
 
 	apt-get install -y "$pkgs" --no-install-recommends
 
