@@ -91,7 +91,7 @@ get_pulls(){
 
 main(){
 	# send the request
-	local response=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/user/repos")
+	local response=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/user/repos?per_page=${DEFAULT_PER_PAGE}")
 	local repos=$(echo $response | jq --raw-output '.[].full_name | tostring')
 
 	for repo in $repos; do
