@@ -306,6 +306,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/bane
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
+	go get -u github.com/jfrazelle/callmemaybe
 	go get -u github.com/jfrazelle/netscan
 	go get -u github.com/jfrazelle/nsqexec
 	go get -u github.com/jfrazelle/macgyver
