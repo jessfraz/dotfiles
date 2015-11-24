@@ -327,6 +327,7 @@ install_golang() {
 	done
 
 	go get -u github.com/cloudflare/cfssl/cmd/cfssl
+	go get -u github.com/cloudflare/cfssl/cmd/cfssljson
 	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
