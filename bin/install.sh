@@ -302,6 +302,11 @@ install_golang() {
 		mkdir -p "$GOPATH/src/github.com/opencontainers"
 		ln -snvf "$HOME/runc" "$GOPATH/src/github.com/opencontainers/runc"
 	fi
+	if [[ -d "$HOME/cfssl" ]]; then
+		rm -rf "$GOPATH/src/github.com/cloudflare/cfssl"
+		mkdir -p "$GOPATH/src/github.com/cloudflare"
+		ln -snvf "$HOME/cfssl" "$GOPATH/src/github.com/cloudflare/cfssl"
+	fi
 
 	go get -u github.com/jfrazelle/bane
 	go get -u github.com/jfrazelle/battery
@@ -326,14 +331,13 @@ install_golang() {
 		ln -snvf "$dir" "${HOME}/${base}"
 	done
 
-	go get -u github.com/cloudflare/cfssl/cmd/cfssl
-	go get -u github.com/cloudflare/cfssl/cmd/cfssljson
+	go get -d github.com/cloudflare/cfssl/cmd/cfssl
+	go get -d github.com/cloudflare/cfssl/cmd/cfssljson
 	go get -u github.com/crosbymichael/gistit
 	go get -u github.com/crosbymichael/ip-addr
 	go get -u github.com/crosbymichael/slex
 	go get -u github.com/digitalocean/doctl
 	go get -u github.com/docker/gordon/pulls
-	go get -u github.com/rakyll/boom
 	go get -u github.com/cbednarski/hostess/cmd/hostess
 	go get -u golang.org/x/tools/cmd/goimports
 	)
