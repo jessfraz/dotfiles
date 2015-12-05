@@ -473,6 +473,15 @@ pms(){
 		--name pms \
 		jess/pms "$@"
 }
+pond(){
+	del_stopped pond
+	relies_on torproxy
+
+	docker run --rm -it \
+		--net container:torproxy \
+		--name pond \
+		jess/pond
+}
 privoxy(){
 	del_stopped privoxy
 	relies_on torproxy

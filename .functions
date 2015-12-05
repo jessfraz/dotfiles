@@ -386,3 +386,9 @@ xname(){
 		-e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
 		-e '${g; p}'
 }
+
+dell_monitor() {
+	xrandr --newmode "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
+	xrandr --addmode  DP1 "3840x2160_30.00"
+	xrandr --output eDP1 --auto --primary --output DP1 --mode 3840x2160_30.00 --above eDP1 --rate 30
+}

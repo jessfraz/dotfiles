@@ -115,7 +115,6 @@ base() {
 		locales \
 		lsof \
 		make \
-		mercurial \
 		mount \
 		net-tools \
 		nfs-common \
