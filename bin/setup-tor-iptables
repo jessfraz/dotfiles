@@ -1,47 +1,80 @@
-#!/bin/bash
-# Most of this is credited to 
+#!/bin/sh
+# Most of this is credited to
 # https://trac.torproject.org/projects/tor/wiki/doc/TransparentProxy
 # With a few minor edits
 set -e
 
 # to run iptables commands you need to be root
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root."
-    return 1
+if [ "$(id -u)" -ne 0 ]; then
+	echo >&2 "Please run as root."
+	return 1
 fi
 
-### set variables
-#destinations you don't want routed through Tor
-_non_tor=""
-#_non_tor="192.168.1.0/24 192.168.0.0/24"
+main() {
+	# check the tor container is running
+	local state=$(docker inspect --format "{{.State.Running}}" tor 2>/dev/null)
+	if [ "$state" = "false" ] || [ -z "$state" ]; then
+		echo >&2 "tor container is not running, exiting."
+		return 1
+	fi
 
-#the UID that Tor runs as (varies from system to system)
-_tor_uid=$(docker exec -u tor tor id -u)
+	###
+	#	set variables
+	###
+	# destinations you don't want routed through Tor, seperated by a space
+	# example: '192.168.1.0/24 192.168.0.0/24'
+	local non_tor="$1"
 
-#Tor's TransPort
-_trans_port="9040"
-_dns_port="5353"
+	# the UID that Tor runs as (varies from system to system)
+	local tor_uid=$(docker exec -u tor tor id -u || echo 1000)
 
-### set iptables *nat
-iptables -t nat -A OUTPUT -m owner --uid-owner $_tor_uid -j RETURN
-iptables -t nat -A OUTPUT -p udp --dport 53 -j REDIRECT --to-ports ${_dns_port}
+	# Tor's TransPort
+	local trans_port="9040"
 
-#allow clearnet access for hosts in $_non_tor
-for _clearnet in $_non_tor 127.0.0.0/9 127.128.0.0/10; do
-   iptables -t nat -A OUTPUT -d $_clearnet -j RETURN
-done
+	# Tor's DNSPort
+	local dns_port="5353"
 
-#redirect all other output to Tor's TransPort
-iptables -t nat -A OUTPUT -p tcp --syn -j REDIRECT --to-ports ${_trans_port}
+	# default iptables action, append
+	local action="-A"
+	# check existance of a rule, if it exists change iptables action
+	# to delete the rules instead of append
+	if iptables -t nat -C OUTPUT -p tcp --syn -j REDIRECT --to-ports "$trans_port" 2>/dev/null ; then
+		echo "[WARNING]: DELETING iptables rules for tor redirection."
+		echo "If this was not your intent, rerun this script to append the rules again."
+		action="-D"
+	else
+		echo "APPENDING iptables rules for tor redirection."
+	fi
 
-### set iptables *filter
-iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+	###
+	#	iptables *nat rules
+	###
+	iptables -t nat "$action" OUTPUT -m owner --uid-owner "$tor_uid" -j RETURN
 
-#allow clearnet access for hosts in $_non_tor
-for _clearnet in $_non_tor 127.0.0.0/8; do
-   iptables -A OUTPUT -d $_clearnet -j ACCEPT
-done
+	# redirect DNS to Tor's DNSPort
+	iptables -t nat "$action" OUTPUT -p udp --dport 53 -j REDIRECT --to-ports "$dns_port"
 
-#allow only Tor output
-iptables -A OUTPUT -m owner --uid-owner $_tor_uid -j ACCEPT
-iptables -A OUTPUT -j REJECT
+	# allow clearnet access for hosts in $non_tor
+	for clearnet in $non_tor 127.0.0.0/9 127.128.0.0/10; do
+		iptables -t nat "$action" OUTPUT -d "$clearnet" -j RETURN
+	done
+
+	# redirect all other tcp output to Tor's TransPort
+	iptables -t nat "$action" OUTPUT -p tcp --syn -j REDIRECT --to-ports "$trans_port"
+
+	###
+	#	iptables *filter rules
+	###
+	iptables "$action" OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+	# allow clearnet access for hosts in $non_tor
+	for clearnet in $non_tor 127.0.0.0/8; do
+		iptables "$action" OUTPUT -d "$clearnet" -j ACCEPT
+	done
+
+	# allow only Tor output
+	iptables "$action" OUTPUT -m owner --uid-owner "$tor_uid" -j ACCEPT
+	iptables "$action" OUTPUT -j REJECT
+}
+
+main "$@"
