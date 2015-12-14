@@ -421,7 +421,7 @@ nmap(){
 		jess/nmap "$@"
 }
 notify_osd(){
-	del_stopped notify-osd
+	del_stopped notify_osd
 
 	docker run -d \
 		-v /etc/machine-id:/etc/machine-id:ro \
