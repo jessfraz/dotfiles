@@ -402,6 +402,11 @@ nes(){
 		--name nes \
 		jess/nes /games/${game}.rom
 }
+netcat(){
+	docker run --rm -it \
+		--net host \
+		jess/netcat "$@"
+}
 nginx(){
 	del_stopped nginx
 
@@ -685,6 +690,13 @@ t(){
 		-v $HOME/.trc:/root/.trc \
 		--log-driver none \
 		jess/tcli "$@"
+}
+tarsnap(){
+	docker run --rm -it \
+		-v $HOME/.tarsnaprc:/root/.tarsnaprc \
+		-v $HOME/.tarsnap:/root/.tarsnap \
+		-v $HOME:/root/workdir \
+		jess/tarsnap "$@"
 }
 telnet(){
 	docker run -it --rm \

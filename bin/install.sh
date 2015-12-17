@@ -274,6 +274,7 @@ install_golang() {
 	# get commandline tools
 	(
 	set -x
+	set +e
 	go get -u github.com/golang/lint/golint
 	go get -u golang.org/x/tools/cmd/cover
 	go get -u golang.org/x/tools/cmd/vet
@@ -314,6 +315,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/netscan
 	go get -u github.com/jfrazelle/nsqexec
 	go get -u github.com/jfrazelle/macgyver
+	go get -u github.com/jfrazelle/onion
 	go get -u github.com/jfrazelle/pastebinit
 	go get -u github.com/jfrazelle/pony
 	go get -u github.com/jfrazelle/s3server
