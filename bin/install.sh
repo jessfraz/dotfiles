@@ -81,6 +81,7 @@ base() {
 	apt-get install -y \
 		adduser \
 		alsa-utils \
+		apparmor \
 		apt-transport-https \
 		automake \
 		bash-completion \
@@ -199,7 +200,7 @@ install_docker() {
 	systemctl enable docker
 
 	# update grub with docker configs and power-saving items
-	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 i915.enable_psr=0 pcie_asm=force i915.i915_enable_fbc=1 i915.i915_enable_rc6=7 i915.lvds_downclock=1"/g' /etc/default/grub
+	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 i915.enable_psr=0 pcie_asm=force i915.i915_enable_fbc=1 i915.i915_enable_rc6=7 i915.lvds_downclock=1 apparmor=1 security=apparmor"/g' /etc/default/grub
 	echo "Docker has been installed. If you want memory management & swap"
 	echo "run update-grub & reboot"
 }
@@ -285,6 +286,10 @@ install_golang() {
 		mkdir -p "$GOPATH/src/github.com/docker"
 		ln -snvf "$HOME/docker" "$GOPATH/src/github.com/docker/docker"
 	fi
+	if [[ -d "$HOME/containerd" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/containerd"
+		ln -snvf "$HOME/containerd" "$GOPATH/src/github.com/docker/containerd"
+	fi
 	if [[ -d "$HOME/leeroy" ]]; then
 		rm -rf "$GOPATH/src/github.com/docker/leeroy"
 		ln -snvf "$HOME/leeroy" "$GOPATH/src/github.com/docker/leeroy"
@@ -312,6 +317,7 @@ install_golang() {
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/callmemaybe
+	go get -u github.com/jfrazelle/libsec
 	go get -u github.com/jfrazelle/netscan
 	go get -u github.com/jfrazelle/nsqexec
 	go get -u github.com/jfrazelle/macgyver
