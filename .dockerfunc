@@ -132,7 +132,7 @@ chrome(){
 		-v $HOME/.chrome:/data \
 		-v /dev/shm:/dev/shm \
 		-v /etc/hosts:/etc/hosts \
-		--security-opt seccomp:unconfined \
+		--security-opt seccomp:/etc/docker/seccomp/chrome.json \
 		--device /dev/snd \
 		--device /dev/dri \
 		--device /dev/video0 \
