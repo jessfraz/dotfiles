@@ -132,6 +132,7 @@ chrome(){
 		-v $HOME/.chrome:/data \
 		-v /dev/shm:/dev/shm \
 		-v /etc/hosts:/etc/hosts \
+		--security-opt seccomp:unconfined \
 		--device /dev/snd \
 		--device /dev/dri \
 		--device /dev/video0 \

@@ -298,6 +298,10 @@ install_golang() {
 		rm -rf "$GOPATH/src/github.com/docker/libnetwork"
 		ln -snvf "$HOME/libnetwork" "$GOPATH/src/github.com/docker/libnetwork"
 	fi
+	if [[ -d "$HOME/libsec" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/libsec"
+		ln -snvf "$HOME/libsec" "$GOPATH/src/github.com/docker/libsec"
+	fi
 	if [[ -d "$HOME/notary" ]]; then
 		rm -rf "$GOPATH/src/github.com/docker/notary"
 		ln -snvf "$HOME/notary" "$GOPATH/src/github.com/docker/notary"
@@ -317,7 +321,6 @@ install_golang() {
 	go get -u github.com/jfrazelle/battery
 	go get -u github.com/jfrazelle/budf
 	go get -u github.com/jfrazelle/callmemaybe
-	go get -u github.com/jfrazelle/libsec
 	go get -u github.com/jfrazelle/netscan
 	go get -u github.com/jfrazelle/nsqexec
 	go get -u github.com/jfrazelle/macgyver
