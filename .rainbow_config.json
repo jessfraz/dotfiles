@@ -1,38 +1,5 @@
 {
-    "HEARTBEAT_TIMEOUT": 120, 
-    "IMAGE_ON_TERM": false, 
-    "THEME": "solarized", 
-    "ASCII_ART": true, 
-    "HIDE_PROMPT": true, 
-    "PREFIX": "#owner#place#me#keyword", 
-    "SEARCH_TYPE": "mixed", 
-    "SEARCH_MAX_RECORD": 5, 
-    "HOME_TWEET_NUM": 5, 
-    "RETWEETS_SHOW_NUM": 5, 
-    "CONVERSATION_MAX": 90, 
-    "QUOTE_FORMAT": "#comment RT #owner: #tweet", 
-    "THREAD_META_LEFT": "(#id) #clock", 
-    "THREAD_META_RIGHT": "#clock (#id)", 
-    "THREAD_MIN_WIDTH": 20, 
-    "MESSAGES_DISPLAY": 5, 
-    "TREND_MAX": 10, 
-    "LIST_MAX": 5, 
-    "ONLY_LIST": [], 
-    "IGNORE_LIST": [], 
-    "HISTORY_FILENAME": "completer.hist", 
-    "IMAGE_SHIFT": 2, 
-    "IMAGE_MAX_HEIGHT": 30, 
-    "STREAM_DELAY": 0, 
-    "USER_DOMAIN": "userstream.twitter.com", 
-    "PUBLIC_DOMAIN": "stream.twitter.com", 
-    "SITE_DOMAIN": "sitestream.twitter.com", 
-    "FORMAT": {
-        "TWEET": {
-            "CLOCK_FORMAT": "%Y/%m/%d %H:%M:%S"
-        }, 
-        "MESSAGE": {
-            "CLOCK_FORMAT": "%Y/%m/%d %H:%M:%S"
-        }
-    }, 
-    "IMAGE_RESIZE_TO_FIT": false
+    "IMAGE_ON_TERM": true, 
+    "IMAGE_RESIZE_TO_FIT": false, 
+    "THEME": "solarized"
 }

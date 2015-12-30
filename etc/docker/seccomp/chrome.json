@@ -722,11 +722,6 @@
             "args": null
         },
         {
-            "name": "truncate",
-            "action": "SCMP_ACT_ERRNO",
-            "args": null
-        },
-        {
             "name": "tuxcall",
             "action": "SCMP_ACT_ERRNO",
             "args": null
