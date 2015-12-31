@@ -103,6 +103,20 @@ cadvisor(){
 	sudo hostess add cadvisor $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" cadvisor)
 	browser-exec "http://cadvisor:8080"
 }
+cheese(){
+	del_stopped cheese
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-v $HOME/Pictures:/root/Pictures \
+		--device /dev/video0 \
+		--device /dev/snd \
+		--device /dev/dri \
+		--name cheese \
+		jess/cheese
+}
 chrome(){
 	# add flags for proxy if passed
 	local proxy=
