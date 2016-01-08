@@ -290,6 +290,10 @@ install_golang() {
 		rm -rf "$GOPATH/src/github.com/docker/containerd"
 		ln -snvf "$HOME/containerd" "$GOPATH/src/github.com/docker/containerd"
 	fi
+	if [[ -d "$HOME/engine-api" ]]; then
+		rm -rf "$GOPATH/src/github.com/docker/engine-api"
+		ln -snvf "$HOME/engine-api" "$GOPATH/src/github.com/docker/engine-api"
+	fi
 	if [[ -d "$HOME/leeroy" ]]; then
 		rm -rf "$GOPATH/src/github.com/docker/leeroy"
 		ln -snvf "$HOME/leeroy" "$GOPATH/src/github.com/docker/leeroy"

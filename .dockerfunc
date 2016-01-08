@@ -155,8 +155,9 @@ chrome(){
 		--group-add audio \
 		--group-add video \
 		--name chrome \
-		jess/chrome --user-data-dir=/data --force-device-scale-factor=1 \
-		--proxy-server="$proxy" --host-resolver-rules="$map" "$args"
+		jess/chrome --user-data-dir=/data \
+		--proxy-server="$proxy" \
+		--host-resolver-rules="$map" "$args"
 
 }
 consul(){
