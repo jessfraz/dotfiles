@@ -1,10 +1,6 @@
-.PHONY: all bin default dotfiles etc install
+.PHONY: all bin dotfiles etc
 
 all: bin dotfiles etc
-
-default: install
-
-install: all
 
 bin:
 	# add aliases for things in bin

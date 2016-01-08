@@ -276,80 +276,29 @@ install_golang() {
 	(
 	set -x
 	set +e
-	go get -u github.com/golang/lint/golint
-	go get -u golang.org/x/tools/cmd/cover
-	go get -u golang.org/x/tools/cmd/vet
+	go get github.com/golang/lint/golint
+	go get golang.org/x/tools/cmd/cover
+	go get golang.org/x/tools/cmd/vet
+	go get golang.org/x/tools/cmd/goimports
 
-	# create aliases for docker, leeroy, libnetwork, notary and runc
-	if [[ -d "$HOME/docker" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/docker"
-		mkdir -p "$GOPATH/src/github.com/docker"
-		ln -snvf "$HOME/docker" "$GOPATH/src/github.com/docker/docker"
-	fi
-	if [[ -d "$HOME/containerd" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/containerd"
-		ln -snvf "$HOME/containerd" "$GOPATH/src/github.com/docker/containerd"
-	fi
-	if [[ -d "$HOME/engine-api" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/engine-api"
-		ln -snvf "$HOME/engine-api" "$GOPATH/src/github.com/docker/engine-api"
-	fi
-	if [[ -d "$HOME/leeroy" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/leeroy"
-		ln -snvf "$HOME/leeroy" "$GOPATH/src/github.com/docker/leeroy"
-	fi
-	if [[ -d "$HOME/libnetwork" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/libnetwork"
-		ln -snvf "$HOME/libnetwork" "$GOPATH/src/github.com/docker/libnetwork"
-	fi
-	if [[ -d "$HOME/libsec" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/libsec"
-		ln -snvf "$HOME/libsec" "$GOPATH/src/github.com/docker/libsec"
-	fi
-	if [[ -d "$HOME/notary" ]]; then
-		rm -rf "$GOPATH/src/github.com/docker/notary"
-		ln -snvf "$HOME/notary" "$GOPATH/src/github.com/docker/notary"
-	fi
-	if [[ -d "$HOME/runc" ]]; then
-		rm -rf "$GOPATH/src/github.com/opencontainers/runc"
-		mkdir -p "$GOPATH/src/github.com/opencontainers"
-		ln -snvf "$HOME/runc" "$GOPATH/src/github.com/opencontainers/runc"
-	fi
+	go get github.com/jfrazelle/bane
+	go get github.com/jfrazelle/battery
+	go get github.com/jfrazelle/budf
+	go get github.com/jfrazelle/cliaoke
+	go get github.com/jfrazelle/netscan
+	go get github.com/jfrazelle/onion
+	go get github.com/jfrazelle/pastebinit
+	go get github.com/jfrazelle/pony
+	go get github.com/jfrazelle/udict
+	go get github.com/jfrazelle/weather
 
-	go get -u github.com/jfrazelle/bane
-	go get -u github.com/jfrazelle/battery
-	go get -u github.com/jfrazelle/budf
-	go get -u github.com/jfrazelle/callmemaybe
-	go get -u github.com/jfrazelle/cliaoke
-	go get -u github.com/jfrazelle/netscan
-	go get -u github.com/jfrazelle/nsqexec
-	go get -u github.com/jfrazelle/macgyver
-	go get -u github.com/jfrazelle/onion
-	go get -u github.com/jfrazelle/pastebinit
-	go get -u github.com/jfrazelle/pony
-	go get -u github.com/jfrazelle/s3server
-	go get -u github.com/jfrazelle/udict
-	go get -u github.com/jfrazelle/vidalia
-	go get -u github.com/jfrazelle/weather
-
-	# create symlinks from personal projects to
-	# the ${HOME} directory
-	projectsdir=$GOPATH/src/github.com/jfrazelle
-	base=$(basename "$projectsdir")
-	find "$projectsdir" -maxdepth 1 -not -name "$base" -type d -print0 | while read -d '' -r dir; do
-		base=$(basename "$dir")
-		ln -snvf "$dir" "${HOME}/${base}"
-	done
-
-	go get -u github.com/cloudflare/cfssl/cmd/cfssl
-	go get -u github.com/cloudflare/cfssl/cmd/cfssljson
-	go get -u github.com/crosbymichael/gistit
-	go get -u github.com/crosbymichael/ip-addr
-	go get -u github.com/crosbymichael/slex
-	go get -u github.com/digitalocean/doctl
-	go get -u github.com/docker/gordon/pulls
-	go get -u github.com/cbednarski/hostess/cmd/hostess
-	go get -u golang.org/x/tools/cmd/goimports
+	go get github.com/cloudflare/cfssl/cmd/cfssl
+	go get github.com/cloudflare/cfssl/cmd/cfssljson
+	go get github.com/crosbymichael/gistit
+	go get github.com/crosbymichael/ip-addr
+	go get github.com/digitalocean/doctl
+	go get github.com/docker/gordon/pulls
+	go get github.com/cbednarski/hostess/cmd/hostess
 	)
 }
 
