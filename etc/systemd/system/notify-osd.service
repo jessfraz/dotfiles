@@ -1,0 +1,22 @@
+[Unit]
+Description=Notifications Daemon
+Documentation=https://wiki.ubuntu.com/NotifyOSD
+After=network.target docker.socket
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+Environment=DISPLAY=:0.0
+ExecStartPre=-/usr/bin/docker rm -f notify_osd
+ExecStart=/usr/bin/docker run -d --restart always \
+		  -v /etc \
+		  -v /home/user/.dbus \
+		  -v /home/user/.cache/dconf \
+		  -v /etc/localtime:/etc/localtime:ro \
+		  -v /tmp/.X11-unix:/tmp/.X11-unix \
+		  -e DISPLAY=unix${DISPLAY} \
+		  --name notify_osd \
+		  jess/notify-osd
+
+[Install]
+WantedBy=multi-user.target

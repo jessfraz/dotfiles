@@ -252,7 +252,6 @@ htop(){
 http(){
 	docker run -t --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
-		--net host \
 		--log-driver none \
 		jess/httpie "$@"
 }
