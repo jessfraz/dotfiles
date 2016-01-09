@@ -112,7 +112,6 @@ base() {
 		less \
 		libc6-dev \
 		libltdl-dev \
-		libnotify-bin \
 		locales \
 		lsof \
 		make \
