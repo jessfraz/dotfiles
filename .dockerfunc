@@ -136,7 +136,6 @@ chrome(){
 	# overlay support inotify, such bullshit
 	docker run -d \
 		--memory 3gb \
-		--net host \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
@@ -267,25 +266,15 @@ imagemin(){
 		-v $HOME/Pictures:/root/Pictures \
 		jess/imagemin sh -c "imagemin /root/Pictures/${image} > /root/Pictures/${filename}_min.${extension}"
 }
-irssi(){
+irssi() {
 	del_stopped irssi
 	relies_on notify_osd
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
-		-v /etc/machine-id:/etc/machine-id:ro \
-		-v /var/run/dbus:/var/run/dbus \
-		-v /var/run/user/$(id -u):/var/run/user/$(id -u) \
-		-e TERM \
-		-e XAUTHORITY \
-		-e DBUS_SESSION_BUS_ADDRESS \
-		-e HOME \
-		-v /etc/passwd:/etc/passwd:ro \
-		-v /etc/group:/etc/group:ro \
-		-u $(whoami) -w "$HOME" \
-		-v $HOME/.Xauthority:$HOME/.Xauthority \
-		-v $HOME/.irssi:$HOME/.irssi \
-		--read-only \
+		-v $HOME/.irssi:/home/user/.irssi \
+		--volumes-from notify_osd \
+		-e DBUS_SESSION_DBUS_ADDRESS="unix:abstract=/home/user/.dbus/session-bus/$(docker exec notify_osd ls /home/user/.dbus/session-bus/)" \
 		--name irssi \
 		jess/irssi
 }
@@ -445,19 +434,12 @@ notify_osd(){
 	del_stopped notify_osd
 
 	docker run -d \
-		-v /etc/machine-id:/etc/machine-id:ro \
-		-v /var/run/dbus:/var/run/dbus \
-		-v /var/run/user/$(id -u):/var/run/user/$(id -u) \
 		-v /etc/localtime:/etc/localtime:ro \
-		-e XAUTHORITY \
-		-e DBUS_SESSION_BUS_ADDRESS \
-		-v /etc/passwd:/etc/passwd:ro \
-		-v /etc/group:/etc/group:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v /etc \
+		-v /home/user/.dbus \
+		-v /home/user/.cache/dconf \
 		-e DISPLAY=unix$DISPLAY \
-		-u $(whoami) -w "$HOME" \
-		-v $HOME/.Xauthority:$HOME/.Xauthority \
-		-v $HOME/.cache/dconf:$HOME/.cache/dconf \
 		--name notify_osd \
 		jess/notify-osd
 }
@@ -673,6 +655,7 @@ spotify(){
 		-e DISPLAY=unix$DISPLAY \
 		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/snd \
+		--group-add audio \
 		--name spotify \
 		jess/spotify
 }
