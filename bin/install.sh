@@ -252,7 +252,7 @@ install_git() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.5.1
+	export GO_VERSION=1.5.3
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -284,10 +284,12 @@ install_golang() {
 	go get github.com/jfrazelle/battery
 	go get github.com/jfrazelle/budf
 	go get github.com/jfrazelle/cliaoke
+	go get github.com/jfrazelle/netns
 	go get github.com/jfrazelle/netscan
 	go get github.com/jfrazelle/onion
 	go get github.com/jfrazelle/pastebinit
 	go get github.com/jfrazelle/pony
+	go get github.com/jfrazelle/riddler
 	go get github.com/jfrazelle/udict
 	go get github.com/jfrazelle/weather
 
