@@ -246,6 +246,7 @@ hollywood(){
 htop(){
 	docker run --rm -it \
 		--pid host \
+		--net none \
 		--name htop \
 		jess/htop
 }
