@@ -515,6 +515,7 @@ pulseaudio(){
 		--device /dev/snd \
 		-p 4713:4713 \
 		--restart always \
+		--group-add audio \
 		--name pulseaudio \
 		jess/pulseaudio
 }
@@ -634,7 +635,10 @@ skype(){
 		-e DISPLAY=unix$DISPLAY \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
+		--security-opt seccomp:unconfined \
 		--device /dev/video0 \
+		--group-add video \
+		--group-add audio \
 		--name skype \
 		jess/skype
 }
@@ -864,6 +868,8 @@ vlc(){
 		-e QT_DEVICE_PIXEL_RATIO \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
+		--group-add audio \
+		--group-add video \
 		-v $HOME/Torrents:/home/vlc/Torrents \
 		--device /dev/dri \
 		--name vlc \
