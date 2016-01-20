@@ -418,6 +418,23 @@ get_dotfiles() {
 	sudo ln -snf "/home/$USERNAME/.vim" /root/.vim
 	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.vimrc
 
+	# alias vim dotfiles to neovim
+	mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+	ln -snf "/home/$USERNAME/.vim" $XDG_CONFIG_HOME/nvim
+	ln -snf "/home/$USERNAME/.vimrc" $XDG_CONFIG_HOME/nvim/init.vim
+	# do the same for root
+	sudo mkdir -p /root/.config
+	sudo ln -snf "/home/$USERNAME/.vim" /root/.config/nvim
+	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.config/nvim/init.vim
+
+	# update alternatives to neovim
+	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+	sudo update-alternatives --config vi
+	sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+	sudo update-alternatives --config vim
+	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+	sudo update-alternatives --config editor
+
 	mkdir -p ~/Pictures
 	mkdir -p ~/Torrents
 	)
