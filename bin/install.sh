@@ -284,6 +284,7 @@ install_golang() {
 	go get github.com/jfrazelle/battery
 	go get github.com/jfrazelle/budf
 	go get github.com/jfrazelle/cliaoke
+	go get github.com/jfrazelle/magneto
 	go get github.com/jfrazelle/netns
 	go get github.com/jfrazelle/netscan
 	go get github.com/jfrazelle/onion
