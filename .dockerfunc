@@ -72,6 +72,19 @@ apt_file(){
 		jess/apt-file
 }
 alias apt-file="apt_file"
+audacity(){
+	del_stopped audacity
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-e QT_DEVICE_PIXEL_RATIO \
+		--device /dev/snd \
+		--group-add audio \
+		--name audacity \
+		jess/audacity
+}
 aws(){
 	docker run -it --rm \
 		-v $HOME/.aws:/root/.aws \
