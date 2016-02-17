@@ -90,14 +90,11 @@ base() {
 		bzip2 \
 		ca-certificates \
 		cgroupfs-mount \
-		cmake \
 		coreutils \
 		curl \
 		dnsutils \
 		file \
 		findutils \
-		fortune-mod \
-		fortunes-off \
 		gcc \
 		git \
 		gnupg \
@@ -117,7 +114,6 @@ base() {
 		make \
 		mount \
 		net-tools \
-		nfs-common \
 		network-manager \
 		openvpn \
 		rxvt-unicode-256color \
