@@ -20,7 +20,7 @@ update_forks() {
 	local githubuser=$(git config --global --get github.user 2>/dev/null)
 
 	# find all the dirs in $HOME
-	find "$HOME" -maxdepth 1 -type d -not -path '*/\.*' -not -path "$HOME" -print0 | while read -d '' -r dir; do
+	find -L "$HOME" -maxdepth 1 -type d -not -path '*/\.*' -not -path "$HOME" -print0 | while read -d '' -r dir; do
 		# subshell because we cd
 		(
 		cd "$dir"

@@ -13,7 +13,7 @@
 # :date: 8 June 2015
 # :version: 0.0.1
 ##############################################################################
-set -e
+#set -e
 set -o pipefail
 
 browser_exec(){
@@ -27,9 +27,16 @@ browser_exec(){
 		if [[ "$firefox_state" == "true" ]]; then
 			docker exec -i firefox /usr/bin/firefox "$@" 2>/dev/null
 		else
-			# neither are currently running so lets start chrome and open the page
-			source $HOME/.dockerfunc
-			chrome "$@"
+			# maybe we are running in runc
+			chrome_pid=$(ps -aux | grep "[c]hrome --user-data" | awk '{ print $2 }' | head -n 1 2>/dev/null)
+			if [[ ! -z "$chrome_pid" ]]; then
+				# nsenter the chrome runc container
+				sudo nsenter -t "$chrome_pid" --pid --user --net --uts --mount --ipc /usr/bin/google-chrome --user-data-dir=/data "$@" 2>/dev/null
+			else
+				# neither are currently running so lets start chrome and open the page
+				source $HOME/.dockerfunc
+				chrome "$@"
+			fi
 		fi
 	fi
 }

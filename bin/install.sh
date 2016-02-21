@@ -36,12 +36,12 @@ setup_sources() {
 	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
 
 	# hack for latest git (don't judge)
-	deb http://ppa.launchpad.net/git-core/ppa/ubuntu vivid main
-	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu vivid main
+	deb http://ppa.launchpad.net/git-core/ppa/ubuntu wily main
+	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu wily main
 
 	# neovim
-	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu vivid main
-	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu vivid main
+	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu wily main
+	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu wily main
 
 	# tlp: Advanced Linux Power Management
 	# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
@@ -90,14 +90,11 @@ base() {
 		bzip2 \
 		ca-certificates \
 		cgroupfs-mount \
-		cmake \
 		coreutils \
 		curl \
 		dnsutils \
 		file \
 		findutils \
-		fortune-mod \
-		fortunes-off \
 		gcc \
 		git \
 		gnupg \
@@ -117,7 +114,6 @@ base() {
 		make \
 		mount \
 		net-tools \
-		nfs-common \
 		network-manager \
 		openvpn \
 		rxvt-unicode-256color \
@@ -252,7 +248,7 @@ install_git() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.5.1
+	export GO_VERSION=1.5.3
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -284,10 +280,13 @@ install_golang() {
 	go get github.com/jfrazelle/battery
 	go get github.com/jfrazelle/budf
 	go get github.com/jfrazelle/cliaoke
+	go get github.com/jfrazelle/magneto
+	go get github.com/jfrazelle/netns
 	go get github.com/jfrazelle/netscan
 	go get github.com/jfrazelle/onion
 	go get github.com/jfrazelle/pastebinit
 	go get github.com/jfrazelle/pony
+	go get github.com/jfrazelle/riddler
 	go get github.com/jfrazelle/udict
 	go get github.com/jfrazelle/weather
 
@@ -415,6 +414,23 @@ get_dotfiles() {
 	ln -snf "/home/$USERNAME/.vim/vimrc" "/home/$USERNAME/.vimrc"
 	sudo ln -snf "/home/$USERNAME/.vim" /root/.vim
 	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.vimrc
+
+	# alias vim dotfiles to neovim
+	mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+	ln -snf "/home/$USERNAME/.vim" $XDG_CONFIG_HOME/nvim
+	ln -snf "/home/$USERNAME/.vimrc" $XDG_CONFIG_HOME/nvim/init.vim
+	# do the same for root
+	sudo mkdir -p /root/.config
+	sudo ln -snf "/home/$USERNAME/.vim" /root/.config/nvim
+	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.config/nvim/init.vim
+
+	# update alternatives to neovim
+	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+	sudo update-alternatives --config vi
+	sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+	sudo update-alternatives --config vim
+	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+	sudo update-alternatives --config editor
 
 	mkdir -p ~/Pictures
 	mkdir -p ~/Torrents

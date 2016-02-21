@@ -72,6 +72,19 @@ apt_file(){
 		jess/apt-file
 }
 alias apt-file="apt_file"
+audacity(){
+	del_stopped audacity
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		-e QT_DEVICE_PIXEL_RATIO \
+		--device /dev/snd \
+		--group-add audio \
+		--name audacity \
+		jess/audacity
+}
 aws(){
 	docker run -it --rm \
 		-v $HOME/.aws:/root/.aws \
@@ -134,7 +147,7 @@ chrome(){
 
 	# one day remove /etc/hosts bind mount when effing
 	# overlay support inotify, such bullshit
-	docker run -d \
+	sudo docker run -d \
 		--memory 3gb \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -246,6 +259,7 @@ hollywood(){
 htop(){
 	docker run --rm -it \
 		--pid host \
+		--net none \
 		--name htop \
 		jess/htop
 }
@@ -435,6 +449,7 @@ notify_osd(){
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		--net none \
 		-v /etc \
 		-v /home/user/.dbus \
 		-v /home/user/.cache/dconf \
@@ -513,6 +528,7 @@ pulseaudio(){
 		--device /dev/snd \
 		-p 4713:4713 \
 		--restart always \
+		--group-add audio \
 		--name pulseaudio \
 		jess/pulseaudio
 }
@@ -632,7 +648,10 @@ skype(){
 		-e DISPLAY=unix$DISPLAY \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
+		--security-opt seccomp:unconfined \
 		--device /dev/video0 \
+		--group-add video \
+		--group-add audio \
 		--name skype \
 		jess/skype
 }
@@ -862,6 +881,8 @@ vlc(){
 		-e QT_DEVICE_PIXEL_RATIO \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
+		--group-add audio \
+		--group-add video \
 		-v $HOME/Torrents:/home/vlc/Torrents \
 		--device /dev/dri \
 		--name vlc \
