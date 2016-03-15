@@ -295,6 +295,7 @@ install_golang() {
 	go get github.com/crosbymichael/gistit
 	go get github.com/crosbymichael/ip-addr
 	go get github.com/cbednarski/hostess/cmd/hostess
+	go get github.com/Soulou/curl-unix-socket
 
 	go get github.com/cloudflare/redoctober
 	go get github.com/docker/containerd
@@ -345,14 +346,25 @@ install_graphics() {
 
 # install custom scripts/binaries
 install_scripts() {
-	local scripts=( asciinema curl-unix-socket gist git-icdiff go-md2man have htotheizzo icdiff light lolcat speedtest todo )
+	# install acsciinema
+	curl -sSL https://asciinema.org/install | sh
+
+	# install speedtest
+	curl -sSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py > /usr/local/bin/speedtest
+
+	# install icdiff
+	curl -sSL https://raw.githubusercontent.com/jeffkaufman/icdiff/master/icdiff > /usr/local/bin/icdiff
+	curl -sSL https://raw.githubusercontent.com/jeffkaufman/icdiff/master/git-icdiff > /usr/local/bin/git-icdiff
+
+	# install lolcat
+	curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
+
+	local scripts=( go-md2man htotheizzo light )
 
 	for script in "${scripts[@]}"; do
 		curl -sSL "http://jesss.s3.amazonaws.com/binaries/$script" > /usr/local/bin/$script
 		chmod +x /usr/local/bin/$script
 	done
-
-	curl -sSL http://jesss.s3.amazonaws.com/binaries/todo_completions > /etc/bash_completion.d/todo
 }
 
 # install syncthing
