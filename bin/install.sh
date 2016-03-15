@@ -66,6 +66,10 @@ setup_sources() {
 
 	# add the tlp apt-repo gpg key
 	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
+
+	# turn off translations, speed up apt-get update
+	mkdir -p /etc/apt/apt.conf.d
+	echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
 }
 
 # installs base packages
@@ -94,8 +98,6 @@ base() {
 		gcc \
 		git \
 		gnupg \
-		gnupg-agent \
-		gnupg-curl \
 		grep \
 		gzip \
 		hostname \
@@ -194,52 +196,6 @@ install_docker() {
 	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 i915.enable_psr=0 pcie_asm=force i915.i915_enable_fbc=1 i915.i915_enable_rc6=7 i915.lvds_downclock=1 apparmor=1 security=apparmor"/g' /etc/default/grub
 	echo "Docker has been installed. If you want memory management & swap"
 	echo "run update-grub & reboot"
-}
-
-# installs git from source
-# no longer used but nice to have
-install_git() {
-	local GIT_VERSION=2.3.0
-	local GIT_SRC=/usr/src/git
-
-	# if we are passing the version
-	if [[ ! -z "$1" ]]; then
-		local GIT_VERSION=$1
-	fi
-
-	# install dependencies
-	apt-get install -y \
-		gettext \
-		gcc \
-		libcurl4-gnutls-dev \
-		libexpat1-dev \
-		libssl-dev \
-		libz-dev \
-		make \
-		--no-install-recommends
-
-	# purge old src
-	if [[ -d "$GIT_SRC" ]]; then
-		rm -rf "$GIT_SRC"
-	fi
-
-	# get the new src
-	mkdir -p /usr/src/git
-	curl -sSl "https://www.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" | tar -v -C $GIT_SRC -xz --strip-components=1 && \
-		cd "$GIT_SRC" && \
-		make prefix=/usr/local all && \
-		make prefix=/usr/local install
-
-	# copy the bash completions
-	cp /usr/src/git/contrib/completion/git-completion.bash /etc/bash_completion.d/git
-
-	# get the new man pages
-	curl -sSl "https://www.kernel.org/pub/software/scm/git/git-manpages-${GIT_VERSION}.tar.gz" | tar -v -C /usr/local/share/man -xz
-
-	# cleanup
-	rm -rf "$GIT_SRC"
-
-	echo "Git version $GIT_VERSION has been installed"
 }
 
 # install/update golang from source
@@ -519,8 +475,6 @@ main() {
 		get_dotfiles
 	elif [[ $cmd == "golang" ]]; then
 		install_golang "$2"
-	elif [[ $cmd == "git" ]]; then
-		install_git "$2"
 	elif [[ $cmd == "scripts" ]]; then
 		install_scripts
 	elif [[ $cmd == "syncthing" ]]; then
