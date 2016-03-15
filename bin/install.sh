@@ -351,15 +351,19 @@ install_scripts() {
 
 	# install speedtest
 	curl -sSL https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py > /usr/local/bin/speedtest
+	chmod +x /usr/local/bin/speedtest
 
 	# install icdiff
 	curl -sSL https://raw.githubusercontent.com/jeffkaufman/icdiff/master/icdiff > /usr/local/bin/icdiff
 	curl -sSL https://raw.githubusercontent.com/jeffkaufman/icdiff/master/git-icdiff > /usr/local/bin/git-icdiff
+	chmod +x /usr/local/bin/icdiff
+	chmod +x /usr/local/bin/git-icdiff
 
 	# install lolcat
 	curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
+	chmod +x /usr/local/bin/lolcat
 
-	local scripts=( go-md2man htotheizzo light )
+	local scripts=( go-md2man light syncthing )
 
 	for script in "${scripts[@]}"; do
 		curl -sSL "http://jesss.s3.amazonaws.com/binaries/$script" > /usr/local/bin/$script
@@ -484,6 +488,7 @@ usage() {
 	echo "  wm                          - install window manager/desktop pkgs"
 	echo "  dotfiles                    - get dotfiles"
 	echo "  golang                      - install golang and packages"
+	echo "  scripts                     - install scripts"
 	echo "  syncthing                   - install syncthing"
 }
 
@@ -518,6 +523,8 @@ main() {
 		install_golang "$2"
 	elif [[ $cmd == "git" ]]; then
 		install_git "$2"
+	elif [[ $cmd == "scripts" ]]; then
+		install_scripts
 	elif [[ $cmd == "syncthing" ]]; then
 		install_syncthing
 	else

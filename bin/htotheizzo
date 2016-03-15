@@ -1,0 +1,106 @@
+#!/bin/bash
+USERNAME=$(find /home/* -maxdepth 0 -printf "%f" -type d)
+
+help() {
+	echo "htotheizzo - a simple script that makes updating/upgrading homebrew or apt-get, gems, pip packages, and node packages so much easier"
+}
+
+dcleanup(){
+	docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+
+update_docker() {
+	local docker_dir="/home/$USERNAME/docker"
+
+	# stop docker
+	dcleanup
+	systemctl stop docker
+
+	if [[ -d $docker_dir ]]; then
+		cd $docker_dir
+
+		# Clean up bundles
+		rm -rf bundles
+
+		# Include contributed completions
+		mkdir -p /etc/bash_completion.d
+		cp contrib/completion/bash/docker /etc/bash_completion.d/
+
+		# Include apparmor profile for docker-engine
+		go run contrib/apparmor/*.go /etc/apparmor.d/docker-engine
+
+		# Include contributed man pages
+		man/md2man-all.sh -q
+		local manRoot="/usr/share/man"
+		mkdir -p "$manRoot"
+		for manDir in man/man?; do
+			local manBase="$(basename "$manDir")" # "man1"
+			for manFile in "$manDir"/*; do
+				local manName="$(basename "$manFile")" # "docker-build.1"
+				mkdir -p "$manRoot/$manBase"
+				gzip -c "$manFile" > "$manRoot/$manBase/$manName.gz"
+			done
+		done
+
+		# move vim syntax highlighting
+		if [[ ! -d /home/$USERNAME/.vim/bundle/Dockerfile ]]; then
+			mkdir -p /home/$USERNAME/.vim/bundle/Dockerfile
+		fi
+		yes | cp -r contrib/syntax/vim/* /home/$USERNAME/.vim/bundle/Dockerfile/
+		chown -R $USERNAME /home/$USERNAME/.vim/bundle/Dockerfile
+	fi
+
+	# get the binary
+	#curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-latest > /usr/bin/docker
+	#curl -sSL https://experimental.docker.com/builds/Linux/x86_64/docker-latest > /usr/bin/docker
+	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
+
+	# start docker
+	systemctl start docker
+}
+
+update_linux() {
+	apt-get -y update
+	apt-get -y upgrade
+	apt-get -y autoremove
+	apt-get -y autoclean
+	apt-get -y clean
+	rm -rf /var/lib/apt/lists/*
+
+	update_docker
+}
+
+update() {
+	echo "htotheizzo is running the update functions"
+
+	# detect the OS for the update functions
+	if [[ "$OSTYPE" == "linux-gnu" ]]; then
+		echo "Hey there Linux user. You rule."
+
+		# on linux, make sure they are the super user
+		if [ "$UID" -ne 0 ]; then
+			echo "Please run as root"
+			exit 1
+		fi
+
+		# update
+		update_linux;
+	else
+		echo "We don't have update functions for OS: ${OSTYPE}"
+		echo "Moving on..."
+	fi
+
+	echo "htotheizzo is complete, you got 99 problems but updates ain't one"
+}
+
+main() {
+	local arg=$1
+	if [[ ! -z "$arg" ]]; then
+		help
+	else
+		update
+	fi
+}
+
+main $@
