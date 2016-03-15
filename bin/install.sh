@@ -294,8 +294,6 @@ install_golang() {
 	go get github.com/cloudflare/cfssl/cmd/cfssljson
 	go get github.com/crosbymichael/gistit
 	go get github.com/crosbymichael/ip-addr
-	go get github.com/digitalocean/doctl
-	go get github.com/docker/gordon/pulls
 	go get github.com/cbednarski/hostess/cmd/hostess
 
 	go get github.com/cloudflare/redoctober
@@ -429,7 +427,7 @@ get_dotfiles() {
 	make
 
 	# enable dbus for the user session
-	systemctl --user enable dbus.socket
+	# systemctl --user enable dbus.socket
 
 	sudo systemctl enable i3lock
 	sudo systemctl enable suspend-sedation.service
