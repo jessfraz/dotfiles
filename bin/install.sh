@@ -143,8 +143,8 @@ base() {
 	apt-get clean
 
 	install_docker
-	install_syncthing
 	install_scripts
+	install_syncthing
 }
 
 # setup sudo for a user
@@ -363,7 +363,15 @@ install_scripts() {
 	curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
 	chmod +x /usr/local/bin/lolcat
 
-	local scripts=( go-md2man light syncthing )
+	# download syncthing binary
+	if [[ ! -f /usr/local/bin/syncthing ]]; then
+		curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
+		chmod +x /usr/local/bin/syncthing
+	fi
+
+	syncthing -upgrade
+
+	local scripts=( go-md2man have light )
 
 	for script in "${scripts[@]}"; do
 		curl -sSL "http://jesss.s3.amazonaws.com/binaries/$script" > /usr/local/bin/$script
@@ -373,13 +381,7 @@ install_scripts() {
 
 # install syncthing
 install_syncthing() {
-	# download binary
-	curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
-	chmod +x /usr/local/bin/syncthing
-
 	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
-
-	syncthing -upgrade
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"
