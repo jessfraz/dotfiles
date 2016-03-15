@@ -297,6 +297,33 @@ install_golang() {
 	go get github.com/digitalocean/doctl
 	go get github.com/docker/gordon/pulls
 	go get github.com/cbednarski/hostess/cmd/hostess
+
+	go get github.com/cloudflare/redoctober
+	go get github.com/docker/containerd
+	go get github.com/docker/engine-api
+	go get github.com/docker/libnetwork
+	go get github.com/docker/notary
+	go get github.com/letsencrypt/boulder
+	go get github.com/opencontainers/runc
+
+	aliases=( cloudflare/cfssl cloudflare/redoctober docker/containerd docker/docker docker/engine-api docker/libnetwork docker/notary letsencrypt/boulder opencontainers/runc )
+	for project in "${aliases[@]}"; do
+		owner=$(dirname "$project")
+		repo=$(basename "$project")
+		if [[ -d "${HOME}/${repo}" ]]; then
+			rm -rf "${HOME}/${repo}"
+		fi
+
+		# make sure we create the right git remotes
+		(
+		cd "${GOPATH}/src/github.com/${project}"
+		git remote set-url --push origin no_push
+		git remote add jfrazelle "git@github.com:jfrazelle/${repo}.git"
+		)
+
+		# create the alias
+		ln -snf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
+	done
 	)
 }
 
