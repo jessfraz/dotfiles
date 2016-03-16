@@ -247,6 +247,7 @@ install_golang() {
 	go get github.com/crosbymichael/gistit
 	go get github.com/crosbymichael/ip-addr
 	go get github.com/cbednarski/hostess/cmd/hostess
+	go get github.com/FiloSottile/gvt
 	go get github.com/Soulou/curl-unix-socket
 
 	go get github.com/cloudflare/redoctober
@@ -273,9 +274,18 @@ install_golang() {
 		)
 
 		# create the alias
-		ln -snf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
+		ln -snvf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
 	done
-	)
+
+	# create symlinks from personal projects to
+	# the ${HOME} directory
+	projectsdir=$GOPATH/src/github.com/jfrazelle
+	base=$(basename "$projectsdir")
+	find "$projectsdir" -maxdepth 1 -not -name "$base" -type d -print0 | while read -d '' -r dir; do
+	base=$(basename "$dir")
+	ln -snvf "$dir" "${HOME}/${base}"
+done
+)
 }
 
 # install graphics drivers
