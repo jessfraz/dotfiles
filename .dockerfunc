@@ -281,13 +281,12 @@ imagemin(){
 }
 irssi() {
 	del_stopped irssi
-	relies_on notify_osd
+	# relies_on notify_osd
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/.irssi:/home/user/.irssi \
-		--volumes-from notify_osd \
-		-e DBUS_SESSION_DBUS_ADDRESS="unix:abstract=/home/user/.dbus/session-bus/$(docker exec notify_osd ls /home/user/.dbus/session-bus/)" \
+		--read-only \
 		--name irssi \
 		jess/irssi
 }
