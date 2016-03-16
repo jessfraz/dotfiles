@@ -230,7 +230,6 @@ install_golang() {
 
 	go get github.com/jfrazelle/bane
 	go get github.com/jfrazelle/battery
-	go get github.com/jfrazelle/budf
 	go get github.com/jfrazelle/cliaoke
 	go get github.com/jfrazelle/magneto
 	go get github.com/jfrazelle/netns
@@ -250,20 +249,24 @@ install_golang() {
 	go get github.com/FiloSottile/gvt
 	go get github.com/Soulou/curl-unix-socket
 
-	go get github.com/cloudflare/redoctober
-	go get github.com/docker/containerd
-	go get github.com/docker/engine-api
-	go get github.com/docker/libnetwork
-	go get github.com/docker/notary
-	go get github.com/letsencrypt/boulder
-	go get github.com/opencontainers/runc
-
 	aliases=( cloudflare/cfssl cloudflare/redoctober docker/containerd docker/docker docker/engine-api docker/libnetwork docker/notary letsencrypt/boulder opencontainers/runc )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
 		if [[ -d "${HOME}/${repo}" ]]; then
 			rm -rf "${HOME}/${repo}"
+		fi
+
+		mkdir -p "${GOPATH}/src/github.com/${owner}"
+
+		if [[ ! -d "${GOPATH}/src/github.com/${project}" ]]; then
+			(
+			# clone the repo
+			cd "${GOPATH}/src/github.com/${owner}"
+			git clone "git@github.com:${project}.git"
+			)
+		else
+			echo "found ${project} already in gopath"
 		fi
 
 		# make sure we create the right git remotes
