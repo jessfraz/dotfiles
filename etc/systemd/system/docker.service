@@ -5,7 +5,6 @@ After=network.target docker.socket firewall.service
 Requires=docker.socket
 
 [Service]
-Environment=GOMAXPROCS=1
 ExecStartPre=-/sbin/iptables -F DOCKER
 ExecStartPre=-/sbin/iptables -X DOCKER
 ExecStartPre=-/sbin/iptables -N DOCKER
@@ -20,6 +19,8 @@ ExecStart=/usr/bin/docker daemon -D \
 MountFlags=slave
 LimitNOFILE=1048576
 LimitNPROC=1048576
+MemoryLimit=4G
+CPUQuota=50%
 
 [Install]
 WantedBy=multi-user.target
