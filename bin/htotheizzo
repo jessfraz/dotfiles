@@ -28,7 +28,7 @@ update_docker() {
 		cp contrib/completion/bash/docker /etc/bash_completion.d/
 
 		# Include apparmor profile for docker-engine
-		go run contrib/apparmor/*.go /etc/apparmor.d/docker-engine
+		# go run contrib/apparmor/*.go /etc/apparmor.d/docker-engine
 
 		# Include contributed man pages
 		man/md2man-all.sh -q
