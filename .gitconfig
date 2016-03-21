@@ -151,8 +151,8 @@
 
 	insteadOf = "gist:"
 [user]
-	name = Jessica Frazelle
-	email = acidburn@docker.com
+	name = Jess Frazelle
+	email = jess@mesosphere.com
 	signingkey = 0x18F3685C0022BFF3
 #[remote "origin"]
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
