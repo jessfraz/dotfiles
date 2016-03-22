@@ -203,6 +203,11 @@ consul(){
 	sudo hostess add consul $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" consul)
 	browser-exec "http://consul:8500"
 }
+dcos(){
+	docker run -it --rm \
+		-v $HOME/.dcos:/root/.dcos \
+		jess/dcos-cli "$@"
+}
 firefox(){
 	del_stopped firefox
 
