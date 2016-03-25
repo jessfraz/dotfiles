@@ -824,7 +824,7 @@ vagrant(){
 	del_stopped vagrant
 
 	# modprobe the module
-	sudo modprobe vboxdrv
+	#sudo modprobe vboxdrv
 
 	docker run -it \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -836,7 +836,6 @@ vagrant(){
 		--net host \
 		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
 		-v $HOME/.vbox/config:/root/.config/VirtualBox \
-		-v $HOME/oscon:/root/oscon \
 		--privileged \
 		--entrypoint bash \
 		jess/vagrant
@@ -845,9 +844,9 @@ virtualbox(){
 	del_stopped virtualbox
 
 	# modprobe the module
-	sudo modprobe vboxdrv
+	#sudo modprobe vboxdrv
 	# and the extras for networking
-	sudo insmod /lib/modules/$(uname -r)/misc/vboxnet*.ko
+	#sudo insmod /lib/modules/$(uname -r)/misc/vboxnet*.ko
 
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -859,6 +858,8 @@ virtualbox(){
 		--net host \
 		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
 		-v $HOME/.vbox/config:/root/.config/VirtualBox \
+		-v /lib/modules/$(uname -r)/misc:/lib/modules/$(uname -r)/misc \
+		-v /usr/src/linux-headers-$(uname -r):/usr/src/linux-headers-$(uname -r) \
 		--privileged \
 		jess/virtualbox
 }
