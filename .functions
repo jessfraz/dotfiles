@@ -228,7 +228,11 @@ repo() {
 		local giturl="http:${giturl}"
 
 		if [[ $gitbranch != "master" ]]; then
-			local giturl="${giturl}/tree/${gitbranch}"
+			if echo "${giturl}" | grep -i "bitbucket" > /dev/null ; then
+				local giturl="${giturl}/branch/${gitbranch}"
+                    	else
+                    		local giturl="${giturl}/tree/${gitbranch}"
+                    	fi
 		fi
 
 		echo $giturl
