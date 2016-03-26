@@ -308,6 +308,21 @@ kernel_builder(){
 		--name kernel-builder \
 		jess/kernel-builder
 }
+kvm(){
+	del_stopped kvm
+	relies_on pulseaudio
+
+	# modprobe the module
+	sudo modprobe kvm
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=unix$DISPLAY \
+		--name kvm \
+		--privileged \
+		jess/kvm
+}
 libreoffice(){
 	del_stopped libreoffice
 
@@ -839,6 +854,13 @@ vagrant(){
 		--privileged \
 		--entrypoint bash \
 		jess/vagrant
+}
+virsh(){
+	docker run -it --rm \
+		-v /var/run/libvirt:/var/run/libvirt \
+		--net host \
+		--log-driver none \
+		jess/libvirt-client virsh "$@"
 }
 virtualbox(){
 	del_stopped virtualbox
