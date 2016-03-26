@@ -55,7 +55,7 @@ main(){
 	docker cp "$iso" "kvm:/tmp/${name}.iso"
 
 	# create the virtual machine
-	docker exec -it kvm virt-install -r 1024 --accelerate -n "$name" \
+	docker exec -it kvm virt-install -r 2048 --accelerate -n "$name" \
 		-f "$guest_dir/guest.img" \
 		--cdrom "/tmp/${name}.iso" \
 		--network "bridge=${bridge}" \

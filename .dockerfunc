@@ -318,7 +318,11 @@ kvm(){
 	docker run -d \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v /run/libvirt:/var/run/libvirt \
 		-e DISPLAY=unix$DISPLAY \
+		--link pulseaudio:pulseaudio \
+		-e PULSE_SERVER=pulseaudio \
+		--group-add audio \
 		--name kvm \
 		--privileged \
 		jess/kvm
@@ -856,12 +860,30 @@ vagrant(){
 		jess/vagrant
 }
 virsh(){
+	relies_on kvm
+
 	docker run -it --rm \
-		-v /var/run/libvirt:/var/run/libvirt \
-		--net host \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /run/libvirt:/var/run/libvirt \
 		--log-driver none \
-		jess/libvirt-client virsh "$@"
+		--net container:kvm \
+		jess/libvirt-client "$@"
 }
+virt_viewer(){
+	relies_on kvm
+
+	docker run -it --rm \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix  \
+		-e DISPLAY=unix$DISPLAY \
+		-v /run/libvirt:/var/run/libvirt \
+		-e PULSE_SERVER=pulseaudio \
+		--group-add audio \
+		--log-driver none \
+		--net container:kvm \
+		jess/virt-viewer "$@"
+}
+alias virt-viewer="virt_viewer"
 virtualbox(){
 	del_stopped virtualbox
 
