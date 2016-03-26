@@ -306,7 +306,7 @@ install_graphics() {
 		local pkgs="xorg xserver-xorg xserver-xorg-video-intel"
 	fi
 
-	apt-get install -y "$pkgs" --no-install-recommends
+	apt-get install -y $pkgs --no-install-recommends
 }
 
 # install custom scripts/binaries
@@ -374,7 +374,7 @@ install_wifi() {
 install_wmapps() {
 	local pkgs="feh i3 i3lock i3status scrot slim neovim"
 
-	apt-get install -y "$pkgs" --no-install-recommends
+	apt-get install -y $pkgs --no-install-recommends
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
