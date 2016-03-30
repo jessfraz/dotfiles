@@ -169,7 +169,7 @@ chrome(){
 		--name chrome \
 		jess/chrome --user-data-dir=/data \
 		--proxy-server="$proxy" \
-		--host-resolver-rules="$map" "$args"
+		--host-resolver-rules="$map" $args
 
 }
 consul(){
