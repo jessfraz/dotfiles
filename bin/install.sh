@@ -200,7 +200,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.5.3
+	export GO_VERSION=1.6.0
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -241,6 +241,7 @@ install_golang() {
 	go get github.com/jfrazelle/udict
 	go get github.com/jfrazelle/weather
 
+	go get github.com/brianredbeard/gpget
 	go get github.com/cloudflare/cfssl/cmd/cfssl
 	go get github.com/cloudflare/cfssl/cmd/cfssljson
 	go get github.com/crosbymichael/gistit
