@@ -1,6 +1,7 @@
 #!/bin/bash
 # Bash wrappers for docker run commands
 
+export DOCKER_REPO_PREFIX=jess
 
 #
 # Helper Functions
@@ -69,7 +70,7 @@ nginx_config(){
 apt_file(){
 	docker run --rm -it \
 		--name apt-file \
-		jess/apt-file
+		${DOCKER_REPO_PREFIX}/apt-file
 }
 alias apt-file="apt_file"
 audacity(){
@@ -83,14 +84,14 @@ audacity(){
 		--device /dev/snd \
 		--group-add audio \
 		--name audacity \
-		jess/audacity
+		${DOCKER_REPO_PREFIX}/audacity
 }
 aws(){
 	docker run -it --rm \
 		-v $HOME/.aws:/root/.aws \
 		--log-driver none \
 		--name aws \
-		jess/awscli "$@"
+		${DOCKER_REPO_PREFIX}/awscli "$@"
 }
 bees(){
 	docker run -it --rm \
@@ -100,7 +101,7 @@ bees(){
 		-v $HOME/.dev:/root/.ssh:ro \
 		--log-driver none \
 		--name bees \
-		jess/beeswithmachineguns "$@"
+		${DOCKER_REPO_PREFIX}/beeswithmachineguns "$@"
 }
 cadvisor(){
 	docker run -d \
@@ -128,7 +129,7 @@ cheese(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--name cheese \
-		jess/cheese
+		${DOCKER_REPO_PREFIX}/cheese
 }
 chrome(){
 	# add flags for proxy if passed
@@ -167,7 +168,7 @@ chrome(){
 		--group-add audio \
 		--group-add video \
 		--name chrome \
-		jess/chrome --user-data-dir=/data \
+		${DOCKER_REPO_PREFIX}/chrome --user-data-dir=/data \
 		--proxy-server="$proxy" \
 		--host-resolver-rules="$map" $args
 
@@ -190,11 +191,11 @@ consul(){
 		--net host \
 		-e GOMAXPROCS=2 \
 		--name consul \
-		jess/consul agent \
+		${DOCKER_REPO_PREFIX}/consul agent \
 		-bootstrap-expect 1 \
 		-config-dir /etc/consul.d \
 		-data-dir /data \
-		-encrypt $(docker run --rm jess/consul keygen) \
+		-encrypt $(docker run --rm ${DOCKER_REPO_PREFIX}/consul keygen) \
 		-ui-dir /usr/src/consul \
 		-server \
 		-dc neverland \
@@ -206,7 +207,7 @@ consul(){
 dcos(){
 	docker run -it --rm \
 		-v $HOME/.dcos:/root/.dcos \
-		jess/dcos-cli "$@"
+		${DOCKER_REPO_PREFIX}/dcos-cli "$@"
 }
 firefox(){
 	del_stopped firefox
@@ -228,7 +229,7 @@ firefox(){
 		--device /dev/snd \
 		--device /dev/dri \
 		--name firefox \
-		jess/firefox "$@"
+		${DOCKER_REPO_PREFIX}/firefox "$@"
 
 	# exit current shell
 	exit 0
@@ -240,7 +241,7 @@ gcalcli(){
 		-v $HOME/.gcalcli/work/oauth:/home/gcalcli/.gcalcli_oauth \
 		-v $HOME/.gcalcli/work/gcalclirc:/home/gcalcli/.gcalclirc \
 		--name gcalcli \
-		jess/gcalcli "$@"
+		${DOCKER_REPO_PREFIX}/gcalcli "$@"
 }
 gimp(){
 	del_stopped gimp
@@ -254,25 +255,25 @@ gimp(){
 		-e GDK_SCALE \
 		-e GDK_DPI_SCALE \
 		--name gimp \
-		jess/gimp
+		${DOCKER_REPO_PREFIX}/gimp
 }
 hollywood(){
 	docker run --rm -it \
 		--name hollywood \
-		jess/hollywood
+		${DOCKER_REPO_PREFIX}/hollywood
 }
 htop(){
 	docker run --rm -it \
 		--pid host \
 		--net none \
 		--name htop \
-		jess/htop
+		${DOCKER_REPO_PREFIX}/htop
 }
 http(){
 	docker run -t --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		--log-driver none \
-		jess/httpie "$@"
+		${DOCKER_REPO_PREFIX}/httpie "$@"
 }
 imagemin(){
 	local image=$1
@@ -282,7 +283,7 @@ imagemin(){
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Pictures:/root/Pictures \
-		jess/imagemin sh -c "imagemin /root/Pictures/${image} > /root/Pictures/${filename}_min.${extension}"
+		${DOCKER_REPO_PREFIX}/imagemin sh -c "imagemin /root/Pictures/${image} > /root/Pictures/${filename}_min.${extension}"
 }
 irssi() {
 	del_stopped irssi
@@ -293,20 +294,20 @@ irssi() {
 		-v $HOME/.irssi:/home/user/.irssi \
 		--read-only \
 		--name irssi \
-		jess/irssi
+		${DOCKER_REPO_PREFIX}/irssi
 }
 john(){
 	local file=$(realpath $1)
 
 	docker run --rm -it \
 		-v ${file}:/root/$(basename ${file}) \
-		jess/john $@
+		${DOCKER_REPO_PREFIX}/john $@
 }
 kernel_builder(){
 	docker run --rm -it \
 		-v /usr/src:/usr/src \
 		--name kernel-builder \
-		jess/kernel-builder
+		${DOCKER_REPO_PREFIX}/kernel-builder
 }
 kvm(){
 	del_stopped kvm
@@ -325,7 +326,7 @@ kvm(){
 		--group-add audio \
 		--name kvm \
 		--privileged \
-		jess/kvm
+		${DOCKER_REPO_PREFIX}/kvm
 }
 libreoffice(){
 	del_stopped libreoffice
@@ -338,18 +339,18 @@ libreoffice(){
 		-e GDK_SCALE \
 		-e GDK_DPI_SCALE \
 		--name libreoffice \
-		jess/libreoffice
+		${DOCKER_REPO_PREFIX}/libreoffice
 }
 lpass(){
 	docker run --rm -it \
 		-v $HOME/.lpass:/root/.lpass \
 		--name lpass \
-		jess/lpass "$@"
+		${DOCKER_REPO_PREFIX}/lpass "$@"
 }
 lynx(){
 	docker run --rm -it \
 		--name lynx \
-		jess/lynx "$@"
+		${DOCKER_REPO_PREFIX}/lynx "$@"
 }
 masscan(){
 	docker run -it --rm \
@@ -357,7 +358,7 @@ masscan(){
 		--net host \
 		--cap-add NET_ADMIN \
 		--name masscan \
-		jess/masscan "$@"
+		${DOCKER_REPO_PREFIX}/masscan "$@"
 }
 mpd(){
 	del_stopped mpd
@@ -373,7 +374,7 @@ mpd(){
 		-v $HOME/.mpd:/var/lib/mpd \
 		-v $HOME/.mpd.conf:/etc/mpd.conf \
 		--name mpd \
-		jess/mpd
+		${DOCKER_REPO_PREFIX}/mpd
 }
 mutt(){
 	# subshell so we dont overwrite variables
@@ -407,7 +408,7 @@ mutt(){
 		-v $HOME/.gnupg:/home/user/.gnupg \
 		-v /etc/localtime:/etc/localtime:ro \
 		--name mutt${account} \
-		jess/mutt
+		${DOCKER_REPO_PREFIX}/mutt
 	)
 }
 ncmpc(){
@@ -417,7 +418,7 @@ ncmpc(){
 		-v $HOME/.mpd/socket:/var/run/mpd/socket \
 		-e MPD_HOST=/var/run/mpd/socket \
 		--name ncmpc \
-		jess/ncmpc "$@"
+		${DOCKER_REPO_PREFIX}/ncmpc "$@"
 }
 neoman(){
 	del_stopped neoman
@@ -429,7 +430,7 @@ neoman(){
 		--device /dev/bus/usb \
 		--device /dev/usb \
 		--name neoman \
-		jess/neoman
+		${DOCKER_REPO_PREFIX}/neoman
 }
 nes(){
 	del_stopped nes
@@ -441,12 +442,12 @@ nes(){
 		--device /dev/dri \
 		--device /dev/snd \
 		--name nes \
-		jess/nes /games/${game}.rom
+		${DOCKER_REPO_PREFIX}/nes /games/${game}.rom
 }
 netcat(){
 	docker run --rm -it \
 		--net host \
-		jess/netcat "$@"
+		${DOCKER_REPO_PREFIX}/netcat "$@"
 }
 nginx(){
 	del_stopped nginx
@@ -464,7 +465,7 @@ nginx(){
 nmap(){
 	docker run --rm -it \
 		--net host \
-		jess/nmap "$@"
+		${DOCKER_REPO_PREFIX}/nmap "$@"
 }
 notify_osd(){
 	del_stopped notify_osd
@@ -478,7 +479,7 @@ notify_osd(){
 		-v /home/user/.cache/dconf \
 		-e DISPLAY=unix$DISPLAY \
 		--name notify_osd \
-		jess/notify-osd
+		${DOCKER_REPO_PREFIX}/notify-osd
 }
 alias notify-send=notify_send
 notify_send(){
@@ -497,7 +498,7 @@ pandoc(){
 		-v ${lfile}:${rfile} \
 		-v /tmp:/tmp \
 		--name pandoc \
-		jess/pandoc ${args} ${rfile}
+		${DOCKER_REPO_PREFIX}/pandoc ${args} ${rfile}
 }
 pivman(){
 	del_stopped pivman
@@ -509,7 +510,7 @@ pivman(){
 		--device /dev/bus/usb \
 		--device /dev/usb \
 		--name pivman \
-		jess/pivman
+		${DOCKER_REPO_PREFIX}/pivman
 }
 pms(){
 	del_stopped pms
@@ -518,7 +519,7 @@ pms(){
 		-v $HOME/.mpd/socket:/var/run/mpd/socket \
 		-e MPD_HOST=/var/run/mpd/socket \
 		--name pms \
-		jess/pms "$@"
+		${DOCKER_REPO_PREFIX}/pms "$@"
 }
 pond(){
 	del_stopped pond
@@ -527,7 +528,7 @@ pond(){
 	docker run --rm -it \
 		--net container:torproxy \
 		--name pond \
-		jess/pond
+		${DOCKER_REPO_PREFIX}/pond
 }
 privoxy(){
 	del_stopped privoxy
@@ -539,7 +540,7 @@ privoxy(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-p 8118:8118 \
 		--name privoxy \
-		jess/privoxy
+		${DOCKER_REPO_PREFIX}/privoxy
 
 	sudo hostess add privoxy $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" privoxy)
 }
@@ -553,7 +554,7 @@ pulseaudio(){
 		--restart always \
 		--group-add audio \
 		--name pulseaudio \
-		jess/pulseaudio
+		${DOCKER_REPO_PREFIX}/pulseaudio
 }
 rainbowstream(){
 	docker run -it --rm \
@@ -561,7 +562,7 @@ rainbowstream(){
 		-v $HOME/.rainbow_oauth:/root/.rainbow_oauth \
 		-v $HOME/.rainbow_config.json:/root/.rainbow_config.json \
 		--name rainbowstream \
-		jess/rainbowstream
+		${DOCKER_REPO_PREFIX}/rainbowstream
 }
 registrator(){
 	del_stopped registrator
@@ -583,7 +584,7 @@ remmina(){
 		-e GDK_DPI_SCALE \
 		-v $HOME/.remmina:/root/.remmina \
 		--name remmina \
-		jess/remmina
+		${DOCKER_REPO_PREFIX}/remmina
 }
 ricochet(){
 	del_stopped ricochet
@@ -597,7 +598,7 @@ ricochet(){
 		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/dri \
 		--name ricochet \
-		jess/ricochet
+		${DOCKER_REPO_PREFIX}/ricochet
 }
 rstudio(){
 	del_stopped rstudio
@@ -611,7 +612,7 @@ rstudio(){
 		-e QT_DEVICE_PIXEL_RATIO \
 		--device /dev/dri \
 		--name rstudio \
-		jess/rstudio
+		${DOCKER_REPO_PREFIX}/rstudio
 }
 s3cmdocker(){
 	del_stopped s3cmd
@@ -621,7 +622,7 @@ s3cmdocker(){
 		-e AWS_SECRET_KEY="${DOCKER_AWS_ACCESS_SECRET}" \
 		-v $(pwd):/root/s3cmd-workspace \
 		--name s3cmd \
-		jess/s3cmd "$@"
+		${DOCKER_REPO_PREFIX}/s3cmd "$@"
 }
 scudcloud(){
 	del_stopped scudcloud
@@ -646,7 +647,7 @@ scudcloud(){
 		-v $HOME/.scudcloud:/home/jessie/.config/scudcloud \
 		--device /dev/snd \
 		--name scudcloud \
-		jess/scudcloud
+		${DOCKER_REPO_PREFIX}/scudcloud
 
 	# exit current shell
 	exit 0
@@ -659,7 +660,7 @@ shorewall(){
 		--cap-add NET_ADMIN \
 		--privileged \
 		--name shorewall \
-		jess/shorewall "$@"
+		${DOCKER_REPO_PREFIX}/shorewall "$@"
 }
 skype(){
 	del_stopped skype
@@ -676,7 +677,7 @@ skype(){
 		--group-add video \
 		--group-add audio \
 		--name skype \
-		jess/skype
+		${DOCKER_REPO_PREFIX}/skype
 }
 slack(){
 	del_stopped slack
@@ -692,7 +693,7 @@ slack(){
 		--group-add video \
 		-v /home/jessie/.slack:/root/.config/Slack \
 		--name slack \
-		jess/slack
+		${DOCKER_REPO_PREFIX}/slack
 }
 spotify(){
 	del_stopped spotify
@@ -705,7 +706,7 @@ spotify(){
 		--device /dev/snd \
 		--group-add audio \
 		--name spotify \
-		jess/spotify
+		${DOCKER_REPO_PREFIX}/spotify
 }
 ssh2john(){
 	local file=$(realpath $1)
@@ -713,7 +714,7 @@ ssh2john(){
 	docker run --rm -it \
 		-v ${file}:/root/$(basename ${file}) \
 		--entrypoint ssh2john \
-		jess/john $@
+		${DOCKER_REPO_PREFIX}/john $@
 }
 steam(){
 	del_stopped steam
@@ -730,25 +731,25 @@ steam(){
 		-e PULSE_SERVER=pulseaudio \
 		--device /dev/dri \
 		--name steam \
-		jess/steam
+		${DOCKER_REPO_PREFIX}/steam
 }
 t(){
 	docker run -t --rm \
 		-v $HOME/.trc:/root/.trc \
 		--log-driver none \
-		jess/tcli "$@"
+		${DOCKER_REPO_PREFIX}/tcli "$@"
 }
 tarsnap(){
 	docker run --rm -it \
 		-v $HOME/.tarsnaprc:/root/.tarsnaprc \
 		-v $HOME/.tarsnap:/root/.tarsnap \
 		-v $HOME:/root/workdir \
-		jess/tarsnap "$@"
+		${DOCKER_REPO_PREFIX}/tarsnap "$@"
 }
 telnet(){
 	docker run -it --rm \
 		--log-driver none \
-		jess/telnet "$@"
+		${DOCKER_REPO_PREFIX}/telnet "$@"
 }
 termboy(){
 	del_stopped termboy
@@ -757,7 +758,7 @@ termboy(){
 	docker run --rm -it \
 		--device /dev/snd \
 		--name termboy \
-		jess/nes /games/${game}.rom
+		${DOCKER_REPO_PREFIX}/nes /games/${game}.rom
 }
 tor(){
 	del_stopped tor
@@ -765,7 +766,7 @@ tor(){
 	docker run -d \
 		--net host \
 		--name tor \
-		jess/tor
+		${DOCKER_REPO_PREFIX}/tor
 
 	# set up the redirect iptables rules
 	sudo setup-tor-iptables
@@ -784,7 +785,7 @@ torbrowser(){
 		-e GDK_DPI_SCALE \
 		--device /dev/snd \
 		--name torbrowser \
-		jess/tor-browser
+		${DOCKER_REPO_PREFIX}/tor-browser
 
 	# exit current shell
 	exit 0
@@ -800,7 +801,7 @@ tormessenger(){
 		-e GDK_DPI_SCALE \
 		--device /dev/snd \
 		--name tormessenger \
-		jess/tor-messenger
+		${DOCKER_REPO_PREFIX}/tor-messenger
 
 	# exit current shell
 	exit 0
@@ -813,14 +814,14 @@ torproxy(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-p 9050:9050 \
 		--name torproxy \
-		jess/tor-proxy
+		${DOCKER_REPO_PREFIX}/tor-proxy
 
 	sudo hostess add torproxy $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" torproxy)
 }
 traceroute(){
 	docker run --rm -it \
 		--net host \
-		jess/traceroute "$@"
+		${DOCKER_REPO_PREFIX}/traceroute "$@"
 }
 transmission(){
 	del_stopped transmission
@@ -833,7 +834,7 @@ transmission(){
 		-p 51413:51413 \
 		-p 51413:51413/udp \
 		--name transmission \
-		jess/transmission
+		${DOCKER_REPO_PREFIX}/transmission
 
 
 	sudo hostess add transmission $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" transmission)
@@ -857,7 +858,7 @@ vagrant(){
 		-v $HOME/.vbox/config:/root/.config/VirtualBox \
 		--privileged \
 		--entrypoint bash \
-		jess/vagrant
+		${DOCKER_REPO_PREFIX}/vagrant
 }
 virsh(){
 	relies_on kvm
@@ -867,7 +868,7 @@ virsh(){
 		-v /run/libvirt:/var/run/libvirt \
 		--log-driver none \
 		--net container:kvm \
-		jess/libvirt-client "$@"
+		${DOCKER_REPO_PREFIX}/libvirt-client "$@"
 }
 virt_viewer(){
 	relies_on kvm
@@ -881,7 +882,7 @@ virt_viewer(){
 		--group-add audio \
 		--log-driver none \
 		--net container:kvm \
-		jess/virt-viewer "$@"
+		${DOCKER_REPO_PREFIX}/virt-viewer "$@"
 }
 alias virt-viewer="virt_viewer"
 virtualbox(){
@@ -905,7 +906,7 @@ virtualbox(){
 		-v /lib/modules/$(uname -r)/misc:/lib/modules/$(uname -r)/misc \
 		-v /usr/src/linux-headers-$(uname -r):/usr/src/linux-headers-$(uname -r) \
 		--privileged \
-		jess/virtualbox
+		${DOCKER_REPO_PREFIX}/virtualbox
 }
 visualstudio(){
 	del_stopped visualstudio
@@ -915,7 +916,7 @@ visualstudio(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix  \
 		-e DISPLAY=unix$DISPLAY \
 		--name visualstudio \
-		jess/visualstudio
+		${DOCKER_REPO_PREFIX}/visualstudio
 }
 vlc(){
 	del_stopped vlc
@@ -935,7 +936,7 @@ vlc(){
 		-v $HOME/Torrents:/home/vlc/Torrents \
 		--device /dev/dri \
 		--name vlc \
-		jess/vlc
+		${DOCKER_REPO_PREFIX}/vlc
 }
 watchman(){
 	del_stopped watchman
@@ -944,7 +945,7 @@ watchman(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v $HOME/Downloads:/root/Downloads \
 		--name watchman \
-		jess/watchman --foreground
+		${DOCKER_REPO_PREFIX}/watchman --foreground
 }
 wireshark(){
 	del_stopped wireshark
@@ -955,13 +956,13 @@ wireshark(){
 		-e DISPLAY=unix$DISPLAY \
 		--net host \
 		--name wireshark \
-		jess/wireshark
+		${DOCKER_REPO_PREFIX}/wireshark
 }
 wrk(){
 	docker run -it --rm \
 		--log-driver none \
 		--name wrk \
-		jess/wrk "$@"
+		${DOCKER_REPO_PREFIX}/wrk "$@"
 }
 ykpersonalize(){
 	del_stopped ykpersonalize
@@ -971,7 +972,7 @@ ykpersonalize(){
 		--device /dev/usb \
 		--device /dev/bus/usb \
 		--name ykpersonalize \
-		jess/ykpersonalize bash
+		${DOCKER_REPO_PREFIX}/ykpersonalize bash
 }
 yubico_piv_tool(){
 	del_stopped yubico-piv-tool
@@ -981,7 +982,7 @@ yubico_piv_tool(){
 		--device /dev/usb \
 		--device /dev/bus/usb \
 		--name yubico-piv-tool \
-		jess/yubico-piv-tool bash
+		${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
 }
 alias yubico-piv-tool="yubico_piv_tool"
 
@@ -1010,5 +1011,5 @@ command_not_found_handle () {
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /home:/home \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		"jess/$@"
+		"${DOCKER_REPO_PREFIX}/$@"
 }
