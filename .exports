@@ -32,3 +32,5 @@ export QT_DEVICE_PIXEL_RATIO=2
 
 # turn on go vendoring experiment
 export GO15VENDOREXPERIMENT=1
+
+export DOCKER_CONTENT_TRUST=1
