@@ -13,7 +13,7 @@ set -o pipefail
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
 	echo "Set the GITHUB_TOKEN env variable."
-	return 1
+	exit 1
 fi
 
 URI=https://api.github.com

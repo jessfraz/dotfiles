@@ -385,12 +385,7 @@ mutt(){
 	export IMAP_SERVER=""
 	export SMTP_SERVER=""
 
-	if [[ "$account" == "docker" ]]; then
-		GMAIL=$GMAIL_DOCKER
-		GMAIL_NAME=$GMAIL_DOCKER_NAME
-		GMAIL_PASS=$GMAIL_DOCKER_PASS
-		GMAIL_FROM=$GMAIL_DOCKER_FROM
-	elif [[ "$account" == "riseup" ]]; then
+	if [[ "$account" == "riseup" ]]; then
 		GMAIL=$MAIL_RISEUP
 		GMAIL_NAME=$MAIL_RISEUP_NAME
 		GMAIL_PASS=$MAIL_RISEUP_PASS
@@ -705,8 +700,11 @@ spotify(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
 		-e QT_DEVICE_PIXEL_RATIO \
+		--security-opt seccomp:unconfined \
 		--device /dev/snd \
+		--device /dev/dri \
 		--group-add audio \
+		--group-add video \
 		--name spotify \
 		${DOCKER_REPO_PREFIX}/spotify
 }
@@ -739,7 +737,7 @@ t(){
 	docker run -t --rm \
 		-v $HOME/.trc:/root/.trc \
 		--log-driver none \
-		${DOCKER_REPO_PREFIX}/tcli "$@"
+		${DOCKER_REPO_PREFIX}/t "$@"
 }
 tarsnap(){
 	docker run --rm -it \
