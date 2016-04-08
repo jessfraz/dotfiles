@@ -1,5 +1,5 @@
 [Unit]
-Description=Run update-repos hourly and on boot
+Description=Run updateforks hourly and on boot
 
 [Timer]
 OnBootSec=15min

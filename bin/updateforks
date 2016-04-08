@@ -1,0 +1,80 @@
+#!/bin/bash
+##############################################################################
+# updateforks
+# -----------
+# Fetch all forked repos in a users github and update the master branch with
+# upstreams.
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 6 April 2016
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+if [[ -z "$GITHUB_USERNAME" ]]; then
+	echo "Set the GITHUB_USERNAME env variable."
+	exit 1
+fi
+
+URI=https://api.github.com
+API_VERSION=v3
+
+DEFAULT_PER_PAGE=100
+
+ignore_repos=( mac-dev-setup )
+
+update_fork(){
+	local forked_repo=$1
+	local upstream_repo=$2
+	local tmpdir=$(mktemp -d)
+
+
+	if [[ " ${override_repos[@]} " =~ " ${repo} " ]]; then
+		return
+	fi
+
+	echo
+	echo "Updating Fork: ${forked_repo} -> Upstream: ${upstream_repo}"
+	echo
+
+	(
+	set -x
+	git clone "git@github.com:${forked_repo}.git" "$tmpdir"
+	cd "$tmpdir"
+	git remote add upstream "git@github.com:${upstream_repo}.git"
+	# just in case
+	git remote set-url --push upstream no_push
+	# fetch the remotes and prune
+	git remote -v update -p
+	git rebase upstream/master
+	git push origin master
+	echo "Updated local ${forked_repo} to origin/master"
+	)
+
+	# cleanup
+	rm -rf "$tmpdir"
+}
+
+
+main(){
+	# send the request
+	local response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}")
+	local repos=$(echo $response | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,id:.id} | @base64')
+
+	for r in $repos; do
+		raw="$(echo $r | base64 --decode)"
+		local id=$(echo $raw | jq --raw-output '.id')
+		local fullname=$(echo $raw | jq --raw-output '.fullname')
+		local repo=$(echo $raw | jq --raw-output '.repo')
+		local fork=$(echo $raw | jq --raw-output '.fork')
+
+		if [[ "$fork" == "true" ]]; then
+			local response=$(curl -sSL "${URI}/repos/${fullname}")
+			local upstream_user=$(echo $response | jq --raw-output '.parent.owner.login')
+			update_fork "${fullname}" "${upstream_user}/${repo}"
+		fi
+	done
+}
+
+main
