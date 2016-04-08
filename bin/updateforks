@@ -30,7 +30,7 @@ update_fork(){
 	local tmpdir=$(mktemp -d)
 
 
-	if [[ " ${override_repos[@]} " =~ " ${repo} " ]]; then
+	if [[ " ${ignore_repos[@]} " =~ " ${repo} " ]]; then
 		return
 	fi
 
