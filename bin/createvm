@@ -48,7 +48,7 @@ main(){
 
 	# create a fully-allocated (non-sparse) raw file
 	docker exec -it kvm mkdir -p "$guest_dir"
-	docker exec -it kvm fallocate -l 8192M "${guest_dir}/guest.img"
+	docker exec -it kvm fallocate -l 16384M "${guest_dir}/guest.img"
 
 	# copy the iso into the kvm container
 	echo "Copying $iso into the container. This may take a bit..."
