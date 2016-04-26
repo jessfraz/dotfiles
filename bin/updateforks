@@ -22,7 +22,7 @@ API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
-ignore_repos=( mac-dev-setup )
+ignore_repos=( mac-dev-setup universe )
 
 update_fork(){
 	local forked_repo=$1

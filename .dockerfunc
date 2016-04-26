@@ -840,26 +840,6 @@ transmission(){
 	sudo hostess add transmission $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" transmission)
 	browser-exec "http://transmission:9091"
 }
-vagrant(){
-	del_stopped vagrant
-
-	# modprobe the module
-	#sudo modprobe vboxdrv
-
-	docker run -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		-v /tmp/.X11-unix:/tmp/.X11-unix  \
-		-e DISPLAY=unix$DISPLAY \
-		-e GDK_SCALE \
-		-e GDK_DPI_SCALE \
-		--name vagrant \
-		--net host \
-		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
-		-v $HOME/.vbox/config:/root/.config/VirtualBox \
-		--privileged \
-		--entrypoint bash \
-		${DOCKER_REPO_PREFIX}/vagrant
-}
 virsh(){
 	relies_on kvm
 
@@ -885,29 +865,6 @@ virt_viewer(){
 		${DOCKER_REPO_PREFIX}/virt-viewer "$@"
 }
 alias virt-viewer="virt_viewer"
-virtualbox(){
-	del_stopped virtualbox
-
-	# modprobe the module
-	#sudo modprobe vboxdrv
-	# and the extras for networking
-	#sudo insmod /lib/modules/$(uname -r)/misc/vboxnet*.ko
-
-	docker run -d \
-		-v /etc/localtime:/etc/localtime:ro \
-		-v /tmp/.X11-unix:/tmp/.X11-unix  \
-		-e DISPLAY=unix$DISPLAY \
-		-e GDK_SCALE \
-		-e GDK_DPI_SCALE \
-		--name virtualbox \
-		--net host \
-		-v "$HOME/.vbox/vms:/root/VirtualBox VMs" \
-		-v $HOME/.vbox/config:/root/.config/VirtualBox \
-		-v /lib/modules/$(uname -r)/misc:/lib/modules/$(uname -r)/misc \
-		-v /usr/src/linux-headers-$(uname -r):/usr/src/linux-headers-$(uname -r) \
-		--privileged \
-		${DOCKER_REPO_PREFIX}/virtualbox
-}
 visualstudio(){
 	del_stopped visualstudio
 
