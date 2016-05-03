@@ -19,6 +19,11 @@ check_is_sudo() {
 # sets up apt sources
 # assumes you are going to use debian stretch
 setup_sources() {
+	apt-get update
+	apt-get install -y \
+		apt-transport-https \
+		--no-install-recommends
+
 	cat <<-EOF > /etc/apt/sources.list
 	deb http://httpredir.debian.org/debian stretch main contrib non-free
 	deb-src http://httpredir.debian.org/debian/ stretch main contrib non-free
@@ -82,7 +87,6 @@ base() {
 		adduser \
 		alsa-utils \
 		apparmor \
-		apt-transport-https \
 		automake \
 		bash-completion \
 		bc \
@@ -105,8 +109,10 @@ base() {
 		iptables \
 		jq \
 		less \
+		libapparmor-dev \
 		libc6-dev \
 		libltdl-dev \
+		libseccomp-dev \
 		locales \
 		lsof \
 		make \
