@@ -189,8 +189,10 @@ install_docker() {
 	sudo groupadd docker
 	sudo gpasswd -a "$USERNAME" docker
 
-	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
-	chmod +x /usr/bin/docker
+
+	curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar -xvz \
+		-C /usr/local/bin --strip-components 1
+	chmod +x /usr/local/bin/docker*
 
 	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
 	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
@@ -206,7 +208,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.6.0
+	export GO_VERSION=1.6.2
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -255,7 +257,7 @@ install_golang() {
 	go get github.com/FiloSottile/gvt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl cloudflare/redoctober docker/containerd docker/docker docker/engine-api docker/libnetwork docker/notary letsencrypt/boulder opencontainers/runc )
+	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
@@ -285,6 +287,9 @@ install_golang() {
 		# create the alias
 		ln -snvf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
 	done
+
+	# clone any additional projects
+	git clone git@github.com:jfrazelle/binctr.git ${GOPATH}/src/github.com/jfrazelle/binctr
 
 	# create symlinks from personal projects to
 	# the ${HOME} directory
