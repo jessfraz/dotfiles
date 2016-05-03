@@ -10,7 +10,7 @@ ExecStartPre=-/sbin/iptables -F DOCKER
 ExecStartPre=-/sbin/iptables -X DOCKER
 ExecStartPre=-/sbin/iptables -N DOCKER
 ExecStartPre=-/sbin/iptables -I DOCKER -i ext_if ! -s 127.0.0.1 -j DROP
-ExecStart=/usr/bin/docker daemon -D \
+ExecStart=/usr/local/bin/docker daemon -D \
 		  -s overlay \
 		  -H fd:// \
 		  --exec-opt=native.cgroupdriver=cgroupfs \

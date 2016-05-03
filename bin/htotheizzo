@@ -54,11 +54,12 @@ update_docker() {
 	# get the binary
 	#curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-latest > /usr/bin/docker
 	#curl -sSL https://experimental.docker.com/builds/Linux/x86_64/docker-latest > /usr/bin/docker
-	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/bin/docker
-	curl -sSL https://master.dockerproject.org/linux/amd64/dockerd > /usr/bin/dockerd
+	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/local/bin/docker
+	curl -sSL https://master.dockerproject.org/linux/amd64/dockerd > /usr/local/bin/dockerd
 	curl -sSL https://master.dockerproject.org/linux/amd64/docker-containerd > /usr/local/bin/docker-containerd
 	curl -sSL https://master.dockerproject.org/linux/amd64/docker-containerd-shim > /usr/local/bin/docker-containerd-shim
 	curl -sSL https://master.dockerproject.org/linux/amd64/docker-runc > /usr/local/bin/docker-runc
+	chmod +x /usr/local/bin/docker*
 
 	# start docker
 	systemctl start docker
