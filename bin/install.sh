@@ -257,7 +257,7 @@ install_golang() {
 	go get github.com/FiloSottile/gvt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc )
+	aliases=( cloudflare/cfssl docker/docker kubernetes/kubernetes letsencrypt/boulder opencontainers/runc )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")

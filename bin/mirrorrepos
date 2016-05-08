@@ -26,7 +26,7 @@ API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
-override_repos=( mac-dev-setup mbox universe )
+override_repos=( docker-freeipa mac-dev-setup mbox universe )
 
 mirror_repo(){
 	local orig=$1
