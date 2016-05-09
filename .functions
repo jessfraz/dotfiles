@@ -341,7 +341,7 @@ gogo(){
 		return 1
 	fi
 
-	if [[ "$d" = github* ]]; then
+	if [[ "$d" == github* ]]; then
 		d=$(echo $d | sed 's/.*\///')
 	fi
 	d=${d%/}
