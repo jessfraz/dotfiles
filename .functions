@@ -23,6 +23,15 @@ mkd() {
 	mkdir -p "$@" && cd "$@"
 }
 
+# Make a temporary directory and enter it
+tmpd() {
+	if [ $# -eq 0 ]; then
+		dir=`mktemp -d` && cd $dir
+	else
+		dir=`mktemp -d -t $1.XXXXXXXXXX` && cd $dir
+	fi
+}
+
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 targz() {
 	local tmpFile="${@%/}.tar"
@@ -230,9 +239,9 @@ repo() {
 		if [[ $gitbranch != "master" ]]; then
 			if echo "${giturl}" | grep -i "bitbucket" > /dev/null ; then
 				local giturl="${giturl}/branch/${gitbranch}"
-                    	else
-                    		local giturl="${giturl}/tree/${gitbranch}"
-                    	fi
+			else
+				local giturl="${giturl}/tree/${gitbranch}"
+			fi
 		fi
 
 		echo $giturl
