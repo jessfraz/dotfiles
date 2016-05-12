@@ -456,6 +456,32 @@ get_dotfiles() {
 	)
 }
 
+install_virtualbox() {
+	# check if we need to install libvpx1
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' libvpx1 | grep "install ok installed")
+	echo Checking for libvpx1: $PKG_OK
+	if [ "" == "$PKG_OK" ]; then
+		echo "No libvpx1. Installing libvpx1."
+		jessie_sources=/etc/apt/sources.list.d/jessie.list
+		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > $jessie_sources
+
+		apt-get update
+		apt-get install -y -t jessie libvpx1 \
+			--no-install-recommends
+
+		# cleanup the file that we used to install things from jessie
+		rm $jessie_sources
+	fi
+
+	echo "deb http://download.virtualbox.org/virtualbox/debian vivid contrib" >> /etc/apt/sources.list.d/virtualbox.list
+	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
+
+	apt-get update
+	apt-get install -y \
+		virtualbox-5.0
+	--no-install-recommends
+}
+
 install_vagrant() {
 	VAGRANT_VERSION=1.8.1
 
@@ -464,20 +490,13 @@ install_vagrant() {
 		export VAGRANT_VERSION=$1
 	fi
 
-	jessie_sources=/etc/apt/sources.list.d/jessie.list
-	echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > $jessie_sources
-	echo "deb http://download.virtualbox.org/virtualbox/debian vivid contrib" >> /etc/apt/sources.list.d/virtualbox.list
-	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
-
-	apt-get update
-	apt-get install -y -t jessie libvpx1 \
-		--no-install-recommends
-	apt-get install -y \
-		virtualbox-5.0
-	--no-install-recommends
-
-	# cleanup the file that we used to install things from jessie
-	rm $jessie_sources
+	# check if we need to install virtualbox
+	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' virtualbox | grep "install ok installed")
+	echo Checking for virtualbox: $PKG_OK
+	if [ "" == "$PKG_OK" ]; then
+		echo "No virtualbox. Installing virtualbox."
+		install_virtualbox
+	fi
 
 	tmpdir=`mktemp -d`
 	(
