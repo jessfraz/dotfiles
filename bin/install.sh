@@ -456,6 +456,42 @@ get_dotfiles() {
 	)
 }
 
+install_vagrant() {
+	VAGRANT_VERSION=1.8.1
+
+	# if we are passing the version
+	if [[ ! -z "$1" ]]; then
+		export VAGRANT_VERSION=$1
+	fi
+
+	jessie_sources=/etc/apt/sources.list.d/jessie.list
+	echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > $jessie_sources
+	echo "deb http://download.virtualbox.org/virtualbox/debian vivid contrib" >> /etc/apt/sources.list.d/virtualbox.list
+	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
+
+	apt-get update
+	apt-get install -y -t jessie libvpx1 \
+		--no-install-recommends
+	apt-get install -y \
+		virtualbox-5.0
+	--no-install-recommends
+
+	# cleanup the file that we used to install things from jessie
+	rm $jessie_sources
+
+	tmpdir=`mktemp -d`
+	(
+	cd $tmpdir
+	curl -sSL -o vagrant.deb https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+	dpkg -i vagrant.deb
+	)
+
+	rm -rf $tmpdir
+
+	# install plugins
+	vagrant plugin install vagrant-vbguest
+}
+
 
 usage() {
 	echo -e "install.sh\n\tThis script installs my basic setup for a debian laptop\n"
@@ -468,6 +504,7 @@ usage() {
 	echo "  golang                      - install golang and packages"
 	echo "  scripts                     - install scripts"
 	echo "  syncthing                   - install syncthing"
+	echo "  vagrant                     - install vagrant and virtualbox"
 }
 
 main() {
@@ -503,6 +540,8 @@ main() {
 		install_scripts
 	elif [[ $cmd == "syncthing" ]]; then
 		install_syncthing
+	elif [[ $cmd == "vagrant" ]]; then
+		install_vagrant "$2"
 	else
 		usage
 	fi
