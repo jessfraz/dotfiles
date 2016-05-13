@@ -1,11 +1,11 @@
 ---
-  language: ghc
+  language: haskell
   sudo: false
   notifications:
     email: true
   ghc:
     - 7.10
   install:
-    - cabal update; cabal install shellcheck
+    - cabal install shellcheck
   script:
-    - PATH="$HOME/.cabal/bin:$PATH" ./test.sh
+    - ./test.sh
