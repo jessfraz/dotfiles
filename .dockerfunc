@@ -309,6 +309,7 @@ john(){
 kernel_builder(){
 	docker run --rm -it \
 		-v /usr/src:/usr/src \
+		--cpu-shares=512 \
 		--name kernel-builder \
 		${DOCKER_REPO_PREFIX}/kernel-builder
 }

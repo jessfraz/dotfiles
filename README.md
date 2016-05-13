@@ -1,6 +1,6 @@
 ## dotfiles
 
-[![Circle CI](https://circleci.com/gh/jfrazelle/dotfiles.svg?style=svg)](https://circleci.com/gh/jfrazelle/dotfiles)
+[![Travis CI](https://travis-ci.org/jfrazelle/dotfiles.svg?branch=master)](https://travis-ci.org/jfrazelle/dotfiles)
 
 **To install:**
 
