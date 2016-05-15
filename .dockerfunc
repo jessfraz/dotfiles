@@ -583,6 +583,7 @@ remmina(){
 		-e GDK_DPI_SCALE \
 		-v $HOME/.remmina:/root/.remmina \
 		--name remmina \
+		--net host \
 		${DOCKER_REPO_PREFIX}/remmina
 }
 ricochet(){
