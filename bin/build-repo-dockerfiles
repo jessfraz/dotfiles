@@ -1,0 +1,80 @@
+#!/bin/bash
+##############################################################################
+# build-repo-dockerfiles
+# -----------
+# Given an array of repos, build the dockerfiles in that repo and push to a
+# private Docker registry.
+#
+# :authors: Jess Frazelle, @jfrazelle
+# :date: 15 May 2016
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+build_repo_dockerfile(){
+	local orig=$1
+	local user=${orig%/*}
+	local repo=${orig#*/}
+	local tmpdir=$(mktemp -d)
+	local suite=latest
+
+	echo
+	echo "Building Dockerfile in ${user}/${repo} for image -> ${REGISTRY_PREFIX}/${repo}"
+	echo
+
+	(
+	set -x
+	git clone --depth 1 "git@github.com:${user}/${repo}.git" "$tmpdir"
+	cd "$tmpdir"
+	docker build --rm --force-rm -t ${REGISTRY_PREFIX}/${repo}:${suite} .
+	)
+
+	echo "                       ---                                   "
+	echo "Successfully built ${REGISTRY_PREFIX}/${repo}:${suite}"
+	echo "                       ---                                   "
+
+	docker push --disable-content-trust=false ${REGISTRY_PREFIX}/${repo}:${suite}
+
+	# also push the weather-server image
+	if [[ "${user}/${repo}" == "jfrazelle/weather" ]]; then
+		echo
+		echo "Building Dockerfile in ${user}/${repo} for image -> ${REGISTRY_PREFIX}/${repo}-server"
+		echo
+
+		(
+		set -x
+		cd "$tmpdir"
+		docker build --rm --force-rm -t ${REGISTRY_PREFIX}/${repo}-server:${suite} server/
+		)
+
+		echo "                       ---                                   "
+		echo "Successfully built ${REGISTRY_PREFIX}/${repo}-server:${suite}"
+		echo "                       ---                                   "
+
+		docker push --disable-content-trust=false ${REGISTRY_PREFIX}/${repo}-server:${suite}
+	fi
+
+
+	# cleanup
+	rm -rf "$tmpdir"
+}
+
+repos=(
+jfrazelle/cliaoke
+jfrazelle/onion
+jfrazelle/pastebinit
+jfrazelle/s3server
+jfrazelle/snippetlib
+jfrazelle/weather
+)
+
+: ${REGISTRY_PREFIX:=r.j3ss.co}
+
+main(){
+	for r in ${repos[@]}; do
+		build_repo_dockerfile "$r"
+	done
+}
+
+main
