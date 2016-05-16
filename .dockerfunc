@@ -404,7 +404,7 @@ mutt(){
 		-e GPG_ID \
 		-e IMAP_SERVER \
 		-e SMTP_SERVER \
-		-v $HOME/.gnupg:/home/user/.gnupg \
+		-v $HOME/.gnupg:/home/user/.gnupg:ro \
 		-v /etc/localtime:/etc/localtime:ro \
 		--name mutt${account} \
 		${DOCKER_REPO_PREFIX}/mutt
