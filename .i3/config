@@ -37,6 +37,7 @@ for_window [class="Code"] floating enable
 for_window [class="Firefox"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="google-chrome"] floating enable
+for_window [class="Keybase"] floating enable
 for_window [class="Neoman"] floating enable
 for_window [class="NES"] floating enable
 for_window [class="Portal"] floating enable
