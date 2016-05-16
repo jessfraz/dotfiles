@@ -40,7 +40,7 @@ update_fork(){
 
 	(
 	set -x
-	git clone "git@github.com:${forked_repo}.git" "$tmpdir"
+	git clone --depth 1 "git@github.com:${forked_repo}.git" "$tmpdir"
 	cd "$tmpdir"
 	git remote add upstream "git@github.com:${upstream_repo}.git"
 	# just in case
