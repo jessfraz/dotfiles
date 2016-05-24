@@ -246,6 +246,13 @@ gcalcli(){
 		--name gcalcli \
 		${DOCKER_REPO_PREFIX}/gcalcli "$@"
 }
+gcloud(){
+	docker run --rm -it \
+		-v $HOME/.gcloud:/root/.config/gcloud \
+		-v $HOME/.ssh:/root/.ssh:ro \
+		--name gcloud \
+		${DOCKER_REPO_PREFIX}/gcloud "$@"
+}
 gimp(){
 	del_stopped gimp
 
