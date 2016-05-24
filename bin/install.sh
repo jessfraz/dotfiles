@@ -235,6 +235,7 @@ install_golang() {
 	go get golang.org/x/tools/cmd/cover
 	go get golang.org/x/tools/cmd/goimports
 
+	go get github.com/jfrazelle/apk-file
 	go get github.com/jfrazelle/bane
 	go get github.com/jfrazelle/battery
 	go get github.com/jfrazelle/cliaoke
