@@ -249,6 +249,7 @@ install_golang() {
 	go get github.com/jfrazelle/udict
 	go get github.com/jfrazelle/weather
 
+	go get github.com/axw/gocov/gocov
 	go get github.com/brianredbeard/gpget
 	go get github.com/cloudflare/cfssl/cmd/cfssl
 	go get github.com/cloudflare/cfssl/cmd/cfssljson
