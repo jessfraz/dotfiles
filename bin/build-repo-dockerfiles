@@ -20,9 +20,15 @@ build_repo_dockerfile(){
 	local suite=latest
 	local image=${REGISTRY_PREFIX}/${repo}:${suite}
 
-	if [[ "${user}/${repo}" == "kylemanna/docker-openvpn" ]]; then
-		image=${REGISTRY_PREFIX}/openvpn-server:${suite}
-	fi
+	case "${user}/${repo}" in
+		"kylemanna/docker-openvpn")
+			image=${REGISTRY_PREFIX}/openvpn-server:${suite}
+			;;
+		"jishi/node-sonos-http-api")
+			image=${REGISTRY_PREFIX}/node-sonos:${suite}
+			;;
+		*) ;;
+	esac
 
 	echo
 	echo "Building Dockerfile in ${user}/${repo} for image -> ${image}"
@@ -73,6 +79,7 @@ jfrazelle/pastebinit
 jfrazelle/s3server
 jfrazelle/snippetlib
 jfrazelle/weather
+jishi/node-sonos-http-api
 kylemanna/docker-openvpn
 )
 
