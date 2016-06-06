@@ -292,6 +292,7 @@ install_golang() {
 
 	# clone any additional projects
 	git clone git@github.com:jfrazelle/binctr.git ${GOPATH}/src/github.com/jfrazelle/binctr
+	git clone git@github.com:jfrazelle/contained.af.git ${GOPATH}/src/github.com/jfrazelle/contained.af
 
 	# create symlinks from personal projects to
 	# the ${HOME} directory
