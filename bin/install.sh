@@ -258,6 +258,9 @@ install_golang() {
 	go get github.com/cbednarski/hostess/cmd/hostess
 	go get github.com/FiloSottile/gvt
 	go get github.com/FiloSottile/vendorcheck
+	go get github.com/shurcooL/git-branches
+	go get github.com/shurcooL/gostatus
+	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
 	aliases=( cloudflare/cfssl docker/docker kubernetes/kubernetes letsencrypt/boulder opencontainers/runc )
