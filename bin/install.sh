@@ -234,6 +234,8 @@ install_golang() {
 	go get github.com/golang/lint/golint
 	go get golang.org/x/tools/cmd/cover
 	go get golang.org/x/tools/cmd/goimports
+	go get golang.org/x/tools/cmd/gorename
+	go get golang.org/x/tools/cmd/guru
 
 	go get github.com/jfrazelle/apk-file
 	go get github.com/jfrazelle/bane
@@ -258,12 +260,14 @@ install_golang() {
 	go get github.com/cbednarski/hostess/cmd/hostess
 	go get github.com/FiloSottile/gvt
 	go get github.com/FiloSottile/vendorcheck
+	go get github.com/nsf/gocode
+	go get github.com/rogpeppe/godef
 	go get github.com/shurcooL/git-branches
 	go get github.com/shurcooL/gostatus
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker kubernetes/kubernetes letsencrypt/boulder opencontainers/runc )
+	aliases=( cloudflare/cfssl docker/docker kubernetes/kubernetes letsencrypt/boulder opencontainers/runc jfrazelle/binctr jfrazelle/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
@@ -277,26 +281,27 @@ install_golang() {
 			(
 			# clone the repo
 			cd "${GOPATH}/src/github.com/${owner}"
-			git clone "git@github.com:${project}.git"
+			git clone "https://github.com/${project}.git"
+			# fix the remote path, since our gitconfig will make it git@
+			cd "${GOPATH}/src/github.com/${project}"
+			git remote set-url origin "https://github.com/${project}.git"
 			)
 		else
 			echo "found ${project} already in gopath"
 		fi
 
 		# make sure we create the right git remotes
-		(
-		cd "${GOPATH}/src/github.com/${project}"
-		git remote set-url --push origin no_push
-		git remote add jfrazelle "git@github.com:jfrazelle/${repo}.git"
-		)
+		if [[ "$owner" != "jfrazelle" ]]; then
+			(
+			cd "${GOPATH}/src/github.com/${project}"
+			git remote set-url --push origin no_push
+			git remote add jfrazelle "https://github.com/jfrazelle/${repo}.git"
+			)
+		fi
 
 		# create the alias
 		ln -snvf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
 	done
-
-	# clone any additional projects
-	git clone git@github.com:jfrazelle/binctr.git ${GOPATH}/src/github.com/jfrazelle/binctr
-	git clone git@github.com:jfrazelle/contained.af.git ${GOPATH}/src/github.com/jfrazelle/contained.af
 
 	# create symlinks from personal projects to
 	# the ${HOME} directory
