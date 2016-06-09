@@ -57,7 +57,7 @@ build_repo_dockerfile(){
 		(
 		set -x
 		cd "$tmpdir"
-		docker build --rm --force-rm -t ${image} .
+		docker build --rm --force-rm -t ${image} server
 		)
 
 		echo "                       ---                                   "

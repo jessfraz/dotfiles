@@ -49,6 +49,7 @@ for_window [class="Virt-viewer"] floating enable
 for_window [class="VirtualBox"] floating enable
 for_window [class="vlc"] floating enable
 for_window [class="Wine"] floating enable
+for_window [class="Wireshark"] floating enable
 
 # lock screen
 bindsym $mod+l exec i3lock -c 111111
