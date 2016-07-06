@@ -1,5 +1,5 @@
 #!/bin/bash
-USERNAME=$(find /home/* -maxdepth 0 -printf "%f" -type d)
+set -e
 
 help() {
 	echo "htotheizzo - a simple script that makes updating/upgrading homebrew or apt-get, gems, pip packages, and node packages so much easier"
@@ -11,24 +11,33 @@ dcleanup(){
 }
 
 update_docker() {
-	local docker_dir="/home/$USERNAME/docker"
+	local username=$(find /home/* -maxdepth 0 -printf "%f" -type d)
+	local user_home="/home/${username}"
+	local docker_dir="${user_home}/docker"
 
 	# stop docker
-	dcleanup
-	systemctl stop docker
+	dcleanup || true
+	if [[ `/sbin/init --version` =~ upstart ]]; then
+		service docker stop || true
+	else
+		systemctl stop docker || true
+	fi
 
-	if [[ -d $docker_dir ]]; then
-		cd $docker_dir
+	if [[ -d "${docker_dir}" ]]; then
+		(
+		cd "${docker_dir}"
 
 		# Clean up bundles
 		rm -rf bundles
 
 		# Include contributed completions
 		mkdir -p /etc/bash_completion.d
-		cp contrib/completion/bash/docker /etc/bash_completion.d/
+		curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/bash/docker
 
-		# Include apparmor profile for docker-engine
-		# go run contrib/apparmor/*.go /etc/apparmor.d/docker-engine
+		if [[ `/sbin/init --version` =~ upstart ]]; then
+			# Update the upstart file
+			curl -sSL -o /etc/init/docker.conf https://raw.githubusercontent.com/docker/docker/master/contrib/init/upstart/docker.conf
+		fi
 
 		# Include contributed man pages
 		man/md2man-all.sh -q
@@ -44,25 +53,35 @@ update_docker() {
 		done
 
 		# move vim syntax highlighting
-		if [[ ! -d /home/$USERNAME/.vim/bundle/Dockerfile ]]; then
-			mkdir -p /home/$USERNAME/.vim/bundle/Dockerfile
+		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
+			mkdir -p "${user_home}/.vim/bundle/Dockerfile"
 		fi
-		yes | cp -r contrib/syntax/vim/* /home/$USERNAME/.vim/bundle/Dockerfile/
-		chown -R $USERNAME /home/$USERNAME/.vim/bundle/Dockerfile
+		yes | cp -r contrib/syntax/vim/* "${user_home}/.vim/bundle/Dockerfile/"
+		chown -R "${username}" "${user_home}/.vim/bundle/Dockerfile"
+		)
 	fi
 
 	# get the binary
-	#curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-latest > /usr/bin/docker
-	#curl -sSL https://experimental.docker.com/builds/Linux/x86_64/docker-latest > /usr/bin/docker
-	curl -sSL https://master.dockerproject.org/linux/amd64/docker > /usr/local/bin/docker
-	curl -sSL https://master.dockerproject.org/linux/amd64/dockerd > /usr/local/bin/dockerd
-	curl -sSL https://master.dockerproject.org/linux/amd64/docker-containerd > /usr/local/bin/docker-containerd
-	curl -sSL https://master.dockerproject.org/linux/amd64/docker-containerd-shim > /usr/local/bin/docker-containerd-shim
-	curl -sSL https://master.dockerproject.org/linux/amd64/docker-runc > /usr/local/bin/docker-runc
+	local tmp_tar=/tmp/docker.tgz
+	local binary_uri="https://master.dockerproject.org"
+	local docker_version=$(curl -sSL "${binary_uri}/version")
+	local docker_sha256=$(curl -sSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
+	(
+	set -x
+	curl -fSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz" -o "${tmp_tar}"
+	echo "${docker_sha256} ${tmp_tar}" | sha256sum -c -
+	tar -C /usr/local/bin --strip-components 1 -xzvf "${tmp_tar}"
+	rm "${tmp_tar}"
+	docker -v
+	)
 	chmod +x /usr/local/bin/docker*
 
 	# start docker
-	systemctl start docker
+	if [[ `/sbin/init --version` =~ upstart ]]; then
+		service docker start
+	else
+		systemctl start docker
+	fi
 }
 
 update_linux() {
@@ -72,8 +91,6 @@ update_linux() {
 	apt-get -y autoclean
 	apt-get -y clean
 	rm -rf /var/lib/apt/lists/*
-
-	update_docker
 }
 
 update() {
@@ -91,6 +108,7 @@ update() {
 
 		# update
 		update_linux;
+		update_docker;
 	else
 		echo "We don't have update functions for OS: ${OSTYPE}"
 		echo "Moving on..."
