@@ -93,14 +93,14 @@ fi;
 if [[ "${USER}" == "root" ]]; then
 	userStyle="${red}";
 else
-	userStyle="${orange}";
+	userStyle="${blue}";
 fi;
 
 # Highlight the hostname when connected via SSH.
 if [[ "${SSH_TTY}" ]]; then
-	hostStyle="${bold}${red}";
+	hostStyle="${bold}${cyan}";
 else
-	hostStyle="${yellow}";
+	hostStyle="${cyan}";
 fi;
 
 # Set the terminal title to the current working directory.
