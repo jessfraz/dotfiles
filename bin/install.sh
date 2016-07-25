@@ -208,7 +208,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.6.2
+	export GO_VERSION=1.6.3
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -268,7 +268,7 @@ install_golang() {
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker kubernetes/kubernetes letsencrypt/boulder opencontainers/runc jfrazelle/binctr jfrazelle/contained.af )
+	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc jfrazelle/binctr jfrazelle/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
@@ -303,6 +303,17 @@ install_golang() {
 		# create the alias
 		ln -snvf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
 	done
+
+	# do special things for k8s GOPATH
+	mkdir -p "${GOPATH}/src/k8s.io"
+	git clone "https://github.com/kubernetes/kubernetes.git" "${GOPATH}/src/k8s.io/kubernetes"
+	(
+	cd "${GOPATH}/src/k8s.io/kubernetes"
+	git remote set-url --push origin no_push
+	git remote add jfrazelle "https://github.com/jfrazelle/kubernetes.git"
+	)
+	ln -snvf "${GOPATH}/src/k8s.io/kubernetes" "${HOME}/kubernetes"
+
 
 	# create symlinks from personal projects to
 	# the ${HOME} directory
