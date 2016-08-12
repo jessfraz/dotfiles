@@ -74,6 +74,7 @@ build_repo_dockerfile(){
 
 repos=(
 jfrazelle/cliaoke
+jfrazelle/ghb0t
 jfrazelle/onion
 jfrazelle/pastebinit
 jfrazelle/s3server
