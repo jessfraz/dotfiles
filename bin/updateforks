@@ -47,7 +47,7 @@ update_fork(){
 	git remote set-url --push upstream no_push
 	# fetch the remotes and prune
 	git remote -v update -p
-	git rebase upstream/master
+	git reset --hard upstream/master
 	git push origin master
 	echo "Updated local ${forked_repo} to origin/master"
 	)
