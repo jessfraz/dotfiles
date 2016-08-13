@@ -48,7 +48,7 @@ update_fork(){
 	# fetch the remotes and prune
 	git remote -v update -p
 	git reset --hard upstream/master
-	git push origin master
+	git push -f origin master
 	echo "Updated local ${forked_repo} to origin/master"
 	)
 
