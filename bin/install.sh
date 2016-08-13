@@ -242,6 +242,7 @@ install_golang() {
 	go get github.com/jfrazelle/bane
 	go get github.com/jfrazelle/battery
 	go get github.com/jfrazelle/cliaoke
+	go get github.com/jfrazelle/ghb0t
 	go get github.com/jfrazelle/magneto
 	go get github.com/jfrazelle/netns
 	go get github.com/jfrazelle/netscan
@@ -299,31 +300,15 @@ install_golang() {
 			git remote add jfrazelle "https://github.com/jfrazelle/${repo}.git"
 			)
 		fi
-
-		# create the alias
-		ln -snvf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
 	done
 
 	# do special things for k8s GOPATH
 	mkdir -p "${GOPATH}/src/k8s.io"
 	git clone "https://github.com/kubernetes/kubernetes.git" "${GOPATH}/src/k8s.io/kubernetes"
-	(
 	cd "${GOPATH}/src/k8s.io/kubernetes"
 	git remote set-url --push origin no_push
 	git remote add jfrazelle "https://github.com/jfrazelle/kubernetes.git"
 	)
-	ln -snvf "${GOPATH}/src/k8s.io/kubernetes" "${HOME}/kubernetes"
-
-
-	# create symlinks from personal projects to
-	# the ${HOME} directory
-	projectsdir=$GOPATH/src/github.com/jfrazelle
-	base=$(basename "$projectsdir")
-	find "$projectsdir" -maxdepth 1 -not -name "$base" -type d -print0 | while read -d '' -r dir; do
-	base=$(basename "$dir")
-	ln -snvf "$dir" "${HOME}/${base}"
-done
-)
 }
 
 # install graphics drivers
