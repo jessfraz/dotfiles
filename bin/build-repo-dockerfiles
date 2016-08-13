@@ -64,7 +64,15 @@ build_repo_dockerfile(){
 		echo "Successfully built ${image}"
 		echo "                       ---                                   "
 
-		docker push --disable-content-trust=false ${image}
+		# try push a few times because notary server sometimes returns 401 for
+		# absolutely no reason
+		n=0
+		until [ $n -ge 5 ]; do
+			docker push --disable-content-trust=false ${image}
+			echo "Try #$n failed... sleeping for 15 seconds"
+			n=$[$n+1]
+			sleep 15
+		done
 	fi
 
 
