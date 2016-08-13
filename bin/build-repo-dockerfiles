@@ -36,7 +36,7 @@ build_repo_dockerfile(){
 
 	(
 	set -x
-	git clone --depth 1 "git@github.com:${user}/${repo}.git" "$tmpdir"
+	git clone --depth 1 "https://github.com/${user}/${repo}.git" "$tmpdir"
 	cd "$tmpdir"
 	docker build --rm --force-rm -t ${image} .
 	)
