@@ -45,8 +45,8 @@ update_fork(){
 	git remote add upstream "git@github.com:${upstream_repo}.git"
 	# just in case
 	git remote set-url --push upstream no_push
-	# fetch the remotes and prune
-	git remote -v update -p
+	# fetch upstream master
+	git fetch upstream master
 	git reset --hard upstream/master
 	git push origin master
 	echo "Updated local ${forked_repo} to origin/master"
