@@ -22,7 +22,7 @@ API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
-ignore_repos=( mac-dev-setup universe )
+ignore_repos=( mac-dev-setup )
 
 update_fork(){
 	local forked_repo=$1
@@ -42,7 +42,7 @@ update_fork(){
 	set -x
 	git clone --depth 1 "git@github.com:${forked_repo}.git" "$tmpdir"
 	cd "$tmpdir"
-	git remote add upstream "git@github.com:${upstream_repo}.git"
+	git remote add upstream "https://github.com/${upstream_repo}.git"
 	# just in case
 	git remote set-url --push upstream no_push
 	# fetch upstream master
