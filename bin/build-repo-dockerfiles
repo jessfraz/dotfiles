@@ -45,7 +45,13 @@ build_repo_dockerfile(){
 	echo "Successfully built ${image}"
 	echo "                       ---                                   "
 
-	docker push --disable-content-trust=false ${image}
+	n=0
+	until [ $n -ge 5 ]; do
+		docker push --disable-content-trust=false ${image} && break
+		echo "Try #$n failed... sleeping for 15 seconds"
+		n=$[$n+1]
+		sleep 15
+	done
 
 	# also push the weather-server image
 	if [[ "${user}/${repo}" == "jfrazelle/weather" ]]; then
@@ -68,7 +74,7 @@ build_repo_dockerfile(){
 		# absolutely no reason
 		n=0
 		until [ $n -ge 5 ]; do
-			docker push --disable-content-trust=false ${image}
+			docker push --disable-content-trust=false ${image} && break
 			echo "Try #$n failed... sleeping for 15 seconds"
 			n=$[$n+1]
 			sleep 15
