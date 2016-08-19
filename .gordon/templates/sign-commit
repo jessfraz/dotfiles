@@ -1,8 +1,0 @@
-Can you please sign your commits following these rules:
-
-https://github.com/dotcloud/docker/blob/master/CONTRIBUTING.md#sign-your-work
-
-The easiest way to do this is to the last commit:
-```
-git commit --amend -s --no-edit && git push -f
-```
