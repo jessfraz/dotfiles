@@ -187,7 +187,7 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 10
+	font pango:monospace 8
 	status_command i3status --config ~/.i3/status.conf
 }
 
@@ -198,9 +198,5 @@ bar {
 exec --no-startup-id feh --bg-fill /usr/share/slim/themes/default/background.jpg
 
 # run the merge for good colors
-exec xrdb -merge /home/jessie/.Xresources
-exec xrdb -merge /home/jessie/.Xdefaults
-
-# startup programs
-#exec --no-starup-id i3-msg 'workspace "1: irssi"; exec rxvt-unicode;'
-#exec --no-startup-id i3msg 'workspace 3; exec rxvt-unicode;'
+exec xrdb -merge $HOME/.Xresources
+exec xrdb -merge $HOME/.Xdefaults
