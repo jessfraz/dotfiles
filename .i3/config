@@ -24,11 +24,13 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start dmenu
+bindsym $mod+d exec i3-dmenu-desktop
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # spotify: no border
-for_window [class="Slack"] border none
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
@@ -43,6 +45,7 @@ for_window [class="NES"] floating enable
 for_window [class="Portal"] floating enable
 for_window [class="RStudio"] floating enable
 for_window [class="Skype"] floating enable
+for_window [class="Slack"] floating enable
 for_window [class="Steam"] floating enable
 for_window [class="Tor Browser"] floating enable
 for_window [class="Virt-viewer"] floating enable
@@ -184,7 +187,7 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 8
+	font pango:monospace 14
 	status_command i3status --config ~/.i3/status.conf
 }
 
