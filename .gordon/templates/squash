@@ -1,1 +1,0 @@
-Can you please squash your commits (use `git rebase -i upstream/master`) and then you can sign either with the githook, or with `git commit --amend -s --no-edit && git push -f`.

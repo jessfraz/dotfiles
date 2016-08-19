@@ -1,5 +1,0 @@
-Can you please gofmt and update this pull request.
-```
-gofmt -s -w
-git commit --amend -a --no-edit && git push -f
-```
