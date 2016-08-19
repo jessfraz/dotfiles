@@ -435,29 +435,29 @@ get_dotfiles() {
 	sudo systemctl enable i3lock
 	sudo systemctl enable suspend-sedation.service
 
-	cd "/home/$USERNAME"
+	cd "$HOME"
 
 	# install .vim files
-	git clone --recursive git@github.com:jfrazelle/.vim.git "/home/$USERNAME/.vim"
-	ln -snf "/home/$USERNAME/.vim/vimrc" "/home/$USERNAME/.vimrc"
-	sudo ln -snf "/home/$USERNAME/.vim" /root/.vim
-	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.vimrc
+	git clone --recursive git@github.com:jfrazelle/.vim.git "$HOME/.vim"
+	ln -snf "$HOME/.vim/vimrc" "$HOME/.vimrc"
+	sudo ln -snf "$HOME/.vim" /root/.vim
+	sudo ln -snf "$HOME/.vimrc" /root/.vimrc
 
 	# alias vim dotfiles to neovim
 	mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-	ln -snf "/home/$USERNAME/.vim" $XDG_CONFIG_HOME/nvim
-	ln -snf "/home/$USERNAME/.vimrc" $XDG_CONFIG_HOME/nvim/init.vim
+	ln -snf "$HOME/.vim" $XDG_CONFIG_HOME/nvim
+	ln -snf "$HOME/.vimrc" $XDG_CONFIG_HOME/nvim/init.vim
 	# do the same for root
 	sudo mkdir -p /root/.config
-	sudo ln -snf "/home/$USERNAME/.vim" /root/.config/nvim
-	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.config/nvim/init.vim
+	sudo ln -snf "$HOME/.vim" /root/.config/nvim
+	sudo ln -snf "$HOME/.vimrc" /root/.config/nvim/init.vim
 
 	# update alternatives to neovim
-	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+	sudo update-alternatives --install /usr/bin/vi vi $(which nvim) 60
 	sudo update-alternatives --config vi
-	sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+	sudo update-alternatives --install /usr/bin/vim vim $(which nvim) 60
 	sudo update-alternatives --config vim
-	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+	sudo update-alternatives --install /usr/bin/editor editor $(which nvim) 60
 	sudo update-alternatives --config editor
 
 	mkdir -p ~/Pictures
