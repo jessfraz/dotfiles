@@ -2,6 +2,7 @@
 # Screenshot: http://i.imgur.com/EkEtphC.png
 # Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
 # iTerm → Profiles → Text → use 13pt Monaco with 1.1 vertical spacing.
+# vim: set filetype=sh :
 
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
 	export TERM='gnome-256color';
@@ -59,6 +60,11 @@ prompt_git() {
 	fi;
 }
 
+cloud=""
+if grep -q ^flags.*\ hypervisor /proc/cpuinfo ; then
+	cloud="☁️ "
+fi
+
 if tput setaf 1 &> /dev/null; then
 	tput sgr0; # reset colors
 	bold=$(tput bold);
@@ -108,7 +114,7 @@ PS1="\[\033]0;\w\007\]";
 PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
-PS1+="\[${hostStyle}\]\h"; # host
+PS1+="\[${hostStyle}\]${cloud}\h"; # host
 PS1+="\[${white}\] in ";
 PS1+="\[${green}\]\w"; # working directory
 PS1+="\$(prompt_git \"${white} on ${violet}\")"; # Git repository details
