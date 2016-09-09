@@ -73,6 +73,15 @@
 	submit = codereview submit
 	sync = codereview sync
 
+	# from seth vargo https://gist.github.com/sethvargo/6b2f7b592853381690bfe3bd00947e8f
+	unreleased = "!f() { git fetch --tags && git diff $(git tag | tail -n 1); }; f"
+	up = !git pull origin master && git remote prune origin && git submodule update --init --recursive
+	undo = !git reset HEAD~1 --mixed
+	top = !git log --format=format:%an | sort | uniq -c | sort -r | head -n 20
+
+	# from trevor bramble https://twitter.com/TrevorBramble/status/774292970681937920
+	alias=!git config -l | grep ^alias | cut -c 7- | sort
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
@@ -174,4 +183,4 @@
 [commit]
 	gpgsign = true
 [http]
-	cookiefile = /home/jessie/.gitcookies
+	cookiefile = ~/.gitcookies
