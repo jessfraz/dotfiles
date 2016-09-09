@@ -62,7 +62,9 @@
 
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
+
 	lg = log --color --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an (%G?)>%Creset' --abbrev-commit
+
 	mdiff = "!f() { git stash | head -1 | grep -q 'No local changes to save'; x=$?; git merge --no-commit $1 &>/dev/null; git add -u &>/dev/null; git diff --staged; git reset --hard &>/dev/null; test $x -ne 0 && git stash pop &>/dev/null; }; f"
 
 	# Codereview aliases
@@ -81,6 +83,13 @@
 
 	# from trevor bramble https://twitter.com/TrevorBramble/status/774292970681937920
 	alias=!git config -l | grep ^alias | cut -c 7- | sort
+
+	# from myles borins https://github.com/TheAlphaNerd/Dot-files/blob/master/.gitconfig
+	# github broke some workflow... this will make it less painful
+	patchit = "!f() { echo $1.patch | sed s_pull/[0-9]*/commits_commit_ | xargs curl -L | git am --whitespace=fix; }; f"
+	# patchit = "!f() { curl -L $1.patch | git am --whitespace=fix; }; f"
+	patchit-please = "!f() { echo $1.patch | sed s_pull/[0-9]*/commits_commit_ | xargs curl -L | git am -3 --whitespace=fix; }; f"
+	# patchit-please = "!f() { curl -L $1.patch | git am -3 --whitespace=fix; }; f"
 
 [apply]
 
@@ -144,13 +153,9 @@
 	log = true
 
 [push]
+	# change to maching for machines with older versions of git 1.x.x
+	default = simple
 
-	# Use the Git 1.x.x default to avoid errors on machines with old Git
-	# installations. To use `simple` instead, add this to your `~/.extra` file:
-	# `git config --global push.default simple`. See http://git.io/mMah-w.
-	default = matching
-
-# URL shorthands
 [url "git@github.com:"]
 
 	pushInsteadOf = https://github.com/
@@ -170,17 +175,22 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
 [user]
 	name = Jess Frazelle
 	email = me@jessfraz.com
 	signingkey = 0x18F3685C0022BFF3
+
+# Uncomment if you want fetch to also get all github pull requests, this is rather
+# large on big repos.
 #[remote "origin"]
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
+
 [github]
 	user = jfrazelle
-#[init]
-#	templatedir = ~/.git_template/template
+
 [commit]
 	gpgsign = true
+
 [http]
 	cookiefile = ~/.gitcookies
