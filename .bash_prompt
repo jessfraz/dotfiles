@@ -20,6 +20,10 @@ prompt_git() {
 		# check if the current directory is in .git before running git checks
 		if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
 
+			if [[ -O "$(git rev-parse --show-toplevel)/.git/index" ]]; then
+				git update-index --really-refresh -q &> /dev/null;
+			fi;
+
 			# Check for uncommitted changes in the index.
 			if ! $(git diff --quiet --ignore-submodules --cached); then
 				s+='+';
