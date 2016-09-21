@@ -48,8 +48,8 @@ for repo in "${repos[@]}"; do
 			# in the substitute current function above
 			if [[ "$sha" != "" ]]; then
 				# delete the old shas
-				echo "deleting ${repo}@${sha}"
-				#reg -r "${REPO_URL}" delete "${repo}@${sha}"
+				echo "deleting ${repo}@${ha}:${sha}"
+				reg -r "${REPO_URL}" delete "${repo}@${ha}:${sha}"
 			fi
 		done
 	done
