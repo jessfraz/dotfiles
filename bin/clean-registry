@@ -44,6 +44,8 @@ for repo in "${repos[@]}"; do
 		# remove the current sha
 		shas=( "${shas[@]/$id}" )
 
-		parallel -j${JOBS} reg -r "${REPO_URL}" delete "${repo}@${ha}:{1}" ::: ${shas[@]}
+		if [[ "${shas[@]}" != "" ]]; then
+			parallel -j${JOBS} reg -r "${REPO_URL}" delete "${repo}@${ha}:{1}" ::: ${shas[@]}
+		fi
 	done
 done
