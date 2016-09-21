@@ -246,7 +246,7 @@ gcalcli(){
 		--name gcalcli \
 		${DOCKER_REPO_PREFIX}/gcalcli "$@"
 }
-gcloud(){
+dgcloud(){
 	docker run --rm -it \
 		-v $HOME/.gcloud:/root/.config/gcloud \
 		-v $HOME/.ssh:/root/.ssh:ro \
