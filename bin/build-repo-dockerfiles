@@ -87,12 +87,22 @@ build_repo_dockerfile(){
 }
 
 repos=(
+jfrazelle/apk-file
+jfrazelle/audit
+jfrazelle/bane
+jfrazelle/battery
 jfrazelle/cliaoke
 jfrazelle/ghb0t
+jfrazelle/magneto
+jfrazelle/netns
+jfrazelle/netscan
 jfrazelle/onion
 jfrazelle/pastebinit
+jfrazelle/pony
+jfrazelle/riddler
 jfrazelle/s3server
 jfrazelle/snippetlib
+jfrazelle/udict
 jfrazelle/upmail
 jfrazelle/weather
 kylemanna/docker-openvpn
