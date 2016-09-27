@@ -178,7 +178,7 @@
 
 [user]
 	name = Jess Frazelle
-	email = me@jessfraz.com
+	email = acidburn@google.com
 	signingkey = 0x18F3685C0022BFF3
 
 # Uncomment if you want fetch to also get all github pull requests, this is rather
