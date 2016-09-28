@@ -20,8 +20,8 @@ fi
 # run local xhost
 xhost local:root
 
-# start ssh-agent
-eval $(ssh-agent)
+# start gpg-agent
+eval $(gpg-agent --daemon --enable-ssh-support --write-env-file ~/.gnupg/gpg-agent.env)
 
 # uncomment this if not using a login manager
 # so i3 will start correctly
