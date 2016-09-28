@@ -421,11 +421,11 @@ install_wmapps() {
 get_dotfiles() {
 	# create subshell
 	(
-	cd "/home/$USERNAME"
+	cd "$HOME"
 
 	# install dotfiles from repo
-	git clone git@github.com:jfrazelle/dotfiles.git "/home/$USERNAME/dotfiles"
-	cd "/home/$USERNAME/dotfiles"
+	git clone git@github.com:jfrazelle/dotfiles.git "${HOME}/dotfiles"
+	cd "${HOME}/dotfiles"
 
 	# installs all the things
 	make
@@ -436,6 +436,17 @@ get_dotfiles() {
 	sudo systemctl enable i3lock@${USERNAME}
 	sudo systemctl enable suspend-sedation.service
 
+	cd "$HOME"
+	mkdir -p ~/Pictures
+	mkdir -p ~/Torrents
+	)
+
+	install_vim;
+}
+
+install_vim() {
+	# create subshell
+	(
 	cd "$HOME"
 
 	# install .vim files
@@ -461,8 +472,15 @@ get_dotfiles() {
 	sudo update-alternatives --install /usr/bin/editor editor $(which nvim) 60
 	sudo update-alternatives --config editor
 
-	mkdir -p ~/Pictures
-	mkdir -p ~/Torrents
+	# install things needed for deoplete for vim
+	sudo apt-get update
+	sudo apt-get install -y \
+		python3-pip \
+		--no-install-recommends
+	pip3 install -U \
+		setuptools \
+		wheel \
+		neovim
 	)
 }
 

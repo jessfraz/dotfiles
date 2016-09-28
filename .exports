@@ -34,3 +34,7 @@ export QT_DEVICE_PIXEL_RATIO=2
 export GO15VENDOREXPERIMENT=1
 
 export DOCKER_CONTENT_TRUST=1
+
+# use a tty for gpg
+# solves error: "gpg: signing failed: Inappropriate ioctl for device"
+export GPG_TTY=`tty`
