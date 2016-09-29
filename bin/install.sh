@@ -351,7 +351,7 @@ install_scripts() {
 
 	# download syncthing binary
 	if [[ ! -f /usr/local/bin/syncthing ]]; then
-		curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
+		curl -sSL https://misc.j3ss.co/binaries/syncthing > /usr/local/bin/syncthing
 		chmod +x /usr/local/bin/syncthing
 	fi
 
@@ -360,7 +360,7 @@ install_scripts() {
 	local scripts=( go-md2man have light )
 
 	for script in "${scripts[@]}"; do
-		curl -sSL "http://jesss.s3.amazonaws.com/binaries/$script" > /usr/local/bin/$script
+		curl -sSL "https://misc.j3ss.co/binaries/$script" > /usr/local/bin/$script
 		chmod +x /usr/local/bin/$script
 	done
 }
