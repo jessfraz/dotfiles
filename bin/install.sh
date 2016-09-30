@@ -194,8 +194,8 @@ install_docker() {
 		-C /usr/local/bin --strip-components 1
 	chmod +x /usr/local/bin/docker*
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
 
 	systemctl daemon-reload
 	systemctl enable docker
@@ -238,21 +238,21 @@ install_golang() {
 	go get golang.org/x/tools/cmd/gorename
 	go get golang.org/x/tools/cmd/guru
 
-	go get github.com/jfrazelle/apk-file
-	go get github.com/jfrazelle/bane
-	go get github.com/jfrazelle/battery
-	go get github.com/jfrazelle/cliaoke
-	go get github.com/jfrazelle/ghb0t
-	go get github.com/jfrazelle/magneto
-	go get github.com/jfrazelle/netns
-	go get github.com/jfrazelle/netscan
-	go get github.com/jfrazelle/onion
-	go get github.com/jfrazelle/pastebinit
-	go get github.com/jfrazelle/pony
-	go get github.com/jfrazelle/reg
-	go get github.com/jfrazelle/riddler
-	go get github.com/jfrazelle/udict
-	go get github.com/jfrazelle/weather
+	go get github.com/jessfraz/apk-file
+	go get github.com/jessfraz/bane
+	go get github.com/jessfraz/battery
+	go get github.com/jessfraz/cliaoke
+	go get github.com/jessfraz/ghb0t
+	go get github.com/jessfraz/magneto
+	go get github.com/jessfraz/netns
+	go get github.com/jessfraz/netscan
+	go get github.com/jessfraz/onion
+	go get github.com/jessfraz/pastebinit
+	go get github.com/jessfraz/pony
+	go get github.com/jessfraz/reg
+	go get github.com/jessfraz/riddler
+	go get github.com/jessfraz/udict
+	go get github.com/jessfraz/weather
 
 	go get github.com/axw/gocov/gocov
 	go get github.com/brianredbeard/gpget
@@ -270,7 +270,7 @@ install_golang() {
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc jfrazelle/binctr jfrazelle/contained.af )
+	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc jessfraz/binctr jessfraz/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
@@ -294,11 +294,11 @@ install_golang() {
 		fi
 
 		# make sure we create the right git remotes
-		if [[ "$owner" != "jfrazelle" ]]; then
+		if [[ "$owner" != "jessfraz" ]]; then
 			(
 			cd "${GOPATH}/src/github.com/${project}"
 			git remote set-url --push origin no_push
-			git remote add jfrazelle "https://github.com/jfrazelle/${repo}.git"
+			git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
 			)
 		fi
 	done
@@ -308,7 +308,7 @@ install_golang() {
 	git clone "https://github.com/kubernetes/kubernetes.git" "${GOPATH}/src/k8s.io/kubernetes"
 	cd "${GOPATH}/src/k8s.io/kubernetes"
 	git remote set-url --push origin no_push
-	git remote add jfrazelle "https://github.com/jfrazelle/kubernetes.git"
+	git remote add jessfraz "https://github.com/jessfraz/kubernetes.git"
 	)
 }
 
@@ -367,7 +367,7 @@ install_scripts() {
 
 # install syncthing
 install_syncthing() {
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"
@@ -399,16 +399,16 @@ install_wmapps() {
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/X11/xorg.conf.d/50-synaptics-clickpad.conf > /etc/X11/xorg.conf.d/50-synaptics-clickpad.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf.d/50-synaptics-clickpad.conf > /etc/X11/xorg.conf.d/50-synaptics-clickpad.conf
 
 	# add xorg conf
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/X11/xorg.conf > /etc/X11/xorg.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf > /etc/X11/xorg.conf
 
 	# get correct sound cards on boot
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/modprobe.d/intel.conf > /etc/modprobe.d/intel.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/modprobe.d/intel.conf > /etc/modprobe.d/intel.conf
 
 	# pretty fonts
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/fonts/local.conf > /etc/fonts/local.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/fonts/local.conf > /etc/fonts/local.conf
 
 	echo "Fonts file setup successfully now run:"
 	echo "	dpkg-reconfigure fontconfig-config"
@@ -424,7 +424,7 @@ get_dotfiles() {
 	cd "$HOME"
 
 	# install dotfiles from repo
-	git clone git@github.com:jfrazelle/dotfiles.git "${HOME}/dotfiles"
+	git clone git@github.com:jessfraz/dotfiles.git "${HOME}/dotfiles"
 	cd "${HOME}/dotfiles"
 
 	# installs all the things
@@ -450,7 +450,7 @@ install_vim() {
 	cd "$HOME"
 
 	# install .vim files
-	git clone --recursive git@github.com:jfrazelle/.vim.git "$HOME/.vim"
+	git clone --recursive git@github.com:jessfraz/.vim.git "$HOME/.vim"
 	ln -snf "$HOME/.vim/vimrc" "$HOME/.vimrc"
 	sudo ln -snf "$HOME/.vim" /root/.vim
 	sudo ln -snf "$HOME/.vimrc" /root/.vimrc

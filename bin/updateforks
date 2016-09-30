@@ -5,7 +5,7 @@
 # Fetch all forked repos in a users github and update the master branch with
 # upstreams.
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 6 April 2016
 # :version: 0.0.1
 ##############################################################################

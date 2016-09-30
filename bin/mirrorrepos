@@ -4,7 +4,7 @@
 # -----------
 # Mirror all public repos in a users github and push to another remote
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 6 April 2016
 # :version: 0.0.1
 ##############################################################################

@@ -5,7 +5,7 @@
 # Given an array of repos, build the dockerfiles in that repo and push to a
 # private Docker registry.
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 15 May 2016
 # :version: 0.0.1
 ##############################################################################
@@ -54,7 +54,7 @@ build_repo_dockerfile(){
 	done
 
 	# also push the weather-server image
-	if [[ "${user}/${repo}" == "jfrazelle/weather" ]]; then
+	if [[ "${user}/${repo}" == "jessfraz/weather" ]]; then
 		image=${REGISTRY_PREFIX}/${repo}-server:${suite}
 		echo
 		echo "Building Dockerfile in ${user}/${repo} for image -> ${image}"
@@ -87,24 +87,24 @@ build_repo_dockerfile(){
 }
 
 repos=(
-jfrazelle/apk-file
-jfrazelle/audit
-jfrazelle/bane
-jfrazelle/battery
-jfrazelle/cliaoke
-jfrazelle/ghb0t
-jfrazelle/magneto
-jfrazelle/netns
-jfrazelle/netscan
-jfrazelle/onion
-jfrazelle/pastebinit
-jfrazelle/pony
-jfrazelle/riddler
-jfrazelle/s3server
-jfrazelle/snippetlib
-jfrazelle/udict
-jfrazelle/upmail
-jfrazelle/weather
+jessfraz/apk-file
+jessfraz/audit
+jessfraz/bane
+jessfraz/battery
+jessfraz/cliaoke
+jessfraz/ghb0t
+jessfraz/magneto
+jessfraz/netns
+jessfraz/netscan
+jessfraz/onion
+jessfraz/pastebinit
+jessfraz/pony
+jessfraz/riddler
+jessfraz/s3server
+jessfraz/snippetlib
+jessfraz/udict
+jessfraz/upmail
+jessfraz/weather
 kylemanna/docker-openvpn
 )
 
