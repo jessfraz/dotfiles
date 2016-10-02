@@ -26,8 +26,6 @@ API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
-override_repos=( docker-freeipa mac-dev-setup mbox universe )
-
 mirror_repo(){
 	local orig=$1
 	local user=${orig%/*}
@@ -39,10 +37,6 @@ mirror_repo(){
 		dest="$repo"
 	else
 		dest="$orig"
-	fi
-
-	if [[ " ${override_repos[@]} " =~ " ${repo} " ]]; then
-		dest="$repo"
 	fi
 
 	echo
@@ -74,9 +68,10 @@ main(){
 		local fork=$(echo $raw | jq --raw-output '.fork')
 
 		if [[ "$fork" == "true" ]]; then
-			local response=$(curl -sSL "${URI}/repos/${fullname}")
-			local user=$(echo $response | jq --raw-output '.parent.owner.login')
-			mirror_repo "${user}/${repo}"
+			#local response=$(curl -sSL "${URI}/repos/${fullname}")
+			#local user=$(echo $response | jq --raw-output '.parent.owner.login')
+			#mirror_repo "${user}/${repo}"
+			echo "skipping fork: ${user}/${repo}"
 		else
 			mirror_repo "${fullname}"
 		fi
