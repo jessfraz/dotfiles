@@ -239,6 +239,7 @@ install_golang() {
 	go get golang.org/x/tools/cmd/guru
 
 	go get github.com/jessfraz/apk-file
+	go get github.com/jessfraz/audit
 	go get github.com/jessfraz/bane
 	go get github.com/jessfraz/battery
 	go get github.com/jessfraz/cliaoke
