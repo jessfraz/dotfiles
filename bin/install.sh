@@ -262,6 +262,7 @@ install_golang() {
 	go get github.com/crosbymichael/gistit
 	go get github.com/crosbymichael/ip-addr
 	go get github.com/cbednarski/hostess/cmd/hostess
+	go get github.com/davecheney/httpstat
 	go get github.com/FiloSottile/gvt
 	go get github.com/FiloSottile/vendorcheck
 	go get github.com/nsf/gocode
