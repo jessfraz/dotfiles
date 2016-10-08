@@ -852,6 +852,12 @@ transmission(){
 	sudo hostess add transmission $(docker inspect --format "{{.NetworkSettings.Networks.bridge.IPAddress}}" transmission)
 	browser-exec "http://transmission:9091"
 }
+travis(){
+	docker run -it --rm \
+		-v $HOME/.travis:/root/.travis \
+		--log-driver none \
+		${DOCKER_REPO_PREFIX}/travis "$@"
+}
 virsh(){
 	relies_on kvm
 
