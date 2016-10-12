@@ -5,4 +5,4 @@ export GOPATH=$HOME/.go
 export PATH=/usr/local/bin:/usr/local/go/bin:$PATH:$GOPATH/bin:/usr/share/bcc/tools:/sbin:$HOME/google-cloud-sdk/bin
 
 # update cdpath
-export CDPATH=.:$GOPATH/src/github.com:$GOPATH/src/golang.org:$GOPATH/src
+export CDPATH=${CDPATH}:$GOPATH/src/github.com:$GOPATH/src/golang.org:$GOPATH/src
