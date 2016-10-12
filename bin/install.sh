@@ -550,6 +550,7 @@ usage() {
 	echo "  graphics {dell,mac,lenovo}  - install graphics drivers"
 	echo "  wm                          - install window manager/desktop pkgs"
 	echo "  dotfiles                    - get dotfiles"
+	echo "  vim                         - install vim specific dotfiles"
 	echo "  golang                      - install golang and packages"
 	echo "  scripts                     - install scripts"
 	echo "  syncthing                   - install syncthing"
@@ -583,6 +584,8 @@ main() {
 		install_wmapps
 	elif [[ $cmd == "dotfiles" ]]; then
 		get_dotfiles
+	elif [[ $cmd == "vim" ]]; then
+		install_vim
 	elif [[ $cmd == "golang" ]]; then
 		install_golang "$2"
 	elif [[ $cmd == "scripts" ]]; then
