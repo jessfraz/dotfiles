@@ -19,7 +19,7 @@ main(){
 		images=( "${images[@]/$image}" )
 	done
 
-	docker rmi -f ${images[@]} 2> /dev/null
+	docker rmi -f ${images[@]} 2>&1 || true
 }
 
 main
