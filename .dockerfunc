@@ -269,6 +269,15 @@ gimp(){
 		--name gimp \
 		${DOCKER_REPO_PREFIX}/gimp
 }
+gitsome(){
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		--name gitsome \
+		--hostname gitsome \
+		-v $HOME/.gitsomeconfig:/home/anon/.gitsomeconfig \
+		-v $HOME/.gitsomeconfigurl:/home/anon/.gitsomeconfigurl \
+		${DOCKER_REPO_PREFIX}/gitsome
+}
 hollywood(){
 	docker run --rm -it \
 		--name hollywood \
