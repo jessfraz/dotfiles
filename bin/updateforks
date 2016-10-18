@@ -18,7 +18,6 @@ if [[ -z "$GITHUB_USERNAME" ]]; then
 fi
 
 URI=https://api.github.com
-API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
@@ -28,10 +27,10 @@ update_fork(){
 	local forked_repo=$1
 	local upstream_repo=$2
 	local primary_branch=$3
-	local tmpdir=$(mktemp -d)
+	local tmpdir
+	tmpdir=$(mktemp -d)
 
-
-	if [[ " ${ignore_repos[@]} " =~ " ${repo} " ]]; then
+	if [[ "${ignore_repos[@]}" =~ ${repo} ]]; then
 		return
 	fi
 
@@ -60,20 +59,27 @@ update_fork(){
 
 main(){
 	# send the request
-	local response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}")
-	local repos=$(echo $response | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,id:.id} | @base64')
+	local response
+	response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}")
+	local repos
+	repos=$(echo "$response" | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork} | @base64')
 
 	for r in $repos; do
-		raw="$(echo $r | base64 -d)"
-		local id=$(echo $raw | jq --raw-output '.id')
-		local fullname=$(echo $raw | jq --raw-output '.fullname')
-		local repo=$(echo $raw | jq --raw-output '.repo')
-		local fork=$(echo $raw | jq --raw-output '.fork')
+		raw="$(echo "$r" | base64 -d)"
+		local fullname
+		fullname=$(echo "$raw" | jq --raw-output '.fullname')
+		local repo
+		repo=$(echo "$raw" | jq --raw-output '.repo')
+		local fork
+		fork=$(echo "$raw" | jq --raw-output '.fork')
 
 		if [[ "$fork" == "true" ]]; then
-			local response=$(curl -sSL "${URI}/repos/${fullname}")
-			local upstream_user=$(echo $response | jq --raw-output '.parent.owner.login')
-			local primary_branch=$(echo $response | jq --raw-output '.default_branch')
+			local response
+			response=$(curl -sSL "${URI}/repos/${fullname}")
+			local upstream_user
+			upstream_user=$(echo "$response" | jq --raw-output '.parent.owner.login')
+			local primary_branch
+			primary_branch=$(echo "$response" | jq --raw-output '.default_branch')
 			update_fork "${fullname}" "${upstream_user}/${repo}" "${primary_branch}"
 		fi
 	done

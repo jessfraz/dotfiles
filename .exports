@@ -15,13 +15,11 @@ export HISTIGNORE=" *:ls:cd:cd -:pwd:exit:date:* --help:* -h:pony:pony add *:pon
 export LANG="en_US.UTF-8";
 export LC_ALL="en_US.UTF-8";
 
-# Highlight section titles in manual pages
-export LESS_TERMCAP_md="${yellow}";
-
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X";
 
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
+export DBUS_SESSION_BUS_ADDRESS
+DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
 
 export TODOTXT_DEFAULT_ACTION=ls
 

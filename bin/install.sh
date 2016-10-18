@@ -277,7 +277,7 @@ install_golang() {
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
 		if [[ -d "${HOME}/${repo}" ]]; then
-			rm -rf "${HOME}/${repo}"
+			rm -rf "${HOME:?}/${repo}"
 		fi
 
 		mkdir -p "${GOPATH}/src/github.com/${owner}"
@@ -323,13 +323,13 @@ install_graphics() {
 		exit 1
 	fi
 
-	local pkgs="nvidia-kernel-dkms bumblebee-nvidia primus"
+	local pkgs=( nvidia-kernel-dkms bumblebee-nvidia primus )
 
 	if [[ $system == "mac" ]] || [[ $system == "dell" ]]; then
-		local pkgs="xorg xserver-xorg xserver-xorg-video-intel"
+		pkgs=( xorg xserver-xorg xserver-xorg-video-intel )
 	fi
 
-	apt-get install -y $pkgs --no-install-recommends
+	apt-get install -y "${pkgs[@]}" --no-install-recommends
 }
 
 # install custom scripts/binaries
@@ -362,8 +362,8 @@ install_scripts() {
 	local scripts=( go-md2man have light )
 
 	for script in "${scripts[@]}"; do
-		curl -sSL "https://misc.j3ss.co/binaries/$script" > /usr/local/bin/$script
-		chmod +x /usr/local/bin/$script
+		curl -sSL "https://misc.j3ss.co/binaries/$script" > "/usr/local/bin/${script}"
+		chmod +x "/usr/local/bin/${script}"
 	done
 }
 
@@ -395,9 +395,9 @@ install_wifi() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	local pkgs="feh i3 i3lock i3status scrot slim neovim"
+	local pkgs=( feh i3 i3lock i3status scrot slim neovim )
 
-	apt-get install -y $pkgs --no-install-recommends
+	apt-get install -y "${pkgs[@]}" --no-install-recommends
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
@@ -435,7 +435,7 @@ get_dotfiles() {
 	# enable dbus for the user session
 	# systemctl --user enable dbus.socket
 
-	sudo systemctl enable i3lock@${USERNAME}
+	sudo systemctl enable "i3lock@${USERNAME}"
 	sudo systemctl enable suspend-sedation.service
 
 	cd "$HOME"
@@ -452,33 +452,35 @@ install_vim() {
 	cd "$HOME"
 
 	# install .vim files
-	git clone --recursive git@github.com:jessfraz/.vim.git "$HOME/.vim"
-	ln -snf "$HOME/.vim/vimrc" "$HOME/.vimrc"
-	sudo ln -snf "$HOME/.vim" /root/.vim
-	sudo ln -snf "$HOME/.vimrc" /root/.vimrc
+	git clone --recursive git@github.com:jessfraz/.vim.git "${HOME}/.vim"
+	ln -snf "${HOME}/.vim/vimrc" "${HOME}/.vimrc"
+	sudo ln -snf "${HOME}/.vim" /root/.vim
+	sudo ln -snf "${HOME}/.vimrc" /root/.vimrc
 
 	# alias vim dotfiles to neovim
-	mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-	ln -snf "$HOME/.vim" $XDG_CONFIG_HOME/nvim
-	ln -snf "$HOME/.vimrc" $XDG_CONFIG_HOME/nvim/init.vim
+	mkdir -p "${XDG_CONFIG_HOME:=$HOME/.config}"
+	ln -snf "${HOME}/.vim" "${XDG_CONFIG_HOME}/nvim"
+	ln -snf "${HOME}/.vimrc" "${XDG_CONFIG_HOME}/nvim/init.vim"
 	# do the same for root
 	sudo mkdir -p /root/.config
-	sudo ln -snf "$HOME/.vim" /root/.config/nvim
-	sudo ln -snf "$HOME/.vimrc" /root/.config/nvim/init.vim
+	sudo ln -snf "${HOME}/.vim" /root/.config/nvim
+	sudo ln -snf "${HOME}/.vimrc" /root/.config/nvim/init.vim
 
 	# update alternatives to neovim
-	sudo update-alternatives --install /usr/bin/vi vi $(which nvim) 60
+	sudo update-alternatives --install /usr/bin/vi vi "$(which nvim)" 60
 	sudo update-alternatives --config vi
-	sudo update-alternatives --install /usr/bin/vim vim $(which nvim) 60
+	sudo update-alternatives --install /usr/bin/vim vim "$(which nvim)" 60
 	sudo update-alternatives --config vim
-	sudo update-alternatives --install /usr/bin/editor editor $(which nvim) 60
+	sudo update-alternatives --install /usr/bin/editor editor "$(which nvim)" 60
 	sudo update-alternatives --config editor
 
 	# install things needed for deoplete for vim
 	sudo apt-get update
+
 	sudo apt-get install -y \
 		python3-pip \
 		--no-install-recommends
+
 	pip3 install -U \
 		setuptools \
 		wheel \
@@ -489,21 +491,22 @@ install_vim() {
 install_virtualbox() {
 	# check if we need to install libvpx1
 	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' libvpx1 | grep "install ok installed")
-	echo Checking for libvpx1: $PKG_OK
+	echo "Checking for libvpx1: $PKG_OK"
 	if [ "" == "$PKG_OK" ]; then
 		echo "No libvpx1. Installing libvpx1."
 		jessie_sources=/etc/apt/sources.list.d/jessie.list
-		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > $jessie_sources
+		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > "$jessie_sources"
 
 		apt-get update
 		apt-get install -y -t jessie libvpx1 \
 			--no-install-recommends
 
 		# cleanup the file that we used to install things from jessie
-		rm $jessie_sources
+		rm "$jessie_sources"
 	fi
 
 	echo "deb http://download.virtualbox.org/virtualbox/debian vivid contrib" >> /etc/apt/sources.list.d/virtualbox.list
+
 	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
 
 	apt-get update
@@ -522,20 +525,20 @@ install_vagrant() {
 
 	# check if we need to install virtualbox
 	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' virtualbox | grep "install ok installed")
-	echo Checking for virtualbox: $PKG_OK
+	echo "Checking for virtualbox: $PKG_OK"
 	if [ "" == "$PKG_OK" ]; then
 		echo "No virtualbox. Installing virtualbox."
 		install_virtualbox
 	fi
 
-	tmpdir=`mktemp -d`
+	tmpdir=$(mktemp -d)
 	(
-	cd $tmpdir
-	curl -sSL -o vagrant.deb https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+	cd "$tmpdir"
+	curl -sSL -o vagrant.deb "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb"
 	dpkg -i vagrant.deb
 	)
 
-	rm -rf $tmpdir
+	rm -rf "$tmpdir"
 
 	# install plugins
 	vagrant plugin install vagrant-vbguest

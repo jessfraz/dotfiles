@@ -45,7 +45,7 @@ for repo in "${repos[@]}"; do
 		shas=( "${shas[@]/$id}" )
 
 		if [[ "${shas[@]}" != "" ]]; then
-			parallel -j${JOBS} reg -r "${REPO_URL}" delete "${repo}@${ha}:{1}" ::: ${shas[@]}
+			parallel -j"${JOBS}" reg -r "${REPO_URL}" delete "${repo}@${ha}:{1}" ::: "${shas[@]}"
 		fi
 	done
 done

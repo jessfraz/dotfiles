@@ -6,18 +6,29 @@ help() {
 }
 
 dcleanup(){
-	docker rm $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
-	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+	local containers
+	containers=( $(docker ps --filter status=exited -q 2>/dev/null) )
+	docker rm "${containers[@]}" 2>/dev/null
+	local images
+	images=( $(docker images --filter dangling=true -q 2>/dev/null) )
+	docker rmi "${images[@]}" 2>/dev/null
 }
 
 update_docker() {
-	local username=$(find /home/* -maxdepth 0 -printf "%f" -type d)
+	local username
+	username=$(find /home/* -maxdepth 0 -printf "%f" -type d)
 	local user_home="/home/${username}"
 	local docker_dir="${user_home}/docker"
 
+	# set init
+	local init="systemd"
+	if [[ "$(/sbin/init --version)" =~ "upstart" ]]; then
+		init="upstart"
+	fi
+
 	# stop docker
 	dcleanup || true
-	if [[ `/sbin/init --version` =~ upstart ]]; then
+	if [[ "$init" == "upstart" ]]; then
 		service docker stop || true
 	else
 		systemctl stop docker || true
@@ -34,7 +45,7 @@ update_docker() {
 		mkdir -p /etc/bash_completion.d
 		curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker/master/contrib/completion/bash/docker
 
-		if [[ `/sbin/init --version` =~ upstart ]]; then
+		if [[ "$init" == "upstart" ]]; then
 			# Update the upstart file
 			curl -sSL -o /etc/init/docker.conf https://raw.githubusercontent.com/docker/docker/master/contrib/init/upstart/docker.conf
 		fi
@@ -44,9 +55,11 @@ update_docker() {
 		local manRoot="/usr/share/man"
 		mkdir -p "$manRoot"
 		for manDir in man/man?; do
-			local manBase="$(basename "$manDir")" # "man1"
+			local manBase
+			manBase="$(basename "$manDir")" # "man1"
 			for manFile in "$manDir"/*; do
-				local manName="$(basename "$manFile")" # "docker-build.1"
+				local manName
+				manName="$(basename "$manFile")" # "docker-build.1"
 				mkdir -p "$manRoot/$manBase"
 				gzip -c "$manFile" > "$manRoot/$manBase/$manName.gz"
 			done
@@ -64,8 +77,10 @@ update_docker() {
 	# get the binary
 	local tmp_tar=/tmp/docker.tgz
 	local binary_uri="https://master.dockerproject.org"
-	local docker_version=$(curl -sSL "${binary_uri}/version")
-	local docker_sha256=$(curl -sSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
+	local docker_version
+	docker_version=$(curl -sSL "${binary_uri}/version")
+	local docker_sha256
+	docker_sha256=$(curl -sSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
 	(
 	set -x
 	curl -fSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz" -o "${tmp_tar}"
@@ -77,7 +92,7 @@ update_docker() {
 	chmod +x /usr/local/bin/docker*
 
 	# start docker
-	if [[ `/sbin/init --version` =~ upstart ]]; then
+	if [[ "$init" == "upstart" ]]; then
 		service docker start
 	else
 		systemctl start docker
@@ -126,4 +141,4 @@ main() {
 	fi
 }
 
-main $@
+main "$@"

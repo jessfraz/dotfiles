@@ -1,5 +1,7 @@
+#!/bin/sh
+
 # go path
-export GOPATH=$HOME/.go
+export GOPATH="${HOME}/.go"
 
 # update path
 export PATH=/usr/local/bin:/usr/local/go/bin:$PATH:$GOPATH/bin:/usr/share/bcc/tools:/sbin:$HOME/google-cloud-sdk/bin

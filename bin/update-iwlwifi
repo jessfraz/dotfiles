@@ -20,9 +20,10 @@ update_iwlwifi(){
 
 	(
 	# make a temp dir for the clone
-	local tdir=`mktemp -d`
+	local tdir
+	tdir=$(mktemp -d)
 
-	cd $tdir
+	cd "$tdir"
 
 	# clone the repo
 	git clone git://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git
@@ -33,8 +34,8 @@ update_iwlwifi(){
 	cp iwlwifi-7265*.ucode /lib/firmware
 
 	# cleanup
-	rm -rf $tdir
+	rm -rf "$tdir"
 	)
 }
 
-update_iwlwifi $@
+update_iwlwifi "$@"

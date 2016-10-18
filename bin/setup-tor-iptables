@@ -12,7 +12,7 @@ fi
 
 main() {
 	# check the tor container is running
-	local state=$(docker inspect --format "{{.State.Running}}" tor 2>/dev/null)
+	state=$(docker inspect --format "{{.State.Running}}" tor 2>/dev/null)
 	if [ "$state" = "false" ] || [ -z "$state" ]; then
 		echo >&2 "tor container is not running, exiting."
 		return 1
@@ -23,19 +23,19 @@ main() {
 	###
 	# destinations you don't want routed through Tor, seperated by a space
 	# example: '192.168.1.0/24 192.168.0.0/24'
-	local non_tor="$1"
+	non_tor="$1"
 
 	# the UID that Tor runs as (varies from system to system)
-	local tor_uid=$(docker exec -u tor tor id -u || echo 1000)
+	tor_uid=$(docker exec -u tor tor id -u || echo 1000)
 
 	# Tor's TransPort
-	local trans_port="9040"
+	trans_port="9040"
 
 	# Tor's DNSPort
-	local dns_port="5353"
+	dns_port="5353"
 
 	# default iptables action, append
-	local action="-A"
+	action="-A"
 	# check existance of a rule, if it exists change iptables action
 	# to delete the rules instead of append
 	if iptables -t nat -C OUTPUT -p tcp --syn -j REDIRECT --to-ports "$trans_port" 2>/dev/null ; then

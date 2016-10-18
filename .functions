@@ -3,39 +3,45 @@
 # Simple calculator
 calc() {
 	local result=""
-	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')"
+	result="$(printf "scale=10;%s\n" "$*" | bc --mathlib | tr -d '\\\n')"
 	#						└─ default (when `--mathlib` is used) is 20
 
 	if [[ "$result" == *.* ]]; then
 		# improve the output for decimal numbers
-		printf "$result" |
-		sed -e 's/^\./0./'		  `# add "0" for cases like ".5"` \
-			-e 's/^-\./-0./'	  `# add "0" for cases like "-.5"`\
-			-e 's/0*$//;s/\.$//';  # remove trailing zeros
+		# add "0" for cases like ".5"
+		# add "0" for cases like "-.5"
+		# remove trailing zeros
+		printf "%s" "$result" |
+		sed -e 's/^\./0./'  \
+			-e 's/^-\./-0./' \
+			-e 's/0*$//;s/\.$//'
 	else
-		printf "$result"
+		printf "%s" "$result"
 	fi
 	printf "\n"
 }
 
 # Create a new directory and enter it
 mkd() {
-	mkdir -p "$@" && cd "$@"
+	mkdir -p "$@"
+	cd "$@" || exit
 }
 
 # Make a temporary directory and enter it
 tmpd() {
+	local dir
 	if [ $# -eq 0 ]; then
-		dir=`mktemp -d` && cd $dir
+		dir=$(mktemp -d)
 	else
-		dir=`mktemp -d -t $1.XXXXXXXXXX` && cd $dir
+		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
 	fi
+	cd "$dir" || exit
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 targz() {
-	local tmpFile="${@%/}.tar"
-	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
+	local tmpFile="${1%/}.tar"
+	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${1}" || return 1
 
 	size=$(
 	stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
@@ -70,7 +76,7 @@ fs() {
 	if [[ -n "$@" ]]; then
 		du $arg -- "$@"
 	else
-		du $arg .[^.]* *
+		du $arg -- .[^.]* *
 	fi
 }
 
@@ -84,7 +90,8 @@ fi
 
 # Create a data URL from a file
 dataurl() {
-	local mimeType=$(file -b --mime-type "$1")
+	local mimeType
+	mimeType=$(file -b --mime-type "$1")
 	if [[ $mimeType == text/* ]]; then
 		mimeType="${mimeType};charset=utf-8"
 	fi
@@ -93,7 +100,7 @@ dataurl() {
 
 # Create a git.io short URL
 gitio() {
-	if [ -z "${1}" -o -z "${2}" ]; then
+	if [ -z "${1}" ] || [ -z "${2}" ]; then
 		echo "Usage: \`gitio slug url\`"
 		return 1
 	fi
@@ -111,9 +118,12 @@ server() {
 
 # Compare original and gzipped file size
 gz() {
-	local origsize=$(wc -c < "$1")
-	local gzipsize=$(gzip -c "$1" | wc -c)
-	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
+	local origsize
+	origsize=$(wc -c < "$1")
+	local gzipsize
+	gzipsize=$(gzip -c "$1" | wc -c)
+	local ratio
+	ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
 	printf "orig: %d bytes\n" "$origsize"
 	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
 }
@@ -140,7 +150,9 @@ mwiki() {
 
 # UTF-8-encode a string of Unicode symbols
 escape() {
-	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+	local args
+	args=( $(printf "%s" "$*" | xxd -p -c1 -u) )
+	printf "\\\x%s" "${args[@]}"
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
 		echo ""; # newline
@@ -149,7 +161,7 @@ escape() {
 
 # Decode \x{ABCD}-style Unicode escape sequences
 unidecode() {
-	perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
+	perl -e "binmode(STDOUT, ':utf8'); print \"$*\""
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
 		echo ""; # newline
@@ -158,7 +170,7 @@ unidecode() {
 
 # Get a character’s Unicode code point
 codepoint() {
-	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+	perl -e "use utf8; print sprintf('U+%04X', ord(\"$*\"))"
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
 		echo ""; # newline
@@ -177,11 +189,13 @@ getcertnames() {
 	echo "Testing ${domain}…"
 	echo ""; # newline
 
-	local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
+	local tmp
+	tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
 		| openssl s_client -connect "${domain}:443" 2>&1)
 
 	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
-		local certText=$(echo "${tmp}" \
+		local certText
+		certText=$(echo "${tmp}" \
 			| openssl x509 -text -certopt "no_header, no_serial, no_version, \
 			no_signame, no_validity, no_issuer, no_pubkey, no_sigdump, no_aux")
 		echo "Common Name:"
@@ -229,11 +243,13 @@ tre() {
 
 # Call from a local repo to open the repository on github/bitbucket in browser
 repo() {
-	local giturl=$(git config --get remote.origin.url | sed 's/git@/\/\//g' | sed 's/.git$//' | sed 's/https://g' | sed 's/:/\//g')
+	local giturl
+	giturl=$(git config --get remote.origin.url | sed 's/git@/\/\//g' | sed 's/.git$//' | sed 's/https://g' | sed 's/:/\//g')
 	if [[ $giturl == "" ]]; then
 		echo "Not a git repository or no remote.origin.url is set."
 	else
-		local gitbranch=$(git rev-parse --abbrev-ref HEAD)
+		local gitbranch
+		gitbranch=$(git rev-parse --abbrev-ref HEAD)
 		local giturl="http:${giturl}"
 
 		if [[ $gitbranch != "master" ]]; then
@@ -244,21 +260,21 @@ repo() {
 			fi
 		fi
 
-		echo $giturl
-		open $giturl
+		echo "$giturl"
+		open "$giturl"
 	fi
 }
 
 # Get colors in manual pages
 man() {
 	env \
-		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-		LESS_TERMCAP_md=$(printf "\e[1;31m") \
-		LESS_TERMCAP_me=$(printf "\e[0m") \
-		LESS_TERMCAP_se=$(printf "\e[0m") \
-		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-		LESS_TERMCAP_ue=$(printf "\e[0m") \
-		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		LESS_TERMCAP_mb="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;44;33m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
 		man "$@"
 }
 
@@ -266,10 +282,11 @@ man() {
 openimage() {
 	local types='*.jpg *.JPG *.png *.PNG *.gif *.GIF *.jpeg *.JPEG'
 
-	cd $(dirname "$1")
-	local file=$(basename "$1")
+	cd "$(dirname "$1")" || exit
+	local file
+	file=$(basename "$1")
 
-	feh -q $types --auto-zoom \
+	feh -q "$types" --auto-zoom \
 		--sort filename --borderless \
 		--scale-down --draw-filename \
 		--image-bg black \
@@ -308,9 +325,10 @@ gostatic(){
 		dir=$(pwd)
 	fi
 
-	local name=$(basename "$dir")
+	local name
+	name=$(basename "$dir")
 	(
-	cd $dir
+	cd "$dir" || exit
 	export GOOS=linux
 	echo "Building static binary for $name in $dir"
 
@@ -351,27 +369,27 @@ gogo(){
 	fi
 
 	if [[ "$d" == github* ]]; then
-		d=$(echo $d | sed 's/.*\///')
+		d=$(echo "$d" | sed 's/.*\///')
 	fi
 	d=${d%/}
 
 	# search for the project dir in the GOPATH
-	local path=( `find "${GOPATH}/src" \( -type d -o -type l \) -iname "$d"  | awk '{print length, $0;}' | sort -n | awk '{print $2}'` )
+	local path=( $(find "${GOPATH}/src" \( -type d -o -type l \) -iname "$d"  | awk '{print length, $0;}' | sort -n | awk '{print $2}') )
 
-	if [ "$path" == "" ] || [ "${path[*]}" == "" ]; then
+	if [ "${path[0]}" == "" ] || [ "${path[*]}" == "" ]; then
 		echo "Could not find a directory named $d in $GOPATH"
 		echo "Maybe you need to 'go get' it ;)"
 		return 1
 	fi
 
 	# enter the first path found
-	cd "${path[0]}"
+	cd "${path[0]}" || return 1
 }
 
 golistdeps(){
 	(
 	if [[ ! -z "$1" ]]; then
-		gogo $@
+		gogo "$@"
 	fi
 
 	go list -e -f '{{join .Deps "\n"}}' ./... | xargs go list -e -f '{{if not .Standard}}{{.ImportPath}}{{end}}'
@@ -389,17 +407,16 @@ xname(){
 	fi
 
 	local match_string='".*"'
-	local match_int='[0-9][0-9]*'
 	local match_qstring='"[^"\\]*(\\.[^"\\]*)*"' # NOTE: Adds 1 backreference
 
 	# get the name
-	xprop -id $window_id | \
+	xprop -id "$window_id" | \
 		sed -nr \
 		-e "s/^WM_CLASS\(STRING\) = ($match_qstring), ($match_qstring)$/instance=\1\nclass=\3/p" \
 		-e "s/^WM_WINDOW_ROLE\(STRING\) = ($match_qstring)$/window_role=\1/p" \
 		-e "/^WM_NAME\(STRING\) = ($match_string)$/{s//title=\1/; h}" \
 		-e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
-		-e '${g; p}'
+		-e "\${g; p}"
 }
 
 dell_monitor() {
