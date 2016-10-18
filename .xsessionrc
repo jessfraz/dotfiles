@@ -6,13 +6,19 @@
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
 	for f in /etc/X11/xinit/xinitrc.d/*; do
-		[ -x "$f" ] && . "$f"
+		if [ -x "$f" ]; then
+			# shellcheck source=/dev/null
+			. "$f"
+		fi
 	done
 	unset f
 fi
 
 # run Xprofile
-[ -f ~/.Xprofile ] && . ~/.Xprofile
+if [ -f ~/.Xprofile ]; then
+	# shellcheck source=/dev/null
+	. ~/.Xprofile
+fi
 
 # run Xmodmap
 [ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap

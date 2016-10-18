@@ -67,7 +67,7 @@ get_threat_score(){
 	if [[ "$result" != "success" ]]; then
 		msg=$(echo "$response" | jq --raw-output '.msg')
 		>&2 echo "[ERROR]: api response for exit node: ${exit} failed with:"
-		>&2 echo "        status:  ${status}"
+		>&2 echo "        status:  ${result}"
 		>&2 echo "        message: ${msg}"
 		exit 1
 	fi

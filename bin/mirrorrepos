@@ -22,7 +22,6 @@ if [[ -z "$REMOTE_URL" ]]; then
 fi
 
 URI=https://api.github.com
-API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
@@ -31,7 +30,8 @@ mirror_repo(){
 	local user=${orig%/*}
 	local repo=${orig#*/}
 	local description="$2"
-	local tmpdir=$(mktemp -d)
+	local tmpdir
+	tmpdir=$(mktemp -d)
 
 
 	if [[ "$GITHUB_USERNAME" == "$user" ]]; then
@@ -59,22 +59,31 @@ mirror_repo(){
 
 main(){
 	# send the request
-	local response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}&type=public")
-	local repos=$(echo $response | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,id:.id,description:.description} | @base64')
+	local response
+	response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}&type=public")
+	local repos
+	repos=$(echo "$response" | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,description:.description} | @base64')
 
 	for r in $repos; do
-		raw="$(echo $r | base64 -d)"
-		local id=$(echo $raw | jq --raw-output '.id')
-		local fullname=$(echo $raw | jq --raw-output '.fullname')
-		local repo=$(echo $raw | jq --raw-output '.repo')
-		local description=$(echo $raw | jq --raw-output '.description')
-		local fork=$(echo $raw | jq --raw-output '.fork')
+		raw="$(echo "$r" | base64 -d)"
+		local fullname
+		fullname=$(echo "$raw" | jq --raw-output '.fullname')
+		local repo
+		repo=$(echo "$raw" | jq --raw-output '.repo')
+		local description
+		description=$(echo "$raw" | jq --raw-output '.description')
+		local fork
+		fork=$(echo "$raw" | jq --raw-output '.fork')
 
 		if [[ "$fork" == "true" ]]; then
-			#local response=$(curl -sSL "${URI}/repos/${fullname}")
-			#local user=$(echo $response | jq --raw-output '.parent.owner.login')
-			#mirror_repo "${user}/${repo}"
-			echo "skipping fork: ${user}/${repo}" "${description}"
+			if [[ -z "$INCLUDE_FORKS" ]]; then
+				echo "skipping fork: ${user}/${repo}" "${description}"
+			else
+				response=$(curl -sSL "${URI}/repos/${fullname}")
+				local user
+				user=$(echo "$response" | jq --raw-output '.parent.owner.login')
+				mirror_repo "${user}/${repo}"
+			fi
 		else
 			mirror_repo "${fullname}" "${description}"
 		fi

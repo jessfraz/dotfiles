@@ -29,8 +29,8 @@ scrot $IMAGE
 
 docker run --rm \
 	-v $IMAGE:$IMAGE \
-	-v $HOME/Pictures/lock.png:/root/lock.png \
-	jess/imagemagick \
+	-v "${HOME}/Pictures/lock.png:/root/lock.png" \
+	r.j3ss.co/imagemagick \
 	sh -c "convert $IMAGE -brightness-contrast -30x10 -level 0%,100%,0.6 -blur $BLURTYPE -gravity center - | composite -gravity center /root/lock.png - $IMAGE"
 
 i3lock -i $IMAGE

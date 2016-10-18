@@ -16,9 +16,10 @@ build_repo_dockerfile(){
 	local orig=$1
 	local user=${orig%/*}
 	local repo=${orig#*/}
-	local tmpdir=$(mktemp -d)
 	local suite=latest
 	local image=${REGISTRY_PREFIX}/${repo}:${suite}
+	local tmpdir
+	tmpdir=$(mktemp -d)
 
 	case "${user}/${repo}" in
 		"kylemanna/docker-openvpn")
@@ -30,60 +31,47 @@ build_repo_dockerfile(){
 		*) ;;
 	esac
 
+	git clone --depth 1 "https://github.com/${user}/${repo}.git" "$tmpdir"
+	build_and_push "$tmpdir" "$image" .
+
+	# also push the weather-server image
+	if [[ "${user}/${repo}" == "jessfraz/weather" ]]; then
+		image=${REGISTRY_PREFIX}/${repo}-server:${suite}
+		build_and_push "$tmpdir" "$image" server
+	fi
+
+	# cleanup
+	rm -rf "$tmpdir"
+}
+
+build_and_push(){
+	local dir=$1
+	local image=$2
+	local context=$3
+
 	echo
-	echo "Building Dockerfile in ${user}/${repo} for image -> ${image}"
+	echo "Building Dockerfile for image -> ${image}"
 	echo
 
 	(
 	set -x
-	git clone --depth 1 "https://github.com/${user}/${repo}.git" "$tmpdir"
-	cd "$tmpdir"
-	docker build --rm --force-rm -t ${image} .
+	cd "$dir"
+	docker build --rm --force-rm -t "${image}" "${context}"
 	)
 
 	echo "                       ---                                   "
 	echo "Successfully built ${image}"
 	echo "                       ---                                   "
 
+	# try push a few times because notary server sometimes returns 401 for
+	# absolutely no reason
 	n=0
 	until [ $n -ge 5 ]; do
-		docker push --disable-content-trust=false ${image} && break
+		docker push --disable-content-trust=false "${image}" && break
 		echo "Try #$n failed... sleeping for 15 seconds"
-		n=$[$n+1]
+		n=$((n+1))
 		sleep 15
 	done
-
-	# also push the weather-server image
-	if [[ "${user}/${repo}" == "jessfraz/weather" ]]; then
-		image=${REGISTRY_PREFIX}/${repo}-server:${suite}
-		echo
-		echo "Building Dockerfile in ${user}/${repo} for image -> ${image}"
-		echo
-
-		(
-		set -x
-		cd "$tmpdir"
-		docker build --rm --force-rm -t ${image} server
-		)
-
-		echo "                       ---                                   "
-		echo "Successfully built ${image}"
-		echo "                       ---                                   "
-
-		# try push a few times because notary server sometimes returns 401 for
-		# absolutely no reason
-		n=0
-		until [ $n -ge 5 ]; do
-			docker push --disable-content-trust=false ${image} && break
-			echo "Try #$n failed... sleeping for 15 seconds"
-			n=$[$n+1]
-			sleep 15
-		done
-	fi
-
-
-	# cleanup
-	rm -rf "$tmpdir"
 }
 
 repos=(
@@ -113,10 +101,10 @@ jessfraz/weather
 kylemanna/docker-openvpn
 )
 
-: ${REGISTRY_PREFIX:=r.j3ss.co}
+: "${REGISTRY_PREFIX:=r.j3ss.co}"
 
 main(){
-	for r in ${repos[@]}; do
+	for r in "${repos[@]}"; do
 		build_repo_dockerfile "$r"
 	done
 }
