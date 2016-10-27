@@ -718,8 +718,9 @@ slack(){
 		--group-add audio \
 		--group-add video \
 		-v "${HOME}/.slack:/root/.config/Slack" \
+		--ipc="host" \
 		--name slack \
-		${DOCKER_REPO_PREFIX}/slack
+		${DOCKER_REPO_PREFIX}/slack "$@"
 }
 spotify(){
 	del_stopped spotify
