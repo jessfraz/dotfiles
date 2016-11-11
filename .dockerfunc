@@ -873,6 +873,8 @@ transmission(){
 travis(){
 	docker run -it --rm \
 		-v "${HOME}/.travis:/root/.travis" \
+		-v $(pwd):/repo \
+		--workdir /repo \
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/travis "$@"
 }
@@ -909,7 +911,7 @@ visualstudio(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix  \
 		-e "DISPLAY=unix${DISPLAY}" \
 		--name visualstudio \
-		${DOCKER_REPO_PREFIX}/visualstudio
+		${DOCKER_REPO_PREFIX}/vscode
 }
 vlc(){
 	del_stopped vlc
