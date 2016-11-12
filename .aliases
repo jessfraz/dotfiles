@@ -6,15 +6,10 @@ alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 
 # Easier navigation: .., ..., ...., ....., ~ and -
-# Thanks to http://stackoverflow.com/a/17030976
-..() {
-    cd $(printf '%0.s../' $(seq 1 ${1:-1}))
-}
-
-# Experimental
-alias cd='pushd > /dev/null'
-alias back='popd > /dev/null'
-
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
