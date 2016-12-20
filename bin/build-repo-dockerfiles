@@ -34,8 +34,8 @@ build_repo_dockerfile(){
 	git clone --depth 1 "https://github.com/${user}/${repo}.git" "$tmpdir"
 	build_and_push "$tmpdir" "$image" .
 
-	# also push the weather-server image
-	if [[ "${user}/${repo}" == "jessfraz/weather" ]]; then
+	# also push the weather-server & reg-server images
+	if [[ "${user}/${repo}" == "jessfraz/weather" ]] || [[ "${user}/${repo}" == "jessfraz/reg" ]]; then
 		image=${REGISTRY_PREFIX}/${repo}-server:${suite}
 		build_and_push "$tmpdir" "$image" server
 	fi
