@@ -24,11 +24,13 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start dmenu
+bindsym $mod+d exec i3-dmenu-desktop
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # spotify: no border
-for_window [class="Slack"] border none
 for_window [class="^Spotify$"] border none
 for_window [class="^Spotify Premium$"] border none
 
@@ -43,6 +45,7 @@ for_window [class="NES"] floating enable
 for_window [class="Portal"] floating enable
 for_window [class="RStudio"] floating enable
 for_window [class="Skype"] floating enable
+for_window [class="Slack"] floating enable
 for_window [class="Steam"] floating enable
 for_window [class="Tor Browser"] floating enable
 for_window [class="Virt-viewer"] floating enable
@@ -108,9 +111,9 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1: irssi
-bindsym $mod+2 workspace 2: mutt
-bindsym $mod+3 workspace 3: www
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
@@ -120,9 +123,9 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1: irssi
-bindsym $mod+Shift+2 move container to workspace 2: mutt
-bindsym $mod+Shift+3 move container to workspace 3: www
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
@@ -143,11 +146,11 @@ bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
 # Screenshots
 # Screenshot fullscreen
-bindsym Print exec "scrot -q 100 '/home/jessie/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 's3cmd put -P $f s3://s3.j3ss.co/screenshots/ && echo https://s3.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
 # Screenshot with selection
-bindsym $mod+Print exec "sleep 0.2; scrot -q 100 -s '/home/jessie/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 's3cmd put -P $f s3://s3.j3ss.co/screenshots/ && echo https://s3.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+bindsym $mod+Print exec "sleep 0.2; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
 # Screenshot current focused window
-bindsym Shift+Print exec "scrot -q 100 -u '/home/jessie/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 's3cmd put -P $f s3://s3.j3ss.co/screenshots/ && echo https://s3.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e 'gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -195,9 +198,5 @@ bar {
 exec --no-startup-id feh --bg-fill /usr/share/slim/themes/default/background.jpg
 
 # run the merge for good colors
-exec xrdb -merge /home/jessie/.Xresources
-exec xrdb -merge /home/jessie/.Xdefaults
-
-# startup programs
-#exec --no-starup-id i3-msg 'workspace "1: irssi"; exec rxvt-unicode;'
-#exec --no-startup-id i3msg 'workspace 3; exec rxvt-unicode;'
+exec xrdb -merge $HOME/.Xresources
+exec xrdb -merge $HOME/.Xdefaults

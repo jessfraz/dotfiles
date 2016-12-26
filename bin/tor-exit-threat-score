@@ -10,7 +10,7 @@
 # 109.163.234.2     1        1      TOR:1
 # 109.163.234.4     50       1      TOR:50
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 17 September 2015
 # :version: 0.0.1
 ##############################################################################
@@ -67,7 +67,7 @@ get_threat_score(){
 	if [[ "$result" != "success" ]]; then
 		msg=$(echo "$response" | jq --raw-output '.msg')
 		>&2 echo "[ERROR]: api response for exit node: ${exit} failed with:"
-		>&2 echo "        status:  ${status}"
+		>&2 echo "        status:  ${result}"
 		>&2 echo "        message: ${msg}"
 		exit 1
 	fi

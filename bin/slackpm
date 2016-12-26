@@ -7,7 +7,7 @@
 # Usage:
 # 	slackpm [user] [message]
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 8 June 2015
 # :version: 0.0.1
 ##############################################################################
@@ -16,7 +16,8 @@ set -o pipefail
 
 # Print a usage message and exit.
 usage(){
-	local name=$(basename "$0")
+	local name
+	name=$(basename "$0")
 
 	cat >&2 <<-EOF
 	${name} [user] [message]
@@ -38,13 +39,15 @@ nick_to_userid(){
 	local nick=$1
 
 	# get the users
-	local users=$(curl -sSL -X POST \
+	local users
+	users=$(curl -sSL -X POST \
 		--data-urlencode "token=${SLACK_TOKEN}" \
 		--data-urlencode "presence=1" \
 		https://slack.com/api/users.list | jq '.members')
 
 	# find the user we want
-	local user=$(echo "$users" | jq '.[] | select(.name == "'"${nick}"'")')
+	local user
+	user=$(echo "$users" | jq '.[] | select(.name == "'"${nick}"'")')
 
 	if [[ -z "$user" ]]; then
 		echo "Could not find user with nick ${nick}."
@@ -64,12 +67,14 @@ user_to_channelid(){
 	local user=$1
 
 	# get the im channels
-	local channels=$(curl -sSL -X POST \
+	local channels
+	channels=$(curl -sSL -X POST \
 		--data-urlencode "token=${SLACK_TOKEN}" \
 		https://slack.com/api/im.list | jq '.ims')
 
 	# find the user we want
-	local channel=$(echo "$channels" | jq '.[] | select(.user == "'"${user}"'")')
+	local channel
+	channel=$(echo "$channels" | jq '.[] | select(.user == "'"${user}"'")')
 
 	if [[ -z "$channel" ]]; then
 		echo "Could not find im channel with user id ${user}."
@@ -90,7 +95,8 @@ send_message(){
 	# get the channel id for the im with this user
 	user_to_channelid "${userid}"
 
-	local postresp=$(curl -sSL -X POST \
+	local postresp
+	postresp=$(curl -sSL -X POST \
 		--data-urlencode "token=${SLACK_TOKEN}" \
 		--data-urlencode "channel=${channelid}" \
 		--data-urlencode "text=${message}" \

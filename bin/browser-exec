@@ -9,7 +9,7 @@
 # Usage:
 #	browser-exec $uri
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 8 June 2015
 # :version: 0.0.1
 ##############################################################################
@@ -28,17 +28,16 @@ browser_exec(){
 			docker exec -i firefox /usr/bin/firefox "$@" 2>/dev/null
 		else
 			# maybe we are running in runc
-			chrome_pid=$(ps -aux | grep "[c]hrome --user-data" | awk '{ print $2 }' | head -n 1 2>/dev/null)
+			chrome_pid=$(pgrep -f "chrome --user-data" | head -n 1 2>/dev/null)
 			if [[ ! -z "$chrome_pid" ]]; then
 				# nsenter the chrome runc container
 				sudo nsenter -t "$chrome_pid" --pid --user --net --uts --mount --ipc /usr/bin/google-chrome --user-data-dir=/data "$@" 2>/dev/null
 			else
-				# neither are currently running so lets start chrome and open the page
-				source $HOME/.dockerfunc
-				chrome "$@"
+				# neither are currently running so lets try xdg-open
+				xdg-open "$@"
 			fi
 		fi
 	fi
 }
 
-browser_exec $@
+browser_exec "$@"

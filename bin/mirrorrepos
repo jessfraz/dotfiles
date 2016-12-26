@@ -4,7 +4,7 @@
 # -----------
 # Mirror all public repos in a users github and push to another remote
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 6 April 2016
 # :version: 0.0.1
 ##############################################################################
@@ -22,27 +22,22 @@ if [[ -z "$REMOTE_URL" ]]; then
 fi
 
 URI=https://api.github.com
-API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
-
-override_repos=( docker-freeipa mac-dev-setup mbox universe )
 
 mirror_repo(){
 	local orig=$1
 	local user=${orig%/*}
 	local repo=${orig#*/}
-	local tmpdir=$(mktemp -d)
+	local description="$2"
+	local tmpdir
+	tmpdir=$(mktemp -d)
 
 
 	if [[ "$GITHUB_USERNAME" == "$user" ]]; then
 		dest="$repo"
 	else
 		dest="$orig"
-	fi
-
-	if [[ " ${override_repos[@]} " =~ " ${repo} " ]]; then
-		dest="$repo"
 	fi
 
 	echo
@@ -53,6 +48,7 @@ mirror_repo(){
 	set -x
 	git clone --mirror "git@github.com:${GITHUB_USERNAME}/${repo}.git" "$tmpdir"
 	cd "$tmpdir"
+	echo "${description}" > description
 	git push --mirror "${REMOTE_URL}:${dest}.git"
 	)
 
@@ -63,22 +59,33 @@ mirror_repo(){
 
 main(){
 	# send the request
-	local response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}&type=public")
-	local repos=$(echo $response | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,id:.id} | @base64')
+	local response
+	response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}&type=public")
+	local repos
+	repos=$(echo "$response" | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,description:.description} | @base64')
 
 	for r in $repos; do
-		raw="$(echo $r | base64 -d)"
-		local id=$(echo $raw | jq --raw-output '.id')
-		local fullname=$(echo $raw | jq --raw-output '.fullname')
-		local repo=$(echo $raw | jq --raw-output '.repo')
-		local fork=$(echo $raw | jq --raw-output '.fork')
+		raw="$(echo "$r" | base64 -d)"
+		local fullname
+		fullname=$(echo "$raw" | jq --raw-output '.fullname')
+		local repo
+		repo=$(echo "$raw" | jq --raw-output '.repo')
+		local description
+		description=$(echo "$raw" | jq --raw-output '.description')
+		local fork
+		fork=$(echo "$raw" | jq --raw-output '.fork')
 
 		if [[ "$fork" == "true" ]]; then
-			local response=$(curl -sSL "${URI}/repos/${fullname}")
-			local user=$(echo $response | jq --raw-output '.parent.owner.login')
-			mirror_repo "${user}/${repo}"
+			if [[ -z "$INCLUDE_FORKS" ]]; then
+				echo "skipping fork: ${user}/${repo}" "${description}"
+			else
+				response=$(curl -sSL "${URI}/repos/${fullname}")
+				local user
+				user=$(echo "$response" | jq --raw-output '.parent.owner.login')
+				mirror_repo "${user}/${repo}"
+			fi
 		else
-			mirror_repo "${fullname}"
+			mirror_repo "${fullname}" "${description}"
 		fi
 	done
 }

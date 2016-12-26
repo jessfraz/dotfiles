@@ -7,7 +7,7 @@
 # Usage:
 # 	keyboard-backlight {up,down,total,off}
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 8 June 2015
 # :version: 0.0.1
 ##############################################################################
@@ -26,32 +26,36 @@ SET_VALUE=0
 case $1 in
 
 	up)
-		TOTAL=`expr $BACKLIGHT + $INCREMENT`
-		if [ $TOTAL -gt "255" ]; then
+		TOTAL=$((BACKLIGHT + INCREMENT))
+		if [ "$TOTAL" -gt "255" ]; then
 			exit 1
 		fi
 		SET_VALUE=1
 		;;
 	down)
-		TOTAL=`expr $BACKLIGHT - $INCREMENT`
-		if [ $TOTAL -lt "0" ]; then
+		TOTAL=$((BACKLIGHT - INCREMENT))
+		if [ "$TOTAL" -lt "0" ]; then
 			exit 1
 		fi
 		SET_VALUE=1
 		;;
 	total)
 		TEMP_VALUE=$BACKLIGHT
-		while [ $TEMP_VALUE -lt "255" ]; do
-			TEMP_VALUE=`expr $TEMP_VALUE + 1`
-			if [ $TEMP_VALUE -gt "255" ]; then TEMP_VALUE=255; fi
+		while [ "$TEMP_VALUE" -lt "255" ]; do
+			TEMP_VALUE=$((TEMP_VALUE + 1))
+			if [ $TEMP_VALUE -gt "255" ]; then
+				TEMP_VALUE=255
+			fi
 			echo $TEMP_VALUE > /sys/class/leds/smc::kbd_backlight/brightness
 		done
 		;;
 	off)
 		TEMP_VALUE=$BACKLIGHT
-		while [ $TEMP_VALUE -gt "0" ]; do
-			TEMP_VALUE=`expr $TEMP_VALUE - 1`
-			if [ $TEMP_VALUE -lt "0" ]; then TEMP_VALUE=0; fi
+		while [ "$TEMP_VALUE" -gt "0" ]; do
+			TEMP_VALUE=$((TEMP_VALUE - 1))
+			if [ $TEMP_VALUE -lt "0" ]; then
+				TEMP_VALUE=0
+			fi
 			echo $TEMP_VALUE > /sys/class/leds/smc::kbd_backlight/brightness
 		done
 		;;
@@ -61,5 +65,5 @@ case $1 in
 esac
 
 if [ $SET_VALUE -eq "1" ]; then
-	echo $TOTAL > /sys/class/leds/smc::kbd_backlight/brightness
+	echo "$TOTAL" > /sys/class/leds/smc::kbd_backlight/brightness
 fi

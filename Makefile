@@ -1,4 +1,4 @@
-.PHONY: all bin dotfiles etc
+.PHONY: all bin dotfiles etc test shellcheck
 
 all: bin dotfiles etc
 
@@ -12,11 +12,12 @@ bin:
 
 dotfiles:
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".*.swp" -not -name ".irssi" -not -name ".gnupg"); do \
+	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".travis.yml" -not -name ".irssi" -not -name ".gnupg"); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
 	ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
+	ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 
 etc:
@@ -26,3 +27,12 @@ etc:
 	done
 	systemctl --user daemon-reload
 	sudo systemctl daemon-reload
+
+test: shellcheck
+
+shellcheck:
+	docker run --rm -it \
+		--name df-shellcheck \
+		-v $(CURDIR):/usr/src:ro \
+		--workdir /usr/src \
+		r.j3ss.co/shellcheck ./test.sh

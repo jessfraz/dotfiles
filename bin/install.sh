@@ -194,8 +194,8 @@ install_docker() {
 		-C /usr/local/bin --strip-components 1
 	chmod +x /usr/local/bin/docker*
 
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
 
 	systemctl daemon-reload
 	systemctl enable docker
@@ -208,7 +208,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.6.2
+	export GO_VERSION=1.7.1
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -238,19 +238,22 @@ install_golang() {
 	go get golang.org/x/tools/cmd/gorename
 	go get golang.org/x/tools/cmd/guru
 
-	go get github.com/jfrazelle/apk-file
-	go get github.com/jfrazelle/bane
-	go get github.com/jfrazelle/battery
-	go get github.com/jfrazelle/cliaoke
-	go get github.com/jfrazelle/magneto
-	go get github.com/jfrazelle/netns
-	go get github.com/jfrazelle/netscan
-	go get github.com/jfrazelle/onion
-	go get github.com/jfrazelle/pastebinit
-	go get github.com/jfrazelle/pony
-	go get github.com/jfrazelle/riddler
-	go get github.com/jfrazelle/udict
-	go get github.com/jfrazelle/weather
+	go get github.com/jessfraz/apk-file
+	go get github.com/jessfraz/audit
+	go get github.com/jessfraz/bane
+	go get github.com/jessfraz/battery
+	go get github.com/jessfraz/cliaoke
+	go get github.com/jessfraz/ghb0t
+	go get github.com/jessfraz/magneto
+	go get github.com/jessfraz/netns
+	go get github.com/jessfraz/netscan
+	go get github.com/jessfraz/onion
+	go get github.com/jessfraz/pastebinit
+	go get github.com/jessfraz/pony
+	go get github.com/jessfraz/reg
+	go get github.com/jessfraz/riddler
+	go get github.com/jessfraz/udict
+	go get github.com/jessfraz/weather
 
 	go get github.com/axw/gocov/gocov
 	go get github.com/brianredbeard/gpget
@@ -259,6 +262,7 @@ install_golang() {
 	go get github.com/crosbymichael/gistit
 	go get github.com/crosbymichael/ip-addr
 	go get github.com/cbednarski/hostess/cmd/hostess
+	go get github.com/davecheney/httpstat
 	go get github.com/FiloSottile/gvt
 	go get github.com/FiloSottile/vendorcheck
 	go get github.com/nsf/gocode
@@ -268,12 +272,12 @@ install_golang() {
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker kubernetes/kubernetes letsencrypt/boulder opencontainers/runc jfrazelle/binctr jfrazelle/contained.af )
+	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc jessfraz/binctr jessfraz/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
 		if [[ -d "${HOME}/${repo}" ]]; then
-			rm -rf "${HOME}/${repo}"
+			rm -rf "${HOME:?}/${repo}"
 		fi
 
 		mkdir -p "${GOPATH}/src/github.com/${owner}"
@@ -292,27 +296,22 @@ install_golang() {
 		fi
 
 		# make sure we create the right git remotes
-		if [[ "$owner" != "jfrazelle" ]]; then
+		if [[ "$owner" != "jessfraz" ]]; then
 			(
 			cd "${GOPATH}/src/github.com/${project}"
 			git remote set-url --push origin no_push
-			git remote add jfrazelle "https://github.com/jfrazelle/${repo}.git"
+			git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
 			)
 		fi
-
-		# create the alias
-		ln -snvf "${GOPATH}/src/github.com/${project}" "${HOME}/${repo}"
 	done
 
-	# create symlinks from personal projects to
-	# the ${HOME} directory
-	projectsdir=$GOPATH/src/github.com/jfrazelle
-	base=$(basename "$projectsdir")
-	find "$projectsdir" -maxdepth 1 -not -name "$base" -type d -print0 | while read -d '' -r dir; do
-	base=$(basename "$dir")
-	ln -snvf "$dir" "${HOME}/${base}"
-done
-)
+	# do special things for k8s GOPATH
+	mkdir -p "${GOPATH}/src/k8s.io"
+	git clone "https://github.com/kubernetes/kubernetes.git" "${GOPATH}/src/k8s.io/kubernetes"
+	cd "${GOPATH}/src/k8s.io/kubernetes"
+	git remote set-url --push origin no_push
+	git remote add jessfraz "https://github.com/jessfraz/kubernetes.git"
+	)
 }
 
 # install graphics drivers
@@ -324,13 +323,13 @@ install_graphics() {
 		exit 1
 	fi
 
-	local pkgs="nvidia-kernel-dkms bumblebee-nvidia primus"
+	local pkgs=( nvidia-kernel-dkms bumblebee-nvidia primus )
 
 	if [[ $system == "mac" ]] || [[ $system == "dell" ]]; then
-		local pkgs="xorg xserver-xorg xserver-xorg-video-intel"
+		pkgs=( xorg xserver-xorg xserver-xorg-video-intel )
 	fi
 
-	apt-get install -y $pkgs --no-install-recommends
+	apt-get install -y "${pkgs[@]}" --no-install-recommends
 }
 
 # install custom scripts/binaries
@@ -354,7 +353,7 @@ install_scripts() {
 
 	# download syncthing binary
 	if [[ ! -f /usr/local/bin/syncthing ]]; then
-		curl -sSL https://jesss.s3.amazonaws.com/binaries/syncthing > /usr/local/bin/syncthing
+		curl -sSL https://misc.j3ss.co/binaries/syncthing > /usr/local/bin/syncthing
 		chmod +x /usr/local/bin/syncthing
 	fi
 
@@ -363,14 +362,14 @@ install_scripts() {
 	local scripts=( go-md2man have light )
 
 	for script in "${scripts[@]}"; do
-		curl -sSL "http://jesss.s3.amazonaws.com/binaries/$script" > /usr/local/bin/$script
-		chmod +x /usr/local/bin/$script
+		curl -sSL "https://misc.j3ss.co/binaries/$script" > "/usr/local/bin/${script}"
+		chmod +x "/usr/local/bin/${script}"
 	done
 }
 
 # install syncthing
 install_syncthing() {
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
 	systemctl enable "syncthing@${USERNAME}"
@@ -396,22 +395,22 @@ install_wifi() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	local pkgs="feh i3 i3lock i3status scrot slim neovim"
+	local pkgs=( feh i3 i3lock i3status scrot slim neovim )
 
-	apt-get install -y $pkgs --no-install-recommends
+	apt-get install -y "${pkgs[@]}" --no-install-recommends
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/X11/xorg.conf.d/50-synaptics-clickpad.conf > /etc/X11/xorg.conf.d/50-synaptics-clickpad.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf.d/50-synaptics-clickpad.conf > /etc/X11/xorg.conf.d/50-synaptics-clickpad.conf
 
 	# add xorg conf
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/X11/xorg.conf > /etc/X11/xorg.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf > /etc/X11/xorg.conf
 
 	# get correct sound cards on boot
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/modprobe.d/intel.conf > /etc/modprobe.d/intel.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/modprobe.d/intel.conf > /etc/modprobe.d/intel.conf
 
 	# pretty fonts
-	curl -sSL https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/fonts/local.conf > /etc/fonts/local.conf
+	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/fonts/local.conf > /etc/fonts/local.conf
 
 	echo "Fonts file setup successfully now run:"
 	echo "	dpkg-reconfigure fontconfig-config"
@@ -424,11 +423,11 @@ install_wmapps() {
 get_dotfiles() {
 	# create subshell
 	(
-	cd "/home/$USERNAME"
+	cd "$HOME"
 
 	# install dotfiles from repo
-	git clone git@github.com:jfrazelle/dotfiles.git "/home/$USERNAME/dotfiles"
-	cd "/home/$USERNAME/dotfiles"
+	git clone git@github.com:jessfraz/dotfiles.git "${HOME}/dotfiles"
+	cd "${HOME}/dotfiles"
 
 	# installs all the things
 	make
@@ -436,57 +435,78 @@ get_dotfiles() {
 	# enable dbus for the user session
 	# systemctl --user enable dbus.socket
 
-	sudo systemctl enable i3lock
+	sudo systemctl enable "i3lock@${USERNAME}"
 	sudo systemctl enable suspend-sedation.service
 
-	cd "/home/$USERNAME"
-
-	# install .vim files
-	git clone --recursive git@github.com:jfrazelle/.vim.git "/home/$USERNAME/.vim"
-	ln -snf "/home/$USERNAME/.vim/vimrc" "/home/$USERNAME/.vimrc"
-	sudo ln -snf "/home/$USERNAME/.vim" /root/.vim
-	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.vimrc
-
-	# alias vim dotfiles to neovim
-	mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-	ln -snf "/home/$USERNAME/.vim" $XDG_CONFIG_HOME/nvim
-	ln -snf "/home/$USERNAME/.vimrc" $XDG_CONFIG_HOME/nvim/init.vim
-	# do the same for root
-	sudo mkdir -p /root/.config
-	sudo ln -snf "/home/$USERNAME/.vim" /root/.config/nvim
-	sudo ln -snf "/home/$USERNAME/.vimrc" /root/.config/nvim/init.vim
-
-	# update alternatives to neovim
-	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-	sudo update-alternatives --config vi
-	sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-	sudo update-alternatives --config vim
-	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-	sudo update-alternatives --config editor
-
+	cd "$HOME"
 	mkdir -p ~/Pictures
 	mkdir -p ~/Torrents
+	)
+
+	install_vim;
+}
+
+install_vim() {
+	# create subshell
+	(
+	cd "$HOME"
+
+	# install .vim files
+	git clone --recursive git@github.com:jessfraz/.vim.git "${HOME}/.vim"
+	ln -snf "${HOME}/.vim/vimrc" "${HOME}/.vimrc"
+	sudo ln -snf "${HOME}/.vim" /root/.vim
+	sudo ln -snf "${HOME}/.vimrc" /root/.vimrc
+
+	# alias vim dotfiles to neovim
+	mkdir -p "${XDG_CONFIG_HOME:=$HOME/.config}"
+	ln -snf "${HOME}/.vim" "${XDG_CONFIG_HOME}/nvim"
+	ln -snf "${HOME}/.vimrc" "${XDG_CONFIG_HOME}/nvim/init.vim"
+	# do the same for root
+	sudo mkdir -p /root/.config
+	sudo ln -snf "${HOME}/.vim" /root/.config/nvim
+	sudo ln -snf "${HOME}/.vimrc" /root/.config/nvim/init.vim
+
+	# update alternatives to neovim
+	sudo update-alternatives --install /usr/bin/vi vi "$(which nvim)" 60
+	sudo update-alternatives --config vi
+	sudo update-alternatives --install /usr/bin/vim vim "$(which nvim)" 60
+	sudo update-alternatives --config vim
+	sudo update-alternatives --install /usr/bin/editor editor "$(which nvim)" 60
+	sudo update-alternatives --config editor
+
+	# install things needed for deoplete for vim
+	sudo apt-get update
+
+	sudo apt-get install -y \
+		python3-pip \
+		--no-install-recommends
+
+	pip3 install -U \
+		setuptools \
+		wheel \
+		neovim
 	)
 }
 
 install_virtualbox() {
 	# check if we need to install libvpx1
 	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' libvpx1 | grep "install ok installed")
-	echo Checking for libvpx1: $PKG_OK
+	echo "Checking for libvpx1: $PKG_OK"
 	if [ "" == "$PKG_OK" ]; then
 		echo "No libvpx1. Installing libvpx1."
 		jessie_sources=/etc/apt/sources.list.d/jessie.list
-		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > $jessie_sources
+		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > "$jessie_sources"
 
 		apt-get update
 		apt-get install -y -t jessie libvpx1 \
 			--no-install-recommends
 
 		# cleanup the file that we used to install things from jessie
-		rm $jessie_sources
+		rm "$jessie_sources"
 	fi
 
 	echo "deb http://download.virtualbox.org/virtualbox/debian vivid contrib" >> /etc/apt/sources.list.d/virtualbox.list
+
 	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
 
 	apt-get update
@@ -505,20 +525,20 @@ install_vagrant() {
 
 	# check if we need to install virtualbox
 	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' virtualbox | grep "install ok installed")
-	echo Checking for virtualbox: $PKG_OK
+	echo "Checking for virtualbox: $PKG_OK"
 	if [ "" == "$PKG_OK" ]; then
 		echo "No virtualbox. Installing virtualbox."
 		install_virtualbox
 	fi
 
-	tmpdir=`mktemp -d`
+	tmpdir=$(mktemp -d)
 	(
-	cd $tmpdir
-	curl -sSL -o vagrant.deb https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+	cd "$tmpdir"
+	curl -sSL -o vagrant.deb "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb"
 	dpkg -i vagrant.deb
 	)
 
-	rm -rf $tmpdir
+	rm -rf "$tmpdir"
 
 	# install plugins
 	vagrant plugin install vagrant-vbguest
@@ -533,6 +553,7 @@ usage() {
 	echo "  graphics {dell,mac,lenovo}  - install graphics drivers"
 	echo "  wm                          - install window manager/desktop pkgs"
 	echo "  dotfiles                    - get dotfiles"
+	echo "  vim                         - install vim specific dotfiles"
 	echo "  golang                      - install golang and packages"
 	echo "  scripts                     - install scripts"
 	echo "  syncthing                   - install syncthing"
@@ -566,6 +587,8 @@ main() {
 		install_wmapps
 	elif [[ $cmd == "dotfiles" ]]; then
 		get_dotfiles
+	elif [[ $cmd == "vim" ]]; then
+		install_vim
 	elif [[ $cmd == "golang" ]]; then
 		install_golang "$2"
 	elif [[ $cmd == "scripts" ]]; then

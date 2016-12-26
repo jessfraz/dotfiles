@@ -7,7 +7,7 @@
 # Usage:
 # 	createvm [name] [path/to/.iso]
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 26 March 2016
 # :version: 0.0.1
 ##############################################################################
@@ -16,7 +16,8 @@ set -o pipefail
 
 # Print a usage message and exit.
 usage(){
-	local name=$(basename "$0")
+	local name
+	name=$(basename "$0")
 
 	cat >&2 <<-EOF
 	${name} [name] [path/to/.iso]

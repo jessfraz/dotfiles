@@ -5,7 +5,7 @@
 # Fetch all forked repos in a users github and update the master branch with
 # upstreams.
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 6 April 2016
 # :version: 0.0.1
 ##############################################################################
@@ -18,19 +18,19 @@ if [[ -z "$GITHUB_USERNAME" ]]; then
 fi
 
 URI=https://api.github.com
-API_VERSION=v3
 
 DEFAULT_PER_PAGE=100
 
-ignore_repos=( mac-dev-setup universe )
+ignore_repos=( mac-dev-setup )
 
 update_fork(){
 	local forked_repo=$1
 	local upstream_repo=$2
-	local tmpdir=$(mktemp -d)
+	local primary_branch=$3
+	local tmpdir
+	tmpdir=$(mktemp -d)
 
-
-	if [[ " ${ignore_repos[@]} " =~ " ${repo} " ]]; then
+	if [[ "${ignore_repos[@]}" =~ ${repo} ]]; then
 		return
 	fi
 
@@ -42,13 +42,13 @@ update_fork(){
 	set -x
 	git clone --depth 1 "git@github.com:${forked_repo}.git" "$tmpdir"
 	cd "$tmpdir"
-	git remote add upstream "git@github.com:${upstream_repo}.git"
+	git remote add upstream "https://github.com/${upstream_repo}.git"
 	# just in case
 	git remote set-url --push upstream no_push
-	# fetch the remotes and prune
-	git remote -v update -p
-	git rebase upstream/master
-	git push origin master
+	# fetch upstream master
+	git fetch upstream "${primary_branch}"
+	git reset --hard "upstream/${primary_branch}"
+	git push origin "${primary_branch}"
 	echo "Updated local ${forked_repo} to origin/master"
 	)
 
@@ -59,20 +59,28 @@ update_fork(){
 
 main(){
 	# send the request
-	local response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}")
-	local repos=$(echo $response | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork,id:.id} | @base64')
+	local response
+	response=$(curl -sSL "${URI}/users/${GITHUB_USERNAME}/repos?per_page=${DEFAULT_PER_PAGE}")
+	local repos
+	repos=$(echo "$response" | jq --raw-output '.[] | {fullname:.full_name,repo:.name,fork:.fork} | @base64')
 
 	for r in $repos; do
-		raw="$(echo $r | base64 -d)"
-		local id=$(echo $raw | jq --raw-output '.id')
-		local fullname=$(echo $raw | jq --raw-output '.fullname')
-		local repo=$(echo $raw | jq --raw-output '.repo')
-		local fork=$(echo $raw | jq --raw-output '.fork')
+		raw="$(echo "$r" | base64 -d)"
+		local fullname
+		fullname=$(echo "$raw" | jq --raw-output '.fullname')
+		local repo
+		repo=$(echo "$raw" | jq --raw-output '.repo')
+		local fork
+		fork=$(echo "$raw" | jq --raw-output '.fork')
 
 		if [[ "$fork" == "true" ]]; then
-			local response=$(curl -sSL "${URI}/repos/${fullname}")
-			local upstream_user=$(echo $response | jq --raw-output '.parent.owner.login')
-			update_fork "${fullname}" "${upstream_user}/${repo}"
+			local response
+			response=$(curl -sSL "${URI}/repos/${fullname}")
+			local upstream_user
+			upstream_user=$(echo "$response" | jq --raw-output '.parent.owner.login')
+			local primary_branch
+			primary_branch=$(echo "$response" | jq --raw-output '.default_branch')
+			update_fork "${fullname}" "${upstream_user}/${repo}" "${primary_branch}"
 		fi
 	done
 }
