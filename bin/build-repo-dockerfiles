@@ -56,7 +56,7 @@ build_and_push(){
 	(
 	set -x
 	cd "$dir"
-	docker build --rm --force-rm -t --no-cache "${image}" "${context}"
+	docker build --rm --force-rm --no-cache -t "${image}" "${context}"
 	)
 
 	echo "                       ---                                   "
