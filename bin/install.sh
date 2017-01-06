@@ -208,7 +208,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.7.1
+	export GO_VERSION=1.7.4
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -265,6 +265,7 @@ install_golang() {
 	go get github.com/davecheney/httpstat
 	go get github.com/FiloSottile/gvt
 	go get github.com/FiloSottile/vendorcheck
+	go get github.com/jstemmer/gotags
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 	go get github.com/shurcooL/git-branches
@@ -272,7 +273,7 @@ install_golang() {
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker letsencrypt/boulder opencontainers/runc jessfraz/binctr jessfraz/contained.af )
+	aliases=( cloudflare/cfssl docker/docker golang/dep letsencrypt/boulder opencontainers/runc jessfraz/binctr jessfraz/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
@@ -286,10 +287,16 @@ install_golang() {
 			(
 			# clone the repo
 			cd "${GOPATH}/src/github.com/${owner}"
-			git clone "https://github.com/${project}.git"
+			if [[ "$project" != "golang/dep" ]]; then
+				git clone "https://github.com/${project}.git"
+			else
+				git clone "git@github.com:${project}.git"
+			fi
 			# fix the remote path, since our gitconfig will make it git@
 			cd "${GOPATH}/src/github.com/${project}"
-			git remote set-url origin "https://github.com/${project}.git"
+			if [[ "$project" != "golang/dep" ]]; then
+				git remote set-url origin "https://github.com/${project}.git"
+			fi
 			)
 		else
 			echo "found ${project} already in gopath"
@@ -300,7 +307,11 @@ install_golang() {
 			(
 			cd "${GOPATH}/src/github.com/${project}"
 			git remote set-url --push origin no_push
-			git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
+			if [[ "$project" != "golang/dep" ]]; then
+				git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
+			else
+				git remote add jessfraz "git@github.com:jessfraz/${repo}.git"
+			fi
 			)
 		fi
 	done
