@@ -376,7 +376,7 @@ formats = {
     pubmsg_hilight = "{pubmsghinick $0 $0 $[-15]1$3%n}$2";
     pubmsg_hilight_channel = "{pubmsghinick $0 $[-15]1$4{msgchannel $2}}$3";
     pubmsg = "{pubmsgnick $2 {pubnick \00300$0}}$1";
-    pubmsg_channel = "{pubmsgnick {pubnick %Y$[-15]0}$2}$1";
+    pubmsg_channel = "{pubmsgnick {pubnick %c$[-15]0}$2}$1";
     msg_private_query = "{privmsgnick $[-15]0}$2";
   };
   "fe-common/irc" = {

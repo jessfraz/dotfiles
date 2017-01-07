@@ -943,6 +943,15 @@ watchman(){
 		--name watchman \
 		${DOCKER_REPO_PREFIX}/watchman --foreground
 }
+weeslack(){
+	del_stopped weeslack
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
+		--name weeslack \
+		${DOCKER_REPO_PREFIX}/wee-slack
+}
 wireshark(){
 	del_stopped wireshark
 
