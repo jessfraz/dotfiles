@@ -49,7 +49,7 @@ mirror_repo(){
 	git clone --mirror "git@github.com:${GITHUB_USERNAME}/${repo}.git" "$tmpdir"
 	cd "$tmpdir"
 	echo "${description}" > description
-	git push --mirror "${REMOTE_URL}:${dest}.git"
+	git push --mirror "${REMOTE_URL}/${dest}.git"
 	)
 
 	# cleanup
