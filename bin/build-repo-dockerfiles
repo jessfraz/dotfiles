@@ -12,21 +12,25 @@
 set -e
 set -o pipefail
 
+REPO_URL="${REPO_URL:-r.j3ss.co}"
+JOBS=${JOBS:-2}
+export REPO_URL
+
 build_repo_dockerfile(){
 	local orig=$1
 	local user=${orig%/*}
 	local repo=${orig#*/}
 	local suite=latest
-	local image=${REGISTRY_PREFIX}/${repo}:${suite}
+	local image=${REPO_URL}/${repo}:${suite}
 	local tmpdir
 	tmpdir=$(mktemp -d)
 
 	case "${user}/${repo}" in
 		"kylemanna/docker-openvpn")
-			image=${REGISTRY_PREFIX}/openvpn-server:${suite}
+			image=${REPO_URL}/openvpn-server:${suite}
 			;;
 		"jishi/node-sonos-http-api")
-			image=${REGISTRY_PREFIX}/node-sonos:${suite}
+			image=${REPO_URL}/node-sonos:${suite}
 			;;
 		*) ;;
 	esac
@@ -36,13 +40,14 @@ build_repo_dockerfile(){
 
 	# also push the weather-server & reg-server images
 	if [[ "${user}/${repo}" == "jessfraz/weather" ]] || [[ "${user}/${repo}" == "jessfraz/reg" ]]; then
-		image=${REGISTRY_PREFIX}/${repo}-server:${suite}
+		image=${REPO_URL}/${repo}-server:${suite}
 		build_and_push "$tmpdir" "$image" server
 	fi
 
 	# cleanup
 	rm -rf "$tmpdir"
 }
+export -f build_repo_dockerfile
 
 build_and_push(){
 	local dir=$1
@@ -73,6 +78,7 @@ build_and_push(){
 		sleep 15
 	done
 }
+export -f build_and_push
 
 repos=(
 jessfraz/apk-file
@@ -101,12 +107,9 @@ jessfraz/weather
 kylemanna/docker-openvpn
 )
 
-: "${REGISTRY_PREFIX:=r.j3ss.co}"
-
 main(){
-	for r in "${repos[@]}"; do
-		build_repo_dockerfile "$r"
-	done
+	echo "Running in parallel with ${JOBS} jobs."
+	parallel --tag --verbose --ungroup -j"${JOBS}" build_repo_dockerfile "{1}" ::: "${repos[@]}"
 }
 
 main
