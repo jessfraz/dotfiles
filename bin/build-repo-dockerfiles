@@ -12,9 +12,9 @@
 set -e
 set -o pipefail
 
+SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 REPO_URL="${REPO_URL:-r.j3ss.co}"
 JOBS=${JOBS:-2}
-export REPO_URL
 
 build_repo_dockerfile(){
 	local orig=$1
@@ -47,7 +47,6 @@ build_repo_dockerfile(){
 	# cleanup
 	rm -rf "$tmpdir"
 }
-export -f build_repo_dockerfile
 
 build_and_push(){
 	local dir=$1
@@ -78,7 +77,6 @@ build_and_push(){
 		sleep 15
 	done
 }
-export -f build_and_push
 
 repos=(
 jessfraz/apk-file
@@ -109,7 +107,18 @@ kylemanna/docker-openvpn
 
 main(){
 	echo "Running in parallel with ${JOBS} jobs."
-	parallel --tag --verbose --ungroup -j"${JOBS}" build_repo_dockerfile "{1}" ::: "${repos[@]}"
+	parallel --tag --verbose --ungroup -j"${JOBS}" $SCRIPT build_repo_dockerfile "{1}" ::: "${repos[@]}"
 }
 
-main
+run(){
+	args=$@
+	f=$1
+
+	if [[ "$f" == "" ]]; then
+		main $args
+	else
+		$args
+	fi
+}
+
+run $@
