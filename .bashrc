@@ -110,6 +110,7 @@ if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
 	gpg-connect-agent /bye >/dev/null 2>&1
 	gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
+alias ssh="gpg-connect-agent updatestartuptty /bye; ssh"
 # Set SSH to use gpg-agent
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
