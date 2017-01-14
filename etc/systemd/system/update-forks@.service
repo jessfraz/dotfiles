@@ -1,8 +1,0 @@
-[Unit]
-Description=Updates git forks for %i
-
-[Service]
-Type=oneshot
-User=%i
-Environment=GITHUB_USERNAME=%i
-ExecStart=/usr/local/bin/updateforks

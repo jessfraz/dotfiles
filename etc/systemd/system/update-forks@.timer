@@ -1,9 +1,0 @@
-[Unit]
-Description=Run updateforks hourly and on boot
-
-[Timer]
-OnBootSec=15min
-OnUnitActiveSec=1h
-
-[Install]
-WantedBy=timers.target
