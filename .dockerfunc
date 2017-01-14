@@ -874,8 +874,8 @@ transmission(){
 travis(){
 	docker run -it --rm \
 		-v "${HOME}/.travis:/root/.travis" \
-		-v $(pwd):/repo \
-		--workdir /repo \
+		-v $(pwd):/usr/src/repo:ro \
+		--workdir /usr/src/repo \
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/travis "$@"
 }
