@@ -123,8 +123,9 @@ URxvt.matcher.button:       1
 URxvt.url-select.underline: true
 
 !! copy paste
-URxvt*clipboard.copycmd:    xclip -i -selection clipboard
-URxvt*clipboard.pastecmd:   xclip -o -selection clipboard
+URxvt.clipboard.autocopy:   true
+URxvt.clipboard.copycmd:    xclip -i -selection clipboard
+URxvt.clipboard.pastecmd:   xclip -o -selection clipboard
 
 !! disable default bindings for Control-Shift
 URxvt.iso14755: false
