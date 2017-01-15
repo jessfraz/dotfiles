@@ -67,10 +67,16 @@ setup_sources() {
 	EOF
 
 	# Add the Cloud SDK distribution URI as a package source
-	echo "deb https://packages.cloud.google.com/apt cloud-sdk-sid main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+	echo "deb https://packages.cloud.google.com/apt cloud-sdk-sid main" > /etc/apt/sources.list.d/google-cloud-sdk.list
 
 	# Import the Google Cloud Platform public key
-	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+	# Add the Google Chrome distribution URI as a package source
+	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+
+	# Import the Google Chrome public key
+	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 	# add docker gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
