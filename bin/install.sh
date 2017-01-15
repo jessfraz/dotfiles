@@ -148,7 +148,7 @@ base() {
 
 	install_docker
 	install_scripts
-	install_syncthing
+	#install_syncthing
 }
 
 # setup sudo for a user
@@ -362,13 +362,6 @@ install_scripts() {
 	curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
 	chmod +x /usr/local/bin/lolcat
 
-	# download syncthing binary
-	if [[ ! -f /usr/local/bin/syncthing ]]; then
-		curl -sSL https://misc.j3ss.co/binaries/syncthing > /usr/local/bin/syncthing
-		chmod +x /usr/local/bin/syncthing
-	fi
-
-	syncthing -upgrade
 
 	local scripts=( go-md2man have light )
 
@@ -380,6 +373,14 @@ install_scripts() {
 
 # install syncthing
 install_syncthing() {
+	# download syncthing binary
+	if [[ ! -f /usr/local/bin/syncthing ]]; then
+		curl -sSL https://misc.j3ss.co/binaries/syncthing > /usr/local/bin/syncthing
+		chmod +x /usr/local/bin/syncthing
+	fi
+
+	syncthing -upgrade
+
 	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
