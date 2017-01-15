@@ -194,5 +194,9 @@
 
 [http]
 	cookiefile = ~/.gitcookies
+
+[init]
+	templatedir = ~/.git-templates
+
 [gpg]
 	program = gpg2
