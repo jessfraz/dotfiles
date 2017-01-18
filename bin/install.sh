@@ -297,7 +297,7 @@ install_golang() {
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( cloudflare/cfssl docker/docker golang/hoard letsencrypt/boulder opencontainers/runc jessfraz/binctr jessfraz/contained.af )
+	aliases=( cloudflare/cfssl docker/docker golang/nest letsencrypt/boulder opencontainers/runc jessfraz/binctr jessfraz/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
@@ -311,14 +311,14 @@ install_golang() {
 			(
 			# clone the repo
 			cd "${GOPATH}/src/github.com/${owner}"
-			if [[ "$project" != "golang/hoard" ]]; then
+			if [[ "$project" != "golang/nest" ]]; then
 				git clone "https://github.com/${project}.git"
 			else
 				git clone "git@github.com:${project}.git"
 			fi
 			# fix the remote path, since our gitconfig will make it git@
 			cd "${GOPATH}/src/github.com/${project}"
-			if [[ "$project" != "golang/hoard" ]]; then
+			if [[ "$project" != "golang/nest" ]]; then
 				git remote set-url origin "https://github.com/${project}.git"
 			fi
 			)
@@ -331,7 +331,7 @@ install_golang() {
 			(
 			cd "${GOPATH}/src/github.com/${project}"
 			git remote set-url --push origin no_push
-			if [[ "$project" != "golang/hoard" ]]; then
+			if [[ "$project" != "golang/nest" ]]; then
 				git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
 			else
 				git remote add jessfraz "git@github.com:jessfraz/${repo}.git"
