@@ -6,7 +6,7 @@ set -e
 
 # get the user that is not root
 # TODO: makes a pretty bad assumption that there is only one other user
-USERNAME=$(find /home/* -maxdepth 0 -printf "%f" -type d)
+USERNAME=$(find /home/* -maxdepth 0 -printf "%f" -type d || echo $USER)
 export DEBIAN_FRONTEND=noninteractive
 
 check_is_sudo() {
@@ -246,9 +246,13 @@ install_golang() {
 		sudo rm -rf "$GOPATH"
 	fi
 
-	# subshell because we `cd`
+	# subshell
 	(
 	curl -sSL "https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
+	local user="$USER"
+	# rebuild stdlib for faster builds
+	sudo chown -R "${user}" /usr/local/go/pkg
+	CGO_ENABLED=0 go install -a -installsuffix cgo std
 	)
 
 	# get commandline tools
