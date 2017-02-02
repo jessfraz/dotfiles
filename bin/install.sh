@@ -285,19 +285,13 @@ install_golang() {
 
 	go get github.com/axw/gocov/gocov
 	go get github.com/brianredbeard/gpget
-	go get github.com/cloudflare/cfssl/cmd/cfssl
-	go get github.com/cloudflare/cfssl/cmd/cfssljson
 	go get github.com/crosbymichael/gistit
 	go get github.com/crosbymichael/ip-addr
-	go get github.com/cbednarski/hostess/cmd/hostess
 	go get github.com/davecheney/httpstat
-	go get github.com/FiloSottile/gvt
-	go get github.com/FiloSottile/vendorcheck
+	go get github.com/google/gops
 	go get github.com/jstemmer/gotags
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
-	go get github.com/shurcooL/git-branches
-	go get github.com/shurcooL/gostatus
 	go get github.com/shurcooL/markdownfmt
 	go get github.com/Soulou/curl-unix-socket
 
@@ -340,6 +334,11 @@ install_golang() {
 	cd "${GOPATH}/src/k8s.io/kubernetes"
 	git remote set-url --push origin no_push
 	git remote add jessfraz "https://github.com/jessfraz/kubernetes.git"
+
+	git clone "https://github.com/kubernetes/test-infra.git" "${GOPATH}/src/k8s.io/test-infra"
+	cd "${GOPATH}/src/k8s.io/test-infra"
+	git remote set-url --push origin no_push
+	git remote add jessfraz "https://github.com/jessfraz/test-infra.git"
 	)
 }
 
