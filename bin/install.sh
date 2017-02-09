@@ -330,15 +330,13 @@ install_golang() {
 
 	# do special things for k8s GOPATH
 	mkdir -p "${GOPATH}/src/k8s.io"
-	git clone "https://github.com/kubernetes/kubernetes.git" "${GOPATH}/src/k8s.io/kubernetes"
-	cd "${GOPATH}/src/k8s.io/kubernetes"
-	git remote set-url --push origin no_push
-	git remote add jessfraz "https://github.com/jessfraz/kubernetes.git"
-
-	git clone "https://github.com/kubernetes/test-infra.git" "${GOPATH}/src/k8s.io/test-infra"
-	cd "${GOPATH}/src/k8s.io/test-infra"
-	git remote set-url --push origin no_push
-	git remote add jessfraz "https://github.com/jessfraz/test-infra.git"
+	kubes_repos=( kubernetes test-infra community )
+	for krepo in "${kubes_repos[@]}"; do
+		git clone "https://github.com/kubernetes/${krepo}.git" "${GOPATH}/src/k8s.io/${krepo}"
+		cd "${GOPATH}/src/k8s.io/${krepo}"
+		git remote set-url --push origin no_push
+		git remote add jessfraz "https://github.com/jessfraz/${krepo}.git"
+	done
 	)
 }
 
