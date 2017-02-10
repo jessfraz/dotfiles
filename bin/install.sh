@@ -330,7 +330,7 @@ install_golang() {
 
 	# do special things for k8s GOPATH
 	mkdir -p "${GOPATH}/src/k8s.io"
-	kubes_repos=( kubernetes test-infra community )
+	kubes_repos=( community kubernetes release test-infra )
 	for krepo in "${kubes_repos[@]}"; do
 		git clone "https://github.com/kubernetes/${krepo}.git" "${GOPATH}/src/k8s.io/${krepo}"
 		cd "${GOPATH}/src/k8s.io/${krepo}"
