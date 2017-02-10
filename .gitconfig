@@ -203,3 +203,7 @@
 	smtpServer = smtp.gmail.com
 	smtpUser = me@jessfraz.com
 	smtpServerPort = 587
+
+[credential]
+	helper = store --file ~/.git-credentials
+	helper = cache --timeout 30000
