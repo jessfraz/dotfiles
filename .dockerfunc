@@ -338,6 +338,18 @@ kernel_builder(){
 		--name kernel-builder \
 		${DOCKER_REPO_PREFIX}/kernel-builder
 }
+keypassxc(){
+	del_stopped keypassxc
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v /usr/share/X11/xkb:/usr/share/X11/xkb:ro \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		--name keypassxc \
+		${DOCKER_REPO_PREFIX}/keepassxc
+}
 kvm(){
 	del_stopped kvm
 	relies_on pulseaudio
