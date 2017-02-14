@@ -42,6 +42,7 @@ for_window [instance="google-chrome"] floating enable
 for_window [class="Keybase"] floating enable
 for_window [class="Neoman"] floating enable
 for_window [class="NES"] floating enable
+for_window [class="Pidgin"] floating enable
 for_window [class="Portal"] floating enable
 for_window [class="RStudio"] floating enable
 for_window [class="Skype"] floating enable
