@@ -971,6 +971,8 @@ wireshark(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e "DISPLAY=unix${DISPLAY}" \
+		--cap-add NET_RAW \
+		--cap-add NET_ADMIN \
 		--net host \
 		--name wireshark \
 		${DOCKER_REPO_PREFIX}/wireshark
