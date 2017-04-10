@@ -270,6 +270,7 @@ install_golang() {
 	go get github.com/jessfraz/audit
 	go get github.com/jessfraz/bane
 	go get github.com/jessfraz/battery
+	go get github.com/jessfraz/certok
 	go get github.com/jessfraz/cliaoke
 	go get github.com/jessfraz/ghb0t
 	go get github.com/jessfraz/magneto
@@ -277,6 +278,7 @@ install_golang() {
 	go get github.com/jessfraz/netscan
 	go get github.com/jessfraz/onion
 	go get github.com/jessfraz/pastebinit
+	go get github.com/jessfraz/pepper
 	go get github.com/jessfraz/pony
 	go get github.com/jessfraz/reg
 	go get github.com/jessfraz/riddler
