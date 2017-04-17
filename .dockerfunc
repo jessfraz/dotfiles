@@ -317,6 +317,12 @@ irssi() {
 	# relies_on notify_osd
 
 	docker run --rm -it \
+		--user root \
+		-v "${HOME}/.irssi:/home/user/.irssi" \
+		${DOCKER_REPO_PREFIX}/irssi \
+		chown -R user /home/user/.irssi
+
+	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v "${HOME}/.irssi:/home/user/.irssi" \
 		--read-only \
