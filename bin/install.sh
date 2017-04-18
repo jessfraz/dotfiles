@@ -24,6 +24,7 @@ setup_sources() {
 		apt-transport-https \
 		ca-certificates \
 		curl \
+		dirmngr \
 		--no-install-recommends
 
 	cat <<-EOF > /etc/apt/sources.list
