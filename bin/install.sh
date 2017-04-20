@@ -233,7 +233,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.7.4
+	export GO_VERSION=1.8.1
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
