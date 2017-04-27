@@ -929,9 +929,11 @@ visualstudio(){
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix  \
 		-e "DISPLAY=unix${DISPLAY}" \
+		--device /dev/dri \
 		--name visualstudio \
 		${DOCKER_REPO_PREFIX}/vscode
 }
+alias vscode="visualstudio"
 vlc(){
 	del_stopped vlc
 	relies_on pulseaudio
