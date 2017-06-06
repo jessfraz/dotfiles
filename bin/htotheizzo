@@ -78,12 +78,12 @@ update_docker() {
 	local tmp_tar=/tmp/docker.tgz
 	local binary_uri="https://master.dockerproject.org"
 	local docker_version
-	docker_version=$(curl -sSL "${binary_uri}/version")
+	docker_version=$(curl -sSL "https://raw.githubusercontent.com/moby/moby/master/VERSION")
 	local docker_sha256
-	docker_sha256=$(curl -sSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
+	docker_sha256=$(curl -sSL "${binary_uri}/linux/x86_64/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
 	(
 	set -x
-	curl -fSL "${binary_uri}/linux/amd64/docker-${docker_version}.tgz" -o "${tmp_tar}"
+	curl -fSL "${binary_uri}/linux/x86_64/docker-${docker_version}.tgz" -o "${tmp_tar}"
 	echo "${docker_sha256} ${tmp_tar}" | sha256sum -c -
 	tar -C /usr/local/bin --strip-components 1 -xzvf "${tmp_tar}"
 	rm "${tmp_tar}"
