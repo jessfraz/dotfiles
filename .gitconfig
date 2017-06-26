@@ -176,34 +176,10 @@
 
 	insteadOf = "gist:"
 
-[user]
-	name = Jess Frazelle
-	email = acidburn@google.com
-	signingkey = 0x18F3685C0022BFF3
-
 # Uncomment if you want fetch to also get all github pull requests, this is rather
 # large on big repos.
 #[remote "origin"]
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
 
-[github]
-	user = jessfraz
-
 [commit]
 	gpgsign = true
-
-[http]
-	cookiefile = ~/.gitcookies
-
-[gpg]
-	program = gpg2
-
-[sendemail]
-	smtpEncryption = tls
-	smtpServer = smtp.gmail.com
-	smtpUser = me@jessfraz.com
-	smtpServerPort = 587
-
-[credential]
-	helper = store --file ~/.git-credentials
-	helper = cache --timeout 30000
