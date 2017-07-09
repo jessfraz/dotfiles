@@ -4,10 +4,19 @@ set -e
 # install.sh
 #	This script installs my basic setup for a debian laptop
 
-# get the user that is not root
-# TODO: makes a pretty bad assumption that there is only one other user
-USERNAME=$(find /home/* -maxdepth 0 -printf "%f" -type d || echo "$USER")
 export DEBIAN_FRONTEND=noninteractive
+
+# Choose a user account to use for this installation
+get_user() {
+    if [ -z "${USERNAME-}" ]; then
+       PS3='Which user account should be used?'
+       options=($(find /home/* -maxdepth 0 -printf "%f\n" -type d))
+       select opt in "${options[@]}"; do
+           readonly USERNAME=$opt
+           break
+       done
+    fi
+}
 
 check_is_sudo() {
 	if [ "$EUID" -ne 0 ]; then
@@ -600,6 +609,7 @@ main() {
 
 	if [[ $cmd == "sources" ]]; then
 		check_is_sudo
+		get_user
 
 		# setup /etc/apt/sources.list
 		setup_sources
@@ -616,6 +626,7 @@ main() {
 
 		install_wmapps
 	elif [[ $cmd == "dotfiles" ]]; then
+		get_user
 		get_dotfiles
 	elif [[ $cmd == "vim" ]]; then
 		install_vim
@@ -624,6 +635,7 @@ main() {
 	elif [[ $cmd == "scripts" ]]; then
 		install_scripts
 	elif [[ $cmd == "syncthing" ]]; then
+		get_user
 		install_syncthing
 	elif [[ $cmd == "vagrant" ]]; then
 		install_vagrant "$2"
