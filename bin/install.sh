@@ -8,11 +8,11 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Choose a user account to use for this installation
 get_user() {
-    if [ -z "${USERNAME-}" ]; then
-       PS3='Which user account should be used?'
+    if [ -z "${TARGET_USER-}" ]; then
+       PS3='Which user account should be used? '
        options=($(find /home/* -maxdepth 0 -printf "%f\n" -type d))
        select opt in "${options[@]}"; do
-           readonly USERNAME=$opt
+           readonly TARGET_USER=$opt
            break
        done
     fi
@@ -194,26 +194,26 @@ base() {
 # i know what the fuck im doing ;)
 setup_sudo() {
 	# add user to sudoers
-	adduser "$USERNAME" sudo
+	adduser "$TARGET_USER" sudo
 
 	# add user to systemd groups
 	# then you wont need sudo to view logs and shit
-	gpasswd -a "$USERNAME" systemd-journal
-	gpasswd -a "$USERNAME" systemd-network
+	gpasswd -a "$TARGET_USER" systemd-journal
+	gpasswd -a "$TARGET_USER" systemd-network
 
 	# add go path to secure path
 	{ \
 		echo -e 'Defaults	secure_path="/usr/local/go/bin:/home/jessie/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'; \
 		echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
-		echo -e "${USERNAME} ALL=(ALL) NOPASSWD:ALL"; \
-		echo -e "${USERNAME} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
+		echo -e "${TARGET_USER} ALL=(ALL) NOPASSWD:ALL"; \
+		echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
 	} >> /etc/sudoers
 
 	# setup downloads folder as tmpfs
 	# that way things are removed on reboot
 	# i like things clean but you may not want this
-	mkdir -p "/home/$USERNAME/Downloads"
-	echo -e "\n# tmpfs for downloads\ntmpfs\t/home/${USERNAME}/Downloads\ttmpfs\tnodev,nosuid,size=2G\t0\t0" >> /etc/fstab
+	mkdir -p "/home/$TARGET_USER/Downloads"
+	echo -e "\n# tmpfs for downloads\ntmpfs\t/home/${TARGET_USER}/Downloads\ttmpfs\tnodev,nosuid,size=2G\t0\t0" >> /etc/fstab
 }
 
 # installs docker master
@@ -221,7 +221,7 @@ setup_sudo() {
 install_docker() {
 	# create docker group
 	sudo groupadd docker
-	sudo gpasswd -a "$USERNAME" docker
+	sudo gpasswd -a "$TARGET_USER" docker
 
 
 	curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar -xvz \
@@ -411,7 +411,7 @@ install_syncthing() {
 	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
 
 	systemctl daemon-reload
-	systemctl enable "syncthing@${USERNAME}"
+	systemctl enable "syncthing@${TARGET_USER}"
 }
 
 # install wifi drivers
@@ -474,7 +474,7 @@ get_dotfiles() {
 	# enable dbus for the user session
 	# systemctl --user enable dbus.socket
 
-	sudo systemctl enable "i3lock@${USERNAME}"
+	sudo systemctl enable "i3lock@${TARGET_USER}"
 	sudo systemctl enable suspend-sedation.service
 
 	cd "$HOME"
