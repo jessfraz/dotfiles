@@ -53,16 +53,16 @@ setup_sources() {
 	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
 
 	# hack for latest git (don't judge)
-	deb http://ppa.launchpad.net/git-core/ppa/ubuntu wily main
-	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu wily main
+	deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
+	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
 
 	# neovim
-	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu wily main
-	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu wily main
+	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
+	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
 
 	# yubico
-	deb http://ppa.launchpad.net/yubico/stable/ubuntu wily main
-	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu wily main
+	deb http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
+	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
 
 	# tlp: Advanced Linux Power Management
 	# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
