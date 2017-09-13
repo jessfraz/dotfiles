@@ -25,9 +25,8 @@ check_is_sudo() {
 	fi
 }
 
-# sets up apt sources
-# assumes you are going to use debian stretch
-setup_sources() {
+
+setup_sources_min() {
 	apt-get update
 	apt-get install -y \
 		apt-transport-https \
@@ -35,6 +34,34 @@ setup_sources() {
 		curl \
 		dirmngr \
 		--no-install-recommends
+
+	# hack for latest git (don't judge)
+	cat <<-EOF > /etc/apt/sources.list.d/git-core.list
+	deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
+	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
+	EOF
+
+	# neovim
+	cat <<-EOF > /etc/apt/sources.list.d/neovim.list
+	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
+	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
+	EOF
+
+	# add the git-core ppa gpg key
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
+
+	# add the neovim ppa gpg key
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
+
+	# turn off translations, speed up apt-get update
+	mkdir -p /etc/apt/apt.conf.d
+	echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
+}
+
+# sets up apt sources
+# assumes you are going to use debian stretch
+setup_sources() {
+	setup_sources_min;
 
 	cat <<-EOF > /etc/apt/sources.list
 	deb http://httpredir.debian.org/debian stretch main contrib non-free
@@ -52,14 +79,6 @@ setup_sources() {
 	deb http://httpredir.debian.org/debian experimental main contrib non-free
 	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
 
-	# hack for latest git (don't judge)
-	deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
-
-	# neovim
-	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
-
 	# yubico
 	deb http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
 	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
@@ -76,8 +95,11 @@ setup_sources() {
 	deb https://apt.dockerproject.org/repo debian-stretch experimental
 	EOF
 
+	# Create an environment variable for the correct distribution
+	export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+
 	# Add the Cloud SDK distribution URI as a package source
-	echo "deb https://packages.cloud.google.com/apt cloud-sdk-sid main" > /etc/apt/sources.list.d/google-cloud-sdk.list
+	echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list
 
 	# Import the Google Cloud Platform public key
 	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
@@ -91,40 +113,24 @@ setup_sources() {
 	# add docker gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-	# add the git-core ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
-
-	# add the neovim ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
-
 	# add the yubico ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 3653E21064B19D134466702E43D5C49532CBA1A9
 
 	# add the tlp apt-repo gpg key
 	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
-
-	# turn off translations, speed up apt-get update
-	mkdir -p /etc/apt/apt.conf.d
-	echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
 }
 
-# installs base packages
-# the utter bare minimal shit
-base() {
+base_min() {
 	apt-get update
 	apt-get -y upgrade
 
 	apt-get install -y \
 		adduser \
-		alsa-utils \
-		apparmor \
 		automake \
 		bash-completion \
 		bc \
-		bridge-utils \
 		bzip2 \
 		ca-certificates \
-		cgroupfs-mount \
 		coreutils \
 		curl \
 		dnsutils \
@@ -135,7 +141,6 @@ base() {
 		gnupg \
 		gnupg2 \
 		gnupg-agent \
-		google-cloud-sdk \
 		grep \
 		gzip \
 		hostname \
@@ -143,20 +148,14 @@ base() {
 		iptables \
 		jq \
 		less \
-		libapparmor-dev \
 		libc6-dev \
-		libltdl-dev \
-		libseccomp-dev \
 		locales \
 		lsof \
 		make \
 		mount \
 		net-tools \
-		network-manager \
-		openvpn \
 		pinentry-curses \
 		rxvt-unicode-256color \
-		s3cmd \
 		scdaemon \
 		silversearcher-ag \
 		ssh \
@@ -172,6 +171,35 @@ base() {
 		zip \
 		--no-install-recommends
 
+	apt-get autoremove
+	apt-get autoclean
+	apt-get clean
+
+	install_scripts
+}
+
+# installs base packages
+# the utter bare minimal shit
+base() {
+	base_min;
+
+	apt-get update
+	apt-get -y upgrade
+
+	apt-get install -y \
+		alsa-utils \
+		apparmor \
+		bridge-utils \
+		cgroupfs-mount \
+		google-cloud-sdk \
+		libapparmor-dev \
+		libltdl-dev \
+		libseccomp-dev \
+		network-manager \
+		openvpn \
+		s3cmd \
+		--no-install-recommends
+
 	# install tlp with recommends
 	apt-get install -y tlp tlp-rdw
 
@@ -182,7 +210,6 @@ base() {
 	apt-get clean
 
 	install_docker
-	install_scripts
 }
 
 # setup sudo for a user
@@ -584,7 +611,8 @@ install_vagrant() {
 usage() {
 	echo -e "install.sh\n\tThis script installs my basic setup for a debian laptop\n"
 	echo "Usage:"
-	echo "  sources                     - setup sources & install base pkgs"
+	echo "  base                        - setup sources & install base pkgs"
+	echo "  basemin                     - setup sources & install base min pkgs"
 	echo "  wifi {broadcom,intel}       - install wifi drivers"
 	echo "  graphics {dell,mac,lenovo}  - install graphics drivers"
 	echo "  wm                          - install window manager/desktop pkgs"
@@ -604,7 +632,7 @@ main() {
 		exit 1
 	fi
 
-	if [[ $cmd == "sources" ]]; then
+	if [[ $cmd == "base" ]]; then
 		check_is_sudo
 		get_user
 
@@ -612,6 +640,14 @@ main() {
 		setup_sources
 
 		base
+	elif [[ $cmd == "basemin" ]]; then
+		check_is_sudo
+		get_user
+
+		# setup /etc/apt/sources.list
+		setup_sources_min
+
+		base_min
 	elif [[ $cmd == "wifi" ]]; then
 		install_wifi "$2"
 	elif [[ $cmd == "graphics" ]]; then
