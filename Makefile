@@ -16,8 +16,11 @@ dotfiles:
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
+	mkdir -p $(HOME)/.gnupg;
 	ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
 	ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
+	sudo chmod 600 $(HOME)/.gnupg/gpg.conf;
+	sudo chmod 755 $(HOME)/.gnupg;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 
 etc:
