@@ -96,7 +96,8 @@ setup_sources() {
 	EOF
 
 	# Create an environment variable for the correct distribution
-	export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+	CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+	export CLOUD_SDK_REPO
 
 	# Add the Cloud SDK distribution URI as a package source
 	echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list
