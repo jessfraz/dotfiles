@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check for various OS openers. Quit as soon as we find one that works.
-for opener in xdg-open cmd.exe cygstart "start" open; do
+for opener in browser-exec xdg-open cmd.exe cygstart "start" open; do
 	if command -v $opener >/dev/null 2>&1; then
 		if [[ "$opener" == "cmd.exe" ]]; then
 			# shellcheck disable=SC2139
