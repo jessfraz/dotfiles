@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Check for various OS openers. Quit as soon as we find one that works.
-# Don't assume this will work, provide a helpful diagnostic if it fails.
 for opener in xdg-open cmd.exe cygstart "start" open; do
 	if command -v $opener >/dev/null 2>&1; then
 		if [[ "$opener" == "cmd.exe" ]]; then
