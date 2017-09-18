@@ -271,7 +271,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.8.1
+	export GO_VERSION=1.9
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -305,38 +305,29 @@ install_golang() {
 	go get golang.org/x/tools/cmd/gorename
 	go get golang.org/x/tools/cmd/guru
 
+	go get github.com/jessfraz/amicontained
 	go get github.com/jessfraz/apk-file
 	go get github.com/jessfraz/audit
-	go get github.com/jessfraz/bane
-	go get github.com/jessfraz/battery
 	go get github.com/jessfraz/certok
 	go get github.com/jessfraz/cliaoke
 	go get github.com/jessfraz/ghb0t
-	go get github.com/jessfraz/magneto
+	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/netns
-	go get github.com/jessfraz/netscan
-	go get github.com/jessfraz/onion
 	go get github.com/jessfraz/pastebinit
 	go get github.com/jessfraz/pepper
-	go get github.com/jessfraz/pony
 	go get github.com/jessfraz/reg
-	go get github.com/jessfraz/riddler
 	go get github.com/jessfraz/udict
 	go get github.com/jessfraz/weather
 
 	go get github.com/axw/gocov/gocov
-	go get github.com/brianredbeard/gpget
 	go get github.com/crosbymichael/gistit
-	go get github.com/crosbymichael/ip-addr
 	go get github.com/davecheney/httpstat
 	go get github.com/google/gops
 	go get github.com/jstemmer/gotags
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
-	go get github.com/shurcooL/markdownfmt
-	go get github.com/Soulou/curl-unix-socket
 
-	aliases=( docker/docker google/syzkaller opencontainers/runc jessfraz/binctr jessfraz/contained.af jessfraz/junk )
+	aliases=( docker/docker opencontainers/runc jessfraz/binctr jessfraz/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
