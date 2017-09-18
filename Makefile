@@ -21,6 +21,7 @@ dotfiles:
 	sudo chmod 600 $(HOME)/.gnupg/gpg.conf;
 	sudo chmod 755 $(HOME)/.gnupg;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
+	git update-index --skip-worktree $(CURDIR)/.gitconfig;
 
 etc:
 	for file in $(shell find $(CURDIR)/etc -type f -not -name ".*.swp"); do \
