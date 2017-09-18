@@ -544,6 +544,7 @@ install_vim() {
 
 	sudo apt-get install -y \
 		python3-pip \
+		python3-setuptools \
 		--no-install-recommends
 
 	pip3 install -U \
