@@ -1,7 +1,19 @@
 #!/bin/bash
 
-# debian specific aliases
-alias open='xdg-open'
+# Check for various OS openers. Quit as soon as we find one that works.
+# Don't assume this will work, provide a helpful diagnostic if it fails.
+for opener in xdg-open cmd.exe cygstart "start" open; do
+	if command -v $opener >/dev/null 2>&1; then
+		if [[ "$opener" == "cmd.exe" ]]; then
+			alias open="$opener /c start";
+		else
+			alias open="$opener";
+		fi
+		break;
+	fi
+done
+
+# Linux specific aliases
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 

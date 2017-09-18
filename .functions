@@ -242,7 +242,7 @@ tre() {
 }
 
 # Call from a local repo to open the repository on github/bitbucket in browser
-# From: https://github.com/zeke/ghwd
+# Modified version of https://github.com/zeke/ghwd
 repo() {
 	# Figure out github repo base URL
 	local base_url
@@ -287,18 +287,10 @@ repo() {
 	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
 	url="$base_url/$tree/$branch$relative_path"
 
-	echo "$url"
 
-	# Check for various OS openers. Quit as soon as we find one that works.
-	# Don't assume this will work, provide a helpful diagnostic if it fails.
-	for opener in xdg-open open cygstart "start"; do
-		if command -v $opener >/dev/null 2>&1; then
-			open=$opener;
-			break;
-		fi
-	done
+	echo "Calling $(type open) for $url"
 
-	$open "$url" &> /dev/null || (echo "Unrecognized OS: Expected to find one of the following launch commands: xdg-open, open, cygstart, start" && exit 1);
+	open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
 }
 
 # Get colors in manual pages
