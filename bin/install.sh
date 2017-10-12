@@ -59,19 +59,19 @@ setup_sources_min() {
 }
 
 # sets up apt sources
-# assumes you are going to use debian stretch
+# assumes you are going to use debian buster
 setup_sources() {
 	setup_sources_min;
 
 	cat <<-EOF > /etc/apt/sources.list
-	deb http://httpredir.debian.org/debian stretch main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ stretch main contrib non-free
+	deb http://httpredir.debian.org/debian buster main contrib non-free
+	deb-src http://httpredir.debian.org/debian/ buster main contrib non-free
 
-	deb http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
+	deb http://httpredir.debian.org/debian/ buster-updates main contrib non-free
+	deb-src http://httpredir.debian.org/debian/ buster-updates main contrib non-free
 
-	deb http://security.debian.org/ stretch/updates main contrib non-free
-	deb-src http://security.debian.org/ stretch/updates main contrib non-free
+	deb http://security.debian.org/ buster/updates main contrib non-free
+	deb-src http://security.debian.org/ buster/updates main contrib non-free
 
 	#deb http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
 	#deb-src http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
@@ -90,9 +90,9 @@ setup_sources() {
 
 	# add docker apt repo
 	cat <<-EOF > /etc/apt/sources.list.d/docker.list
-	deb https://apt.dockerproject.org/repo debian-stretch main
-	deb https://apt.dockerproject.org/repo debian-stretch testing
-	deb https://apt.dockerproject.org/repo debian-stretch experimental
+	deb https://apt.dockerproject.org/repo debian-buster main
+	deb https://apt.dockerproject.org/repo debian-buster testing
+	deb https://apt.dockerproject.org/repo debian-buster experimental
 	EOF
 
 	# Create an environment variable for the correct distribution
