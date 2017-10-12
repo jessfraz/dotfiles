@@ -18,7 +18,7 @@ update_docker() {
 	local username
 	username=$(find /home/* -maxdepth 0 -printf "%f" -type d)
 	local user_home="/home/${username}"
-	local docker_dir="${user_home}/docker"
+	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
 
 	# set init
 	local init="systemd"
@@ -49,21 +49,6 @@ update_docker() {
 			# Update the upstart file
 			curl -sSL -o /etc/init/docker.conf https://raw.githubusercontent.com/docker/docker/master/contrib/init/upstart/docker.conf
 		fi
-
-		# Include contributed man pages
-		man/md2man-all.sh -q
-		local manRoot="/usr/share/man"
-		mkdir -p "$manRoot"
-		for manDir in man/man?; do
-			local manBase
-			manBase="$(basename "$manDir")" # "man1"
-			for manFile in "$manDir"/*; do
-				local manName
-				manName="$(basename "$manFile")" # "docker-build.1"
-				mkdir -p "$manRoot/$manBase"
-				gzip -c "$manFile" > "$manRoot/$manBase/$manName.gz"
-			done
-		done
 
 		# move vim syntax highlighting
 		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
