@@ -8,14 +8,14 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Choose a user account to use for this installation
 get_user() {
-    if [ -z "${TARGET_USER-}" ]; then
-       PS3='Which user account should be used? '
-       options=($(find /home/* -maxdepth 0 -printf "%f\n" -type d))
-       select opt in "${options[@]}"; do
-           readonly TARGET_USER=$opt
-           break
-       done
-    fi
+	if [ -z "${TARGET_USER-}" ]; then
+		PS3='Which user account should be used? '
+		options=($(find /home/* -maxdepth 0 -printf "%f\n" -type d))
+		select opt in "${options[@]}"; do
+			readonly TARGET_USER=$opt
+			break
+		done
+	fi
 }
 
 check_is_sudo() {
@@ -377,15 +377,27 @@ install_graphics() {
 	local system=$1
 
 	if [[ -z "$system" ]]; then
-		echo "You need to specify whether it's dell, mac or lenovo"
+		echo "You need to specify whether it's intel, geforce or optimus"
 		exit 1
 	fi
 
-	local pkgs=( nvidia-kernel-dkms bumblebee-nvidia primus )
+	local pkgs=( xorg xserver-xorg )
 
-	if [[ $system == "mac" ]] || [[ $system == "dell" ]]; then
-		pkgs=( xorg xserver-xorg xserver-xorg-video-intel )
-	fi
+	case $system in
+		"intel")
+			pkgs+=( xserver-xorg-video-intel )
+			;;
+		"geforce")
+			pkgs+=( nvidia-driver )
+			;;
+		"optimus")
+			pkgs+=( nvidia-kernel-dkms bumblebee-nvidia primus )
+			;;
+		*)
+			echo "You need to specify whether it's intel, geforce or optimus"
+			exit 1
+			;;
+	esac
 
 	apt-get install -y "${pkgs[@]}" --no-install-recommends
 }
@@ -605,17 +617,17 @@ install_vagrant() {
 usage() {
 	echo -e "install.sh\n\tThis script installs my basic setup for a debian laptop\n"
 	echo "Usage:"
-	echo "  base                        - setup sources & install base pkgs"
-	echo "  basemin                     - setup sources & install base min pkgs"
-	echo "  wifi {broadcom,intel}       - install wifi drivers"
-	echo "  graphics {dell,mac,lenovo}  - install graphics drivers"
-	echo "  wm                          - install window manager/desktop pkgs"
-	echo "  dotfiles                    - get dotfiles"
-	echo "  vim                         - install vim specific dotfiles"
-	echo "  golang                      - install golang and packages"
-	echo "  scripts                     - install scripts"
-	echo "  syncthing                   - install syncthing"
-	echo "  vagrant                     - install vagrant and virtualbox"
+	echo "  base                                - setup sources & install base pkgs"
+	echo "  basemin                             - setup sources & install base min pkgs"
+	echo "  wifi {broadcom, intel}              - install wifi drivers"
+	echo "  graphics {intel, geforce, optimus}  - install graphics drivers"
+	echo "  wm                                  - install window manager/desktop pkgs"
+	echo "  dotfiles                            - get dotfiles"
+	echo "  vim                                 - install vim specific dotfiles"
+	echo "  golang                              - install golang and packages"
+	echo "  scripts                             - install scripts"
+	echo "  syncthing                           - install syncthing"
+	echo "  vagrant                             - install vagrant and virtualbox"
 }
 
 main() {
