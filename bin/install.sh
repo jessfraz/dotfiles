@@ -419,7 +419,7 @@ install_scripts() {
 	chmod +x /usr/local/bin/lolcat
 
 
-	local scripts=( go-md2man have light )
+	local scripts=( have light )
 
 	for script in "${scripts[@]}"; do
 		curl -sSL "https://misc.j3ss.co/binaries/$script" > "/usr/local/bin/${script}"
