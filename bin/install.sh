@@ -33,6 +33,7 @@ setup_sources_min() {
 		ca-certificates \
 		curl \
 		dirmngr \
+		lsb-release \
 		--no-install-recommends
 
 	# hack for latest git (don't judge)
