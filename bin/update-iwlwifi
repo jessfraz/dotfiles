@@ -32,6 +32,7 @@ update_iwlwifi(){
 	cd linux-firmware
 	mkdir -p /lib/firmware
 	cp iwlwifi-7265*.ucode /lib/firmware
+	cp iwlwifi-800*.ucode /lib/firmware
 	cp iwlwifi-8265*.ucode /lib/firmware
 
 	# cleanup
