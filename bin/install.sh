@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -o pipefail
 
 # install.sh
 #	This script installs my basic setup for a debian laptop
@@ -106,6 +107,12 @@ setup_sources() {
 	# Import the Google Cloud Platform public key
 	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
+	# Add the Cloud SDK for Azure
+	echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" > /etc/apt/sources.list.d/azure-cloud-sdk.list
+
+	# Add the Azure Cloud public key
+	apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+
 	# Add the Google Chrome distribution URI as a package source
 	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 
@@ -192,6 +199,7 @@ base() {
 	apt-get install -y \
 		alsa-utils \
 		apparmor \
+		azure-cli \
 		bridge-utils \
 		cgroupfs-mount \
 		google-cloud-sdk \
