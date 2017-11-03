@@ -64,6 +64,7 @@ update_docker() {
 	local binary_uri="https://master.dockerproject.org"
 	local docker_version
 	docker_version=$(curl -sSL "https://raw.githubusercontent.com/moby/moby/master/VERSION")
+	docker_version="17.06.0-dev"
 	local docker_sha256
 	docker_sha256=$(curl -sSL "${binary_uri}/linux/x86_64/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
 	(
