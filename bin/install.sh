@@ -280,7 +280,7 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=1.9
+	export GO_VERSION=$(curl -sSL "https://golang.org/VERSION?m=text")
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -293,6 +293,8 @@ install_golang() {
 		sudo rm -rf "$GO_SRC"
 		sudo rm -rf "$GOPATH"
 	fi
+
+	GO_VERSION=${GO_VERSION#go}
 
 	# subshell
 	(
