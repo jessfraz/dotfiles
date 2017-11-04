@@ -280,12 +280,13 @@ install_docker() {
 
 # install/update golang from source
 install_golang() {
-	export GO_VERSION=$(curl -sSL "https://golang.org/VERSION?m=text")
+	export GO_VERSION
+	GO_VERSION=$(curl -sSL "https://golang.org/VERSION?m=text")
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
 	if [[ ! -z "$1" ]]; then
-		export GO_VERSION=$1
+		GO_VERSION=$1
 	fi
 
 	# purge old src
