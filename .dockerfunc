@@ -536,6 +536,48 @@ notify_send(){
 	local args=${*:2}
 	docker exec -i notify_osd notify-send "$1" "${args}"
 }
+opensnitch(){
+	del_stopped opensnitchd
+	del_stopped opensnitch
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		--net host \
+		--cap-add NET_ADMIN \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v /usr/share/dbus-1:/usr/share/dbus-1 \
+		-v "/var/run/user/$(id -u):/var/run/user/$(id -u)" \
+		-e DBUS_SESSION_BUS_ADDRESS \
+		-e XAUTHORITY \
+		-v "${HOME}/.Xauthority:$HOME/.Xauthority" \
+		-v /tmp:/tmp \
+		--name opensnitchd \
+		${DOCKER_REPO_PREFIX}/opensnitchd
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v /usr/share/X11:/usr/share/X11:ro \
+		-v /usr/share/dbus-1:/usr/share/dbus-1 \
+		-v /etc/machine-id:/etc/machine-id:ro \
+		-v /var/run/dbus:/var/run/dbus \
+		-v "/var/run/user/$(id -u):/var/run/user/$(id -u)" \
+		-e DBUS_SESSION_BUS_ADDRESS \
+		-e XAUTHORITY \
+		-v "${HOME}/.Xauthority:$HOME/.Xauthority" \
+		-e HOME \
+		-e QT_DEVICE_PIXEL_RATIO \
+		-e XDG_RUNTIME_DIR \
+		-v /etc/passwd:/etc/passwd:ro \
+		-v /etc/group:/etc/group:ro \
+		-v /tmp:/tmp \
+		-u "$(id -u)" -w "$HOME" \
+		--net host \
+		--name opensnitch \
+		${DOCKER_REPO_PREFIX}/opensnitch
+}
 pandoc(){
 	local file=${*: -1}
 	local lfile
@@ -694,7 +736,6 @@ scudcloud(){
 		-v /etc/group:/etc/group:ro \
 		-u "$(whoami)" -w "$HOME" \
 		-v "${HOME}/.Xauthority:$HOME/.Xauthority" \
-		-v /etc/machine-id:/etc/machine-id:ro \
 		-v "${HOME}/.scudcloud:/home/jessie/.config/scudcloud" \
 		--device /dev/snd \
 		--name scudcloud \

@@ -334,6 +334,8 @@ install_golang() {
 	go get github.com/axw/gocov/gocov
 	go get github.com/crosbymichael/gistit
 	go get github.com/davecheney/httpstat
+	go get github.com/FiloSottile/gvt
+	go get github.com/FiloSottile/vendorcheck
 	go get github.com/google/gops
 	go get github.com/jstemmer/gotags
 	go get github.com/nsf/gocode
