@@ -12,7 +12,7 @@ calc() {
 		# add "0" for cases like "-.5"
 		# remove trailing zeros
 		printf "%s" "$result" |
-		sed -e 's/^\./0./'  \
+			sed -e 's/^\./0./'  \
 			-e 's/^-\./-0./' \
 			-e 's/0*$//;s/\.$//'
 	else
@@ -451,4 +451,8 @@ dell_monitor() {
 	xrandr --newmode "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
 	xrandr --addmode  DP1 "3840x2160_30.00"
 	xrandr --output eDP1 --auto --primary --output DP1 --mode 3840x2160_30.00 --above eDP1 --rate 30
+}
+
+govendorcheck() {
+	vendorcheck -u ./... | awk '{print $NF}' | sed -e "s#^github.com/jessfraz/"$(basename $(pwd))"/##"
 }
