@@ -454,5 +454,5 @@ dell_monitor() {
 }
 
 govendorcheck() {
-	vendorcheck -u ./... | awk '{print $NF}' | sed -e "s#^github.com/jessfraz/"$(basename $(pwd))"/##"
+	vendorcheck -u ./... | awk '{print $NF}' | sed -e "s#^github.com/jessfraz/$(basename $(pwd))/##"
 }
