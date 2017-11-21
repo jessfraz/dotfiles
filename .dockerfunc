@@ -1039,6 +1039,16 @@ wrk(){
 		--name wrk \
 		${DOCKER_REPO_PREFIX}/wrk "$@"
 }
+ykman(){
+	del_stopped ykpersonalize
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		--device /dev/usb \
+		--device /dev/bus/usb \
+		--name ykman \
+		${DOCKER_REPO_PREFIX}/ykman bash
+}
 ykpersonalize(){
 	del_stopped ykpersonalize
 
