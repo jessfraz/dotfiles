@@ -2,7 +2,7 @@
 set -e
 
 help() {
-	echo "htotheizzo - a simple script that makes updating/upgrading homebrew or apt-get, gems, pip packages, and node packages so much easier"
+	echo "htotheizzo - a simple script that makes updating/upgrading homebrew or apt, gems, pip packages, and node packages so much easier"
 }
 
 dcleanup(){
@@ -86,11 +86,11 @@ update_docker() {
 }
 
 update_linux() {
-	apt-get -y update
-	apt-get -y upgrade
-	apt-get -y autoremove
-	apt-get -y autoclean
-	apt-get -y clean
+	apt -y update
+	apt -y upgrade
+	apt -y autoremove
+	apt -y autoclean
+	apt -y clean
 	rm -rf /var/lib/apt/lists/*
 }
 
