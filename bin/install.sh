@@ -28,8 +28,8 @@ check_is_sudo() {
 
 
 setup_sources_min() {
-	apt-get update
-	apt-get install -y \
+	apt update
+	apt install -y \
 		apt-transport-https \
 		ca-certificates \
 		curl \
@@ -55,7 +55,7 @@ setup_sources_min() {
 	# add the neovim ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
 
-	# turn off translations, speed up apt-get update
+	# turn off translations, speed up apt update
 	mkdir -p /etc/apt/apt.conf.d
 	echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
 }
@@ -130,10 +130,10 @@ setup_sources() {
 }
 
 base_min() {
-	apt-get update
-	apt-get -y upgrade
+	apt update
+	apt -y upgrade
 
-	apt-get install -y \
+	apt install -y \
 		adduser \
 		automake \
 		bash-completion \
@@ -181,9 +181,9 @@ base_min() {
 		zip \
 		--no-install-recommends
 
-	apt-get autoremove
-	apt-get autoclean
-	apt-get clean
+	apt autoremove
+	apt autoclean
+	apt clean
 
 	install_scripts
 }
@@ -193,10 +193,10 @@ base_min() {
 base() {
 	base_min;
 
-	apt-get update
-	apt-get -y upgrade
+	apt update
+	apt -y upgrade
 
-	apt-get install -y \
+	apt install -y \
 		alsa-utils \
 		apparmor \
 		azure-cli \
@@ -212,13 +212,13 @@ base() {
 		--no-install-recommends
 
 	# install tlp with recommends
-	apt-get install -y tlp tlp-rdw
+	apt install -y tlp tlp-rdw
 
 	setup_sudo
 
-	apt-get autoremove
-	apt-get autoclean
-	apt-get clean
+	apt autoremove
+	apt autoclean
+	apt clean
 
 	install_docker
 }
@@ -431,7 +431,7 @@ install_graphics() {
 			;;
 	esac
 
-	apt-get install -y "${pkgs[@]}" --no-install-recommends
+	apt install -y "${pkgs[@]}" --no-install-recommends
 }
 
 # install custom scripts/binaries
@@ -487,7 +487,7 @@ install_wifi() {
 	if [[ $system == "broadcom" ]]; then
 		local pkg="broadcom-sta-dkms"
 
-		apt-get install -y "$pkg" --no-install-recommends
+		apt install -y "$pkg" --no-install-recommends
 	else
 		update-iwlwifi
 	fi
@@ -497,7 +497,7 @@ install_wifi() {
 install_wmapps() {
 	local pkgs=( feh i3 i3lock i3status scrot slim suckless-tools )
 
-	apt-get install -y "${pkgs[@]}" --no-install-recommends
+	apt install -y "${pkgs[@]}" --no-install-recommends
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
@@ -575,9 +575,9 @@ install_vim() {
 	sudo update-alternatives --config editor
 
 	# install things needed for deoplete for vim
-	sudo apt-get update
+	sudo apt update
 
-	sudo apt-get install -y \
+	sudo apt install -y \
 		python3-pip \
 		python3-setuptools \
 		--no-install-recommends
@@ -598,8 +598,8 @@ install_virtualbox() {
 		jessie_sources=/etc/apt/sources.list.d/jessie.list
 		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > "$jessie_sources"
 
-		apt-get update
-		apt-get install -y -t jessie libvpx1 \
+		apt update
+		apt install -y -t jessie libvpx1 \
 			--no-install-recommends
 
 		# cleanup the file that we used to install things from jessie
@@ -610,8 +610,8 @@ install_virtualbox() {
 
 	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
 
-	apt-get update
-	apt-get install -y \
+	apt update
+	apt install -y \
 		virtualbox-5.0
 	--no-install-recommends
 }
