@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+while IFS= read -r -d '' dir; do
+	if [[ -d "${dir}/.git" ]]; then
+		base=$(basename "$dir")
+		echo "updating repo for ${base}..."
+		(
+		cd "$dir"
+		git pull
+		)
+	fi
+done < <(find "${HOME}" -maxdepth 1 -type d ! -path "${HOME}" -print0)
