@@ -94,6 +94,12 @@ update_linux() {
 	rm -rf /var/lib/apt/lists/*
 }
 
+update_kubectl() {
+	KUBERNETES_VERSION=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+	curl -sSL "https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl" > /usr/local/bin/kubectl
+	chmod +x /usr/local/bin/kubectl
+}
+
 update() {
 	echo "htotheizzo is running the update functions"
 
@@ -110,6 +116,7 @@ update() {
 		# update
 		update_linux;
 		update_docker;
+		update_kubectl;
 	else
 		echo "We don't have update functions for OS: ${OSTYPE}"
 		echo "Moving on..."
