@@ -5,19 +5,29 @@ help() {
 	echo "htotheizzo - a simple script that makes updating/upgrading homebrew or apt, gems, pip packages, and node packages so much easier"
 }
 
+# Choose a user account to use
+get_user() {
+	if [ -z "${TARGET_USER-}" ]; then
+		PS3='Which user account should be used? '
+		mapfile -t options < <(find /home/* -maxdepth 0 -printf "%f\\n" -type d)
+		select opt in "${options[@]}"; do
+			readonly TARGET_USER=$opt
+			break
+		done
+	fi
+}
+
 dcleanup(){
 	local containers
-	containers=( $(docker ps --filter status=exited -q 2>/dev/null) )
+	mapfile -t containers < <(docker ps --filter status=exited -q 2>/dev/null)
 	docker rm "${containers[@]}" 2>/dev/null
 	local images
-	images=( $(docker images --filter dangling=true -q 2>/dev/null) )
+	mapfile -t images < <(docker images --filter dangling=true -q 2>/dev/null)
 	docker rmi "${images[@]}" 2>/dev/null
 }
 
 update_docker() {
-	local username
-	username=$(find /home/* -maxdepth 0 -printf "%f" -type d)
-	local user_home="/home/${username}"
+	local user_home="/home/${TARGET_USER}"
 	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
 
 	# set init
@@ -54,8 +64,9 @@ update_docker() {
 		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
 			mkdir -p "${user_home}/.vim/bundle/Dockerfile"
 		fi
+		# shellcheck disable=SC2216
 		yes | cp -r contrib/syntax/vim/* "${user_home}/.vim/bundle/Dockerfile/"
-		chown -R "${username}" "${user_home}/.vim/bundle/Dockerfile"
+		chown -R "${TARGET_USER}" "${user_home}/.vim/bundle/Dockerfile"
 		)
 	fi
 
@@ -114,6 +125,7 @@ update() {
 		fi
 
 		# update
+		get_user;
 		update_linux;
 		update_docker;
 		update_kubectl;
