@@ -20,11 +20,11 @@ BUCKET_PREFIX="gs://${REPO_URL}/docker/registry/v2"
 JOBS=${JOBS:-10}
 
 # get the repos
-repos=( $(gsutil ls "${BUCKET_PREFIX}/repositories/" | awk -F"/" '{print $(NF-1)}') )
+mapfile -t repos < <(gsutil ls "${BUCKET_PREFIX}/repositories/" | awk -F"/" '{print $(NF-1)}')
 
 for repo in "${repos[@]}"; do
 	# get the tags
-	tags=( $(gsutil ls "${BUCKET_PREFIX}/repositories/${repo}/_manifests/tags/" | awk -F"/" '{print $(NF-1)}') )
+	mapfile -t tags < <(gsutil ls "${BUCKET_PREFIX}/repositories/${repo}/_manifests/tags/" | awk -F"/" '{print $(NF-1)}')
 
 	for tag in "${tags[@]}"; do
 		echo "repo: $repo | tag: $tag"
@@ -39,7 +39,7 @@ for repo in "${repos[@]}"; do
 		echo "repo: $repo | tag: $tag | current: ${ha}:${id}"
 
 		# get the shas
-		shas=( $(gsutil ls "${BUCKET_PREFIX}/repositories/${repo}/_manifests/tags/${tag}/index/${ha}/" | awk -F"/" '{print $(NF-1)}') )
+		mapfile -t shas < <(gsutil ls "${BUCKET_PREFIX}/repositories/${repo}/_manifests/tags/${tag}/index/${ha}/" | awk -F"/" '{print $(NF-1)}')
 
 		# remove the current sha
 		shas=( "${shas[@]/$id}" )
