@@ -16,6 +16,7 @@ ExecStart=/usr/local/bin/dockerd -D \
 		  --exec-opt=native.cgroupdriver=cgroupfs \
 		  --userland-proxy=true \
 		  --disable-legacy-registry=true \
+		  --live-restore \
 		  --iptables=true
 MountFlags=slave
 LimitNOFILE=1048576
