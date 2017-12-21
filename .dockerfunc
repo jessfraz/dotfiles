@@ -1071,6 +1071,14 @@ yubico_piv_tool(){
 }
 alias yubico-piv-tool="yubico_piv_tool"
 
+weather(){
+    del_stopped weather
+
+    docker run --rm -it \
+               -v /etc/localtime:/etc/localtime:ro \
+               --name weather \
+               ${DOCKER_REPO_PREFIX}/weather "$@"
+}
 
 ###
 ### Awesome sauce by @jpetazzo
