@@ -11,7 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 get_user() {
 	if [ -z "${TARGET_USER-}" ]; then
 		PS3='Which user account should be used? '
-		options=($(find /home/* -maxdepth 0 -printf "%f\n" -type d))
+		mapfile -t options < <(find /home/* -maxdepth 0 -printf "%f\\n" -type d)
 		select opt in "${options[@]}"; do
 			readonly TARGET_USER=$opt
 			break
@@ -241,7 +241,7 @@ setup_sudo() {
 
 	# add go path to secure path
 	{ \
-		echo -e 'Defaults	secure_path="/usr/local/go/bin:/home/jessie/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'; \
+		echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${USERNAME}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\""; \
 		echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
 		echo -e "${TARGET_USER} ALL=(ALL) NOPASSWD:ALL"; \
 		echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
@@ -251,7 +251,7 @@ setup_sudo() {
 	# that way things are removed on reboot
 	# i like things clean but you may not want this
 	mkdir -p "/home/$TARGET_USER/Downloads"
-	echo -e "\n# tmpfs for downloads\ntmpfs\t/home/${TARGET_USER}/Downloads\ttmpfs\tnodev,nosuid,size=2G\t0\t0" >> /etc/fstab
+	echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=2G\\t0\\t0" >> /etc/fstab
 }
 
 # installs docker master
@@ -613,7 +613,7 @@ install_virtualbox() {
 
 	apt update
 	apt install -y \
-		virtualbox-5.0
+		virtualbox-5.0 \
 	--no-install-recommends
 }
 
@@ -648,7 +648,7 @@ install_vagrant() {
 
 
 usage() {
-	echo -e "install.sh\n\tThis script installs my basic setup for a debian laptop\n"
+	echo -e "install.sh\\n\\tThis script installs my basic setup for a debian laptop\\n"
 	echo "Usage:"
 	echo "  base                                - setup sources & install base pkgs"
 	echo "  basemin                             - setup sources & install base min pkgs"

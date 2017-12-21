@@ -22,17 +22,17 @@ usage() {
 	cat >&2 <<-EOF
 	To run, I need:
 	- to be provided with a Cloudflare email, in environment variable
-	CLOUDFLARE_EMAIL;
+	CLOUDFLARE_API_EMAIL;
 	- to be provided with a Cloudflare apikey for this email, in environment
-	variables CLOUDFLARE_APIKEY;
+	variables CLOUDFLARE_API_KEY;
 	- a generous amount of good will and nice manners.
 	EOF
 	exit 1
 }
 
 
-[ "$CLOUDFLARE_APIKEY" ] || usage
-[ "$CLOUDFLARE_EMAIL" ] || usage
+[ "$CLOUDFLARE_API_KEY" ] || usage
+[ "$CLOUDFLARE_API_EMAIL" ] || usage
 
 # get all the tor exit nodes that can reach a given IP
 get_tor_exits(){
@@ -57,8 +57,8 @@ get_threat_score(){
 
 	response=$(curl -sSL "https://www.cloudflare.com/api_json.html" \
 		-d "a=ip_lkup" \
-		-d "tkn=${CLOUDFLARE_APIKEY}" \
-		-d "email=${CLOUDFLARE_EMAIL}" \
+		-d "tkn=${CLOUDFLARE_API_KEY}" \
+		-d "email=${CLOUDFLARE_API_EMAIL}" \
 		-d "ip=${exit}"
 	)
 
@@ -78,9 +78,9 @@ get_threat_score(){
 main() {
 	local ip=$1  # ip to check exit nodes reach
 
-	exitnodes=( $(get_tor_exits "${ip}") )
+	mapfile -t exitnodes < <(get_tor_exits "${ip}")
 
-	echo -e "IP\t\t\tSCORE\t\tTOR?\tRAW"
+	echo -e "IP\\t\\t\\tSCORE\\t\\tTOR?\\tRAW"
 
 	for exit in "${exitnodes[@]}"; do
 		score=$(get_threat_score "${exit}")
@@ -91,7 +91,7 @@ main() {
 		fi
 
 		s=${score#*:}
-		echo -e "${exit}\t\t${s}\t\t${tor}\t${score}"
+		echo -e "${exit}\\t\\t${s}\\t\\t${tor}\\t${score}"
 	done
 }
 
