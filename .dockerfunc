@@ -1011,6 +1011,14 @@ watchman(){
 		--name watchman \
 		${DOCKER_REPO_PREFIX}/watchman --foreground
 }
+weather(){
+    del_stopped weather
+
+    docker run --rm -it \
+               -v /etc/localtime:/etc/localtime:ro \
+               --name weather \
+               ${DOCKER_REPO_PREFIX}/weather "$@"
+}
 weeslack(){
 	del_stopped weeslack
 
@@ -1070,15 +1078,6 @@ yubico_piv_tool(){
 		${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
 }
 alias yubico-piv-tool="yubico_piv_tool"
-
-weather(){
-    del_stopped weather
-
-    docker run --rm -it \
-               -v /etc/localtime:/etc/localtime:ro \
-               --name weather \
-               ${DOCKER_REPO_PREFIX}/weather "$@"
-}
 
 ###
 ### Awesome sauce by @jpetazzo
