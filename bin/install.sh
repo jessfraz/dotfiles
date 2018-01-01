@@ -10,8 +10,17 @@ export DEBIAN_FRONTEND=noninteractive
 # Choose a user account to use for this installation
 get_user() {
 	if [ -z "${TARGET_USER-}" ]; then
-		PS3='Which user account should be used? '
 		mapfile -t options < <(find /home/* -maxdepth 0 -printf "%f\\n" -type d)
+		# if there is only one option just use that user
+		if [ "${#options[@]}" -eq "1" ]; then
+			readonly TARGET_USER="${options[0]}"
+			echo "Using user account: ${TARGET_USER}"
+			return
+		fi
+
+		# iterate through the user options and print them
+		PS3='Which user account should be used? '
+
 		select opt in "${options[@]}"; do
 			readonly TARGET_USER=$opt
 			break
