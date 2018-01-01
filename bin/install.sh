@@ -349,7 +349,6 @@ install_golang() {
 	go get github.com/jessfraz/audit
 	go get github.com/jessfraz/certok
 	go get github.com/jessfraz/cliaoke
-	go get github.com/jessfraz/ghb0t
 	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/netns
 	go get github.com/jessfraz/pastebinit
