@@ -70,7 +70,8 @@ get_release(){
 	created_at=$(echo "$resp" | jq -e --raw-output .created_at || true)
 
 	echo -e "\\ttag -> ${blue}${tag}${reset}"
-	echo -e "\\tcreated -> $created_at"
+	d=$(date --date="${created_at}" "+%A, %B %d, %Y at %H:%M %Z" || true)
+	echo -e "\\tcreated -> ${d}"
 }
 
 travis(){
