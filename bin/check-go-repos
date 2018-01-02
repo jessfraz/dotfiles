@@ -70,7 +70,7 @@ get_release(){
 	created_at=$(echo "$resp" | jq -e --raw-output .created_at || true)
 
 	echo -e "\\ttag -> ${blue}${tag}${reset}"
-	d=$(date --date="${created_at}" "+%A, %B %d, %Y at %H:%M %Z" || true)
+	d=$(date --date="${created_at}" "+%A, %B %d, %Y at %H:%M %Z" 2>/dev/null || true)
 	echo -e "\\tcreated -> ${d}"
 }
 
