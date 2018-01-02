@@ -25,6 +25,12 @@ API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 GITHUB_USER=${GITHUB_USER:-jessfraz}
 
+esc=$(printf '\033')
+red=${esc}'[0;31m'
+green=${esc}'[0;32m'
+blue=${esc}'[0;34m'
+reset=${esc}'[0m' # No Color
+
 repos=(
 amicontained
 apk-file
@@ -58,17 +64,17 @@ get_release(){
 
 	local resp
 	resp=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${repo}/releases/latest")
-	local tag
 	tag=$(echo "$resp" | jq -e --raw-output .tag_name)
+	export tag
 	local created_at
 	created_at=$(echo "$resp" | jq -e --raw-output .created_at)
 
-	echo -e "\\ttag -> $tag"
+	echo -e "\\ttag -> ${blue}${tag}${reset}"
 	echo -e "\\tcreated -> $created_at"
 }
 
 travis(){
-	docker run -it --rm \
+	docker run --rm \
 		-v "${HOME}/.travis:/root/.travis" \
 		-v "$(pwd):/usr/src/repo:ro" \
 		--workdir /usr/src/repo \
@@ -87,16 +93,16 @@ for repo in "${repos[@]}"; do
 
 	# check that a Gopkg.toml and Gopkg.lock exists
 	if [[ ! -f "Gopkg.toml" ]] || [[ ! -f "Gopkg.lock" ]]; then
-		echo -e "\\tdep -> NO"
+		echo -e "\\tdep -> ${red}NO${reset}"
 	else
-		echo -e "\\tdep -> YES"
+		echo -e "\\tdep -> ${green}YES${reset}"
 	fi
 
 	# get the latest release
 	get_release "${GITHUB_USER}/${repo}"
 
 	# get the latest travis build
-	travis branches --repo "${GITHUB_USER}/${repo}"
+	travis branches --repo "${GITHUB_USER}/${repo}" | head -n 2 | sed "s#failed#${red}failed${reset}#g" | sed "s#passed#${green}passed${reset}#g" | sed "s#${tag}#${blue}${tag}${reset}#g"
 	)
 
 	echo
