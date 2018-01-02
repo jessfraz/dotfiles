@@ -63,11 +63,11 @@ get_release(){
 	local repo=$1
 
 	local resp
-	resp=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${repo}/releases/latest")
-	tag=$(echo "$resp" | jq -e --raw-output .tag_name)
+	resp=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${repo}/releases/latest" || true)
+	tag=$(echo "$resp" | jq -e --raw-output .tag_name || true)
 	export tag
 	local created_at
-	created_at=$(echo "$resp" | jq -e --raw-output .created_at)
+	created_at=$(echo "$resp" | jq -e --raw-output .created_at || true)
 
 	echo -e "\\ttag -> ${blue}${tag}${reset}"
 	echo -e "\\tcreated -> $created_at"
@@ -102,7 +102,7 @@ for repo in "${repos[@]}"; do
 	get_release "${GITHUB_USER}/${repo}"
 
 	# get the latest travis build
-	travis branches --repo "${GITHUB_USER}/${repo}" | head -n 2 | sed "s#failed#${red}failed${reset}#g" | sed "s#passed#${green}passed${reset}#g" | sed "s#${tag}#${blue}${tag}${reset}#g"
+	travis branches --repo "${GITHUB_USER}/${repo}" | head -n 2 | sed "s#failed#${red}failed${reset}#g" | sed "s#canceled#${red}canceled${reset}#g" | sed "s#errored#${red}errored${reset}#g" | sed "s#passed#${green}passed${reset}#g" | sed "s#${tag}#${blue}${tag}${reset}#g"
 	)
 
 	echo
