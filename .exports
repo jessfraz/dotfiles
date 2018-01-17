@@ -32,3 +32,9 @@ export QT_DEVICE_PIXEL_RATIO=2
 export GO15VENDOREXPERIMENT=1
 
 export DOCKER_CONTENT_TRUST=1
+
+# if it's an ssh session export GPG_TTY
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
+	GPG_TTY=$(tty)
+	export GPG_TTY
+fi

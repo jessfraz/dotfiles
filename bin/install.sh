@@ -10,8 +10,17 @@ export DEBIAN_FRONTEND=noninteractive
 # Choose a user account to use for this installation
 get_user() {
 	if [ -z "${TARGET_USER-}" ]; then
-		PS3='Which user account should be used? '
 		mapfile -t options < <(find /home/* -maxdepth 0 -printf "%f\\n" -type d)
+		# if there is only one option just use that user
+		if [ "${#options[@]}" -eq "1" ]; then
+			readonly TARGET_USER="${options[0]}"
+			echo "Using user account: ${TARGET_USER}"
+			return
+		fi
+
+		# iterate through the user options and print them
+		PS3='Which user account should be used? '
+
 		select opt in "${options[@]}"; do
 			readonly TARGET_USER=$opt
 			break
@@ -291,7 +300,7 @@ install_docker() {
 	systemctl enable docker
 
 	# update grub with docker configs and power-saving items
-	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 pcie_aspm=force apparmor=1 security=apparmor"/g' /etc/default/grub
+	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 apparmor=1 security=apparmor page_poison=1 slab_nomerge vsyscall=none"/g' /etc/default/grub
 	echo "Docker has been installed. If you want memory management & swap"
 	echo "run update-grub & reboot"
 }
@@ -340,7 +349,6 @@ install_golang() {
 	go get github.com/jessfraz/audit
 	go get github.com/jessfraz/certok
 	go get github.com/jessfraz/cliaoke
-	go get github.com/jessfraz/ghb0t
 	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/netns
 	go get github.com/jessfraz/pastebinit
