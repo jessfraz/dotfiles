@@ -167,6 +167,7 @@ base_min() {
 		jq \
 		less \
 		libc6-dev \
+		libimobiledevice6 \
 		locales \
 		lsof \
 		make \
@@ -183,6 +184,7 @@ base_min() {
 		tar \
 		tree \
 		tzdata \
+		usbmuxd \
 		unzip \
 		xclip \
 		xcompmgr \
