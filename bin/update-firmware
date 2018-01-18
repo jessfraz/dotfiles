@@ -1,0 +1,42 @@
+#!/bin/bash
+##############################################################################
+# update-firmware
+# -----------
+# Update firmware from the linux firmware repo which has the
+# latest builds.
+#
+# :authors: Jess Frazelle, @jessfraz
+# :date: 18 January 2018
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+update_firmware(){
+	if [ "$EUID" -ne 0 ]; then
+		echo "Please run as root."
+		return 1
+	fi
+
+	(
+	# make a temp dir for the clone
+	local tdir
+	tdir=$(mktemp -d)
+
+	cd "$tdir"
+
+	# clone the repo
+	git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+
+	# copy the firmware
+	cd linux-firmware
+	mkdir -p /lib/firmware/{intel,i915}
+	cp intel/ibt-12-16.sfi /lib/firmware/intel/
+	cp i915/kbl_dmc_ver1_01.bin /lib/firmware/i915/
+
+	# cleanup
+	rm -rf "$tdir"
+	)
+}
+
+update_firmware "$@"
