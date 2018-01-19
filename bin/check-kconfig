@@ -432,6 +432,16 @@ MODULES
 check_flags_not_set "${flags[@]}"
 
 echo
+echo 'Firmware in Kernel (only required if you unset CONFIG_MODULES):'
+flags=(
+FIRMWARE_IN_KERNEL
+)
+check_flags "${flags[@]}"
+echo "    $(wrap_color 'also set CONFIG_EXTRA_FIRMWARE' bold white)"
+echo "        $(wrap_color 'this is a space seperated list of paths to the firmware you want to include' bold white)"
+echo "    $(wrap_color 'set CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware" or to your firmware dir' bold white)"
+
+echo
 echo 'GCC Plugins:'
 flags=(
 GCC_PLUGINS
