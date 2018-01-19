@@ -126,7 +126,7 @@ check_flag_not_set() {
 	elif is_set_as_module "$1"; then
 		wrap_bad "CONFIG_$1" 'enabled (as module)'
 	else
-		wrap_good "CONFIG_$1" 'missing'
+		wrap_good "CONFIG_$1" 'not enabled'
 		EXITCODE=1
 	fi
 }
@@ -480,6 +480,48 @@ X86_X32
 MODIFY_LDT_SYSCALL
 )
 check_flags_not_set "${flags[@]}"
+
+echo
+echo 'bcc-tools Settings:'
+flags=(
+BPF
+BPF_SYSCALL
+)
+check_flags "${flags[@]}"
+
+echo '- Optional bcc-tools Settings:'
+flags=(
+NET_CLS_BPF
+NET_ACT_BPF
+BPF_JIT
+HAVE_BPF_JIT
+BPF_EVENTS
+)
+check_flags "${flags[@]}"
+
+echo '- bcc-tools Networking Settings:'
+flags=(
+NET_SCH_SFQ
+NET_ACT_POLICE
+NET_ACT_GACT
+DUMMY
+VXLAN
+)
+check_flags "${flags[@]}"
+
+echo
+echo 'Cilium Container Networking Settings:'
+flags=(
+BPF
+BPF_SYSCALL
+NET_CLS_BPF
+BPF_JIT
+NET_CLS_ACT
+NET_SCH_INGRESS
+CRYPTO_SHA1
+CRYPTO_USER_API_HASH
+)
+check_flags "${flags[@]}"
 
 echo
 echo 'Intel Wireless (iwlwifi):'
