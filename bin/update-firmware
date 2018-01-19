@@ -26,12 +26,13 @@ update_firmware(){
 	cd "$tdir"
 
 	# clone the repo
-	git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+	git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 
 	# copy the firmware
 	cd linux-firmware
 	mkdir -p /lib/firmware/{intel,i915}
 	cp intel/ibt-12-16.sfi /lib/firmware/intel/
+	cp intel/ibt-12-16.ddc /lib/firmware/intel/
 	cp i915/kbl_dmc_ver1_01.bin /lib/firmware/i915/
 
 	# cleanup
