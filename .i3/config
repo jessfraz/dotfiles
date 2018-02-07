@@ -6,6 +6,7 @@ set $mod Mod4
 set $term urxvt
 set $menu i3-dmenu-desktop
 set $barcmd i3status
+set $lockcmd swaylock
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -20,7 +21,6 @@ font pango:Monospace 16
 # Reverse scroll
 input "2:7:SynPS/2_Synaptics_TouchPad" {
     natural_scroll enabled
-    tap enabled
     left_handed disabled
     pointer_accel 0.9
 }
@@ -71,7 +71,7 @@ for_window [class="Wine"] floating enable
 for_window [class="Wireshark"] floating enable
 
 # lock screen
-bindsym $mod+l exec i3lock -c 111111
+bindsym $mod+l exec $lockcmd -c 111111
 
 # change focus
 bindsym $mod+j focus left
@@ -162,11 +162,17 @@ bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
 # Screenshots
 # Screenshot fullscreen
-bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# Screenshot fullscreen, sway
+bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 # Screenshot with selection
-bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# Screenshot capture, sway
+bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
 # Screenshot current focused window
-bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# Screenshot current focused window, sway
+bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
