@@ -20,6 +20,8 @@ dotfiles:
 	ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	git update-index --skip-worktree $(CURDIR)/.gitconfig;
+	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
+	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
 
 etc:
 	sudo mkdir -p /etc/docker/seccomp

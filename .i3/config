@@ -3,13 +3,27 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $term urxvt
+set $menu i3-dmenu-desktop
+set $barcmd i3status
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:Monospace 16
 
-font pango:Monospace 8
+# HiDPI for sway
+# output eDP-1 scale 1
+
+# Inputs for sway
+# Reverse scroll
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+    natural_scroll enabled
+    tap enabled
+    left_handed disabled
+    pointer_accel 0.9
+}
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -22,10 +36,10 @@ font pango:Monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec $term
 
 # start dmenu
-bindsym $mod+d exec i3-dmenu-desktop
+bindsym $mod+d exec $menu
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -159,7 +173,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -189,15 +203,18 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 8
-	status_command i3status --config ~/.i3/status.conf
+	font pango:monospace 16
+	status_command $barcmd --config ~/.i3/status.conf
 }
 
 # auto run commands
 # set background
 # use the same background as slim (login manager)
 # this file is an alias to something in /home/jessie/Pictures
-exec --no-startup-id feh --bg-fill ${HOME}/Pictures/central-park2.jpg
+#exec --no-startup-id feh --bg-fill ${HOME}/Pictures/central-park2.jpg
+
+# Sway backgroud
+output "*" background ${HOME}/Pictures/central-park2.jpg fill
 
 # run the merge for good colors
 exec xrdb -merge $HOME/.Xresources
