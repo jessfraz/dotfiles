@@ -19,8 +19,8 @@
 !!cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
 !!green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
-#define S_base03        #002b36
 #define S_base04        #00171d
+#define S_base03        #002b36
 #define S_base02        #073642
 #define S_base01        #586e75
 #define S_base00        #c1cacd
@@ -41,11 +41,12 @@
 URxvt*background:       [90]S_base04
 *foreground:            S_base00
 *depth:                 32
-!!*fading:                40
-!!*fadeColor:             S_base03
+*fading:                40
+*fadeColor:             S_base03
 *cursorColor:           S_base1
 *pointerColorBackground:S_base01
 *pointerColorForeground:S_base1
+
 
 !! black dark/light
 *color0:                S_base02
@@ -92,10 +93,10 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 ! -- Fonts -- !
-URxvt.font:xft:Inconsolata:pixelsize=27,style=Medium, xft:Symbola:pixelsize=19,style=Regular
-URxvt.boldFont:xft:Inconsolata:style=Bold,pixelsize=27, xft:Symbola:pixelsize=19,style=Regular
+URxvt.font: xft:Inconsolata:pixelsize=27:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
+URxvt.boldFont: xft:Inconsolata:style=bold:pixelsize=27:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
 
-*faceSize:              10
+!!*faceSize:              10
 *bellIsUrgent:          true
 
 !! scroll

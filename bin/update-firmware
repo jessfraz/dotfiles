@@ -1,18 +1,18 @@
 #!/bin/bash
 ##############################################################################
-# update-iwlwifi
+# update-firmware
 # -----------
-# Update iwliwifi from intel's linux firmware fork which has the
-# latest builds for wifi card 7265
+# Update firmware from the linux firmware repo which has the
+# latest builds.
 #
 # :authors: Jess Frazelle, @jessfraz
-# :date: 8 June 2015
+# :date: 18 January 2018
 # :version: 0.0.1
 ##############################################################################
 set -e
 set -o pipefail
 
-update_iwlwifi(){
+update_firmware(){
 	if [ "$EUID" -ne 0 ]; then
 		echo "Please run as root."
 		return 1
@@ -26,18 +26,18 @@ update_iwlwifi(){
 	cd "$tdir"
 
 	# clone the repo
-	git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/linux-firmware.git
+	git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 
 	# copy the firmware
 	cd linux-firmware
-	mkdir -p /lib/firmware
-	cp iwlwifi-7265*.ucode /lib/firmware
-	cp iwlwifi-800*.ucode /lib/firmware
-	cp iwlwifi-8265*.ucode /lib/firmware
+	mkdir -p /lib/firmware/{intel,i915}
+	cp intel/ibt-12-16.sfi /lib/firmware/intel/
+	cp intel/ibt-12-16.ddc /lib/firmware/intel/
+	cp i915/kbl_dmc_ver1_01.bin /lib/firmware/i915/
 
 	# cleanup
 	rm -rf "$tdir"
 	)
 }
 
-update_iwlwifi "$@"
+update_firmware "$@"

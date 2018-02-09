@@ -3,13 +3,27 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $term urxvt
+set $menu i3-dmenu-desktop
+set $barcmd i3status
+set $lockcmd swaylock
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:Monospace 16
 
-font pango:Monospace 8
+# HiDPI for sway
+# output eDP-1 scale 1
+
+# Inputs for sway
+# Reverse scroll
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+    natural_scroll enabled
+    left_handed disabled
+    pointer_accel 0.9
+}
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -22,10 +36,10 @@ font pango:Monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec $term
 
 # start dmenu
-bindsym $mod+d exec i3-dmenu-desktop
+bindsym $mod+d exec $menu
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -57,7 +71,7 @@ for_window [class="Wine"] floating enable
 for_window [class="Wireshark"] floating enable
 
 # lock screen
-bindsym $mod+l exec i3lock -c 111111
+bindsym $mod+l exec $lockcmd -c 111111
 
 # change focus
 bindsym $mod+j focus left
@@ -148,18 +162,24 @@ bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
 # Screenshots
 # Screenshot fullscreen
-bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# Screenshot fullscreen, sway
+bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 # Screenshot with selection
-bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# Screenshot capture, sway
+bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
 # Screenshot current focused window
-bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+# Screenshot current focused window, sway
+bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -189,15 +209,18 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 8
-	status_command i3status --config ~/.i3/status.conf
+	font pango:monospace 16
+	status_command $barcmd --config ~/.i3/status.conf
 }
 
 # auto run commands
 # set background
 # use the same background as slim (login manager)
 # this file is an alias to something in /home/jessie/Pictures
-exec --no-startup-id feh --bg-fill ${HOME}/Pictures/central-park2.jpg
+#exec --no-startup-id feh --bg-fill ${HOME}/Pictures/central-park2.jpg
+
+# Sway backgroud
+output "*" background ${HOME}/Pictures/central-park2.jpg fill
 
 # run the merge for good colors
 exec xrdb -merge $HOME/.Xresources
