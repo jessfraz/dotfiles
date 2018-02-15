@@ -26,17 +26,17 @@ fi
 for i in "$@"; do
     clear
     if [[ "$i" != "" ]]; then
-        gpg --recv-key $i
-        FP=$(gpg --fingerprint $i | grep fingerprint)
+        gpg --recv-key "$i"
+        FP=$(gpg --fingerprint "$i" | grep fingerprint)
         echo; echo -e "\033[40m\033[1;36m  $FP  \033[0m"; echo; sleep 2;
         echo; echo -e "\033[40m\033[0;36m  Would you like to see $i's signatures before signing? (y/N): \033[0m"
-        read opt
+        read -r opt
         case "$opt" in
             "Y"|"y"|"Yes"|"yes")
                 if [[ "$CCZE_IS_INSTALLED" != "" ]]; then
-                    gpg --list-sigs $i | ccze -A
+                    gpg --list-sigs "$i" | ccze -A
                 else
-                    gpg --list-sigs $i | less
+                    gpg --list-sigs "$i" | less
                 fi
                 ;;
             * )
@@ -46,28 +46,28 @@ for i in "$@"; do
         echo -e "\033[40m\033[0;36m  Type \033[40m\033[1;36m'trust'\033[0m \033[40m\033[0;36mto assign trust for key $i, before typing \033[40m\033[1;36m'sign'\033[0m\033[40m\033[0;36m to\033[0m"
         echo -e "\033[40m\033[0;36m  sign. Type \033[40m\033[1;36m'help'\033[0m \033[40m\033[0;36m for a list of more options, \033[40m\033[1;36m'quit'\033[0m\033[40m\033[0;36m to exit, or"
         echo -e "\033[40m\033[1;36m  'save'\033[0m \033[40m\033[0;36m to save. \033[0m"; echo;
-        gpg --no-greeting --edit-key $i
+        gpg --no-greeting --edit-key "$i"
         echo; echo -e "\033[40m\033[1;36m  Would you like to send the signed key to a keyserver? (Y/n): \033[0m"; echo;
-        read choice
+        read -r choice
         case "$choice" in
             "N"|"n"|"No"|"no")
                 echo -e "\033[40m\033[0;36m  Keeping signed key locally... \033[0m"; echo;
                 echo -e "\033[40m\033[1;36m  Would you like to export this key to send to its owner? (Y/n): \033[0m"; echo;
-                read yn
+                read -r yn
                 case "$yn" in
                     "N"|"n"|"No"|"no")
                         echo -e "\033[40m\033[0;36m  Exiting... \033[0m"; echo;
                         exit 0
                         ;;
                     * )
-                        echo -e "\033[40m\033[0;36m  Saving as "$HOME"/"$i"-signed.asc... \033[0m"; echo;
-                        gpg -a -o $HOME/$i-signed.asc --export $i
+                        echo -e "\033[40m\033[0;36m  Saving as ${HOME}/${i}-signed.asc... \033[0m"; echo;
+                        gpg -a -o "${HOME}/${i}-signed.asc" --export "$i"
                         exit 0
                         ;;
                 esac
                 ;;
             * )
-                gpg --send-key $i; echo;
+                gpg --send-key "$i"; echo;
                 exit 0
                 ;;
         esac
