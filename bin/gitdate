@@ -28,7 +28,7 @@
 #
 # v0.0.5: It now knows if it's been sourced or executed, and if it was executed,
 #         it prints the export commands which need to be run on stdout. Because
-#         they are printed exacted as they should be run. 
+#         they are printed exacted as they should be run.
 #
 #         We *should* be able to coproc that output from other scripts, piping
 #         stdout of the coproc into the stdin of the other script, and wrap it
@@ -104,7 +104,7 @@ elif test $# -eq 1 ; then
     HOUR=$(echo "$TIME" | cut -d ':' -f 1)
     MIN=$(echo "$TIME" | cut -d ':' -f 2)
     SEC=$(echo "$TIME" | cut -d ':' -f 3)
-    MINSEC=$(echo "${MIN}:${SEC}")
+    MINSEC="${MIN}:${SEC}"
     unset TIME
     unset MIN
     unset SEC
@@ -115,7 +115,7 @@ else
     printf "    gitdate 'Mon Dec 29 17:45:54 2011 +0800'\n"
     printf "and then run the printed export commands to change your shell's\n"
     printf "variables.\n"
-fi  
+fi
 
 for mnth in Jan Mar May Jul Aug Oct Dec ; do
     if [[ "$mnth" = "$MONTH" ]]; then LONG_MONTH=true ; fi
@@ -158,13 +158,13 @@ if test "$IS_WEST" ; then
 
     # If it is tomorrow in UTC, make sure we increment the day.
     if test "$FALSEDAWN" ; then
-        if [ "$DAY" = "Mon" ]; then NEXTDAY=$(echo "Tue") ;
-        elif [ "$DAY" = "Tue" ]; then NEXTDAY=$(echo "Wed") ;
-        elif [ "$DAY" = "Wed" ]; then NEXTDAY=$(echo "Thu") ;
-        elif [ "$DAY" = "Thu" ]; then NEXTDAY=$(echo "Fri") ;
-        elif [ "$DAY" = "Fri" ]; then NEXTDAY=$(echo "Sat") ;
-        elif [ "$DAY" = "Sat" ]; then NEXTDAY=$(echo "Sun") ;
-        elif [ "$DAY" = "Sun" ]; then NEXTDAY=$(echo "Mon") ;
+        if [ "$DAY" = "Mon" ]; then NEXTDAY="Tue" ;
+        elif [ "$DAY" = "Tue" ]; then NEXTDAY="Wed" ;
+        elif [ "$DAY" = "Wed" ]; then NEXTDAY="Thu" ;
+        elif [ "$DAY" = "Thu" ]; then NEXTDAY="Fri" ;
+        elif [ "$DAY" = "Fri" ]; then NEXTDAY="Sat" ;
+        elif [ "$DAY" = "Sat" ]; then NEXTDAY="Sun" ;
+        elif [ "$DAY" = "Sun" ]; then NEXTDAY="Mon" ;
         fi
         DAY=$NEXTDAY
         unset NEXTDAY
@@ -172,14 +172,14 @@ if test "$IS_WEST" ; then
         if test "$LONG_MONTH" ; then
             if [[ "$DATE" -lt "31" ]]; then let DATE+=1 ;
             elif [[ "$DATE" -eq "31" ]]; then
-                if [[ "$MONTH" = "Jan" ]]; then NEXTMONTH=$(echo "Feb") ;
-                elif [[ "$MONTH" = "Mar" ]]; then NEXTMONTH=$(echo "Apr") ;
-                elif [[ "$MONTH" = "May" ]]; then NEXTMONTH=$(echo "Jun") ;
-                elif [[ "$MONTH" = "Jul" ]]; then NEXTMONTH=$(echo "Aug") ;
-                elif [[ "$MONTH" = "Aug" ]]; then NEXTMONTH=$(echo "Sep") ;
-                elif [[ "$MONTH" = "Oct" ]]; then NEXTMONTH=$(echo "Nov") ;
+                if [[ "$MONTH" = "Jan" ]]; then NEXTMONTH="Feb" ;
+                elif [[ "$MONTH" = "Mar" ]]; then NEXTMONTH="Apr" ;
+                elif [[ "$MONTH" = "May" ]]; then NEXTMONTH="Jun" ;
+                elif [[ "$MONTH" = "Jul" ]]; then NEXTMONTH="Aug" ;
+                elif [[ "$MONTH" = "Aug" ]]; then NEXTMONTH="Sep" ;
+                elif [[ "$MONTH" = "Oct" ]]; then NEXTMONTH="Nov" ;
                 elif [[ "$MONTH" = "Dec" ]]; then
-                    NEXTMONTH=$(echo "Jan")
+                    NEXTMONTH="Jan"
                     let YEAR+=1
                 fi
                 DATE=1
@@ -187,15 +187,15 @@ if test "$IS_WEST" ; then
         elif [[ "$MONTH" = "Feb" ]] && [[ "$DATE" -lt "28" ]]; then
             let DATE+=1
         elif [[ "$MONTH" = "Feb" ]] && [[ "$DATE" -eq "28" ]]; then
-            NEXTMONTH=$(echo "Mar")
+            NEXTMONTH="Mar"
             DATE=1
         else
             if [[ "$DATE" -lt "30" ]]; then let DATE+=1 ;
             elif [[ "$DATE" -eq "30" ]]; then
-                if [[ "$MONTH" = "Apr" ]]; then NEXTMONTH=$(echo "May") ;
-                elif [[ "$MONTH" = "Jun" ]]; then NEXTMONTH=$(echo "Jul") ;
-                elif [[ "$MONTH" = "Sep" ]]; then NEXTMONTH=$(echo "Oct") ;
-                elif [[ "$MONTH" = "Nov" ]]; then NEXTMONTH=$(echo "Dec") ;
+                if [[ "$MONTH" = "Apr" ]]; then NEXTMONTH="May" ;
+                elif [[ "$MONTH" = "Jun" ]]; then NEXTMONTH="Jul" ;
+                elif [[ "$MONTH" = "Sep" ]]; then NEXTMONTH="Oct" ;
+                elif [[ "$MONTH" = "Nov" ]]; then NEXTMONTH="Dec" ;
                 fi
                 DATE=1
             fi
@@ -229,29 +229,29 @@ elif test "$IS_EAST" ; then
 
     # If it is yesterday in UTC, make sure we decrement the day.
     if test "$MAKE_YESTERDAY" ; then
-        if [ "$DAY" = "Mon" ]; then LASTDAY=$(echo "Sun") ;
-        elif [ "$DAY" = "Tue" ]; then LASTDAY=$(echo "Mon") ;
-        elif [ "$DAY" = "Wed" ]; then LASTDAY=$(echo "Tue") ;
-        elif [ "$DAY" = "Thu" ]; then LASTDAY=$(echo "Wed") ;
-        elif [ "$DAY" = "Fri" ]; then LASTDAY=$(echo "Thu") ;
-        elif [ "$DAY" = "Sat" ]; then LASTDAY=$(echo "Fri") ;
-        elif [ "$DAY" = "Sun" ]; then LASTDAY=$(echo "Sat") ;
+        if [ "$DAY" = "Mon" ]; then LASTDAY="Sun" ;
+        elif [ "$DAY" = "Tue" ]; then LASTDAY="Mon" ;
+        elif [ "$DAY" = "Wed" ]; then LASTDAY="Tue" ;
+        elif [ "$DAY" = "Thu" ]; then LASTDAY="Wed" ;
+        elif [ "$DAY" = "Fri" ]; then LASTDAY="Thu" ;
+        elif [ "$DAY" = "Sat" ]; then LASTDAY="Fri" ;
+        elif [ "$DAY" = "Sun" ]; then LASTDAY="Sat" ;
         fi
         DAY=$LASTDAY
         unset LASTDAY
 
         if $LONG_MONTH ; then
-            if [[ "$DATE" -eq "1" ]]; then 
-                if [[ "$MONTH" = "Jan" ]]; then LASTMONTH=$(echo "Dec"); 
+            if [[ "$DATE" -eq "1" ]]; then
+                if [[ "$MONTH" = "Jan" ]]; then LASTMONTH="Dec";
                     let YEAR=YEAR-1 ;
-                elif [[ "$MONTH" = "May" ]]; then LASTMONTH=$(echo "Apr") ;
-                elif [[ "$MONTH" = "Jul" ]]; then LASTMONTH=$(echo "Jun") ;
-                elif [[ "$MONTH" = "Aug" ]]; then LASTMONTH=$(echo "Jul") ;
-                elif [[ "$MONTH" = "Oct" ]]; then LASTMONTH=$(echo "Sep") ;
-                elif [[ "$MONTH" = "Dec" ]]; then LASTMONTH=$(echo "Nov") ;
+                elif [[ "$MONTH" = "May" ]]; then LASTMONTH="Apr" ;
+                elif [[ "$MONTH" = "Jul" ]]; then LASTMONTH="Jun" ;
+                elif [[ "$MONTH" = "Aug" ]]; then LASTMONTH="Jul" ;
+                elif [[ "$MONTH" = "Oct" ]]; then LASTMONTH="Sep" ;
+                elif [[ "$MONTH" = "Dec" ]]; then LASTMONTH="Nov" ;
                 fi
                 DATE=30
-                if [[ "$MONTH" = "Mar" ]]; then LASTMONTH=$(echo "Feb");
+                if [[ "$MONTH" = "Mar" ]]; then LASTMONTH="Feb";
                     DATE=28 ;
                 fi
             else
@@ -259,11 +259,11 @@ elif test "$IS_EAST" ; then
             fi
         else
             if [[ "$DATE" -eq "1" ]]; then
-                if [[ "$MONTH" = "Feb" ]]; then LASTMONTH=$(echo "Jan") ;
-                elif [[ "$MONTH" = "Apr" ]]; then LASTMONTH=$(echo "Mar") ;
-                elif [[ "$MONTH" = "Jun" ]]; then LASTMONTH=$(echo "May") ;
-                elif [[ "$MONTH" = "Sep" ]]; then LASTMONTH=$(echo "Aug") ;
-                elif [[ "$MONTH" = "Nov" ]]; then LASTMONTH=$(echo "Oct") ;
+                if [[ "$MONTH" = "Feb" ]]; then LASTMONTH="Jan" ;
+                elif [[ "$MONTH" = "Apr" ]]; then LASTMONTH="Mar" ;
+                elif [[ "$MONTH" = "Jun" ]]; then LASTMONTH="May" ;
+                elif [[ "$MONTH" = "Sep" ]]; then LASTMONTH="Aug" ;
+                elif [[ "$MONTH" = "Nov" ]]; then LASTMONTH="Oct" ;
                 fi
                 DATE=31
             else
@@ -282,8 +282,10 @@ unset IS_EAST
 unset IS_WEST
 unset LONG_MONTH
 
-export GIT_AUTHOR_DATE=$(echo "$DAY $MONTH $DATE $HOUR:$MINSEC $YEAR +0000")
-export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
+GIT_AUTHOR_DATE="$DAY $MONTH $DATE ${HOUR}:${MINSEC} $YEAR +0000"
+export GIT_AUTHOR_DATE
+GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
+export GIT_COMMITTER_DATE
 
 ## only print what we exported if we were not sourced:
 if ! [ "x$0" = 'x-bash' ] ; then
