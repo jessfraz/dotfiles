@@ -35,10 +35,10 @@ fi
 
 restart_agent(){
 	# Restart the gpg agent.
-	kill -9 $(pidof scdaemon) || echo "no scdaemon running"
-	kill -9 $(pidof gpg-agent) || echo "no gpg-agent running"
-	gpg-connect-agent /bye >/dev/null
-	gpg-connect-agent updatestartuptty /bye >/dev/null
+	kill -9 $(pidof scdaemon) >/dev/null 2>&1
+	kill -9 $(pidof gpg-agent) >/dev/null 2>&1
+	gpg-connect-agent /bye >/dev/null 2>&1
+	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
 
 setup_gnupghome(){
