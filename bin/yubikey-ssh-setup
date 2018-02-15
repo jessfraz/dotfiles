@@ -35,16 +35,19 @@ fi
 
 restart_agent(){
 	# Restart the gpg agent.
+	# shellcheck disable=SC2046
 	kill -9 $(pidof scdaemon) >/dev/null 2>&1
+	# shellcheck disable=SC2046
 	kill -9 $(pidof gpg-agent) >/dev/null 2>&1
 	gpg-connect-agent /bye >/dev/null 2>&1
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
 
 setup_gnupghome(){
-	# Create a temporary directory for GNUPGPHOME.
-	export GNUPGHOME=$(mktemp -d)
-	echo "Temporary GNUPGPHOME is $GNUPGHOME"
+	# Create a temporary directory for GNUPGHOME.
+	GNUPGHOME=$(mktemp -d)
+	export GNUPGHOME
+	echo "Temporary GNUPGHOME is $GNUPGHOME"
 	echo "KeyID is ${KEYID}"
 
 	# Create the gpg config file.
@@ -76,7 +79,7 @@ setup_gnupghome(){
 	max-cache-ttl 7200
 	EOF
 
-	# Copy master key info to GNUPGPHOME.
+	# Copy master key info to GNUPGHOME.
 	echo "Copying master key from Google Cloud Storage..."
 	gsutil -m cp gs://misc.j3ss.co/dotfiles/.gnupg/* "${GNUPGHOME}/"
 
@@ -152,7 +155,7 @@ update_cardinfo(){
 		--command-fd 0 --card-edit
 
 	echo "Updating card login..."
-	echo admin$'\n'login$'\n'$EMAIL$'\n'quit$'\n' | \
+	echo admin$'\n'login$'\n'"$EMAIL"$'\n'quit$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --card-edit
 
@@ -176,9 +179,9 @@ finalize(){
 	gpg2 --list-secret-keys
 
 	echo
-	echo "Temporary GNUPGPHOME is $GNUPGHOME"
+	echo "Temporary GNUPGHOME is $GNUPGHOME"
 
-	gpg --armor --export $KEYID > "${HOME}/pubkey.txt"
+	gpg --armor --export "$KEYID" > "${HOME}/pubkey.txt"
 
 	echo
 	echo "Public key is ${HOME}/pubkey.txt"
