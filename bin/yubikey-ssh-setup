@@ -80,6 +80,9 @@ setup_gnupghome(){
 	EOF
 
 	# Copy master key info to GNUPGHOME.
+	# IMPORTANT: This is here as a stopper for anyone who runs this without reading it,
+	# because it will exit here.
+	# Modify this line to copy from a USB stick or your $HOME directory.
 	echo "Copying master key from Google Cloud Storage..."
 	gsutil -m cp gs://misc.j3ss.co/dotfiles/.gnupg/* "${GNUPGHOME}/"
 
