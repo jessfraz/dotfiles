@@ -34,6 +34,7 @@ update_firmware(){
 	cp intel/ibt-12-16.sfi /lib/firmware/intel/
 	cp intel/ibt-12-16.ddc /lib/firmware/intel/
 	cp i915/kbl_dmc_ver1_01.bin /lib/firmware/i915/
+	cp i915/skl_dmc_ver1_26.bin /lib/firmware/i915/
 
 	# cleanup
 	rm -rf "$tdir"
