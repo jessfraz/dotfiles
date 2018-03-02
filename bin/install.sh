@@ -351,6 +351,7 @@ install_golang() {
 	go get github.com/jessfraz/audit
 	go get github.com/jessfraz/certok
 	go get github.com/jessfraz/cliaoke
+	go get github.com/jessfraz/img
 	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/netns
 	go get github.com/jessfraz/pastebinit
@@ -370,7 +371,7 @@ install_golang() {
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 
-	aliases=( docker/docker opencontainers/runc jessfraz/binctr jessfraz/contained.af )
+	aliases=( docker/docker moby/buildkit opencontainers/runc jessfraz/binctr jessfraz/contained.af )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
