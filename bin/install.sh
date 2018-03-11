@@ -365,9 +365,9 @@ install_golang() {
 	go get github.com/crosbymichael/gistit
 	go get github.com/davecheney/httpstat
 	go get honnef.co/go/tools/cmd/staticcheck
-	go get github.com/FiloSottile/gvt
-	go get github.com/FiloSottile/vendorcheck
 	go get github.com/google/gops
+
+	# Tools for vimgo.
 	go get github.com/jstemmer/gotags
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
