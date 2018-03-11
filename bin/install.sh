@@ -346,19 +346,20 @@ install_golang() {
 	go get golang.org/x/tools/cmd/gorename
 	go get golang.org/x/tools/cmd/guru
 
-	go get github.com/jessfraz/amicontained
-	go get github.com/jessfraz/apk-file
-	go get github.com/jessfraz/audit
-	go get github.com/jessfraz/certok
+	go get github.com/genuinetools/amicontained
+	go get github.com/genuinetools/apk-file
+	go get github.com/genuinetools/audit
+	go get github.com/genuinetools/certok
+	go get github.com/genuinetools/img
+	go get github.com/genuinetools/netns
+	go get github.com/genuinetools/pepper
+	go get github.com/genuinetools/reg
+	go get github.com/genuinetools/udict
+	go get github.com/genuinetools/weather
+
 	go get github.com/jessfraz/cliaoke
-	go get github.com/jessfraz/img
 	go get github.com/jessfraz/junk/sembump
-	go get github.com/jessfraz/netns
 	go get github.com/jessfraz/pastebinit
-	go get github.com/jessfraz/pepper
-	go get github.com/jessfraz/reg
-	go get github.com/jessfraz/udict
-	go get github.com/jessfraz/weather
 
 	go get github.com/axw/gocov/gocov
 	go get github.com/crosbymichael/gistit
@@ -371,7 +372,7 @@ install_golang() {
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 
-	aliases=( docker/docker moby/buildkit opencontainers/runc jessfraz/binctr jessfraz/contained.af )
+	aliases=( genuinetools/contained.af docker/docker moby/buildkit opencontainers/runc jessfraz/binctr )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
