@@ -3,24 +3,25 @@
 # generate-go-project-files
 # -----------
 # Generates a .travis.yml, .gitignore, LICENSE, README.md, Makefile,
-# Dockerfile, VERSION, and version/ files and directories.
+# Dockerfile, VERSION.txt, and version/ files and directories.
 #
 # Usage:
 #       generate-go-project-files
 #
-# :authors: Jess Frazelle, @jessfraz
+# :authors: Jess Frazelle, @${PROJECT_DIR}
 # :date: 1 January 2018
 # :version: 0.0.1
 ##############################################################################
 set -e
 set -o pipefail
 
-OWNER=${OWNER:-Jessica Frazelle}
+OWNER=${OWNER:-The Genuinetools Authors}
 
-BASE_PROJECT=${BASE_PROJECT:-jessfraz/pepper}
+BASE_PROJECT=${BASE_PROJECT:-genuinetools/pepper}
 BASE_PROJECT_NAME="$(basename "$BASE_PROJECT")"
 
 PROJECT_NAME="$(basename "$(pwd)")"
+PROJECT_DIR="$(dirname "$(pwd)")"
 
 # Generate a file passed as an argument.
 generate_file(){
@@ -79,12 +80,18 @@ license(){
 	EOF
 }
 
-# Generate the VERSION file.
+# Generate the VERSION.txt file.
 version(){
-	version_file="VERSION"
+	version_file="VERSION.txt"
 
 	# Only generate the version file if it doesn't exist already.
 	if [[ ! -f "$version_file" ]]; then
+		# If the old version file exists then move it.
+		if [[ -f "VERSION" ]]; then
+			echo "Moving old VERSION file to $version_file"
+			mv "VERSION" "$version_file"
+			return
+		fi
 		echo "Writing $version_file"
 
 		echo "v0.0.0" > "$version_file"
@@ -94,7 +101,7 @@ version(){
 # Generate the README.md file,
 readme(){
 	readme_file="README.md"
-	version=$(cat VERSION)
+	version=$(cat VERSION.txt)
 
 	# Only generate the readme file if it doesn't exist already.
 	if [[ ! -f "$readme_file" ]]; then
@@ -103,7 +110,7 @@ readme(){
 		cat <<-EOF > "$readme_file"
 		# $PROJECT_NAME
 
-		[![Travis CI](https://travis-ci.org/jessfraz/${PROJECT_NAME}.svg?branch=master)](https://travis-ci.org/jessfraz/${PROJECT_NAME})
+		[![Travis CI](https://travis-ci.org/${PROJECT_DIR}/${PROJECT_NAME}.svg?branch=master)](https://travis-ci.org/${PROJECT_DIR}/${PROJECT_NAME})
 
 		{DESCRIPTION}
 
@@ -111,11 +118,11 @@ readme(){
 
 		#### Binaries
 
-		- **darwin** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-amd64)
-		- **freebsd** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-amd64)
-		- **linux** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-amd64) / [arm](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm) / [arm64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm64)
-		- **solaris** [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-solaris-amd64)
-		- **windows** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-amd64)
+		- **darwin** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-amd64)
+		- **freebsd** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-amd64)
+		- **linux** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-amd64) / [arm](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm) / [arm64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm64)
+		- **solaris** [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-solaris-amd64)
+		- **windows** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-amd64)
 		EOF
 	fi
 }
