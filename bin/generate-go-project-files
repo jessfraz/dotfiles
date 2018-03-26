@@ -19,9 +19,15 @@ OWNER=${OWNER:-The Genuinetools Authors}
 
 BASE_PROJECT=${BASE_PROJECT:-genuinetools/pepper}
 BASE_PROJECT_NAME="$(basename "$BASE_PROJECT")"
+BASE_PROJECT_DIR="$(dirname "$BASE_PROJECT")"
 
 PROJECT_NAME="$(basename "$(pwd)")"
-PROJECT_DIR="$(dirname "$(pwd)")"
+PROJECT_DIR="$(basename "$(dirname "$(pwd)")")"
+PROJECT="${PROJECT_DIR}/${PROJECT_NAME}"
+
+if [[ "$PROJECT_DIR" == "jessfraz" ]]; then
+	OWNER="Jessica Frazelle"
+fi
 
 # Generate a file passed as an argument.
 generate_file(){
@@ -33,7 +39,9 @@ generate_file(){
 	fi
 
 	contents=$(curl -sSL "https://raw.githubusercontent.com/${BASE_PROJECT}/master/${file}")
+	contents=${contents//$BASE_PROJECT/$PROJECT}
 	contents=${contents//$BASE_PROJECT_NAME/$PROJECT_NAME}
+	contents=${contents//$BASE_PROJECT_DIR/$PROJECT_DIR}
 
 	# If the file is in a directory, create the directory first.
 	# shellcheck disable=SC1001
