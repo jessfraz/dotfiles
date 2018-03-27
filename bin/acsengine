@@ -100,7 +100,7 @@ acsscp(){
 	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress")
 	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/${deployment}/apimodel.json")
 
-	scp -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
+	scp -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}:/home/${sshuser}/.ssh/id_rsa"
 }
 
 main() {
