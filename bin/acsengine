@@ -82,7 +82,7 @@ list(){
 		fi
 
 		ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress" 2>/dev/null || echo "provisioning")
-		printf "$deployment\t$ip\n"
+		printf "%s\t%s\n" "$deployment" "$ip"
 	done | column -t
 }
 
