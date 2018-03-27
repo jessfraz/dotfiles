@@ -57,9 +57,10 @@ kubeconfig(){
 	tmpfile=$(mktemp /tmp/acsengine.XXXXXX)
 
 	# Save the merged config view to the temp file
-	kubectl config view > "$tmpfile"
+	kubectl config view --raw > "$tmpfile"
 
 	# Copy the merged config to our local kubeconfig
+	mkdir -p "${HOME}/.kube"
 	cp "$tmpfile" "${HOME}/.kube/config"
 
 	# Cleanup the temp file
