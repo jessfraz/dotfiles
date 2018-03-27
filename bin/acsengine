@@ -7,11 +7,12 @@
 # - list command (with master ip)
 # - --ssh-key flag on deploy
 # - command to move kubeconfig locally
+# - ssh command to ssh into the master node of the cluster
 #
 # See: https://github.com/Azure/acs-engine/issues/2535
 #
 # Usage:
-# 	acsengine {rm,ls,kubeconfig}
+# 	acsengine {rm,ls,kubeconfig,ssh}
 #
 # :authors: Jess Frazelle, @jessfraz
 # :date: 27 March 2018
@@ -76,6 +77,19 @@ list(){
 	done | column
 }
 
+acsssh(){
+	deployment=$1
+	if [[ -z "$deployment" ]]; then
+		(>&2 echo "must pass an acs-engine deployment name to ssh")
+		exit 1
+	fi
+	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress")
+	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/${deployment}/apimodel.json")
+
+	# shellcheck disable=SC2029
+	ssh -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
+}
+
 main() {
 	cmd=$1
 
@@ -88,6 +102,9 @@ main() {
 			;;
 		ls)
 			list
+			;;
+		ssh)
+			acsssh "${@:2}"
 			;;
 		kubeconfig)
 			kubeconfig "${@:2}"
