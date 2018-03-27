@@ -118,6 +118,7 @@ update_kubectl() {
 	KUBERNETES_VERSION=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 	curl -sSL "https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl" > /usr/local/bin/kubectl
 	chmod +x /usr/local/bin/kubectl
+	echo "kuebctl $(kubectl version --client --short)"
 }
 
 update() {
