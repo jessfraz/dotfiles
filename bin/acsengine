@@ -8,11 +8,12 @@
 # - --ssh-key flag on deploy
 # - command to move kubeconfig locally
 # - ssh command to ssh into the master node of the cluster
+# - scp command to scp the rsa key onto the master node for ssh-ing into the agents
 #
 # See: https://github.com/Azure/acs-engine/issues/2535
 #
 # Usage:
-# 	acsengine {rm,ls,kubeconfig,ssh}
+# 	acsengine {rm,ls,kubeconfig,ssh,scp}
 #
 # :authors: Jess Frazelle, @jessfraz
 # :date: 27 March 2018
@@ -32,7 +33,7 @@ delete(){
 
 	for rg in "${args[@]}"; do
 		echo "Deleting resource group $rg..."
-		az group delete -n "$rg" || true
+		az group delete -n "$rg" && rm -rf "${OUTPUT_DIR:?}/${rg}"
 	done
 }
 
@@ -90,6 +91,18 @@ acsssh(){
 	ssh -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
 }
 
+acsscp(){
+	deployment=$1
+	if [[ -z "$deployment" ]]; then
+		(>&2 echo "must pass an acs-engine deployment name to scp")
+		exit 1
+	fi
+	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress")
+	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/${deployment}/apimodel.json")
+
+	scp -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
+}
+
 main() {
 	cmd=$1
 
@@ -105,6 +118,9 @@ main() {
 			;;
 		ssh)
 			acsssh "${@:2}"
+			;;
+		scp)
+			acsscp "${@:2}"
 			;;
 		kubeconfig)
 			kubeconfig "${@:2}"
