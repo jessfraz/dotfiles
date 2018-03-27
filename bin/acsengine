@@ -23,24 +23,25 @@ set -o pipefail
 OUTPUT_DIR=${OUTPUT_DIR:="${GOPATH}/src/github.com/Azure/acs-engine/_output"}
 
 delete(){
-	if [[ -z "$@" ]]; then
+	args=( "$@" )
+	if [[ ${#args[@]} -eq 0 ]]; then
 		(>&2 echo "must pass a resource group to rm")
 		exit 1
 	fi
 
-	for rg in "$@"; do
+	for rg in "${args[@]}"; do
 		echo "Deleting resource group $rg..."
 		az group delete -n "$rg" || true
 	done
 }
 
 kubeconfig(){
-	if [[ -z "$@" ]]; then
+	deployment=$1
+	if [[ -z "$deployment" ]]; then
 		(>&2 echo "must pass an acs-engine deployment name to kubeconfig")
 		exit 1
 	fi
 
-	deployment=$1
 	kubeconfigs=( $(find "${OUTPUT_DIR}/${deployment}/kubeconfig" -maxdepth 1 -mindepth 1 -type f) )
 	kcs=""
 
@@ -76,24 +77,23 @@ list(){
 }
 
 main() {
-	args=$@
 	cmd=$1
 
 	case $cmd in
 		deploy)
-			echo "doing deploy"
+			acs-engine "$@"
 			;;
 		rm)
-			delete ${@:2}
+			delete "${@:2}"
 			;;
 		ls)
 			list
 			;;
 		kubeconfig)
-			kubeconfig ${@:2}
+			kubeconfig "${@:2}"
 			;;
 		*)
-			acs-engine $@
+			acs-engine "$@"
 			;;
 	esac
 }
