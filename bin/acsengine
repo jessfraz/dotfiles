@@ -33,7 +33,7 @@ delete(){
 
 	for rg in "${args[@]}"; do
 		echo "Deleting resource group $rg..."
-		az group delete -n "$rg" && rm -rf "${OUTPUT_DIR:?}/${rg}"
+		az group delete --no-wait -n "$rg" && rm -rf "${OUTPUT_DIR:?}/${rg}"
 	done
 }
 
