@@ -360,6 +360,7 @@ install_golang() {
 	go get github.com/jessfraz/cliaoke
 	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/pastebinit
+	go get github.com/jessfraz/tdash
 
 	go get github.com/axw/gocov/gocov
 	go get github.com/crosbymichael/gistit
