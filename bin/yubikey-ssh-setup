@@ -14,7 +14,7 @@
 set -e
 set -o pipefail
 
-SUBKEY_LENGTH=${SUBKEY_LENGTH:=4096}
+SUBKEY_LENGTH=${SUBKEY_LENGTH:=2048}
 SUBKEY_EXPIRE=${SUBKEY_EXPIRE:=0}
 SURNAME=${SURNAME:="Frazelle"}
 GIVENNAME=${GIVENNAME:="Jessie"}
@@ -36,9 +36,9 @@ fi
 restart_agent(){
 	# Restart the gpg agent.
 	# shellcheck disable=SC2046
-	kill -9 $(pidof scdaemon) >/dev/null 2>&1
+	kill -9 $(pidof scdaemon) >/dev/null 2>&1 || true
 	# shellcheck disable=SC2046
-	kill -9 $(pidof gpg-agent) >/dev/null 2>&1
+	kill -9 $(pidof gpg-agent) >/dev/null 2>&1 || true
 	gpg-connect-agent /bye >/dev/null 2>&1
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
