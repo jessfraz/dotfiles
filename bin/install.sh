@@ -509,7 +509,7 @@ install_wifi() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	local pkgs=( feh i3 i3lock i3status scrot slim suckless-tools )
+	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
 
 	apt install -y "${pkgs[@]}" --no-install-recommends
 
@@ -553,7 +553,7 @@ get_dotfiles() {
 	sudo systemctl enable suspend-sedation.service
 
 	cd "$HOME"
-	mkdir -p ~/Pictures
+	mkdir -p ~/Pictures/Screenshots
 	mkdir -p ~/Torrents
 	)
 
