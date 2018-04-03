@@ -17,6 +17,10 @@ if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then source "${HOME}/google-
 # shellcheck source=/dev/null
 if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then source "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
 
-# update path for gnu on darwin
+# update path for gnu coreutils, make & find on darwin
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
 export PATH=/usr/local/opt/make/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/make/libexec/gnuman:${MANPATH}
+export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
+export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
