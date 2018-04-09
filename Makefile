@@ -25,6 +25,10 @@ dotfiles: ## Installs the dotfiles.
 	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
+	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile;
+	if [[ -f /usr/local/bin/pinentry ]]; then \
+		sudo ln -snf /usr/bin/pinentry /usr/local/bin/pinentry; \
+	fi;
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
