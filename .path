@@ -24,3 +24,10 @@ export PATH=/usr/local/opt/make/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/make/libexec/gnuman:${MANPATH}
 export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
+
+# update path for Chromium depot_tools
+export PATH="${PATH}:${HOME}/depot_tools"
+
+# Add bash completion for Chromium depot_tools
+# shellcheck source=/dev/null
+if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then source "${HOME}/depot_tools/git_cl_completion.sh"; fi
