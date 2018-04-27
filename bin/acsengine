@@ -44,6 +44,7 @@ kubeconfig(){
 		exit 1
 	fi
 
+	# shellcheck disable=SC2207
 	kubeconfigs=( $(find "${OUTPUT_DIR}/${deployment}/kubeconfig" -maxdepth 1 -mindepth 1 -type f) )
 	kcs=""
 
@@ -71,7 +72,8 @@ kubeconfig(){
 }
 
 list(){
-	deployments=( $(find "${OUTPUT_DIR}" -maxdepth 1 -mindepth 1 -type d -printf "%f\n") )
+	# shellcheck disable=SC2207
+	deployments=( $(find "${OUTPUT_DIR}" -maxdepth 1 -mindepth 1 -type d -printf "%f\\n") )
 
 	for deployment in "${deployments[@]}"; do
 		# check if the resource group exists and clean it up if not
@@ -86,6 +88,7 @@ list(){
 		ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress" 2>/dev/null || echo "provisioning")
 
 		# Get the agent ip addresses
+		# shellcheck disable=SC2207
 		agents=( $(az vm list -g "$deployment" | jq --raw-output '.[].name' | grep -v "master") )
 		nicips=""
 		for agent in "${agents[@]}"; do
@@ -93,7 +96,7 @@ list(){
 			nicip=$(az vm list-ip-addresses -g "$deployment" -n "$agent" | jq '.[0]' | jq '.virtualMachine.network.privateIpAddresses' | jq --raw-output '.[0]')
 			nicips+="$nicip|"
 		done
-		printf "%s\t%s\t%s\n" "$deployment" "$ip" "$nicips"
+		printf "%s\\t%s\\t%s\\n" "$deployment" "$ip" "$nicips"
 	done | column -t
 }
 

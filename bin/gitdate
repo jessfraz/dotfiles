@@ -70,213 +70,213 @@
 #TIMEOFFSET=-0400
 
 if [ "x$0" == 'x-bash' ] ; then
-    if test "$DEBUG" ; then printf "Detected that we were sourced.\n"; fi
+	if test "$DEBUG" ; then printf "Detected that we were sourced.\\n"; fi
 elif test -n "${0#gitdate}" ; then
-    if test "$DEBUG" ; then printf "We weren't sourced.\n"; fi
+	if test "$DEBUG" ; then printf "We weren't sourced.\\n"; fi
 fi
 
 ## git stores datestrings as: Sun Aug 19 08:34:12 2012 -0400
 ## date uses:                 Mon May  6 21:00:18 UTC 2013
 
 if test $# -eq 0 ; then
-    if test "$DEBUG" ; then
-        printf "We didn't get a datestring argument.\n"
-    fi
-    if [ "$#" = '0' ] ; then
-        DAY=$(date +"%a")
-        MONTH=$(date +"%b")
-        DATE=$(date +"%d")
-        HOUR=$(date +"%H")
-        MINSEC=$(date +"%M:%S")
-        YEAR=$(date +"%Y")
-        TIMEZONE=$(date +"%z")
-    fi
+	if test "$DEBUG" ; then
+		printf "We didn't get a datestring argument.\\n"
+	fi
+	if [ "$#" = '0' ] ; then
+		DAY=$(date +"%a")
+		MONTH=$(date +"%b")
+		DATE=$(date +"%d")
+		HOUR=$(date +"%H")
+		MINSEC=$(date +"%M:%S")
+		YEAR=$(date +"%Y")
+		TIMEZONE=$(date +"%z")
+	fi
 elif test $# -eq 1 ; then
-    if test "$DEBUG" ; then
-        printf "Converting git datestring: %s\n" "$1"
-    fi
-    DAY=$(echo "$1" | cut -d ' ' -f 1)
-    MONTH=$(echo "$1" | cut -d ' ' -f 2)
-    DATE=$(echo "$1" | cut -d ' ' -f 3)
-    TIME=$(echo "$1" | cut -d ' ' -f 4)
-    YEAR=$(echo "$1" | cut -d ' ' -f 5)
-    TIMEZONE=$(echo "$1" | cut -d ' ' -f 6)
-    HOUR=$(echo "$TIME" | cut -d ':' -f 1)
-    MIN=$(echo "$TIME" | cut -d ':' -f 2)
-    SEC=$(echo "$TIME" | cut -d ':' -f 3)
-    MINSEC="${MIN}:${SEC}"
-    unset TIME
-    unset MIN
-    unset SEC
+	if test "$DEBUG" ; then
+		printf "Converting git datestring: %s\\n" "$1"
+	fi
+	DAY=$(echo "$1" | cut -d ' ' -f 1)
+	MONTH=$(echo "$1" | cut -d ' ' -f 2)
+	DATE=$(echo "$1" | cut -d ' ' -f 3)
+	TIME=$(echo "$1" | cut -d ' ' -f 4)
+	YEAR=$(echo "$1" | cut -d ' ' -f 5)
+	TIMEZONE=$(echo "$1" | cut -d ' ' -f 6)
+	HOUR=$(echo "$TIME" | cut -d ':' -f 1)
+	MIN=$(echo "$TIME" | cut -d ':' -f 2)
+	SEC=$(echo "$TIME" | cut -d ':' -f 3)
+	MINSEC="${MIN}:${SEC}"
+	unset TIME
+	unset MIN
+	unset SEC
 else
-    printf "\nUsage:\nTo change a specific commit's date, run as:\n"
-    printf "    . gitdate 'Mon Dec 29 17:45:54 2011 +0800'\n"
-    printf "or as:\n"
-    printf "    gitdate 'Mon Dec 29 17:45:54 2011 +0800'\n"
-    printf "and then run the printed export commands to change your shell's\n"
-    printf "variables.\n"
+	printf "\\nUsage:\\nTo change a specific commit's date, run as:\\n"
+	printf "    . gitdate 'Mon Dec 29 17:45:54 2011 +0800'\\n"
+	printf "or as:\\n"
+	printf "    gitdate 'Mon Dec 29 17:45:54 2011 +0800'\\n"
+	printf "and then run the printed export commands to change your shell's\\n"
+	printf "variables.\\n"
 fi
 
 for mnth in Jan Mar May Jul Aug Oct Dec ; do
-    if [[ "$mnth" = "$MONTH" ]]; then LONG_MONTH=true ; fi
+	if [[ "$mnth" = "$MONTH" ]]; then LONG_MONTH=true ; fi
 done
 
 TIMEOFFSET=${TIMEOFFSET:=$TIMEZONE}
 TIMEOFFSET=${TIMEOFFSET%%00}
 if [[ "${TIMEOFFSET:0:1}" = '-' ]] ; then
-    TIMEOFFSET=${TIMEOFFSET:1}
-    IS_WEST=true
+	TIMEOFFSET=${TIMEOFFSET:1}
+	IS_WEST=true
 elif [[ "${TIMEOFFSET:0:1}" = '+' ]] ; then
-    TIMEOFFSET=${TIMEOFFSET:1}
-    IS_EAST=true
+	TIMEOFFSET=${TIMEOFFSET:1}
+	IS_EAST=true
 else
-    printf "Error: TIMEOFFSET variable did not start with '-' or '+'"
+	printf "Error: TIMEOFFSET variable did not start with '-' or '+'"
 fi
 
 ## 'let' requires the leading zero stripped
 if [[ "${TIMEOFFSET:0:1}" = '0' ]] ; then
-    TIMEOFFSET=${TIMEOFFSET:1}
+	TIMEOFFSET=${TIMEOFFSET:1}
 fi
 
 if test "$IS_WEST" ; then
-    let SPILLOVER=24-TIMEOFFSET
-    if [ "$HOUR" -lt "$SPILLOVER" ]; then
-        let HOUR+=TIMEOFFSET
-    else
-        let TILMIDNIGHT=24-HOUR
-        let HOUR=TIMEOFFSET-TILMIDNIGHT
-        FALSEDAWN=true
-        unset TILMIDNIGHT
-    fi
-    unset TIMEOFFSET
-    unset SPILLOVER
+	(( SPILLOVER=24-TIMEOFFSET ))
+	if [ "$HOUR" -lt "$SPILLOVER" ]; then
+		(( HOUR+=TIMEOFFSET ))
+	else
+		(( TILMIDNIGHT=24-HOUR ))
+		(( HOUR=TIMEOFFSET-TILMIDNIGHT ))
+		FALSEDAWN=true
+		unset TILMIDNIGHT
+	fi
+	unset TIMEOFFSET
+	unset SPILLOVER
 
-    # If the hour is one digit, prepend a zero.
-    if [ "${#HOUR}" -eq "1" ]; then
-        HOUR=$(printf "%02d" $HOUR)
-    fi
+	# If the hour is one digit, prepend a zero.
+	if [ "${#HOUR}" -eq "1" ]; then
+		HOUR=$(printf "%02d" $HOUR)
+	fi
 
-    # If it is tomorrow in UTC, make sure we increment the day.
-    if test "$FALSEDAWN" ; then
-        if [ "$DAY" = "Mon" ]; then NEXTDAY="Tue" ;
-        elif [ "$DAY" = "Tue" ]; then NEXTDAY="Wed" ;
-        elif [ "$DAY" = "Wed" ]; then NEXTDAY="Thu" ;
-        elif [ "$DAY" = "Thu" ]; then NEXTDAY="Fri" ;
-        elif [ "$DAY" = "Fri" ]; then NEXTDAY="Sat" ;
-        elif [ "$DAY" = "Sat" ]; then NEXTDAY="Sun" ;
-        elif [ "$DAY" = "Sun" ]; then NEXTDAY="Mon" ;
-        fi
-        DAY=$NEXTDAY
-        unset NEXTDAY
+	# If it is tomorrow in UTC, make sure we increment the day.
+	if test "$FALSEDAWN" ; then
+		if [ "$DAY" = "Mon" ]; then NEXTDAY="Tue" ;
+		elif [ "$DAY" = "Tue" ]; then NEXTDAY="Wed" ;
+		elif [ "$DAY" = "Wed" ]; then NEXTDAY="Thu" ;
+		elif [ "$DAY" = "Thu" ]; then NEXTDAY="Fri" ;
+		elif [ "$DAY" = "Fri" ]; then NEXTDAY="Sat" ;
+		elif [ "$DAY" = "Sat" ]; then NEXTDAY="Sun" ;
+		elif [ "$DAY" = "Sun" ]; then NEXTDAY="Mon" ;
+		fi
+		DAY=$NEXTDAY
+		unset NEXTDAY
 
-        if test "$LONG_MONTH" ; then
-            if [[ "$DATE" -lt "31" ]]; then let DATE+=1 ;
-            elif [[ "$DATE" -eq "31" ]]; then
-                if [[ "$MONTH" = "Jan" ]]; then NEXTMONTH="Feb" ;
-                elif [[ "$MONTH" = "Mar" ]]; then NEXTMONTH="Apr" ;
-                elif [[ "$MONTH" = "May" ]]; then NEXTMONTH="Jun" ;
-                elif [[ "$MONTH" = "Jul" ]]; then NEXTMONTH="Aug" ;
-                elif [[ "$MONTH" = "Aug" ]]; then NEXTMONTH="Sep" ;
-                elif [[ "$MONTH" = "Oct" ]]; then NEXTMONTH="Nov" ;
-                elif [[ "$MONTH" = "Dec" ]]; then
-                    NEXTMONTH="Jan"
-                    let YEAR+=1
-                fi
-                DATE=1
-            fi
-        elif [[ "$MONTH" = "Feb" ]] && [[ "$DATE" -lt "28" ]]; then
-            let DATE+=1
-        elif [[ "$MONTH" = "Feb" ]] && [[ "$DATE" -eq "28" ]]; then
-            NEXTMONTH="Mar"
-            DATE=1
-        else
-            if [[ "$DATE" -lt "30" ]]; then let DATE+=1 ;
-            elif [[ "$DATE" -eq "30" ]]; then
-                if [[ "$MONTH" = "Apr" ]]; then NEXTMONTH="May" ;
-                elif [[ "$MONTH" = "Jun" ]]; then NEXTMONTH="Jul" ;
-                elif [[ "$MONTH" = "Sep" ]]; then NEXTMONTH="Oct" ;
-                elif [[ "$MONTH" = "Nov" ]]; then NEXTMONTH="Dec" ;
-                fi
-                DATE=1
-            fi
-        fi
-    fi
-    unset FALSEDAWN
-    if [[ -n "$NEXTMONTH" ]]; then
-        MONTH=$NEXTMONTH
-    fi
-    unset NEXTMONTH
+		if test "$LONG_MONTH" ; then
+			if [[ "$DATE" -lt "31" ]]; then (( DATE+=1 )) ;
+			elif [[ "$DATE" -eq "31" ]]; then
+				if [[ "$MONTH" = "Jan" ]]; then NEXTMONTH="Feb" ;
+				elif [[ "$MONTH" = "Mar" ]]; then NEXTMONTH="Apr" ;
+				elif [[ "$MONTH" = "May" ]]; then NEXTMONTH="Jun" ;
+				elif [[ "$MONTH" = "Jul" ]]; then NEXTMONTH="Aug" ;
+				elif [[ "$MONTH" = "Aug" ]]; then NEXTMONTH="Sep" ;
+				elif [[ "$MONTH" = "Oct" ]]; then NEXTMONTH="Nov" ;
+				elif [[ "$MONTH" = "Dec" ]]; then
+					NEXTMONTH="Jan"
+					(( YEAR+=1 ))
+				fi
+				DATE=1
+			fi
+		elif [[ "$MONTH" = "Feb" ]] && [[ "$DATE" -lt "28" ]]; then
+			(( DATE+=1 ))
+		elif [[ "$MONTH" = "Feb" ]] && [[ "$DATE" -eq "28" ]]; then
+			NEXTMONTH="Mar"
+			DATE=1
+		else
+			if [[ "$DATE" -lt "30" ]]; then (( DATE+=1 )) ;
+			elif [[ "$DATE" -eq "30" ]]; then
+				if [[ "$MONTH" = "Apr" ]]; then NEXTMONTH="May" ;
+				elif [[ "$MONTH" = "Jun" ]]; then NEXTMONTH="Jul" ;
+				elif [[ "$MONTH" = "Sep" ]]; then NEXTMONTH="Oct" ;
+				elif [[ "$MONTH" = "Nov" ]]; then NEXTMONTH="Dec" ;
+				fi
+				DATE=1
+			fi
+		fi
+	fi
+	unset FALSEDAWN
+	if [[ -n "$NEXTMONTH" ]]; then
+		MONTH=$NEXTMONTH
+	fi
+	unset NEXTMONTH
 
 elif test "$IS_EAST" ; then
-    if [ "$HOUR" -lt "$TIMEOFFSET" ]; then
-        let SPILLOVER=24-TIMEOFFSET
-        let HOUR=HOUR+SPILLOVER
-        MAKE_YESTERDAY=true
-    else
-        ## 'let' requires the leading zero stripped
-        if [[ "${HOUR:0:1}" = '0' ]] ; then
-            HOUR=${HOUR:1}
-        fi
-        let HOUR=HOUR-TIMEOFFSET
-    fi
-    unset TIMEOFFSET
-    unset SPILLOVER
+	if [ "$HOUR" -lt "$TIMEOFFSET" ]; then
+		(( SPILLOVER=24-TIMEOFFSET ))
+		(( HOUR=HOUR+SPILLOVER ))
+		MAKE_YESTERDAY=true
+	else
+		## 'let' requires the leading zero stripped
+		if [[ "${HOUR:0:1}" = '0' ]] ; then
+			HOUR=${HOUR:1}
+		fi
+		(( HOUR=HOUR-TIMEOFFSET ))
+	fi
+	unset TIMEOFFSET
+	unset SPILLOVER
 
-    # If the hour is one digit, prepend a zero.
-    if [ "${#HOUR}" -eq "1" ]; then
-        HOUR=$(printf "%02d" "$HOUR")
-    fi
+	# If the hour is one digit, prepend a zero.
+	if [ "${#HOUR}" -eq "1" ]; then
+		HOUR=$(printf "%02d" "$HOUR")
+	fi
 
-    # If it is yesterday in UTC, make sure we decrement the day.
-    if test "$MAKE_YESTERDAY" ; then
-        if [ "$DAY" = "Mon" ]; then LASTDAY="Sun" ;
-        elif [ "$DAY" = "Tue" ]; then LASTDAY="Mon" ;
-        elif [ "$DAY" = "Wed" ]; then LASTDAY="Tue" ;
-        elif [ "$DAY" = "Thu" ]; then LASTDAY="Wed" ;
-        elif [ "$DAY" = "Fri" ]; then LASTDAY="Thu" ;
-        elif [ "$DAY" = "Sat" ]; then LASTDAY="Fri" ;
-        elif [ "$DAY" = "Sun" ]; then LASTDAY="Sat" ;
-        fi
-        DAY=$LASTDAY
-        unset LASTDAY
+	# If it is yesterday in UTC, make sure we decrement the day.
+	if test "$MAKE_YESTERDAY" ; then
+		if [ "$DAY" = "Mon" ]; then LASTDAY="Sun" ;
+		elif [ "$DAY" = "Tue" ]; then LASTDAY="Mon" ;
+		elif [ "$DAY" = "Wed" ]; then LASTDAY="Tue" ;
+		elif [ "$DAY" = "Thu" ]; then LASTDAY="Wed" ;
+		elif [ "$DAY" = "Fri" ]; then LASTDAY="Thu" ;
+		elif [ "$DAY" = "Sat" ]; then LASTDAY="Fri" ;
+		elif [ "$DAY" = "Sun" ]; then LASTDAY="Sat" ;
+		fi
+		DAY=$LASTDAY
+		unset LASTDAY
 
-        if $LONG_MONTH ; then
-            if [[ "$DATE" -eq "1" ]]; then
-                if [[ "$MONTH" = "Jan" ]]; then LASTMONTH="Dec";
-                    let YEAR=YEAR-1 ;
-                elif [[ "$MONTH" = "May" ]]; then LASTMONTH="Apr" ;
-                elif [[ "$MONTH" = "Jul" ]]; then LASTMONTH="Jun" ;
-                elif [[ "$MONTH" = "Aug" ]]; then LASTMONTH="Jul" ;
-                elif [[ "$MONTH" = "Oct" ]]; then LASTMONTH="Sep" ;
-                elif [[ "$MONTH" = "Dec" ]]; then LASTMONTH="Nov" ;
-                fi
-                DATE=30
-                if [[ "$MONTH" = "Mar" ]]; then LASTMONTH="Feb";
-                    DATE=28 ;
-                fi
-            else
-                let DATE=DATE-1
-            fi
-        else
-            if [[ "$DATE" -eq "1" ]]; then
-                if [[ "$MONTH" = "Feb" ]]; then LASTMONTH="Jan" ;
-                elif [[ "$MONTH" = "Apr" ]]; then LASTMONTH="Mar" ;
-                elif [[ "$MONTH" = "Jun" ]]; then LASTMONTH="May" ;
-                elif [[ "$MONTH" = "Sep" ]]; then LASTMONTH="Aug" ;
-                elif [[ "$MONTH" = "Nov" ]]; then LASTMONTH="Oct" ;
-                fi
-                DATE=31
-            else
-                let DATE=DATE-1
-            fi
-        fi
-        unset LONGMONTH
-    fi
-    unset MAKE_YESTERDAY
-    if [[ -n "$LASTMONTH" ]]; then
-        MONTH=$LASTMONTH
-    fi
-    unset LASTMONTH
+		if $LONG_MONTH ; then
+			if [[ "$DATE" -eq "1" ]]; then
+				if [[ "$MONTH" = "Jan" ]]; then LASTMONTH="Dec";
+					(( YEAR=YEAR-1 )) ;
+				elif [[ "$MONTH" = "May" ]]; then LASTMONTH="Apr" ;
+				elif [[ "$MONTH" = "Jul" ]]; then LASTMONTH="Jun" ;
+				elif [[ "$MONTH" = "Aug" ]]; then LASTMONTH="Jul" ;
+				elif [[ "$MONTH" = "Oct" ]]; then LASTMONTH="Sep" ;
+				elif [[ "$MONTH" = "Dec" ]]; then LASTMONTH="Nov" ;
+				fi
+				DATE=30
+				if [[ "$MONTH" = "Mar" ]]; then LASTMONTH="Feb";
+					DATE=28 ;
+				fi
+			else
+				(( DATE=DATE-1 ))
+			fi
+		else
+			if [[ "$DATE" -eq "1" ]]; then
+				if [[ "$MONTH" = "Feb" ]]; then LASTMONTH="Jan" ;
+				elif [[ "$MONTH" = "Apr" ]]; then LASTMONTH="Mar" ;
+				elif [[ "$MONTH" = "Jun" ]]; then LASTMONTH="May" ;
+				elif [[ "$MONTH" = "Sep" ]]; then LASTMONTH="Aug" ;
+				elif [[ "$MONTH" = "Nov" ]]; then LASTMONTH="Oct" ;
+				fi
+				DATE=31
+			else
+				(( DATE=DATE-1 ))
+			fi
+		fi
+		unset LONGMONTH
+	fi
+	unset MAKE_YESTERDAY
+	if [[ -n "$LASTMONTH" ]]; then
+		MONTH=$LASTMONTH
+	fi
+	unset LASTMONTH
 fi
 unset IS_EAST
 unset IS_WEST
@@ -289,13 +289,13 @@ export GIT_COMMITTER_DATE
 
 ## only print what we exported if we were not sourced:
 if ! [ "x$0" = 'x-bash' ] ; then
-    if test -n "${0#gitdate}" ; then
-        if test "$DEBUG" ; then
-            printf "\nPlease copy and run the following export commands:\n\n"
-        fi
-        printf "export GIT_AUTHOR_DATE='%s'\nexport GIT_COMMITTER_DATE='%s'\n" \
-            "$GIT_AUTHOR_DATE" "$GIT_COMMITTER_DATE"
-    fi
+	if test -n "${0#gitdate}" ; then
+		if test "$DEBUG" ; then
+			printf "\\nPlease copy and run the following export commands:\\n\\n"
+		fi
+		printf "export GIT_AUTHOR_DATE='%s'\\nexport GIT_COMMITTER_DATE='%s'\\n" \
+			"$GIT_AUTHOR_DATE" "$GIT_COMMITTER_DATE"
+	fi
 fi
 
 unset DAY
