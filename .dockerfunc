@@ -816,9 +816,9 @@ sshb0t(){
 	del_stopped sshb0t
 
 	docker run --rm -it \
-    --name sshb0t \
-    -v "${HOME}/.ssh/authorized_keys:/root/.ssh/authorized_keys" \
-    r.j3ss.co/sshb0t \
+		--name sshb0t \
+		-v "${HOME}/.ssh/authorized_keys:/root/.ssh/authorized_keys" \
+		r.j3ss.co/sshb0t \
 		--user "${GITHUB_USER}" --keyfile /root/.ssh/authorized_keys --once
 }
 steam(){
