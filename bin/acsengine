@@ -109,8 +109,12 @@ acsssh(){
 	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress")
 	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/${deployment}/apimodel.json")
 
-	# shellcheck disable=SC2029
-	ssh -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
+	if [[ -f "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" ]]; then
+		# shellcheck disable=SC2029
+		ssh -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
+	else
+		ssh "${sshuser}@${ip}"
+	fi
 }
 
 acsscp(){
