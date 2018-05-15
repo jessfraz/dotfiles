@@ -33,7 +33,7 @@ delete(){
 
 	for rg in "${args[@]}"; do
 		echo "Deleting resource group $rg..."
-		az group delete --no-wait -n "$rg"
+		az group delete --no-wait --yes -n "$rg"
 	done
 }
 
