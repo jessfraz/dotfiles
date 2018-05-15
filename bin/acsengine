@@ -113,7 +113,7 @@ acsssh(){
 		# shellcheck disable=SC2029
 		ssh -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
 	else
-		ssh "${sshuser}@${ip}"
+		ssh -A "${sshuser}@${ip}"
 	fi
 }
 
