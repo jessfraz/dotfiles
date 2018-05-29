@@ -346,6 +346,8 @@ john(){
 kernel_builder(){
 	docker run --rm -it \
 		-v /usr/src:/usr/src \
+		-v /lib/modules:/lib/modules \
+		-v /boot:/boot \
 		--cpu-shares=512 \
 		--name kernel-builder \
 		${DOCKER_REPO_PREFIX}/kernel-builder
@@ -1027,6 +1029,12 @@ weeslack(){
 		-v "${HOME}/.weechat:/home/user/.weechat" \
 		--name weeslack \
 		${DOCKER_REPO_PREFIX}/wee-slack
+}
+wg(){
+	docker run -it --rm \
+		--log-driver none \
+		--name wg \
+		${DOCKER_REPO_PREFIX}/wg "$@"
 }
 wireshark(){
 	del_stopped wireshark
