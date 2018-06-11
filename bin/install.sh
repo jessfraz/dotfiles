@@ -403,7 +403,7 @@ install_golang() {
 
 	# do special things for k8s GOPATH
 	mkdir -p "${GOPATH}/src/k8s.io"
-	kubes_repos=( community kubernetes release test-infra )
+	kubes_repos=( community kubernetes release sig-release )
 	for krepo in "${kubes_repos[@]}"; do
 		git clone "https://github.com/kubernetes/${krepo}.git" "${GOPATH}/src/k8s.io/${krepo}"
 		cd "${GOPATH}/src/k8s.io/${krepo}"
@@ -561,7 +561,7 @@ install_vim() {
 	cd "$HOME"
 
 	# install .vim files
-	sudo rm -rf "${HOME}/.vim" 
+	sudo rm -rf "${HOME}/.vim"
 	git clone --recursive git@github.com:jessfraz/.vim.git "${HOME}/.vim"
 	ln -snf "${HOME}/.vim/vimrc" "${HOME}/.vimrc"
 	sudo ln -snf "${HOME}/.vim" /root/.vim
