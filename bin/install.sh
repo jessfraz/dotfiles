@@ -349,7 +349,6 @@ install_golang() {
 	go get github.com/genuinetools/apk-file
 	go get github.com/genuinetools/audit
 	go get github.com/genuinetools/certok
-	go get github.com/genuinetools/img
 	go get github.com/genuinetools/netns
 	go get github.com/genuinetools/pepper
 	go get github.com/genuinetools/reg
@@ -373,7 +372,7 @@ install_golang() {
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 
-	aliases=( Azure/acs-engine Azure/draft genuinetools/contained.af genuinetools/binctr gl-prototypes/cmd-localfs docker/docker moby/buildkit opencontainers/runc )
+	aliases=( Azure/acs-engine genuinetools/contained.af genuinetools/binctr genuinetools/img docker/docker moby/buildkit opencontainers/runc )
 	for project in "${aliases[@]}"; do
 		owner=$(dirname "$project")
 		repo=$(basename "$project")
