@@ -300,6 +300,11 @@ install_docker() {
 	echo "run update-grub & reboot"
 }
 
+# install rust
+install_rust() {
+	curl https://sh.rustup.rs -sSf | sh
+}
+
 # install/update golang from source
 install_golang() {
 	export GO_VERSION
@@ -623,7 +628,7 @@ install_virtualbox() {
 	apt update
 	apt install -y \
 		virtualbox-5.0 \
-	--no-install-recommends
+		--no-install-recommends
 }
 
 install_vagrant() {
@@ -667,6 +672,7 @@ usage() {
 	echo "  dotfiles                            - get dotfiles"
 	echo "  vim                                 - install vim specific dotfiles"
 	echo "  golang                              - install golang and packages"
+	echo "  rust                                - install rust"
 	echo "  scripts                             - install scripts"
 	echo "  syncthing                           - install syncthing"
 	echo "  vagrant                             - install vagrant and virtualbox"
@@ -711,6 +717,8 @@ main() {
 		get_dotfiles
 	elif [[ $cmd == "vim" ]]; then
 		install_vim
+	elif [[ $cmd == "rust" ]]; then
+		install_rust
 	elif [[ $cmd == "golang" ]]; then
 		install_golang "$2"
 	elif [[ $cmd == "scripts" ]]; then

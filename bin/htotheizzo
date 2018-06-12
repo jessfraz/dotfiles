@@ -121,6 +121,11 @@ update_kubectl() {
 	echo "kuebctl $(kubectl version --client --short)"
 }
 
+update_rust() {
+	rustup update
+	rustc --version
+}
+
 update() {
 	echo "htotheizzo is running the update functions"
 
@@ -139,6 +144,7 @@ update() {
 		update_linux;
 		update_docker;
 		update_kubectl;
+		update_rust;
 	else
 		echo "We don't have update functions for OS: ${OSTYPE}"
 		echo "Moving on..."
