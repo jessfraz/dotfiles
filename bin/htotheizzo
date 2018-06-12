@@ -122,8 +122,8 @@ update_kubectl() {
 }
 
 update_rust() {
-	rustup update
-	rustc --version
+	su -l -c "rustup update" "$TARGET_USER"
+	su -l -c "rustc --version" "$TARGET_USER"
 }
 
 update() {
