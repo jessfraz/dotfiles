@@ -30,7 +30,10 @@ for repo in "${repos[@]}"; do
 		echo "repo: $repo | tag: $tag"
 
 		# get the latest index for the tag
-		current=$(gsutil cat "${BUCKET_PREFIX}/repositories/${repo}/_manifests/tags/${tag}/current/link")
+		current=$(gsutil cat "${BUCKET_PREFIX}/repositories/${repo}/_manifests/tags/${tag}/current/link" || true)
+		if [[ "$current" == "true" ]]; then
+			continue
+		fi
 		# split on : since the link comes back as:
 		# sha256:97bf033cf680a2fe49a6f0df40ac76dba97bc71745aeb06018dbf9df5de74bd6
 		ha=${current%:*}
