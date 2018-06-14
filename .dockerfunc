@@ -348,7 +348,6 @@ kernel_builder(){
 		-v /usr/src:/usr/src \
 		-v /lib/modules:/lib/modules \
 		-v /boot:/boot \
-		--cpu-shares=512 \
 		--name kernel-builder \
 		${DOCKER_REPO_PREFIX}/kernel-builder
 }
@@ -1031,8 +1030,11 @@ weeslack(){
 		${DOCKER_REPO_PREFIX}/wee-slack
 }
 wg(){
-	docker run -it --rm \
+	docker run -i --rm \
 		--log-driver none \
+		-v /tmp:/tmp \
+		--cap-add NET_ADMIN \
+		--net host \
 		--name wg \
 		${DOCKER_REPO_PREFIX}/wg "$@"
 }
