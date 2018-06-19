@@ -49,7 +49,7 @@ for repo in "${repos[@]}"; do
 
 		# shellcheck disable=SC2199
 		if [[ "${shas[@]}" != "" ]]; then
-			parallel -j"${JOBS}" reg -r "${REPO_URL}" delete "${repo}@${ha}:{1}" ::: "${shas[@]}"
+			parallel -j"${JOBS}" reg delete "${REPO_URL}/${repo}@${ha}:{1}" ::: "${shas[@]}"
 		fi
 	done
 done
