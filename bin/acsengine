@@ -45,7 +45,7 @@ kubeconfig(){
 	fi
 
 	# shellcheck disable=SC2207
-	kubeconfigs=( $(find "${OUTPUT_DIR}/${deployment}/kubeconfig" -maxdepth 1 -mindepth 1 -type f) )
+	kubeconfigs=( $(find "${OUTPUT_DIR}/kubeconfig" -maxdepth 1 -mindepth 1 -type f) )
 	kcs=""
 
 	for kc in "${kubeconfigs[@]}"; do
@@ -107,11 +107,11 @@ acsssh(){
 		exit 1
 	fi
 	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress")
-	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/${deployment}/apimodel.json")
+	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/apimodel.json")
 
-	if [[ -f "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" ]]; then
+	if [[ -f "${OUTPUT_DIR}/${sshuser}_rsa" ]]; then
 		# shellcheck disable=SC2029
-		ssh -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}"
+		ssh -i "${OUTPUT_DIR}/${sshuser}_rsa" "${sshuser}@${ip}"
 	else
 		ssh -A "${sshuser}@${ip}"
 	fi
@@ -126,7 +126,7 @@ acsscp(){
 	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress")
 	sshuser=$(jq --raw-output ".properties.linuxProfile.adminUsername" "${OUTPUT_DIR}/${deployment}/apimodel.json")
 
-	scp -i "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${OUTPUT_DIR}/${deployment}/${sshuser}_rsa" "${sshuser}@${ip}:/home/${sshuser}/.ssh/id_rsa"
+	scp -i "${OUTPUT_DIR}/${sshuser}_rsa" "${OUTPUT_DIR}/${sshuser}_rsa" "${sshuser}@${ip}:/home/${sshuser}/.ssh/id_rsa"
 }
 
 main() {
