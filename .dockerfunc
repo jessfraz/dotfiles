@@ -816,6 +816,10 @@ ssh2john(){
 sshb0t(){
 	del_stopped sshb0t
 
+	if [[ ! -f "${HOME}/.ssh/authorized_keys" ]]; then
+		touch "${HOME}/.ssh/authorized_keys"
+	fi
+
 	docker run --rm -it \
 		--name sshb0t \
 		-v "${HOME}/.ssh/authorized_keys:/root/.ssh/authorized_keys" \
@@ -868,9 +872,13 @@ termboy(){
 }
 terraform(){
 	docker run -it --rm \
+		-v "${HOME}:${HOME}:ro" \
 		-v "$(pwd):/usr/src/repo" \
+		-v /tmp:/tmp \
 		--workdir /usr/src/repo \
 		--log-driver none \
+		-e GOOGLE_APPLICATION_CREDENTIALS \
+		-e SSH_AUTH_SOCK \
 		${DOCKER_REPO_PREFIX}/terraform "$@"
 }
 tor(){
