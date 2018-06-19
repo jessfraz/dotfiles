@@ -866,6 +866,13 @@ termboy(){
 		--name termboy \
 		${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
 }
+terraform(){
+	docker run -it --rm \
+		-v "$(pwd):/usr/src/repo" \
+		--workdir /usr/src/repo \
+		--log-driver none \
+		${DOCKER_REPO_PREFIX}/terraform "$@"
+}
 tor(){
 	del_stopped tor
 
