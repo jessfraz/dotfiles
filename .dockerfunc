@@ -302,6 +302,13 @@ htop(){
 		--name htop \
 		${DOCKER_REPO_PREFIX}/htop
 }
+htpasswd(){
+	docker run --rm -it \
+		--net none \
+		--name htpasswd \
+		--log-driver none \
+		${DOCKER_REPO_PREFIX}/htpasswd
+}
 http(){
 	docker run -t --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock \
