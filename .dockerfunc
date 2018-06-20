@@ -307,7 +307,7 @@ htpasswd(){
 		--net none \
 		--name htpasswd \
 		--log-driver none \
-		${DOCKER_REPO_PREFIX}/htpasswd
+		${DOCKER_REPO_PREFIX}/htpasswd "$@"
 }
 http(){
 	docker run -t --rm \
