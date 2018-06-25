@@ -89,10 +89,12 @@ update_docker() {
 	# docker_sha256=$(curl -sSL "${binary_uri}/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
 	(
 	set -x
-	curl -fSL "${binary_uri}/docker-${docker_version}.tgz" -o "${tmp_tar}"
+	curl -fSL "${binary_uri}/docker-${docker_version}.tgz" -o "$tmp_tar"
 	# echo "${docker_sha256} ${tmp_tar}" | sha256sum -c -
-	tar -C /usr/local/bin --strip-components 1 -xzvf "${tmp_tar}"
+	tar -C /usr/local/bin --strip-components 1 -xzvf "$tmp_tar"
 	rm "${tmp_tar}"
+	# remove binaries we don't need
+	rm /usr/local/bin/docker-containerd*
 	docker -v
 	)
 	chmod +x /usr/local/bin/docker*
@@ -105,7 +107,42 @@ update_docker() {
 	fi
 }
 
-update_linux() {
+update_containerd() {
+	local tmp_tar=/tmp/containerd.tar.gz
+	local containerd_version
+	containerd_version=$(curl -sSL "https://api.github.com/repos/containerd/containerd/releases" | jq --raw-output .[0].tag_name)
+	containerd_version=${containerd_version#v}
+	local binary_uri="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}.linux-amd64.tar.gz"
+	(
+	set -x
+	curl -fSL "$binary_uri" -o "$tmp_tar"
+	tar -C /usr/local/bin --strip-components 1 -xzvf "$tmp_tar"
+	rm "$tmp_tar"
+	containerd -v
+	)
+
+	# start containerd
+	if [[ "$init" == "upstart" ]]; then
+		service containerd start
+	else
+		systemctl start containerd
+	fi
+}
+
+update_runc() {
+	local runc_version
+	runc_version=$(curl -sSL "https://api.github.com/repos/opencontainers/runc/releases" | jq --raw-output .[0].tag_name)
+	runc_version=${runc_version#v}
+	local binary_uri="https://github.com/opencontainers/runc/releases/download/v${runc_version}/runc.amd64"
+	(
+	set -x
+	curl -fSL "$binary_uri" -o "/sbin/runc"
+	chmod +x /sbin/runc
+	runc -v
+	)
+}
+
+update_apt() {
 	apt -y update
 	apt -y upgrade
 	apt -y autoremove
@@ -141,7 +178,9 @@ update() {
 
 		# update
 		get_user;
-		update_linux;
+		update_apt;
+		update_runc;
+		update_containerd;
 		update_docker;
 		update_kubectl;
 		update_rust;

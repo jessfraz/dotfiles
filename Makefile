@@ -35,6 +35,7 @@ etc: ## Installs the etc directory files.
 	sudo mkdir -p /etc/docker/seccomp
 	for file in $(shell find $(CURDIR)/etc -type f -not -name ".*.swp"); do \
 		f=$$(echo $$file | sed -e 's|$(CURDIR)||'); \
+		sudo mkdir -p $$(dirname $$f); \
 		sudo ln -f $$file $$f; \
 	done
 	systemctl --user daemon-reload || true
