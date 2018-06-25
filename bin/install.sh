@@ -158,6 +158,7 @@ base_min() {
 		hostname \
 		indent \
 		iptables \
+		iwd \
 		jq \
 		less \
 		libc6-dev \
