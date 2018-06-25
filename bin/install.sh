@@ -210,7 +210,6 @@ base() {
 		libapparmor-dev \
 		libltdl-dev \
 		libseccomp-dev \
-		network-manager \
 		openvpn \
 		s3cmd \
 		--no-install-recommends
