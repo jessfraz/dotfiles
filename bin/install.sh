@@ -468,8 +468,11 @@ get_dotfiles() {
 	(
 	cd "$HOME"
 
-	# install dotfiles from repo
-	git clone git@github.com:jessfraz/dotfiles.git "${HOME}/dotfiles"
+	if [[ ! -d "${HOME}/dotfiles" ]]; then
+		# install dotfiles from repo
+		git clone git@github.com:jessfraz/dotfiles.git "${HOME}/dotfiles"
+	fi
+
 	cd "${HOME}/dotfiles"
 
 	# installs all the things
@@ -486,7 +489,6 @@ get_dotfiles() {
 
 	cd "$HOME"
 	mkdir -p ~/Pictures/Screenshots
-	mkdir -p ~/Torrents
 	)
 
 	install_vim;
