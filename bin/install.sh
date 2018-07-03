@@ -84,9 +84,6 @@ setup_sources() {
 	deb http://security.debian.org/ buster/updates main contrib non-free
 	deb-src http://security.debian.org/ buster/updates main contrib non-free
 
-	#deb http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
-	#deb-src http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
-
 	deb http://httpredir.debian.org/debian experimental main contrib non-free
 	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
 
@@ -176,6 +173,7 @@ base_min() {
 		ssh \
 		strace \
 		sudo \
+		systemd \
 		tar \
 		tree \
 		tzdata \
@@ -211,8 +209,6 @@ base() {
 		libapparmor-dev \
 		libltdl-dev \
 		libseccomp-dev \
-		openvpn \
-		s3cmd \
 		--no-install-recommends
 
 	# install tlp with recommends
@@ -223,8 +219,6 @@ base() {
 	apt autoremove
 	apt autoclean
 	apt clean
-
-	install_docker
 }
 
 # setup sudo for a user
@@ -243,6 +237,10 @@ setup_sudo() {
 	gpasswd -a "$TARGET_USER" systemd-journal
 	gpasswd -a "$TARGET_USER" systemd-network
 
+	# create docker group
+	sudo groupadd docker
+	sudo gpasswd -a "$TARGET_USER" docker
+
 	# add go path to secure path
 	{ \
 		echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${USERNAME}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\""; \
@@ -256,48 +254,6 @@ setup_sudo() {
 	# i like things clean but you may not want this
 	mkdir -p "/home/$TARGET_USER/Downloads"
 	echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=2G\\t0\\t0" >> /etc/fstab
-}
-
-# installs docker master
-# and adds necessary items to boot params
-install_docker() {
-	# create docker group
-	sudo groupadd docker
-	sudo gpasswd -a "$TARGET_USER" docker
-
-	# Include contributed completions
-	mkdir -p /etc/bash_completion.d
-	curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
-
-
-	# get the binary
-	local tmp_tar=/tmp/docker.tgz
-	local binary_uri="https://download.docker.com/linux/static/edge/x86_64"
-	local docker_version
-	docker_version=$(curl -sSL "https://api.github.com/repos/docker/docker-ce/releases/latest" | jq --raw-output .tag_name)
-	docker_version=${docker_version#v}
-	# local docker_sha256
-	# docker_sha256=$(curl -sSL "${binary_uri}/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
-	(
-	set -x
-	curl -fSL "${binary_uri}/docker-${docker_version}.tgz" -o "${tmp_tar}"
-	# echo "${docker_sha256} ${tmp_tar}" | sha256sum -c -
-	tar -C /usr/local/bin --strip-components 1 -xzvf "${tmp_tar}"
-	rm "${tmp_tar}"
-	docker -v
-	)
-	chmod +x /usr/local/bin/docker*
-
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/docker.service > /etc/systemd/system/docker.service
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/docker.socket > /etc/systemd/system/docker.socket
-
-	systemctl daemon-reload
-	systemctl enable docker
-
-	# update grub with docker configs and power-saving items
-	sed -i.bak 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 apparmor=1 security=apparmor page_poison=1 slab_nomerge vsyscall=none"/g' /etc/default/grub
-	echo "Docker has been installed. If you want memory management & swap"
-	echo "run update-grub & reboot"
 }
 
 # install rust
@@ -472,22 +428,6 @@ install_scripts() {
 	done
 }
 
-# install syncthing
-install_syncthing() {
-	# download syncthing binary
-	if [[ ! -f /usr/local/bin/syncthing ]]; then
-		curl -sSL https://misc.j3ss.co/binaries/syncthing > /usr/local/bin/syncthing
-		chmod +x /usr/local/bin/syncthing
-	fi
-
-	syncthing -upgrade
-
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/systemd/system/syncthing@.service > /etc/systemd/system/syncthing@.service
-
-	systemctl daemon-reload
-	systemctl enable "syncthing@${TARGET_USER}"
-}
-
 # install wifi drivers
 install_wifi() {
 	local system=$1
@@ -551,6 +491,9 @@ get_dotfiles() {
 	sudo systemctl enable "i3lock@${TARGET_USER}"
 	sudo systemctl enable suspend-sedation.service
 
+	sudo systemctl enable systemd-networkd systemd-resolved
+	sudo systemctl start systemd-networkd systemd-resolved
+
 	cd "$HOME"
 	mkdir -p ~/Pictures/Screenshots
 	mkdir -p ~/Torrents
@@ -595,63 +538,6 @@ install_vim() {
 	)
 }
 
-install_virtualbox() {
-	# check if we need to install libvpx1
-	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' libvpx1 | grep "install ok installed")
-	echo "Checking for libvpx1: $PKG_OK"
-	if [ "" == "$PKG_OK" ]; then
-		echo "No libvpx1. Installing libvpx1."
-		jessie_sources=/etc/apt/sources.list.d/jessie.list
-		echo "deb http://httpredir.debian.org/debian jessie main contrib non-free" > "$jessie_sources"
-
-		apt update
-		apt install -y -t jessie libvpx1 \
-			--no-install-recommends
-
-		# cleanup the file that we used to install things from jessie
-		rm "$jessie_sources"
-	fi
-
-	echo "deb http://download.virtualbox.org/virtualbox/debian vivid contrib" >> /etc/apt/sources.list.d/virtualbox.list
-
-	curl -sSL https://www.virtualbox.org/download/oracle_vbox.asc | apt-key add -
-
-	apt update
-	apt install -y \
-		virtualbox-5.0 \
-		--no-install-recommends
-}
-
-install_vagrant() {
-	VAGRANT_VERSION=1.8.1
-
-	# if we are passing the version
-	if [[ ! -z "$1" ]]; then
-		export VAGRANT_VERSION=$1
-	fi
-
-	# check if we need to install virtualbox
-	PKG_OK=$(dpkg-query -W --showformat='${Status}\n' virtualbox | grep "install ok installed")
-	echo "Checking for virtualbox: $PKG_OK"
-	if [ "" == "$PKG_OK" ]; then
-		echo "No virtualbox. Installing virtualbox."
-		install_virtualbox
-	fi
-
-	tmpdir=$(mktemp -d)
-	(
-	cd "$tmpdir"
-	curl -sSL -o vagrant.deb "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb"
-	dpkg -i vagrant.deb
-	)
-
-	rm -rf "$tmpdir"
-
-	# install plugins
-	vagrant plugin install vagrant-vbguest
-}
-
-
 usage() {
 	echo -e "install.sh\\n\\tThis script installs my basic setup for a debian laptop\\n"
 	echo "Usage:"
@@ -666,7 +552,6 @@ usage() {
 	echo "  rust                                - install rust"
 	echo "  scripts                             - install scripts"
 	echo "  syncthing                           - install syncthing"
-	echo "  vagrant                             - install vagrant and virtualbox"
 }
 
 main() {
@@ -714,11 +599,6 @@ main() {
 		install_golang "$2"
 	elif [[ $cmd == "scripts" ]]; then
 		install_scripts
-	elif [[ $cmd == "syncthing" ]]; then
-		get_user
-		install_syncthing
-	elif [[ $cmd == "vagrant" ]]; then
-		install_vagrant "$2"
 	else
 		usage
 	fi
