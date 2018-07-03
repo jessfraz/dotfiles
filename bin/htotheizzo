@@ -39,19 +39,9 @@ update_docker() {
 	local user_home="/home/${TARGET_USER}"
 	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
 
-	# set init
-	local init="systemd"
-	if [[ "$(/sbin/init --version)" =~ "upstart" ]]; then
-		init="upstart"
-	fi
-
 	# stop docker
 	dcleanup || true
-	if [[ "$init" == "upstart" ]]; then
-		service docker stop || true
-	else
-		systemctl stop docker || true
-	fi
+	systemctl stop docker || true
 
 	if [[ -d "${docker_dir}" ]]; then
 		(
@@ -63,11 +53,6 @@ update_docker() {
 		# Include contributed completions
 		mkdir -p /etc/bash_completion.d
 		curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
-
-		if [[ "$init" == "upstart" ]]; then
-			# Update the upstart file
-			curl -sSL -o /etc/init/docker.conf https://raw.githubusercontent.com/docker/docker/master/contrib/init/upstart/docker.conf
-		fi
 
 		# move vim syntax highlighting
 		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
@@ -99,12 +84,10 @@ update_docker() {
 	)
 	chmod +x /usr/local/bin/docker*
 
-	# start docker
-	if [[ "$init" == "upstart" ]]; then
-		service docker start
-	else
-		systemctl start docker
-	fi
+	# enable and start docker
+	systemctl daemon-reload
+	systemctl enable docker
+	systemctl start docker
 }
 
 update_containerd() {
@@ -121,12 +104,10 @@ update_containerd() {
 	containerd -v
 	)
 
-	# start containerd
-	if [[ "$init" == "upstart" ]]; then
-		service containerd start
-	else
-		systemctl start containerd
-	fi
+	# enable and start containerd
+	systemctl daemon-reload
+	systemctl enable containerd
+	systemctl start containerd
 }
 
 update_runc() {
