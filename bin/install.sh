@@ -390,6 +390,9 @@ install_graphics() {
 			;;
 	esac
 
+	apt update
+	apt -y upgrade
+
 	apt install -y "${pkgs[@]}" --no-install-recommends
 }
 
@@ -430,6 +433,7 @@ install_wifi() {
 	if [[ $system == "broadcom" ]]; then
 		local pkg="broadcom-sta-dkms"
 
+		apt update
 		apt install -y "$pkg" --no-install-recommends
 	else
 		update-iwlwifi
@@ -440,6 +444,7 @@ install_wifi() {
 install_wmapps() {
 	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
 
+	apt update
 	apt install -y "${pkgs[@]}" --no-install-recommends
 
 	# update clickpad settings
