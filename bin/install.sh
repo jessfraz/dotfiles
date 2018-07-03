@@ -543,7 +543,6 @@ usage() {
 	echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
 	echo "  scripts                             - install scripts"
-	echo "  syncthing                           - install syncthing"
 }
 
 main() {
