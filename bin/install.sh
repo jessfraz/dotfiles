@@ -43,6 +43,7 @@ setup_sources_min() {
 		ca-certificates \
 		curl \
 		dirmngr \
+		gnupg2 \
 		lsb-release \
 		--no-install-recommends
 
