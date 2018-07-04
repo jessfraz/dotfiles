@@ -43,6 +43,10 @@ update_docker() {
 	dcleanup || true
 	systemctl stop docker || true
 
+	# Include contributed completions
+	mkdir -p /etc/bash_completion.d
+	curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
+
 	if [[ -d "${docker_dir}" ]]; then
 		(
 		cd "${docker_dir}"
@@ -50,9 +54,6 @@ update_docker() {
 		# Clean up bundles
 		rm -rf bundles
 
-		# Include contributed completions
-		mkdir -p /etc/bash_completion.d
-		curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
 
 		# move vim syntax highlighting
 		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
