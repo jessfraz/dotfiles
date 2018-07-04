@@ -209,6 +209,31 @@ base() {
 	apt clean
 }
 
+# install and configure dropbear
+install_dropbear() {
+	apt update || true
+	apt -y upgrade
+
+	apt install -y \
+		dropbear-initramfs \
+		--no-install-recommends
+
+	apt autoremove
+	apt autoclean
+	apt clean
+
+	# change the default port and settings
+	sed -i 's/#DROPBEAR_OPTIONS=""/DROPBEAR_OPTIONS="-p 4748 -s -j -k -I 60"/g' /etc/dropbear-initramfs/config
+
+	# update the authorized keys
+	cp "/home/${TARGET_USER}/.ssh/authorized_keys" /etc/dropbear-initramfs/authorized_keys
+	sed -i 's/ssh-/no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="\/bin\/cryptroot-unlock" ssh-/g' /etc/dropbear-initramfs/authorized_keys
+
+	echo "Dropbear has been installed and configured."
+	echo "You will now want to update your initramfs:"
+	printf "\tupdate-initramfs -u\n"
+}
+
 # setup sudo for a user
 # because fuck typing that shit all the time
 # just have a decent password
@@ -526,6 +551,7 @@ usage() {
 	echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
 	echo "  scripts                             - install scripts"
+	echo "  dropbear                            - install and configure dropbear initramfs"
 }
 
 main() {
@@ -571,6 +597,12 @@ main() {
 		install_golang "$2"
 	elif [[ $cmd == "scripts" ]]; then
 		install_scripts
+	elif [[ $cmd == "dropbear" ]]; then
+		check_is_sudo
+
+		get_user
+
+		install_dropbear
 	else
 		usage
 	fi
