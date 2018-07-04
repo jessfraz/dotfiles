@@ -385,6 +385,9 @@ install_golang() {
 		git remote add jessfraz "https://github.com/jessfraz/${krepo}.git"
 	done
 	)
+
+	# symlink weather binary for motd
+	sudo ln -snf "${GOPATH}/bin/weather" /usr/local/bin/weather
 }
 
 # install graphics drivers
