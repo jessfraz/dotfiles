@@ -51,7 +51,6 @@ HostbasedAuthentication no
 #IgnoreUserKnownHosts no
 # Don't read the user's ~/.rhosts and ~/.shosts files
 IgnoreRhosts yes
-RhostsAuthentication no
 
 # To disable tunneled clear text passwords, change to no here!
 PasswordAuthentication no

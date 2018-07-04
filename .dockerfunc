@@ -823,9 +823,15 @@ ssh2john(){
 sshb0t(){
 	del_stopped sshb0t
 
+	if [[ ! -d "${HOME}/.ssh" ]]; then
+		mkdir -p "${HOME}/.ssh"
+	fi
+
 	if [[ ! -f "${HOME}/.ssh/authorized_keys" ]]; then
 		touch "${HOME}/.ssh/authorized_keys"
 	fi
+
+	GITHUB_USER=${GITHUB_USER:=jessfraz}
 
 	docker run --rm -it \
 		--name sshb0t \
