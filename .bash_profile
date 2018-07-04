@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# Load the shell dotfiles, and then some:
-for file in ~/.{bashrc}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
-done
+# Load .bashrc
+file=~/.bashrc
+if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+	# shellcheck source=/dev/null
+	source "$file"
+fi
 unset file
