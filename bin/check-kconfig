@@ -566,9 +566,22 @@ IKCONFIG_PROC
 check_flags "${flags[@]}"
 
 echo
-echo 'Diffie-Hellman support:'
+echo 'Crypto/Diffie-Hellman support (iwd):'
 flags=(
 KEY_DH_OPERATIONS
+CRYPTO_USER_API_SKCIPHER
+CRYPTO_USER_API_HASH
+CRYPTO_HMAC
+CRYPTO_CMAC
+CRYPTO_MD4
+CRYPTO_MD5
+CRYPTO_SHA256
+CRYPTO_SHA512
+CRYPTO_AES
+CRYPTO_ECB
+CRYPTO_ARC4
+CRYPTO_DES
+CRYPTO_CBC
 )
 check_flags "${flags[@]}"
 
