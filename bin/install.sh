@@ -37,7 +37,7 @@ check_is_sudo() {
 
 
 setup_sources_min() {
-	apt update
+	apt update || true
 	apt install -y \
 		apt-transport-https \
 		ca-certificates \
@@ -121,7 +121,7 @@ setup_sources() {
 }
 
 base_min() {
-	apt update
+	apt update || true
 	apt -y upgrade
 
 	apt install -y \
@@ -188,7 +188,7 @@ base_min() {
 base() {
 	base_min;
 
-	apt update
+	apt update || true
 	apt -y upgrade
 
 	apt install -y \
@@ -391,7 +391,7 @@ install_graphics() {
 			;;
 	esac
 
-	apt update
+	apt update || true
 	apt -y upgrade
 
 	apt install -y "${pkgs[@]}" --no-install-recommends
@@ -434,7 +434,7 @@ install_wifi() {
 	if [[ $system == "broadcom" ]]; then
 		local pkg="broadcom-sta-dkms"
 
-		apt update
+		apt update || true
 		apt install -y "$pkg" --no-install-recommends
 	else
 		update-iwlwifi
@@ -445,7 +445,7 @@ install_wifi() {
 install_wmapps() {
 	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
 
-	apt update
+	apt update || true
 	apt install -y "${pkgs[@]}" --no-install-recommends
 
 	# update clickpad settings
@@ -522,7 +522,7 @@ install_vim() {
 	sudo update-alternatives --config editor
 
 	# install things needed for deoplete for vim
-	sudo apt update
+	sudo apt update || true
 
 	sudo apt install -y \
 		python3-pip \
