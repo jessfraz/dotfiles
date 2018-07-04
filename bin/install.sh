@@ -373,7 +373,7 @@ install_graphics() {
 		exit 1
 	fi
 
-	local pkgs=( xorg xserver-xorg )
+	local pkgs=( xorg xserver-xorg xserver-xorg-input-synaptics )
 
 	case $system in
 		"intel")
