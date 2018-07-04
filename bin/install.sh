@@ -422,25 +422,6 @@ install_scripts() {
 	done
 }
 
-# install wifi drivers
-install_wifi() {
-	local system=$1
-
-	if [[ -z "$system" ]]; then
-		echo "You need to specify whether it's broadcom or intel"
-		exit 1
-	fi
-
-	if [[ $system == "broadcom" ]]; then
-		local pkg="broadcom-sta-dkms"
-
-		apt update || true
-		apt install -y "$pkg" --no-install-recommends
-	else
-		update-iwlwifi
-	fi
-}
-
 # install stuff for i3 window manager
 install_wmapps() {
 	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
@@ -541,7 +522,6 @@ usage() {
 	echo "Usage:"
 	echo "  base                                - setup sources & install base pkgs"
 	echo "  basemin                             - setup sources & install base min pkgs"
-	echo "  wifi {broadcom, intel}              - install wifi drivers"
 	echo "  graphics {intel, geforce, optimus}  - install graphics drivers"
 	echo "  wm                                  - install window manager/desktop pkgs"
 	echo "  dotfiles                            - get dotfiles"
@@ -575,8 +555,6 @@ main() {
 		setup_sources_min
 
 		base_min
-	elif [[ $cmd == "wifi" ]]; then
-		install_wifi "$2"
 	elif [[ $cmd == "graphics" ]]; then
 		check_is_sudo
 
