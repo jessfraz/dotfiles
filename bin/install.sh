@@ -151,6 +151,7 @@ base_min() {
 		less \
 		libc6-dev \
 		libimobiledevice6 \
+		libpam-systemd \
 		locales \
 		lsof \
 		make \
@@ -395,7 +396,7 @@ install_graphics() {
 		exit 1
 	fi
 
-	local pkgs=( xorg xserver-xorg xserver-xorg-input-synaptics )
+	local pkgs=( xorg xserver-xorg xserver-xorg-input-libinput xserver-xorg-input-synaptics )
 
 	case $system in
 		"intel")
