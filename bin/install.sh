@@ -202,9 +202,6 @@ base() {
 		libseccomp-dev \
 		--no-install-recommends
 
-	# install tlp with recommends
-	apt install -y tlp tlp-rdw
-
 	setup_sudo
 
 	apt autoremove
