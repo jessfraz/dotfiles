@@ -565,4 +565,11 @@ IKCONFIG_PROC
 )
 check_flags "${flags[@]}"
 
+echo
+echo 'Diffie-Hellman support:'
+flags=(
+KEY_DH_OPERATIONS
+)
+check_flags "${flags[@]}"
+
 exit $EXITCODE
