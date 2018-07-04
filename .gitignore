@@ -13,6 +13,8 @@ Session.vim
 .netrwhist
 *~
 
+.uuid
+
 .extra
 .gitconfig
 .gnupg
