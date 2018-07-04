@@ -231,7 +231,7 @@ install_dropbear() {
 
 	echo "Dropbear has been installed and configured."
 	echo "You will now want to update your initramfs:"
-	printf "\tupdate-initramfs -u\n"
+	printf "\\tupdate-initramfs -u\\n"
 }
 
 # setup sudo for a user
