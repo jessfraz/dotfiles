@@ -145,6 +145,13 @@ update_rust() {
 	su -l -c "rustc --version" "$TARGET_USER"
 }
 
+update_bios() {
+	echo "Checking for BIOS updates..."
+	fwupdmgr refresh
+	fwupdmgr get-updates
+	fwupdmgr update
+}
+
 update() {
 	echo "htotheizzo is running the update functions"
 
@@ -166,6 +173,7 @@ update() {
 		update_docker;
 		update_kubectl;
 		update_rust;
+		update_bios;
 	else
 		echo "We don't have update functions for OS: ${OSTYPE}"
 		echo "Moving on..."
