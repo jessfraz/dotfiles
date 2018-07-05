@@ -136,6 +136,8 @@ base_min() {
 		dnsutils \
 		file \
 		findutils \
+		fwupd \
+		fwupdate \
 		gcc \
 		git \
 		gnupg \
