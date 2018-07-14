@@ -364,7 +364,7 @@ install_golang() {
 		fi
 
 		# make sure we create the right git remotes
-		if [[ "$owner" != "jessfraz" ]]; then
+		if [[ "$owner" != "jessfraz" ]] && [[ "$owner" != "genuinetools" ]]; then
 			(
 			cd "${GOPATH}/src/github.com/${project}"
 			git remote set-url --push origin no_push
