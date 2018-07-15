@@ -198,25 +198,53 @@ readme(){
 
 		{DESCRIPTION}
 
+		* [Installation](README.md#installation)
+		   * [Binaries](README.md#binaries)
+		   * [Via Go](README.md#via-go)
+		* [Usage](README.md#usage)
+
 		## Installation
 
 		#### Binaries
 
 		For installation instructions from binaries please visit the [Releases Page](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases).
 
-		- **darwin** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-amd64)
-		- **freebsd** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-amd64)
-		- **linux** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-amd64) / [arm](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm) / [arm64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm64)
-		- **solaris** [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-solaris-amd64)
-		- **windows** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-amd64)
+		#### Via Go
+
+		\`\`\`console
+		$ go get github.com/genuinetools/pepper
+		\`\`\`
+
+		## Usage
+
+		\`\`\`console
+		\`\`\`
 		EOF
 	fi
+}
+
+travis(){
+	travis_file=".travis.yml"
+	# Update the os and arch release file info with that from .goosarch.
+	files=""
+	osarches=( $(cat .goosarch) )
+	for osarch in "${osarches[@]}"; do
+		osarch=${osarch/\//-}
+		files+='\n          - cross/'"${PROJECT_NAME}-${osarch}"'\n'
+		files+='          - cross/'"${PROJECT_NAME}-${osarch}"'.md5\n'
+		files+='          - cross/'"${PROJECT_NAME}-${osarch}"'.sha256'
+	done
+
+	# Remove all the file lines from the travis file.
+	sed -i '\#.*- cross/'"${PROJECT_NAME}"'-*.#d' "$travis_file"
+		match_line="file:"
+	sed -i 's#'"${match_line}"'#'${match_line}"${files}#" "$travis_file"
 }
 
 main(){
 	echo "Generating project files for ${PROJECT_NAME}..."
 
-	files=( ".travis.yml" ".gitignore" "Makefile" "Dockerfile" "version/version.go" )
+	files=( ".travis.yml" ".gitignore" ".goosarch" "Makefile" "Dockerfile" "version/version.go" )
 	for file in "${files[@]}"; do
 		generate_file "$file"
 	done
@@ -225,6 +253,7 @@ main(){
 	version
 	readme
 	gopkg
+	travis
 }
 
 main
