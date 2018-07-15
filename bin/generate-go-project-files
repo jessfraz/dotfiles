@@ -88,6 +88,46 @@ license(){
 	EOF
 }
 
+
+# Generate the Gopkg.toml file.
+gopkg(){
+	gopkg_file="Gopkg.toml"
+
+	echo "Writing $gopkg_file"
+
+	cat <<-EOF > "$gopkg_file"
+	# Gopkg.toml example
+	#
+	# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
+	# for detailed Gopkg.toml documentation.
+	#
+	# required = ["github.com/user/thing/cmd/thing"]
+	# ignored = ["github.com/user/project/pkgX", "bitbucket.org/user/project/pkgA/pkgY"]
+	#
+	# [[constraint]]
+	#   name = "github.com/user/project"
+	#   version = "1.0.0"
+	#
+	# [[constraint]]
+	#   name = "github.com/user/project2"
+	#   branch = "dev"
+	#   source = "github.com/myfork/project2"
+	#
+	# [[override]]
+	#  name = "github.com/x/y"
+	#  version = "2.4.0"
+
+	[prune]
+	  non-go = true
+	  go-tests = true
+	  unused-packages = true
+
+	[[override]]
+	  name = "github.com/Sirupsen/logrus"
+	  source = "github.com/sirupsen/logrus"
+	EOF
+}
+
 # Generate the VERSION.txt file.
 version(){
 	version_file="VERSION.txt"
@@ -118,13 +158,17 @@ readme(){
 		cat <<-EOF > "$readme_file"
 		# $PROJECT_NAME
 
-		[![Travis CI](https://travis-ci.org/${PROJECT_DIR}/${PROJECT_NAME}.svg?branch=master)](https://travis-ci.org/${PROJECT_DIR}/${PROJECT_NAME})
+		[![Travis CI](https://img.shields.io/travis/${PROJECT_DIR}/${PROJECT_NAME}.svg?style=for-the-badge)](https://travis-ci.org/${PROJECT_DIR}/${PROJECT_NAME})
+		[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/${PROJECT_DIR}/${PROJECT_NAME})
+		[![Github All Releases](https://img.shields.io/github/downloads/${PROJECT_DIR}/${PROJECT_NAME}/total.svg?style=for-the-badge)](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases)
 
 		{DESCRIPTION}
 
 		## Installation
 
 		#### Binaries
+
+		For installation instructions from binaries please visit the [Releases Page](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases).
 
 		- **darwin** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-amd64)
 		- **freebsd** [386](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-386) / [amd64](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-amd64)
@@ -146,6 +190,7 @@ main(){
 	license
 	version
 	readme
+	gopkg
 }
 
 main
