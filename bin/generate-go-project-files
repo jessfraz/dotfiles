@@ -31,6 +31,11 @@ fi
 
 # Generate a file passed as an argument.
 generate_file(){
+	if [[ "$PROJECT" == "$BASE_PROJECT" ]]; then
+		# Skip getting the files in we are on the base project.
+		return
+	fi
+
 	file=$1
 
 	if [[ -z "$file" ]]; then
@@ -95,7 +100,8 @@ gopkg(){
 
 	echo "Writing $gopkg_file"
 
-	cat <<-EOF > "$gopkg_file"
+	#cat <<-EOF > "$gopkg_file"
+	gopkgtpl=$(cat <<-EOF
 	# Gopkg.toml example
 	#
 	# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
@@ -126,6 +132,15 @@ gopkg(){
 	  name = "github.com/Sirupsen/logrus"
 	  source = "github.com/sirupsen/logrus"
 	EOF
+	)
+
+	if [[ -f "$gopkg_file" ]]; then
+		# Delete all the content before the new line after logrus.
+		sed -i '1,/sirupsen\/logrus"$/d' "$gopkg_file"
+	fi
+
+	# Add the new lines on top.
+	printf '%s\n%s' "${gopkgtpl}" "$(cat "$gopkg_file")" > "$gopkg_file"
 }
 
 # Generate the VERSION.txt file.
@@ -149,7 +164,6 @@ version(){
 # Generate the README.md file,
 readme(){
 	readme_file="README.md"
-	version=$(cat VERSION.txt)
 
 	# Only generate the readme file if it doesn't exist already, otherwise try
 	# and update it.
@@ -184,6 +198,7 @@ readme(){
 		if ! grep -Fq "${new_line:0:50}" "$readme_file"; then
 			# Add the new line after the "#### Binaries" line.
 			match_line="#### Binaries"
+			# shellcheck disable=SC1117
 			sed -i $'\_'"${match_line}"'_a '"\\\n${new_line}" "$readme_file"
 		fi
 	else
@@ -225,9 +240,11 @@ readme(){
 
 travis(){
 	travis_file=".travis.yml"
+	echo "Updating $travis_file"
+
 	# Update the os and arch release file info with that from .goosarch.
 	files=""
-	osarches=( $(cat .goosarch) )
+	mapfile -t osarches < <(cat .goosarch)
 	for osarch in "${osarches[@]}"; do
 		osarch=${osarch/\//-}
 		files+='\n          - cross/'"${PROJECT_NAME}-${osarch}"'\n'
@@ -236,15 +253,18 @@ travis(){
 	done
 
 	# Remove all the file lines from the travis file.
-	sed -i '\#.*- cross/'"${PROJECT_NAME}"'-*.#d' "$travis_file"
-		match_line="file:"
-	sed -i 's#'"${match_line}"'#'${match_line}"${files}#" "$travis_file"
+	sed -i '\_.*- cross/'"${PROJECT_NAME}"'-*._d' "$travis_file"
+	sed -i 's#file:#file:'"${files}#" "$travis_file"
+
+	# Update the secure key with the one in the dotfile.
+	key=$(cat .traviskey)
+	sed -i 's#secure:.*#secure: "'"${key}"'"#' "$travis_file"
 }
 
 main(){
 	echo "Generating project files for ${PROJECT_NAME}..."
 
-	files=( ".travis.yml" ".gitignore" ".goosarch" "Makefile" "Dockerfile" "version/version.go" )
+	files=( ".travis.yml" ".gitignore" ".goosarch" ".traviskey" "Makefile" "Dockerfile" "version/version.go" )
 	for file in "${files[@]}"; do
 		generate_file "$file"
 	done
