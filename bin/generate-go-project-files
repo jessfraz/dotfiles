@@ -56,6 +56,11 @@ generate_file(){
 		mkdir -p "$dir"
 	fi
 
+	if [[ "$file" == ".goosarch" ]] && [[ -f ".goosarch" ]]; then
+		# Return early so we don't overwrite it.
+		return
+	fi
+
 	echo "Writing $file"
 
 	echo "$contents" > "$file"
