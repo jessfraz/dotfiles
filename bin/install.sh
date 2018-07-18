@@ -225,7 +225,7 @@ install_dropbear() {
 	apt clean
 
 	# change the default port and settings
-	sed -i 's/#DROPBEAR_OPTIONS=""/DROPBEAR_OPTIONS="-p 4748 -s -j -k -I 60"/g' /etc/dropbear-initramfs/config
+	echo 'DROPBEAR_OPTIONS="-p 4748 -s -j -k -I 60"' >> /etc/dropbear-initramfs/config
 
 	# update the authorized keys
 	cp "/home/${TARGET_USER}/.ssh/authorized_keys" /etc/dropbear-initramfs/authorized_keys
