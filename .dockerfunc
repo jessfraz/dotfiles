@@ -421,6 +421,16 @@ masscan(){
 		--name masscan \
 		${DOCKER_REPO_PREFIX}/masscan "$@"
 }
+mc(){
+	cwd="$(pwd)"
+	name="$(basename "$cwd")"
+
+	docker run --rm -it \
+		--log-driver none \
+		-v "${cwd}:/home/mc/${name}" \
+		--workdir "/home/mc/${name}" \
+		${DOCKER_REPO_PREFIX}/mc "$@"
+}
 mpd(){
 	del_stopped mpd
 
