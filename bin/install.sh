@@ -163,7 +163,6 @@ base_min() {
 		pinentry-curses \
 		rxvt-unicode-256color \
 		scdaemon \
-		silversearcher-ag \
 		ssh \
 		strace \
 		sudo \
