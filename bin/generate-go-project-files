@@ -190,11 +190,19 @@ readme(){
 			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
 		fi
 
+		# Add the codacy badge if it's not already there.
+		new_line='[![Codacy](https://img.shields.io/codacy/grade/c2cbe5daa266419dbfbc2bfd23c5fff3.svg?style=for-the-badge)](https://app.codacy.com/app/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the GoDoc badge line.
+			match_line='.*\[Go Doc\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
 		# Add the releases badge if it's not already there.
 		new_line='[![Github All Releases](https://img.shields.io/github/downloads/'"${PROJECT_DIR}/${PROJECT_NAME}"'/total.svg?style=for-the-badge)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/releases)'
 		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
-			# Add the new line after the GoDoc badge line.
-			match_line='.*\[GoDoc\]*.'
+			# Add the new line after the Codacy badge line.
+			match_line='.*\[Codacy\]*.'
 			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
 		fi
 
