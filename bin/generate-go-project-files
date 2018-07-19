@@ -105,7 +105,6 @@ gopkg(){
 
 	echo "Writing $gopkg_file"
 
-	#cat <<-EOF > "$gopkg_file"
 	gopkgtpl=$(cat <<-EOF
 	# Gopkg.toml example
 	#
@@ -142,6 +141,8 @@ gopkg(){
 	if [[ -f "$gopkg_file" ]]; then
 		# Delete all the content before the new line after logrus.
 		sed -i '1,/sirupsen\/logrus"$/d' "$gopkg_file"
+	else
+		touch "$gopkg_file"
 	fi
 
 	# Add the new lines on top.
@@ -240,7 +241,7 @@ readme(){
 		#### Via Go
 
 		\`\`\`console
-		$ go get github.com/genuinetools/pepper
+		$ go get github.com/${PROJECT_DIR}/${PROJECT_NAME}
 		\`\`\`
 
 		## Usage
@@ -269,9 +270,11 @@ travis(){
 	sed -i '\_.*- cross/'"${PROJECT_NAME}"'-*._d' "$travis_file"
 	sed -i 's#file:#file:'"${files}#" "$travis_file"
 
-	# Update the secure key with the one in the dotfile.
-	key=$(cat .traviskey)
-	sed -i 's#secure:.*#secure: "'"${key}"'"#' "$travis_file"
+	if [[ -r ".traviskey" ]]; then
+		# Update the secure key with the one in the dotfile.
+		key=$(cat .traviskey)
+		sed -i 's#secure:.*#secure: "'"${key}"'"#' "$travis_file"
+	fi
 }
 
 main(){
