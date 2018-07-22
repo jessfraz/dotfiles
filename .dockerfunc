@@ -249,6 +249,12 @@ firefox(){
 	# exit current shell
 	exit 0
 }
+fleetctl(){
+	docker run --rm -it \
+		--entrypoint fleetctl \
+		-v "${HOME}/.fleet://.fleet" \
+		r.j3ss.co/fleet "$@"
+}
 gcalcli(){
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
