@@ -42,6 +42,7 @@ etc: ## Installs the etc directory files.
 	done
 	systemctl --user daemon-reload || true
 	sudo systemctl daemon-reload
+	sudo ln -snf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
 .PHONY: test
 test: shellcheck ## Runs all the tests on the files in the repository.
