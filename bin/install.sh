@@ -71,7 +71,7 @@ setup_sources_min() {
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
 
 	# add the iovisor/bcc-tools gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys D4284CDD
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 648A4A16A23015EEF4A66B8E4052245BD4284CDD
 
 	# turn off translations, speed up apt update
 	mkdir -p /etc/apt/apt.conf.d
@@ -115,13 +115,17 @@ setup_sources() {
 	export CLOUD_SDK_REPO
 
 	# Add the Cloud SDK distribution URI as a package source
-	echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list
+	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
+	deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
+	EOF
 
 	# Import the Google Cloud Platform public key
 	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 	# Add the Google Chrome distribution URI as a package source
-	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+	cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
+	deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+	EOF
 
 	# Import the Google Chrome public key
 	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -130,7 +134,7 @@ setup_sources() {
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 3653E21064B19D134466702E43D5C49532CBA1A9
 
 	# add the tlp apt-repo gpg key
-	apt-key adv --keyserver pool.sks-keyservers.net --recv-keys CD4E8809
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6B283E95745A6D903009F7CA641EED65CD4E8809
 }
 
 base_min() {
