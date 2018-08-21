@@ -59,11 +59,19 @@ setup_sources_min() {
 	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
 	EOF
 
+	# iovisor/bcc-tools
+	cat <<-EOF > /etc/apt/sources.list.d/iovisor.list
+	deb https://repo.iovisor.org/apt/xenial xenial main
+	EOF
+
 	# add the git-core ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
 
 	# add the neovim ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
+
+	# add the iovisor/bcc-tools gpg key
+	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys D4284CDD
 
 	# turn off translations, speed up apt update
 	mkdir -p /etc/apt/apt.conf.d
@@ -87,11 +95,16 @@ setup_sources() {
 
 	deb http://httpredir.debian.org/debian experimental main contrib non-free
 	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+	EOF
 
 	# yubico
+	cat <<-EOF > /etc/apt/sources.list.d/yubico.list
 	deb http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
 	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
+	EOF
 
+	# tlp: Advanced Linux Power Management
+	cat <<-EOF > /etc/apt/sources.list.d/tlp.list
 	# tlp: Advanced Linux Power Management
 	# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
 	deb http://repo.linrunner.de/debian sid main
@@ -152,7 +165,6 @@ base_min() {
 		jq \
 		less \
 		libc6-dev \
-		libimobiledevice6 \
 		libpam-systemd \
 		locales \
 		lsof \
@@ -172,8 +184,6 @@ base_min() {
 		tzdata \
 		usbmuxd \
 		unzip \
-		xclip \
-		xcompmgr \
 		xz-utils \
 		zip \
 		--no-install-recommends
@@ -200,8 +210,11 @@ base() {
 		cgroupfs-mount \
 		google-cloud-sdk \
 		libapparmor-dev \
+		libimobiledevice6 \
 		libltdl-dev \
 		libseccomp-dev \
+		xclip \
+		xcompmgr \
 		--no-install-recommends
 
 	setup_sudo
@@ -258,7 +271,7 @@ setup_sudo() {
 
 	# add go path to secure path
 	{ \
-		echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${USERNAME}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\""; \
+		echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${TARGET_USER}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/bcc/tools\""; \
 		echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
 		echo -e "${TARGET_USER} ALL=(ALL) NOPASSWD:ALL"; \
 		echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
