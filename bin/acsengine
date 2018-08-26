@@ -37,6 +37,13 @@ delete(){
 	done
 }
 
+az(){
+	docker run -it --rm \
+		-v "${HOME}/.azure:/root/.azure" \
+		--log-driver none \
+		r.j3ss.co/azure-cli "$@"
+}
+
 kubeconfig(){
 	deployment=$1
 	if [[ -z "$deployment" ]]; then
@@ -72,32 +79,19 @@ kubeconfig(){
 }
 
 list(){
+	# Get the master ip address
+	ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress" 2>/dev/null || echo "provisioning")
+
+	# Get the agent ip addresses
 	# shellcheck disable=SC2207
-	deployments=( $(find "${OUTPUT_DIR}" -maxdepth 1 -mindepth 1 -type d -printf "%f\\n") )
-
-	for deployment in "${deployments[@]}"; do
-		# check if the resource group exists and clean it up if not
-		exists="$(az group exists -n "$deployment")"
-		if [[ "$exists" == "false"* ]]; then
-			# garbase collect the directory
-			rm -rf "${OUTPUT_DIR:?}/${deployment}"
-			continue
-		fi
-
-		# Get the master ip address
-		ip=$(az network public-ip list -g "$deployment" | jq --raw-output ".[0] | .ipAddress" 2>/dev/null || echo "provisioning")
-
-		# Get the agent ip addresses
-		# shellcheck disable=SC2207
-		agents=( $(az vm list -g "$deployment" | jq --raw-output '.[].name' | grep -v "master") )
-		nicips=""
-		for agent in "${agents[@]}"; do
-			# get the nic id
-			nicip=$(az vm list-ip-addresses -g "$deployment" -n "$agent" | jq '.[0]' | jq '.virtualMachine.network.privateIpAddresses' | jq --raw-output '.[0]')
-			nicips+="$nicip|"
-		done
-		printf "%s\\t%s\\t%s\\n" "$deployment" "$ip" "$nicips"
-	done | column -t
+	agents=( $(az vm list -g "$deployment" | jq --raw-output '.[].name' | grep -v "master") )
+	nicips=""
+	for agent in "${agents[@]}"; do
+		# get the nic id
+		nicip=$(az vm list-ip-addresses -g "$deployment" -n "$agent" | jq '.[0]' | jq '.virtualMachine.network.privateIpAddresses' | jq --raw-output '.[0]')
+		nicips+="$nicip|"
+	done
+	printf "%s\\t%s\\t%s\\n" "$deployment" "$ip" "$nicips"
 }
 
 acsssh(){
