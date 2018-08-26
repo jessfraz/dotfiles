@@ -153,40 +153,30 @@ base_min() {
 		dnsutils \
 		file \
 		findutils \
-		fwupd \
-		fwupdate \
 		gcc \
 		git \
 		gnupg \
 		gnupg2 \
-		gnupg-agent \
 		grep \
 		gzip \
 		hostname \
 		indent \
 		iptables \
-		iwd \
 		jq \
 		less \
 		libc6-dev \
-		libpam-systemd \
 		locales \
 		lsof \
 		make \
 		mount \
 		net-tools \
 		neovim \
-		pinentry-curses \
-		rxvt-unicode-256color \
-		scdaemon \
 		ssh \
 		strace \
 		sudo \
-		systemd \
 		tar \
 		tree \
 		tzdata \
-		usbmuxd \
 		unzip \
 		xz-utils \
 		zip \
@@ -212,11 +202,21 @@ base() {
 		apparmor \
 		bridge-utils \
 		cgroupfs-mount \
+		fwupd \
+		fwupdate \
+		gnupg-agent \
 		google-cloud-sdk \
+		iwd \
 		libapparmor-dev \
 		libimobiledevice6 \
 		libltdl-dev \
+		libpam-systemd \
 		libseccomp-dev \
+		pinentry-curses \
+		rxvt-unicode-256color \
+		scdaemon \
+		systemd \
+		usbmuxd \
 		xclip \
 		xcompmgr \
 		--no-install-recommends
