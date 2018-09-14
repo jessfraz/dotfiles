@@ -623,7 +623,7 @@ osquery(){
 		--enroll_secret_env=OSQUERY_ENROLL_SECRET \
 		--docker_socket=/var/run/docker.sock \
 		--host_identifier=hostname \
-		--tls_hostname=${OSQUERY_DOMAIN} \
+		--tls_hostname="${OSQUERY_DOMAIN}" \
 		--enroll_tls_endpoint=/api/v1/osquery/enroll \
 		--config_plugin=tls \
 		--config_tls_endpoint=/api/v1/osquery/config \
