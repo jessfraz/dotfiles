@@ -336,6 +336,7 @@ install_golang() {
 	go get github.com/genuinetools/amicontained
 	go get github.com/genuinetools/apk-file
 	go get github.com/genuinetools/audit
+	go get github.com/genuinetools/bpfps
 	go get github.com/genuinetools/certok
 	go get github.com/genuinetools/netns
 	go get github.com/genuinetools/pepper
@@ -343,6 +344,7 @@ install_golang() {
 	go get github.com/genuinetools/udict
 	go get github.com/genuinetools/weather
 
+	go get github.com/jessfraz/bpfd
 	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/secping
 	go get github.com/jessfraz/ship
