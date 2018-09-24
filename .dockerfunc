@@ -563,6 +563,12 @@ notify_send(){
 	local args=${*:2}
 	docker exec -i notify_osd notify-send "$1" "${args}"
 }
+now(){
+	docker run -it --rm \
+		-v "${HOME}/.now:/root/.now" \
+		--log-driver none \
+		${DOCKER_REPO_PREFIX}/now "$@"
+}
 opensnitch(){
 	del_stopped opensnitchd
 	del_stopped opensnitch
