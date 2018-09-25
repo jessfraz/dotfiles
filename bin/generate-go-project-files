@@ -229,7 +229,7 @@ travis(){
 main(){
 	echo "Generating project files for ${PROJECT_NAME}..."
 
-	files=( ".travis.yml" ".gitignore" ".goosarch" "Makefile" "Dockerfile" "version/version.go" )
+	files=( ".travis.yml" ".gitignore" ".goosarch" "Makefile" "basic.mk" "Dockerfile" "version/version.go" )
 	for file in "${files[@]}"; do
 		generate_file "$file"
 	done
