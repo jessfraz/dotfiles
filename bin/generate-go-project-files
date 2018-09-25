@@ -98,57 +98,6 @@ license(){
 	EOF
 }
 
-
-# Generate the Gopkg.toml file.
-gopkg(){
-	gopkg_file="Gopkg.toml"
-
-	echo "Writing $gopkg_file"
-
-	gopkgtpl=$(cat <<-EOF
-	# Gopkg.toml example
-	#
-	# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
-	# for detailed Gopkg.toml documentation.
-	#
-	# required = ["github.com/user/thing/cmd/thing"]
-	# ignored = ["github.com/user/project/pkgX", "bitbucket.org/user/project/pkgA/pkgY"]
-	#
-	# [[constraint]]
-	#   name = "github.com/user/project"
-	#   version = "1.0.0"
-	#
-	# [[constraint]]
-	#   name = "github.com/user/project2"
-	#   branch = "dev"
-	#   source = "github.com/myfork/project2"
-	#
-	# [[override]]
-	#  name = "github.com/x/y"
-	#  version = "2.4.0"
-
-	[prune]
-	  non-go = true
-	  go-tests = true
-	  unused-packages = true
-
-	[[override]]
-	  name = "github.com/Sirupsen/logrus"
-	  source = "github.com/sirupsen/logrus"
-	EOF
-	)
-
-	if [[ -f "$gopkg_file" ]]; then
-		# Delete all the content before the new line after logrus.
-		sed -i '1,/sirupsen\/logrus"$/d' "$gopkg_file"
-	else
-		touch "$gopkg_file"
-	fi
-
-	# Add the new lines on top.
-	printf '%s\n%s' "${gopkgtpl}" "$(cat "$gopkg_file")" > "$gopkg_file"
-}
-
 # Generate the VERSION.txt file.
 version(){
 	version_file="VERSION.txt"
@@ -288,7 +237,6 @@ main(){
 	license
 	version
 	readme
-	gopkg
 	travis
 }
 
