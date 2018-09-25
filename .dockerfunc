@@ -566,6 +566,8 @@ notify_send(){
 now(){
 	docker run -it --rm \
 		-v "${HOME}/.now:/root/.now" \
+		-v "$(pwd):/usr/src/repo:ro" \
+		--workdir /usr/src/repo \
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/now "$@"
 }
