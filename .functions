@@ -467,3 +467,7 @@ restart_gpgagent(){
 	gpg-connect-agent /bye >/dev/null 2>&1
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
+
+gitsetoriginnopush() {
+	git remote set-url --push origin no_push
+}
