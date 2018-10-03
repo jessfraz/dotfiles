@@ -1,6 +1,6 @@
 ## dotfiles
 
-[![Circle CI](https://circleci.com/gh/jfrazelle/dotfiles.svg?style=svg)](https://circleci.com/gh/jfrazelle/dotfiles)
+[![Travis CI](https://travis-ci.org/jessfraz/dotfiles.svg?branch=master)](https://travis-ci.org/jessfraz/dotfiles)
 
 **To install:**
 
@@ -40,4 +40,13 @@ export GMAIL_FROM=from-email@you.com
 #### `.vim`
 
 For my `.vimrc` and `.vim` dotfiles see
-[github.com/jfrazelle/.vim](https://github.com/jfrazelle/.vim).
+[github.com/jessfraz/.vim](https://github.com/jessfraz/.vim).
+
+### Tests
+
+The tests use [shellcheck](https://github.com/koalaman/shellcheck). You don't
+need to install anything. They run in a container.
+
+```console
+$ make test
+```

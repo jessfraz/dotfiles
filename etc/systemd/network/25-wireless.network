@@ -1,0 +1,10 @@
+[Match]
+Name=w*
+
+[Network]
+DHCP=ipv4
+DNS=1.1.1.1
+DNS=1.0.0.1
+
+[DHCP]
+RouteMetric=20

@@ -1,0 +1,66 @@
+#!/bin/bash
+##############################################################################
+# createvm
+# -----------
+# Create a vm from an iso file
+#
+# Usage:
+# 	createvm [name] [path/to/.iso]
+#
+# :authors: Jess Frazelle, @jessfraz
+# :date: 26 March 2016
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+# Print a usage message and exit.
+usage(){
+	local name
+	name=$(basename "$0")
+
+	cat >&2 <<-EOF
+	${name} [name] [path/to/.iso]
+
+	This script assumes you have libvirtd running in a docker container named "kvm".
+	EOF
+	exit 1
+}
+
+# Print usage with --help or -h
+if [ "$#" -lt 2 ]; then
+	usage;
+fi
+
+main(){
+	local name=$1
+	local iso=$2
+	local guest_dir="/var/lib/libvirt/images/${name}"
+	local bridge=virt0
+
+	if [[ -z "$name" ]] || [[ -z "$iso" ]]; then
+		usage
+	fi
+
+	if [[ -d "$guest_dir" ]]; then
+		>&2 echo "Guest directory: $guest_dir already exists."
+		>&2 echo "Exiting..."
+	fi
+
+	# create a fully-allocated (non-sparse) raw file
+	docker exec -it kvm mkdir -p "$guest_dir"
+	docker exec -it kvm fallocate -l 16384M "${guest_dir}/guest.img"
+
+	# copy the iso into the kvm container
+	echo "Copying $iso into the container. This may take a bit..."
+	docker cp "$iso" "kvm:/tmp/${name}.iso"
+
+	# create the virtual machine
+	docker exec -it kvm virt-install -r 2048 --accelerate -n "$name" \
+		-f "$guest_dir/guest.img" \
+		--cdrom "/tmp/${name}.iso" \
+		--network "bridge=${bridge}" \
+		--os-type linux
+}
+
+main "$@"

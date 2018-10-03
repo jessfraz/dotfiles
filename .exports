@@ -15,13 +15,11 @@ export HISTIGNORE=" *:ls:cd:cd -:pwd:exit:date:* --help:* -h:pony:pony add *:pon
 export LANG="en_US.UTF-8";
 export LC_ALL="en_US.UTF-8";
 
-# Highlight section titles in manual pages
-export LESS_TERMCAP_md="${yellow}";
-
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X";
 
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
+export DBUS_SESSION_BUS_ADDRESS
+DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
 
 export TODOTXT_DEFAULT_ACTION=ls
 
@@ -32,4 +30,11 @@ export QT_DEVICE_PIXEL_RATIO=2
 
 # turn on go vendoring experiment
 export GO15VENDOREXPERIMENT=1
-export GOMAXPROCS=1
+
+export DOCKER_CONTENT_TRUST=1
+
+# if it's an ssh session export GPG_TTY
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
+	GPG_TTY=$(tty)
+	export GPG_TTY
+fi

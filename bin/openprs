@@ -4,7 +4,7 @@
 # -----------
 # Get the openprs for all of a users github repos
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 8 June 2015
 # :version: 0.0.1
 ##############################################################################
@@ -13,7 +13,7 @@ set -o pipefail
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
 	echo "Set the GITHUB_TOKEN env variable."
-	return 1
+	exit 1
 fi
 
 URI=https://api.github.com
@@ -21,15 +21,24 @@ API_VERSION=v3
 API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
-DEFAULT_PER_PAGE=100
+DEFAULT_PER_PAGE=20
 LAST_PAGE=1
+REPO_LAST_PAGE=1
 
 # get the last page from the headers
 get_last_page(){
-	header=${1%%" rel=\"last\""*}
+	local header=${1%%" rel=\"last\""*}
 	header=${header#*"rel=\"next\""}
 	header=${header%%">;"*}
-	LAST_PAGE=$(echo ${header#*"&page="} | bc 2>/dev/null)
+	LAST_PAGE=$(echo "${header#*'&page='}" | bc 2>/dev/null)
+}
+
+# get the repo last page from the headers
+get_repo_last_page(){
+	local header=${1%%" rel=\"last\""*}
+	header=${header#*"rel=\"next\""}
+	header=${header%%">;"*}
+	REPO_LAST_PAGE=$(echo "${header#*'&page='}" | bc 2>/dev/null)
 }
 
 get_pulls(){
@@ -37,12 +46,13 @@ get_pulls(){
 	local page=$2
 
 	# send the request
-	local response=$(curl -i -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${repo}/pulls?per_page=${DEFAULT_PER_PAGE}&page=${page}&state=open")
+	local response
+	response=$(curl -i -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${repo}/pulls?state=open&per_page=${DEFAULT_PER_PAGE}&page=${page}")
 
 	# seperate the headers and body into 2 variables
 	local head=true
-	local header=
-	local body=
+	local header
+	local body
 	while read -r line; do
 		if $head; then
 			if [[ $line = $'\r' ]]; then
@@ -57,25 +67,33 @@ get_pulls(){
 
 	get_last_page "${header}"
 
-	local length=$(echo $body | jq length)
+	local length
+	length=$(echo "$body" | jq length)
 
 	echo "${repo} has ${length} open PRs"
 
 	if [[ "$length" -gt 0 ]]; then
-		local pulls=$(echo $body | jq --raw-output '.[] | {number: .number, html_url: .html_url, title: .title, body: .body, created_at: .created_at, author: .base.repo.owner.login} | @base64')
+		local pulls
+		pulls=$(echo "$body" | jq --raw-output '.[] | {number: .number, html_url: .html_url, title: .title, body: .body, created_at: .created_at, author: .base.repo.owner.login} | @base64')
 		for p in $pulls; do
-			pull="$(echo $p | base64 --decode)"
-			local number=$(echo $pull | jq --raw-output '.number')
-			local html_url=$(echo $pull | jq --raw-output '.html_url')
-			local title=$(echo $pull | jq --raw-output '.title')
-			local body=$(echo $pull | jq --raw-output '.body')
-			local created_at=$(echo $pull | jq --raw-output '.created_at')
-			local author=$(echo $pull | jq --raw-output '.author')
+			pull="$(echo "$p" | base64 --decode)"
+			local number
+			number=$(echo "$pull" | jq --raw-output '.number')
+			local html_url
+			html_url=$(echo "$pull" | jq --raw-output '.html_url')
+			local title
+			title=$(echo "$pull" | jq --raw-output '.title')
+			local body
+			body=$(echo "$pull" | jq --raw-output '.body')
+			local created_at
+			created_at=$(echo "$pull" | jq --raw-output '.created_at')
+			local author
+			author=$(echo "$pull" | jq --raw-output '.author')
 
 			cat <<-EOF
 
 			${repo}#${number}: ${title}
-			`date  -d"${created_at}" +'%A, %B %d, %Y at %r'`
+			$(date  -d"${created_at}" +'%A, %B %d, %Y at %r')
 			${html_url}
 
 			@${author}: ${body}
@@ -88,24 +106,60 @@ get_pulls(){
 	fi
 }
 
+get_repos(){
+	local page=$1
 
-main(){
 	# send the request
-	local response=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/user/repos?per_page=${DEFAULT_PER_PAGE}")
-	local repos=$(echo $response | jq --raw-output '.[].full_name | tostring')
+	local response
+	response=$(curl -i -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/user/repos?affiliation=owner&per_page=${DEFAULT_PER_PAGE}&page=${page}")
+
+	# seperate the headers and body into 2 variables
+	local head=true
+	local header
+	local body
+	while read -r line; do
+		if $head; then
+			if [[ $line = $'\r' ]]; then
+				head=false
+			else
+				header="$header"$'\n'"$line"
+			fi
+		else
+			body="$body"$'\n'"$line"
+		fi
+	done < <(echo "${response}")
+
+	get_repo_last_page "${header}"
+
+	local repos
+	repos=$(echo "$body" | jq --raw-output '.[].full_name | tostring')
 
 	for repo in $repos; do
-		page=1
+		local page=1
 
 		get_pulls "${repo}" "${page}"
 
 		if [ ! -z "$LAST_PAGE" ] && [ "$LAST_PAGE" -ge "$page" ]; then
-			for page in  $(seq $((page + 1)) 1 ${LAST_PAGE}); do
-				echo "On page ${page} of ${LAST_PAGE}"
+			for page in  $(seq $((page + 1)) 1 "${LAST_PAGE}"); do
+				echo "[debug]: on page ${page} of ${LAST_PAGE}"
 				get_pulls "${repo}" "${page}"
 			done
 		fi
 	done
+}
+
+
+main(){
+	local page=1
+
+	get_repos "$page"
+
+	if [ ! -z "$REPO_LAST_PAGE" ] && [ "$REPO_LAST_PAGE" -ge "$page" ]; then
+		for page in  $(seq $((page + 1)) 1 "${REPO_LAST_PAGE}"); do
+			echo "[debug]: on repo page ${page} of ${REPO_LAST_PAGE}"
+			get_repos "${page}"
+		done
+	fi
 }
 
 main

@@ -7,7 +7,7 @@
 #
 # It will fetch from origin and push the changes to the mirror.
 #
-# :authors: Jess Frazelle, @jfrazelle
+# :authors: Jess Frazelle, @jessfraz
 # :date: 8 June 2015
 # :version: 0.0.1
 ##############################################################################
@@ -17,23 +17,24 @@ set -o pipefail
 update_mirrors() {
 	# find all the dirs in $HOME
 	find "$HOME" -maxdepth 1 -type d -not -path '*/\.*' -not -path "$HOME" -print0 | while read -d '' -r dir; do
-		# subshell because we cd
-		(
-		cd "$dir"
+	# subshell because we cd
+	(
+	cd "$dir"
 
-		# check the git remote
-		local ismirror=$(git config --get remote.origin.mirror 2>/dev/null)
-		if [[ "$ismirror" == "true" ]]; then
-			echo "$(basename "$dir") is a git mirror"
+	# check the git remote
+	local ismirror
+	ismirror=$(git config --get remote.origin.mirror 2>/dev/null)
+	if [[ "$ismirror" == "true" ]]; then
+		echo "$(basename "$dir") is a git mirror"
 
-			# fetch and push
-			git fetch -p origin
-			git push --mirror
+		# fetch and push
+		git fetch -p origin
+		git push --mirror
 
-			echo "Updated $(git config --get remote.origin.url) to $(git config --get remote.origin.pushurl)"
-		fi
-		)
-	done
+		echo "Updated $(git config --get remote.origin.url) to $(git config --get remote.origin.pushurl)"
+	fi
+	)
+done
 }
 
 update_mirrors "$@"

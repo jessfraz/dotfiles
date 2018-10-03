@@ -1,0 +1,110 @@
+#!/bin/bash
+##############################################################################
+# check-go-repos
+# -----------
+# Checks each public go repo for unification amongst the common bits.
+#
+# Usage:
+#       check-go-repos
+#
+# :authors: Jess Frazelle, @jessfraz
+# :date: 2 January 2018
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+if [[ -z "$GITHUB_TOKEN" ]]; then
+	echo "Set the GITHUB_TOKEN env variable."
+	exit 1
+fi
+
+URI=https://api.github.com
+API_VERSION=v3
+API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
+AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
+GITHUB_USER=${GITHUB_USER:-jessfraz}
+
+esc=$(printf '\033')
+red=${esc}'[0;31m'
+green=${esc}'[0;32m'
+blue=${esc}'[0;34m'
+reset=${esc}'[0m' # No Color
+
+repos=(
+amicontained
+apk-file
+audit
+bane
+battery
+contained.af
+certok
+cliaoke
+dockfmt
+ghb0t
+magneto
+netns
+netscan
+onion
+pastebinit
+pepper
+pony
+reg
+riddler
+s3server
+snippetlib
+sshb0t
+udict
+upmail
+weather
+)
+
+get_release(){
+	local repo=$1
+
+	local resp
+	resp=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${repo}/releases/latest" || true)
+	tag=$(echo "$resp" | jq -e --raw-output .tag_name || true)
+	export tag
+	local created_at
+	created_at=$(echo "$resp" | jq -e --raw-output .created_at || true)
+
+	echo -e "\\ttag -> ${blue}${tag}${reset}"
+	d=$(date --date="${created_at}" "+%A, %B %d, %Y at %H:%M %Z" 2>/dev/null || true)
+	echo -e "\\tcreated -> ${d}"
+}
+
+travis(){
+	docker run --rm \
+		-v "${HOME}/.travis:/root/.travis" \
+		-v "$(pwd):/usr/src/repo:ro" \
+		--workdir /usr/src/repo \
+		--log-driver none \
+		r.j3ss.co/travis "$@"
+}
+
+
+for repo in "${repos[@]}"; do
+	echo "[${repo}]"
+	# get the latest version
+	go get -u "github.com/${GITHUB_USER}/${repo}"
+	# create a subshell
+	(
+	cd "${GOPATH}/src/github.com/${GITHUB_USER}/${repo}"
+
+	# check that a Gopkg.toml and Gopkg.lock exists
+	if [[ ! -f "Gopkg.toml" ]] || [[ ! -f "Gopkg.lock" ]]; then
+		echo -e "\\tdep -> ${red}NO${reset}"
+	else
+		echo -e "\\tdep -> ${green}YES${reset}"
+	fi
+
+	# get the latest release
+	get_release "${GITHUB_USER}/${repo}"
+
+	# get the latest travis build
+	travis branches --repo "${GITHUB_USER}/${repo}" | head -n 2 | sed "s#failed#${red}failed${reset}#g" | sed "s#canceled#${red}canceled${reset}#g" | sed "s#errored#${red}errored${reset}#g" | sed "s#passed#${green}passed${reset}#g" | sed "s#${tag}#${blue}${tag}${reset}#g"
+	)
+
+	echo
+done

@@ -1,0 +1,243 @@
+#!/bin/bash
+##############################################################################
+# generate-go-project-files
+# -----------
+# Generates a .travis.yml, .gitignore, LICENSE, README.md, Makefile,
+# Dockerfile, VERSION.txt, and version/ files and directories.
+#
+# Usage:
+#       generate-go-project-files
+#
+# :authors: Jess Frazelle, @${PROJECT_DIR}
+# :date: 1 January 2018
+# :version: 0.0.1
+##############################################################################
+set -e
+set -o pipefail
+
+OWNER=${OWNER:-The Genuinetools Authors}
+
+BASE_PROJECT=${BASE_PROJECT:-genuinetools/pepper}
+BASE_PROJECT_NAME="$(basename "$BASE_PROJECT")"
+BASE_PROJECT_DIR="$(dirname "$BASE_PROJECT")"
+
+PROJECT_NAME="$(basename "$(pwd)")"
+PROJECT_DIR="$(basename "$(dirname "$(pwd)")")"
+PROJECT="${PROJECT_DIR}/${PROJECT_NAME}"
+
+if [[ "$PROJECT_DIR" == "jessfraz" ]]; then
+	OWNER="Jessica Frazelle"
+fi
+
+# Generate a file passed as an argument.
+generate_file(){
+	if [[ "$PROJECT" == "$BASE_PROJECT" ]]; then
+		# Skip getting the files in we are on the base project.
+		return
+	fi
+
+	file=$1
+
+	if [[ -z "$file" ]]; then
+		echo "Pass a file name to generate_file." 1>&2;
+		exit 1
+	fi
+
+	contents=$(curl -sSL "https://raw.githubusercontent.com/${BASE_PROJECT}/master/${file}")
+	contents=${contents//$BASE_PROJECT/$PROJECT}
+	contents=${contents//$BASE_PROJECT_NAME/$PROJECT_NAME}
+	contents=${contents//$BASE_PROJECT_DIR/$PROJECT_DIR}
+
+	# If the file is in a directory, create the directory first.
+	# shellcheck disable=SC1001
+	if [[ "$file" == *\/* ]]; then
+		dir="$(dirname "$file")"
+		echo "Creating directory $dir"
+		mkdir -p "$dir"
+	fi
+
+	if [[ "$file" == ".goosarch" ]] && [[ -f ".goosarch" ]]; then
+		# Return early so we don't overwrite it.
+		return
+	fi
+
+	echo "Writing $file"
+
+	echo "$contents" > "$file"
+}
+
+# Generate the LICENSE file.
+license(){
+	year=$(date +"%Y")
+	license_file="LICENSE"
+
+	echo "Writing $license_file"
+
+	cat <<-EOF > "$license_file"
+	The MIT License (MIT)
+
+	Copyright (c) $year $OWNER
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+	EOF
+}
+
+# Generate the VERSION.txt file.
+version(){
+	version_file="VERSION.txt"
+
+	# Only generate the version file if it doesn't exist already.
+	if [[ ! -f "$version_file" ]]; then
+		# If the old version file exists then move it.
+		if [[ -f "VERSION" ]]; then
+			echo "Moving old VERSION file to $version_file"
+			mv "VERSION" "$version_file"
+			return
+		fi
+		echo "Writing $version_file"
+
+		echo "v0.0.0" > "$version_file"
+	fi
+}
+
+# Generate the README.md file,
+readme(){
+	readme_file="README.md"
+
+	# Only generate the readme file if it doesn't exist already, otherwise try
+	# and update it.
+	if [[ -f "$readme_file" ]]; then
+		# Check if the travis line exists
+		old_line='[![Travis CI](https://travis-ci'
+		new_line='[![Travis CI](https://img\.shields\.io/travis/'"${PROJECT_DIR}/${PROJECT_NAME}"'\.svg?style=for-the-badge)](https://travis-ci\.org/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		n=$(grep -nF "$old_line" "$readme_file" | cut -f1 -d: || true)
+		if [[ "$n" != "" ]]; then
+			# Replace that line with the new line.
+			sed -i "${n}"'s#.*#'"${new_line}"'#' "$readme_file"
+		fi
+
+		# Add the godoc badge if it's not already there.
+		new_line='[![GoDoc](https://img\.shields\.io/badge/godoc-reference-5272B4\.svg?style=for-the-badge)](https://godoc\.org/github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the Travis CI badge line.
+			match_line='.*\[Travis CI\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Add the codacy badge if it's not already there.
+		new_line='[![Codacy](https://img.shields.io/codacy/grade/c2cbe5daa266419dbfbc2bfd23c5fff3.svg?style=for-the-badge)](https://app.codacy.com/app/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the GoDoc badge line.
+			match_line='.*\[Go Doc\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Add the releases badge if it's not already there.
+		new_line='[![Github All Releases](https://img.shields.io/github/downloads/'"${PROJECT_DIR}/${PROJECT_NAME}"'/total.svg?style=for-the-badge)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/releases)'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the Codacy badge line.
+			match_line='.*\[Codacy\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Check if the installation instructions line exists
+		new_line='For installation instructions from binaries please visit the [Releases Page](https://github\.com/'"${PROJECT_DIR}"/"${PROJECT_NAME}"'/releases)\.'
+		if ! grep -Fq "${new_line:0:50}" "$readme_file"; then
+			# Add the new line after the "#### Binaries" line.
+			match_line="#### Binaries"
+			# shellcheck disable=SC1117
+			sed -i $'\_'"${match_line}"'_a '"\\\n${new_line}" "$readme_file"
+		fi
+	else
+		echo "Writing $readme_file"
+
+		cat <<-EOF > "$readme_file"
+		# $PROJECT_NAME
+
+		[![Travis CI](https://img.shields.io/travis/${PROJECT_DIR}/${PROJECT_NAME}.svg?style=for-the-badge)](https://travis-ci.org/${PROJECT_DIR}/${PROJECT_NAME})
+		[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/${PROJECT_DIR}/${PROJECT_NAME})
+		[![Github All Releases](https://img.shields.io/github/downloads/${PROJECT_DIR}/${PROJECT_NAME}/total.svg?style=for-the-badge)](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases)
+
+		{DESCRIPTION}
+
+		* [Installation](README.md#installation)
+		   * [Binaries](README.md#binaries)
+		   * [Via Go](README.md#via-go)
+		* [Usage](README.md#usage)
+
+		## Installation
+
+		#### Binaries
+
+		For installation instructions from binaries please visit the [Releases Page](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases).
+
+		#### Via Go
+
+		\`\`\`console
+		$ go get github.com/${PROJECT_DIR}/${PROJECT_NAME}
+		\`\`\`
+
+		## Usage
+
+		\`\`\`console
+		\`\`\`
+		EOF
+	fi
+}
+
+travis(){
+	travis_file=".travis.yml"
+	echo "Updating $travis_file"
+
+	# Update the os and arch release file info with that from .goosarch.
+	files=""
+	mapfile -t osarches < <(cat .goosarch)
+	for osarch in "${osarches[@]}"; do
+		osarch=${osarch/\//-}
+		files+='\n          - cross/'"${PROJECT_NAME}-${osarch}"'\n'
+		files+='          - cross/'"${PROJECT_NAME}-${osarch}"'.md5\n'
+		files+='          - cross/'"${PROJECT_NAME}-${osarch}"'.sha256'
+	done
+
+	# Remove all the file lines from the travis file.
+	sed -i '\_.*- cross/'"${PROJECT_NAME}"'-*._d' "$travis_file"
+	sed -i 's#file:#file:'"${files}#" "$travis_file"
+
+	if [[ -r ".traviskey" ]]; then
+		# Update the secure key with the one in the dotfile.
+		key=$(cat .traviskey)
+		sed -i 's#secure:.*#secure: "'"${key}"'"#' "$travis_file"
+	fi
+}
+
+main(){
+	echo "Generating project files for ${PROJECT_NAME}..."
+
+	files=( ".travis.yml" ".gitignore" ".goosarch" "Makefile" "basic.mk" "Dockerfile" "version/version.go" )
+	for file in "${files[@]}"; do
+		generate_file "$file"
+	done
+
+	license
+	version
+	readme
+	travis
+}
+
+main

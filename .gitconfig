@@ -15,6 +15,9 @@
 	# Pull in remote changes for the current repository and all its submodules
 	p = !"git pull; git submodule foreach git pull origin master"
 
+	# Checkout a pull request from origin (of a github repository)
+	pr = !"pr() { git fetch origin pull/$1/head:pr-$1; git checkout pr-$1; }; pr"
+
 	# Clone a repository including all submodules
 	c = clone --recursive
 
@@ -55,12 +58,38 @@
 
 	# Remove branches that have already been merged with master
 	# a.k.a. ‘delete merged’
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p"
 
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
+
 	lg = log --color --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an (%G?)>%Creset' --abbrev-commit
+
 	mdiff = "!f() { git stash | head -1 | grep -q 'No local changes to save'; x=$?; git merge --no-commit $1 &>/dev/null; git add -u &>/dev/null; git diff --staged; git reset --hard &>/dev/null; test $x -ne 0 && git stash pop &>/dev/null; }; f"
+
+	# Codereview aliases
+	change = codereview change
+	gofmt = codereview gofmt
+	mail = codereview mail
+	pending = codereview pending
+	submit = codereview submit
+	sync = codereview sync
+
+	# from seth vargo https://gist.github.com/sethvargo/6b2f7b592853381690bfe3bd00947e8f
+	unreleased = "!f() { git fetch --tags && git diff $(git tag | tail -n 1); }; f"
+	up = !git pull origin master && git remote prune origin && git submodule update --init --recursive
+	undo = !git reset HEAD~1 --mixed
+	top = !git log --format=format:%an | sort | uniq -c | sort -r | head -n 20
+
+	# from trevor bramble https://twitter.com/TrevorBramble/status/774292970681937920
+	alias=!git config -l | grep ^alias | cut -c 7- | sort
+
+	# from myles borins https://github.com/TheAlphaNerd/Dot-files/blob/master/.gitconfig
+	# github broke some workflow... this will make it less painful
+	patchit = "!f() { echo $1.patch | sed s_pull/[0-9]*/commits_commit_ | xargs curl -L | git am --whitespace=fix; }; f"
+	# patchit = "!f() { curl -L $1.patch | git am --whitespace=fix; }; f"
+	patchit-please = "!f() { echo $1.patch | sed s_pull/[0-9]*/commits_commit_ | xargs curl -L | git am -3 --whitespace=fix; }; f"
+	# patchit-please = "!f() { curl -L $1.patch | git am -3 --whitespace=fix; }; f"
 
 [apply]
 
@@ -124,16 +153,12 @@
 	log = true
 
 [push]
+	# change to maching for machines with older versions of git 1.x.x
+	default = simple
 
-	# Use the Git 1.x.x default to avoid errors on machines with old Git
-	# installations. To use `simple` instead, add this to your `~/.extra` file:
-	# `git config --global push.default simple`. See http://git.io/mMah-w.
-	default = matching
-
-# URL shorthands
 [url "git@github.com:"]
 
-	insteadOf = https://github.com/
+	pushInsteadOf = https://github.com/
 	pushInsteadOf = "github:"
 	pushInsteadOf = "git://github.com/"
 
@@ -150,17 +175,11 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
-[user]
-	name = Jessica Frazelle
-	email = acidburn@docker.com
-	signingkey = 0x18F3685C0022BFF3
+
+# Uncomment if you want fetch to also get all github pull requests, this is rather
+# large on big repos.
 #[remote "origin"]
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
-[github]
-	user = jfrazelle
-#[init]
-#	templatedir = ~/.git_template/template
+
 [commit]
 	gpgsign = true
-[http]
-	cookiefile = /home/jessie/.gitcookies
