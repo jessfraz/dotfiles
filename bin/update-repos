@@ -13,14 +13,17 @@ while IFS= read -r -d '' dir; do
 
 		case "$base" in
 			".vim")
+				echo
 				echo "Running 'make update' in .vim repo..."
 				make update
 				;;
 			"dotfiles")
+				echo
 				echo "Running 'make' in dotfiles repo..."
 				make
 				;;
 			"configs")
+				echo
 				echo "Running 'make dotfiles' in configs repo..."
 				make dotfiles
 				;;
