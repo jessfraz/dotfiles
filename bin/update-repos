@@ -5,10 +5,28 @@ set -o pipefail
 while IFS= read -r -d '' dir; do
 	if [[ -d "${dir}/.git" ]]; then
 		base=$(basename "$dir")
-		echo "updating repo for ${base}..."
+		echo "Updating repo for ${base}..."
 		(
 		cd "$dir"
 		git pull
+
+		case "$base" in
+			".vim")
+				echo "Running 'make update' in .vim repo..."
+				make update
+				;;
+			"dotfiles")
+				echo "Running 'make' in dotfiles repo..."
+				make
+				;;
+			"configs")
+				echo "Running 'make dotfiles' in configs repo..."
+				make dotfiles
+				;;
+		esac
+
+		echo "Successfully updated ${base}!"
+		echo
 		)
 	fi
 done < <(find "${HOME}" -maxdepth 1 -type d ! -path "${HOME}" -print0)
