@@ -6,6 +6,7 @@ while IFS= read -r -d '' dir; do
 	if [[ -d "${dir}/.git" ]]; then
 		base=$(basename "$dir")
 		echo "Updating repo for ${base}..."
+		echo
 		(
 		cd "$dir"
 		git pull
@@ -25,6 +26,7 @@ while IFS= read -r -d '' dir; do
 				;;
 		esac
 
+		echo
 		echo "Successfully updated ${base}!"
 		echo
 		)
