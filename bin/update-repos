@@ -24,8 +24,8 @@ while IFS= read -r -d '' dir; do
 				;;
 			"configs")
 				echo
-				echo "Running 'make dotfiles' in configs repo..."
-				make dotfiles
+				echo "Running 'make dotfiles update' in configs repo..."
+				make dotfiles update
 				;;
 		esac
 
