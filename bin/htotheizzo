@@ -80,7 +80,7 @@ update_docker() {
 	tar -C /usr/local/bin --strip-components 1 -xzvf "$tmp_tar"
 	rm "${tmp_tar}"
 	# remove binaries we don't need
-	rm /usr/local/bin/docker-containerd*
+	rm -f /usr/local/bin/docker-containerd*
 	docker -v
 	)
 	chmod +x /usr/local/bin/docker*
@@ -168,9 +168,9 @@ update() {
 		# update
 		get_user;
 		update_apt;
-		update_runc;
-		update_containerd;
 		update_docker;
+		update_containerd;
+		update_runc;
 		update_kubectl;
 		update_rust;
 		update_bios;
