@@ -20,11 +20,11 @@ export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPA
 
 # The next line updates PATH for the Google Cloud SDK.
 # shellcheck source=/dev/null
-if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then source "${HOME}/google-cloud-sdk/path.bash.inc"; fi
+if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/google-cloud-sdk/path.bash.inc"; fi
 
 # The next line enables shell command completion for gcloud.
 # shellcheck source=/dev/null
-if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then source "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
+if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
 
 # update path for gnu coreutils, make & find on darwin
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
@@ -39,4 +39,4 @@ export PATH="${PATH}:${HOME}/depot_tools"
 
 # Add bash completion for Chromium depot_tools
 # shellcheck source=/dev/null
-if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then source "${HOME}/depot_tools/git_cl_completion.sh"; fi
+if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then . "${HOME}/depot_tools/git_cl_completion.sh"; fi
