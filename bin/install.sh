@@ -19,7 +19,7 @@ get_user() {
 		fi
 
 		# iterate through the user options and print them
-		PS3='Which user account should be used? '
+		PS3='command -v user account should be used? '
 
 		select opt in "${options[@]}"; do
 			readonly TARGET_USER=$opt
@@ -537,11 +537,11 @@ install_vim() {
 	)
 
 	# update alternatives to neovim
-	sudo update-alternatives --install /usr/bin/vi vi "$(which nvim)" 60
+	sudo update-alternatives --install /usr/bin/vi vi "$(command -v nvim)" 60
 	sudo update-alternatives --config vi
-	sudo update-alternatives --install /usr/bin/vim vim "$(which nvim)" 60
+	sudo update-alternatives --install /usr/bin/vim vim "$(command -v nvim)" 60
 	sudo update-alternatives --config vim
-	sudo update-alternatives --install /usr/bin/editor editor "$(which nvim)" 60
+	sudo update-alternatives --install /usr/bin/editor editor "$(command -v nvim)" 60
 	sudo update-alternatives --config editor
 
 	# install things needed for deoplete for vim

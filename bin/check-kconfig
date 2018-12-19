@@ -240,7 +240,7 @@ IP_NF_NAT NF_NAT NF_NAT_NEEDED
 POSIX_MQUEUE
 )
 check_flags "${flags[@]}"
-if [ "$kernelMajor" -lt 4 ] || ([ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -lt 8 ]); then
+if [ "$kernelMajor" -lt 4 ] || { [ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -lt 8 ];}; then
 	check_flags DEVPTS_MULTIPLE_INSTANCES
 fi
 
@@ -286,15 +286,15 @@ echo 'Optional Features for Containers:'
 	fi
 }
 
-if [ "$kernelMajor" -lt 4 ] || ([ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -le 5 ]); then
+if [ "$kernelMajor" -lt 4 ] || { [ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -le 5 ];}; then
 	check_flags MEMCG_KMEM
 fi
 
-if [ "$kernelMajor" -lt 3 ] || ([ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 18 ]); then
+if [ "$kernelMajor" -lt 3 ] || { [ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 18 ];}; then
 	check_flags RESOURCE_COUNTERS
 fi
 
-if [ "$kernelMajor" -lt 3 ] || ([ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 13 ]); then
+if [ "$kernelMajor" -lt 3 ] || { [ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 13 ];}; then
 	netprio=NETPRIO_CGROUP
 else
 	netprio=CGROUP_NET_PRIO
