@@ -6,6 +6,14 @@
 
 <!-- toc -->
 
+- [About](#about)
+  * [Installing](#installing)
+  * [Customizing](#customizing)
+- [Resources](#resources)
+  * [`.vim`](#vim)
+- [Contributing](#contributing)
+  * [Running the tests](#running-the-tests)
+
 <!-- tocstop -->
 
 ## About
