@@ -345,6 +345,7 @@ install_golang() {
 	go get github.com/genuinetools/udict
 	go get github.com/genuinetools/weather
 
+	go get github.com/jessfraz/gmailfilters
 	go get github.com/jessfraz/junk/sembump
 	go get github.com/jessfraz/secping
 	go get github.com/jessfraz/ship
