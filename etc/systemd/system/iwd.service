@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 ExecStartPre=-/sbin/modprobe -v ath10k_pci ath10k_core
-ExecStart=/lib/x86_64-linux-gnu/iwd/iwd --debug
+ExecStart=/usr/libexec/iwd --debug
 LimitNPROC=1
 Restart=on-failure
 StartLimitBurst=3
