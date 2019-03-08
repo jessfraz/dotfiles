@@ -243,7 +243,17 @@ install_dropbear() {
 	cp "/home/${TARGET_USER}/.ssh/authorized_keys" /etc/dropbear-initramfs/authorized_keys
 	sed -i 's/ssh-/no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="\/bin\/cryptroot-unlock" ssh-/g' /etc/dropbear-initramfs/authorized_keys
 
+	echo
+	echo "Updated config in /etc/dropbear-initramfs/config:"
+	cat /etc/dropbear-initramfs/config
+	echo
+
+	echo "Updated authorized_keys in /etc/dropbear-initramfs/authorized_keys:"
+	cat /etc/dropbear-initramfs/authorized_keys
+	echo
+
 	echo "Dropbear has been installed and configured."
+	echo
 	echo "You will now want to update your initramfs:"
 	printf "\\tupdate-initramfs -u\\n"
 }
