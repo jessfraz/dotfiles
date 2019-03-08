@@ -504,7 +504,7 @@ get_dotfiles() {
 	fi
 
 	cd "${HOME}/dotfiles"
-	
+
 	# set the correct origin
 	git remote set-url origin git@github.com:jessfraz/dotfiles.git
 
@@ -516,9 +516,6 @@ get_dotfiles() {
 
 	sudo systemctl enable "i3lock@${TARGET_USER}"
 	sudo systemctl enable suspend-sedation.service
-
-	sudo systemctl enable systemd-networkd systemd-resolved
-	sudo systemctl start systemd-networkd systemd-resolved
 
 	cd "$HOME"
 	mkdir -p ~/Pictures/Screenshots
@@ -563,6 +560,20 @@ install_vim() {
 	)
 }
 
+install_tools() {
+	echo "Installing golang..."
+	echo
+	install_golang;
+	echo
+	echo "Installing rust..."
+	echo
+	install_rust;
+	echo
+	echo "Installing scripts..."
+	echo
+	install_scripts;
+}
+
 usage() {
 	echo -e "install.sh\\n\\tThis script installs my basic setup for a debian laptop\\n"
 	echo "Usage:"
@@ -575,6 +586,7 @@ usage() {
 	echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
 	echo "  scripts                             - install scripts"
+	echo "  tools                               - install golang, rust, and scripts"
 	echo "  dropbear                            - install and configure dropbear initramfs"
 }
 
@@ -621,6 +633,8 @@ main() {
 		install_golang "$2"
 	elif [[ $cmd == "scripts" ]]; then
 		install_scripts
+	elif [[ $cmd == "tools" ]]; then
+		install_tools
 	elif [[ $cmd == "dropbear" ]]; then
 		check_is_sudo
 
