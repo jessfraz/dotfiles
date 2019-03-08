@@ -584,7 +584,7 @@ install_tools() {
 	echo
 	echo "Installing scripts..."
 	echo
-	sudo install_scripts;
+	sudo install.sh scripts;
 }
 
 usage() {
