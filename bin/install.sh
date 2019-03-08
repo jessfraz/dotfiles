@@ -504,6 +504,9 @@ get_dotfiles() {
 	fi
 
 	cd "${HOME}/dotfiles"
+	
+	# set the correct origin
+	git remote set-url origin git@github.com:jessfraz/dotfiles.git
 
 	# installs all the things
 	make
