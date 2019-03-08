@@ -36,6 +36,10 @@ dcleanup(){
 }
 
 update_docker() {
+	echo
+	echo "Updating docker..."
+	echo
+
 	local user_home="/home/${TARGET_USER}"
 	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
 
@@ -92,6 +96,10 @@ update_docker() {
 }
 
 update_containerd() {
+	echo
+	echo "Updating containerd..."
+	echo
+
 	local tmp_tar=/tmp/containerd.tar.gz
 	local containerd_version
 	containerd_version=$(curl -sSL "https://api.github.com/repos/containerd/containerd/releases" | jq --raw-output .[0].tag_name)
@@ -112,6 +120,10 @@ update_containerd() {
 }
 
 update_runc() {
+	echo
+	echo "Updating runc..."
+	echo
+
 	local runc_version
 	runc_version=$(curl -sSL "https://api.github.com/repos/opencontainers/runc/releases" | jq --raw-output .[0].tag_name)
 	runc_version=${runc_version#v}
@@ -125,6 +137,9 @@ update_runc() {
 }
 
 update_apt() {
+	echo
+	echo "Updating apt.."
+	echo
 	apt -y update
 	apt -y upgrade
 	apt -y autoremove
@@ -134,6 +149,9 @@ update_apt() {
 }
 
 update_kubectl() {
+	echo
+	echo "Updating kubectl..."
+	echo
 	KUBERNETES_VERSION=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 	curl -sSL "https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl" > /usr/local/bin/kubectl
 	chmod +x /usr/local/bin/kubectl
@@ -141,15 +159,35 @@ update_kubectl() {
 }
 
 update_rust() {
+	echo
+	echo "Updating rust..."
+	echo
+
+	command -v rustup >/dev/null 2>&1 || { echo >&2 "I require rust but it's not installed.  Aborting."; return; }
+
 	su -l -c "rustup update" "$TARGET_USER"
 	su -l -c "rustc --version" "$TARGET_USER"
 }
 
 update_bios() {
+	echo
 	echo "Checking for BIOS updates..."
+	echo
 	fwupdmgr refresh
 	fwupdmgr get-updates
 	fwupdmgr update
+}
+
+update_firmware() {
+	echo
+	echo "Updating firmware..."
+	echo
+	update-firmware
+
+	echo
+	echo "Updating iwlwifi..."
+	echo
+	update-iwlwifi
 }
 
 update() {
