@@ -564,14 +564,16 @@ install_tools() {
 	echo "Installing golang..."
 	echo
 	install_golang;
+
 	echo
 	echo "Installing rust..."
 	echo
 	install_rust;
+
 	echo
 	echo "Installing scripts..."
 	echo
-	install_scripts;
+	sudo install_scripts;
 }
 
 usage() {
