@@ -211,6 +211,7 @@ update() {
 		update_runc;
 		update_kubectl;
 		update_rust;
+		update_firmware;
 		update_bios;
 	else
 		echo "We don't have update functions for OS: ${OSTYPE}"
