@@ -198,7 +198,6 @@ base() {
 	apt -y upgrade
 
 	apt install -y \
-		alsa-utils \
 		apparmor \
 		bridge-utils \
 		cgroupfs-mount \
@@ -213,12 +212,8 @@ base() {
 		libpam-systemd \
 		libseccomp-dev \
 		pinentry-curses \
-		rxvt-unicode-256color \
 		scdaemon \
 		systemd \
-		usbmuxd \
-		xclip \
-		xcompmgr \
 		--no-install-recommends
 
 	setup_sudo
@@ -470,7 +465,13 @@ install_wmapps() {
 	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
 
 	apt update || true
-	apt install -y "${pkgs[@]}" --no-install-recommends
+	apt install -y "${pkgs[@]} " \
+		alsa-utils \
+		rxvt-unicode-256color \
+		usbmuxd \
+		xclip \
+		xcompmgr \
+		--no-install-recommends
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
