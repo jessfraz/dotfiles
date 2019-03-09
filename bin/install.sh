@@ -171,6 +171,7 @@ base_min() {
 		mount \
 		net-tools \
 		neovim \
+		silversearcher-ag \
 		ssh \
 		strace \
 		sudo \
