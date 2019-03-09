@@ -472,7 +472,7 @@ install_scripts() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
+	local pkgs=( feh i3 i3lock i3status scrot )
 
 	apt update || true
 	apt install -y "${pkgs[@]} " \
