@@ -473,11 +473,15 @@ install_scripts() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	local pkgs=( feh i3 i3lock i3status scrot suckless-tools )
-
 	apt update || true
-	apt install -y ${pkgs[@]}  \
+	apt install -y \
 		alsa-utils \
+		feh \
+		i3 \
+		i3lock \
+		i3status \
+		scrot \
+		suckless-tools \
 		rxvt-unicode-256color \
 		usbmuxd \
 		xclip \
