@@ -474,7 +474,7 @@ gitsetoriginnopush() {
 
 xrandrNYC() {
 	# This function sets the xrandr display modes for my desk in NYC.
-	xrandr --output eDP-1 --primary --mode 3840x2160 --rate 60 --below DP-2-2 \
-		--output DP-2-2 --mode 3840x2160 --rate 60  --pos 0x900  \
-		--output DP-1-2 --mode 3840x2160 --rate 60  --rotate left --pos 3840x0
+	xrandr --output eDP-1 --primary --mode 3840x2160 --rate 60 --below DP-1-2 \
+		--output DP-1-2 --mode 3840x2160 --rate 60  --pos 0x900  \
+		--output DP-2-2 --mode 3840x2160 --rate 60  --rotate left --pos 3840x0
 	}
