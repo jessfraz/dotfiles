@@ -16,3 +16,4 @@ SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="cc:2f:71:cd:78:c
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="a0:c5:89:89:1b:06", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="9c:b6:d0:8a:39:f1", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="94:b8:6d:21:bd:76", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="9c:b6:d0:97:64:91", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
