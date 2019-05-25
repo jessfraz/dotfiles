@@ -171,6 +171,7 @@ base_min() {
 		mount \
 		net-tools \
 		neovim \
+		policykit-1 \
 		silversearcher-ag \
 		ssh \
 		strace \
