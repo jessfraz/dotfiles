@@ -25,8 +25,8 @@ get_user() {
 			readonly TARGET_USER=$opt
 			break
 		done
-	fi
-}
+		fi
+	}
 
 check_is_sudo() {
 	if [ "$EUID" -ne 0 ]; then
@@ -552,6 +552,7 @@ install_vim() {
 	sudo update-alternatives --config vim
 	sudo update-alternatives --install /usr/bin/editor editor "$(command -v vim)" 60
 	sudo update-alternatives --config editor
+	)
 }
 
 install_tools() {
