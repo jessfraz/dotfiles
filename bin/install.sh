@@ -53,12 +53,6 @@ setup_sources_min() {
 	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
 	EOF
 
-	# neovim
-	cat <<-EOF > /etc/apt/sources.list.d/neovim.list
-	deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu xenial main
-	EOF
-
 	# iovisor/bcc-tools
 	cat <<-EOF > /etc/apt/sources.list.d/iovisor.list
 	deb https://repo.iovisor.org/apt/xenial xenial main
@@ -66,9 +60,6 @@ setup_sources_min() {
 
 	# add the git-core ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
-
-	# add the neovim ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DBB0BE9366964F134855E2255F96FCF8231B6DD
 
 	# add the iovisor/bcc-tools gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 648A4A16A23015EEF4A66B8E4052245BD4284CDD
@@ -170,7 +161,6 @@ base_min() {
 		make \
 		mount \
 		net-tools \
-		neovim \
 		policykit-1 \
 		silversearcher-ag \
 		ssh \
@@ -180,6 +170,7 @@ base_min() {
 		tree \
 		tzdata \
 		unzip \
+		vim \
 		xz-utils \
 		zip \
 		--no-install-recommends
@@ -554,27 +545,13 @@ install_vim() {
 	make install
 	)
 
-	# update alternatives to neovim
-	sudo update-alternatives --install /usr/bin/vi vi "$(command -v nvim)" 60
+	# update alternatives to vim
+	sudo update-alternatives --install /usr/bin/vi vi "$(command -v vim)" 60
 	sudo update-alternatives --config vi
-	sudo update-alternatives --install /usr/bin/vim vim "$(command -v nvim)" 60
+	sudo update-alternatives --install /usr/bin/vim vim "$(command -v vim)" 60
 	sudo update-alternatives --config vim
-	sudo update-alternatives --install /usr/bin/editor editor "$(command -v nvim)" 60
+	sudo update-alternatives --install /usr/bin/editor editor "$(command -v vim)" 60
 	sudo update-alternatives --config editor
-
-	# install things needed for deoplete for vim
-	sudo apt update || true
-
-	sudo apt install -y \
-		python3-pip \
-		python3-setuptools \
-		--no-install-recommends
-
-	pip3 install -U \
-		setuptools \
-		wheel \
-		neovim
-	)
 }
 
 install_tools() {
