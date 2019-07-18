@@ -447,12 +447,6 @@ xname(){
 		-e "\${g; p}"
 }
 
-dell_monitor() {
-	xrandr --newmode "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
-	xrandr --addmode  DP1 "3840x2160_30.00"
-	xrandr --output eDP1 --auto --primary --output DP1 --mode 3840x2160_30.00 --above eDP1 --rate 30
-}
-
 govendorcheck() {
 	# shellcheck disable=SC2046
 	vendorcheck -u ./... | awk '{print $NF}' | sed -e "s#^github.com/jessfraz/$(basename $(pwd))/##"
@@ -472,9 +466,9 @@ gitsetoriginnopush() {
 	git remote set-url --push origin no_push
 }
 
-xrandrNYC() {
+homeMonitorSetup() {
 	# This function sets the xrandr display modes for my desk in NYC.
 	xrandr --output eDP-1 --primary --mode 3840x2160 --rate 60 --below DP-1-2 \
-		--output DP-1-2 --mode 3840x2160 --rate 60  --pos 0x900  \
-		--output DP-2-2 --mode 3840x2160 --rate 60  --rotate left --pos 3840x0
-	}
+		--output DP-2-2 --mode 3840x2160 --rate 60  --rotate normal --pos 0x900  \
+		--output DP-1-2 --mode 3840x2160 --rate 60  --rotate left --pos 3840x0
+}
