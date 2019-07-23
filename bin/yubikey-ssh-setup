@@ -39,8 +39,8 @@ restart_agent(){
 	kill -9 $(pidof scdaemon) >/dev/null 2>&1 || true
 	# shellcheck disable=SC2046
 	kill -9 $(pidof gpg-agent) >/dev/null 2>&1 || true
-	gpg-connect-agent /bye >/dev/null 2>&1
-	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+	gpg-connect-agent /bye >/dev/null 2>&1 || true
+	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1 || true
 }
 
 setup_gnupghome(){
