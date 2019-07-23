@@ -92,7 +92,7 @@ update_docker() {
 	# enable and start docker
 	systemctl daemon-reload
 	systemctl enable docker
-	systemctl start docker
+	systemctl start docker || true
 }
 
 update_containerd() {
