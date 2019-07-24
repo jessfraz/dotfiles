@@ -549,8 +549,6 @@ install_vim() {
 	# update alternatives to vim
 	sudo update-alternatives --install /usr/bin/vi vi "$(command -v vim)" 60
 	sudo update-alternatives --config vi
-	sudo update-alternatives --install /usr/bin/vim vim "$(command -v vim)" 60
-	sudo update-alternatives --config vim
 	sudo update-alternatives --install /usr/bin/editor editor "$(command -v vim)" 60
 	sudo update-alternatives --config editor
 	)
