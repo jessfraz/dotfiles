@@ -1,8 +1,8 @@
 # i3lock on commputer sleep
-#	Source: https://bbs.archlinux.org/viewtopic.php?pid=1170536#p1170536 by 65kid
-#	Also: https://wiki.debian.org/ScreenLockingOnSleep
 [Unit]
 Description=i3lock
+Documentation=https://bbs.archlinux.org/viewtopic.php?pid=1170536#p1170536
+Documentation=https://wiki.debian.org/ScreenLockingOnSleep
 Before=suspend.target
 
 [Service]
