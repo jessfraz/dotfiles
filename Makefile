@@ -31,6 +31,8 @@ dotfiles: ## Installs the dotfiles.
 	fi;
 	mkdir -p $(HOME)/Pictures;
 	ln -snf $(CURDIR)/central-park.jpg $(HOME)/Pictures/central-park.jpg;
+	xrdb -merge $(HOME)/.Xdefaults
+	xrdb -merge $(HOME)/.Xresources
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
