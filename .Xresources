@@ -93,8 +93,8 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 ! -- Fonts -- !
-URxvt.font: xft:Inconsolata:pixelsize=37:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
-URxvt.boldFont: xft:Inconsolata:style=bold:pixelsize=37:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
+URxvt.font: xft:Consolas:pixelsize=37:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
+URxvt.boldFont: xft:Consolas:style=bold:pixelsize=37:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
 
 !!*faceSize:              10
 *bellIsUrgent:          true
