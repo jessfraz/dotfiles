@@ -1125,6 +1125,7 @@ weematrix(){
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
+		-v "${HOME}/.weechat-matrix:/home/user/.weechat" \
 		--name weematrix \
 		${DOCKER_REPO_PREFIX}/weechat-matrix
 }
