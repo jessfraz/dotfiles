@@ -1120,6 +1120,14 @@ watchman(){
 		--name watchman \
 		${DOCKER_REPO_PREFIX}/watchman --foreground
 }
+weematrix(){
+	del_stopped weematrix
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		--name weematrix \
+		${DOCKER_REPO_PREFIX}/weechat-matrix
+}
 weeslack(){
 	del_stopped weeslack
 
