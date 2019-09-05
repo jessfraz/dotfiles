@@ -1124,13 +1124,25 @@ weematrix(){
 	del_stopped weematrix
 
 	docker run --rm -it \
+		--user root \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
+		${DOCKER_REPO_PREFIX}/weechat-matrix \
+		chown -R user /home/user/.weechat
+
+	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
-		-v "${HOME}/.weechat-matrix:/home/user/.weechat" \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
 		--name weematrix \
 		${DOCKER_REPO_PREFIX}/weechat-matrix
 }
 weeslack(){
 	del_stopped weeslack
+
+	docker run --rm -it \
+		--user root \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
+		${DOCKER_REPO_PREFIX}/wee-slack \
+		chown -R user /home/user/.weechat
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
