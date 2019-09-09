@@ -105,7 +105,7 @@ Comment[vi]=Truy cập Internet
 Comment[zh_CN]=访问互联网
 Comment[zh_HK]=連線到網際網路
 Comment[zh_TW]=連線到網際網路
-Exec=/usr/bin/google-chrome-stable %U
+Exec=/usr/bin/google-chrome-stable --force-device-scale-factor=2 %U
 StartupNotify=true
 Terminal=false
 Icon=google-chrome
