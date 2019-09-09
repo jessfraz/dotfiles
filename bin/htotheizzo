@@ -223,7 +223,7 @@ update() {
 
 main() {
 	local arg=$1
-	if [[ ! -z "$arg" ]]; then
+	if [[ -n "$arg" ]]; then
 		help
 	else
 		update

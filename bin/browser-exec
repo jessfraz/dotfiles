@@ -29,7 +29,7 @@ browser_exec(){
 		else
 			# maybe we are running in runc
 			chrome_pid=$(pgrep -f "chrome --user-data" | head -n 1 2>/dev/null)
-			if [[ ! -z "$chrome_pid" ]]; then
+			if [[ -n "$chrome_pid" ]]; then
 				# nsenter the chrome runc container
 				sudo nsenter -t "$chrome_pid" --pid --user --net --uts --mount --ipc /usr/bin/google-chrome --user-data-dir=/data "$@" 2>/dev/null
 			else
