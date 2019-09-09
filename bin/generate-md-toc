@@ -65,7 +65,7 @@ gh_toc_md2html() {
 	fi
 
 	URL=https://api.github.com/markdown/raw
-	if [[ ! -z "$GITHUB_TOKEN" ]]; then
+	if [[ -n "$GITHUB_TOKEN" ]]; then
 		URL="${URL}?access_token=${GITHUB_TOKEN}"
 	fi
 	curl -s --user-agent "$gh_user_agent" \
