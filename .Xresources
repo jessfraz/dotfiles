@@ -1,3 +1,7 @@
+! vim: set ft=xdefaults:
+! Set $TERM variable
+URxvt.termName: rxvt-unicode-256color
+
 !! drop in Solarized colorscheme for Xresources/Xdefaults
 
 !!SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
@@ -93,8 +97,19 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 ! -- Fonts -- !
-URxvt.font: xft:Consolas:pixelsize=37:antialias=true:hinting=full,xft:Noto Color Emoji:style=Regular:pixelsize=37:antialias=true:hinting=full,xft:Symbola:pixelsize=37:antialias=true:hinting=full
-URxvt.boldFont: xft:Consolas:style=bold:pixelsize=37:antialias=true:hinting=full,xft:Noto Color Emoji:style=Regular:pixelsize=37:antialias=true:hinting=full,xft:Symbola:pixelsize=37:antialias=true:hinting=full
+URxvt.font: xft:Consolas:style=Regular:pixelsize=37:antialias=true:hinting=full,\
+            xft:Noto Color Emoji,\
+            xft:Symbola:pixelsize=37:antialias=true:hinting=full
+URxvt.boldFont: xft:Consolas:style=Bold:pixelsize=37:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=37:antialias=true:hinting=full
+URxvt.italicFont: xft:Consolas:style=Italic:pixelsize=37:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=37:antialias=true:hinting=full
+URxvt.boldItalicFont: xft:Consolas:style=Bold Italic:pixelsize=37:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=37:antialias=true:hinting=full
+URxvt.letterSpace: 0
 
 !!*faceSize:              10
 *bellIsUrgent:          true
