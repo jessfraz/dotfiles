@@ -25,16 +25,17 @@ dotfiles: ## Installs the dotfiles.
 	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
-	mkdir -p $(HOME)/.config/fontconfig;
-	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf;
 	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile;
 	if [ -f /usr/local/bin/pinentry ]; then \
 		sudo ln -snf /usr/bin/pinentry /usr/local/bin/pinentry; \
 	fi;
 	mkdir -p $(HOME)/Pictures;
 	ln -snf $(CURDIR)/central-park.jpg $(HOME)/Pictures/central-park.jpg;
+	mkdir -p $(HOME)/.config/fontconfig;
+	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf;
 	xrdb -merge $(HOME)/.Xdefaults || true
 	xrdb -merge $(HOME)/.Xresources || true
+	fc-cache -f -v
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
