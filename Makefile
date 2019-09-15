@@ -35,7 +35,7 @@ dotfiles: ## Installs the dotfiles.
 	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf;
 	xrdb -merge $(HOME)/.Xdefaults || true
 	xrdb -merge $(HOME)/.Xresources || true
-	fc-cache -f -v
+	fc-cache -f -v || true
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
