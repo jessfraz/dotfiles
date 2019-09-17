@@ -165,8 +165,8 @@ update_rust() {
 
 	command -v rustup >/dev/null 2>&1 || { echo >&2 "I require rust but it's not installed.  Aborting."; return; }
 
-	su -l -c "rustup update" "$TARGET_USER"
-	su -l -c "rustc --version" "$TARGET_USER"
+	su -c "rustup update" "$TARGET_USER"
+	su -c "rustc --version" "$TARGET_USER"
 }
 
 update_bios() {
