@@ -388,6 +388,7 @@ kicad(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e "DISPLAY=unix${DISPLAY}" \
 		-v "${HOME}/kicad:/root/kicad" \
+		-e QT_DEVICE_PIXEL_RATIO \
 		--name kicad \
 		${DOCKER_REPO_PREFIX}/kicad
 }
