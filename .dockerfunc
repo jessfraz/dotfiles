@@ -388,6 +388,8 @@ kicad(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e "DISPLAY=unix${DISPLAY}" \
 		-v "${HOME}/kicad:/root/kicad" \
+		-v "${HOME}/.cache/kicad:/root/.cache/kicad" \
+		-v "${HOME}/.config/kicad:/root/.config/kicad" \
 		-e QT_DEVICE_PIXEL_RATIO \
 		-e GDK_SCALE \
 		-e GDK_DPI_SCALE \
