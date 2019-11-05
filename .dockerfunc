@@ -389,6 +389,8 @@ kicad(){
 		-e "DISPLAY=unix${DISPLAY}" \
 		-v "${HOME}/kicad:/root/kicad" \
 		-e QT_DEVICE_PIXEL_RATIO \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
 		--name kicad \
 		${DOCKER_REPO_PREFIX}/kicad
 }
