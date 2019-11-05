@@ -391,6 +391,7 @@ kicad(){
 		-e QT_DEVICE_PIXEL_RATIO \
 		-e GDK_SCALE \
 		-e GDK_DPI_SCALE \
+		--device /dev/dri \
 		--name kicad \
 		${DOCKER_REPO_PREFIX}/kicad
 }
