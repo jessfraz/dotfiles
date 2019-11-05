@@ -602,7 +602,6 @@ openscad(){
 		-e GDK_DPI_SCALE \
 		--device /dev/dri \
 		--name openscad \
-		--disable-content-trust \
 		${DOCKER_REPO_PREFIX}/openscad
 }
 opensnitch(){
