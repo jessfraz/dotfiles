@@ -59,6 +59,7 @@ for_window [class="Kicad"] floating enable
 for_window [class="Logic"] floating enable
 for_window [class="Neoman"] floating enable
 for_window [class="NES"] floating enable
+for_window [class="OpenSCAD"] floating enable
 for_window [class="Pidgin"] floating enable
 for_window [class="Portal"] floating enable
 for_window [class="RStudio"] floating enable
