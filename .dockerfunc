@@ -588,6 +588,23 @@ now(){
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/now "$@"
 }
+openscad(){
+	del_stopped openscad
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v "${HOME}/openscad:/root/openscad" \
+		-v "${HOME}/.config/OpenSCAD:/root/.config/OpenSCAD" \
+		-e QT_DEVICE_PIXEL_RATIO \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--device /dev/dri \
+		--name openscad \
+		--disable-content-trust \
+		${DOCKER_REPO_PREFIX}/openscad
+}
 opensnitch(){
 	del_stopped opensnitchd
 	del_stopped opensnitch
