@@ -44,9 +44,11 @@ generate_file(){
 	fi
 
 	contents=$(curl -sSL "https://raw.githubusercontent.com/${BASE_PROJECT}/master/${file}")
-	contents=${contents//$BASE_PROJECT/$PROJECT}
-	contents=${contents//$BASE_PROJECT_NAME/$PROJECT_NAME}
-	contents=${contents//$BASE_PROJECT_DIR/$PROJECT_DIR}
+	if [[ "$file" != ".github/workflows/make-release.yml" ]]; then
+		contents=${contents//$BASE_PROJECT/$PROJECT}
+		contents=${contents//$BASE_PROJECT_NAME/$PROJECT_NAME}
+		contents=${contents//$BASE_PROJECT_DIR/$PROJECT_DIR}
+	fi
 
 	# If the file is in a directory, create the directory first.
 	# shellcheck disable=SC1001
@@ -124,19 +126,27 @@ readme(){
 	# and update it.
 	if [[ -f "$readme_file" ]]; then
 		# Check if the travis line exists
-		old_line='[![Travis CI](https://travis-ci'
-		new_line='[![Travis CI](https://img\.shields\.io/travis/'"${PROJECT_DIR}/${PROJECT_NAME}"'\.svg?style=for-the-badge)](https://travis-ci\.org/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		old_line='[![Travis CI](https://'
+		new_line='![make-all](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20all/badge\.svg)'
 		n=$(grep -nF "$old_line" "$readme_file" | cut -f1 -d: || true)
 		if [[ "$n" != "" ]]; then
 			# Replace that line with the new line.
 			sed -i "${n}"'s#.*#'"${new_line}"'#' "$readme_file"
 		fi
 
+		# Add the make image badge if it's not already there.
+		new_line='![make-image](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20image/badge\.svg)'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the Travis CI badge line.
+			match_line='.*\[make-all\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
 		# Add the godoc badge if it's not already there.
 		new_line='[![GoDoc](https://img\.shields\.io/badge/godoc-reference-5272B4\.svg?style=for-the-badge)](https://godoc\.org/github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
 		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
 			# Add the new line after the Travis CI badge line.
-			match_line='.*\[Travis CI\]*.'
+			match_line='.*\[make-image\]*.'
 			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
 		fi
 
