@@ -170,8 +170,8 @@ readme(){
 		cat <<-EOF > "$readme_file"
 		# $PROJECT_NAME
 
-		![make-all](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/workflows/make-all/badge.svg)
-![make-image](https://github.com/oxidecomputer/${PROJECT_DIR}/${PROJECT_NAME}/make-image/badge.svg)
+		![make all](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/workflows/make%20all/badge.svg)
+		![make image](https://github.com/oxidecomputer/${PROJECT_DIR}/${PROJECT_NAME}/make%20image/badge.svg)
 		[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/${PROJECT_DIR}/${PROJECT_NAME})
 		[![Github All Releases](https://img.shields.io/github/downloads/${PROJECT_DIR}/${PROJECT_NAME}/total.svg?style=for-the-badge)](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases)
 
