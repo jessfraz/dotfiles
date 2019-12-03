@@ -410,6 +410,9 @@ kvm(){
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-v "${HOME}/kvm:/root/kvm" \
 		-e "DISPLAY=unix${DISPLAY}" \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		-e QT_DEVICE_PIXEL_RATIO \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
 		--group-add audio \
