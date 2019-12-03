@@ -405,10 +405,10 @@ kvm(){
 	modprobe kvm
 
 	docker run -d \
+		--tmpfs /var/run \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		-v /run/libvirt:/var/run/libvirt \
-		-v "${HOME}/Downloads:/root/Downloads" \
+		-v "${HOME}/kvm:/root/kvm" \
 		-e "DISPLAY=unix${DISPLAY}" \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
