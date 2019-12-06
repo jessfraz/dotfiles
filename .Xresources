@@ -1,6 +1,6 @@
 ! vim: set ft=xdefaults:
 ! Set $TERM variable
-URxvt.termName: rxvt-unicode-256color
+URxvt.termName: rxvt-unicode
 
 !! drop in Solarized colorscheme for Xresources/Xdefaults
 
