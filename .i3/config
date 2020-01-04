@@ -4,7 +4,7 @@
 
 set $mod Mod4
 set $term urxvt
-set $menu i3-dmenu-desktop
+set $menu i3-dmenu-desktop --dmenu="dmenu -i -fn 'Consolas:pixelsize=26'"
 set $barcmd i3status
 set $lockcmd i3lock
 
