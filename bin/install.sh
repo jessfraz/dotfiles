@@ -524,7 +524,6 @@ get_dotfiles() {
 	# systemctl --user enable dbus.socket
 
 	sudo systemctl enable "i3lock@${TARGET_USER}"
-	sudo systemctl enable suspend-sedation.service
 
 	cd "$HOME"
 	mkdir -p ~/Pictures/Screenshots
