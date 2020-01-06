@@ -9,7 +9,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Choose a user account to use for this installation
 get_user() {
-	if [ -z "${TARGET_USER-}" ]; then
+	if [[ -z "${TARGET_USER-}" ]]; then
 		mapfile -t options < <(find /home/* -maxdepth 0 -printf "%f\\n" -type d)
 		# if there is only one option just use that user
 		if [ "${#options[@]}" -eq "1" ]; then
@@ -25,8 +25,8 @@ get_user() {
 			readonly TARGET_USER=$opt
 			break
 		done
-		fi
-	}
+	fi
+}
 
 check_is_sudo() {
 	if [ "$EUID" -ne 0 ]; then
