@@ -468,11 +468,15 @@ install_scripts() {
 install_wmapps() {
 	apt update || true
 	apt install -y \
-		alsa-utils \
+		bluez \
+		bluez-firmware \
 		feh \
 		i3 \
 		i3lock \
 		i3status \
+		pulseaudio \
+		pulseaudio-module-bluetooth \
+		pulsemixer \
 		scrot \
 		suckless-tools \
 		rxvt-unicode-256color \
@@ -480,6 +484,12 @@ install_wmapps() {
 		xclip \
 		xcompmgr \
 		--no-install-recommends
+
+	# start and enable pulseaudio
+	systemctl --user daemon-reload
+	systemctl --user enable pulseaudio.service
+	systemctl --user enable pulseaudio.socket
+	systemctl --user start pulseaudio.service
 
 	# update clickpad settings
 	mkdir -p /etc/X11/xorg.conf.d/
