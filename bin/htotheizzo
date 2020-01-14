@@ -167,6 +167,7 @@ update_rust() {
 
 	su -c "rustup update" "$TARGET_USER"
 	su -c "rustc --version" "$TARGET_USER"
+	su -c "rustup completions bash" > "/etc/bash_completion.d/rustup"
 }
 
 update_bios() {
