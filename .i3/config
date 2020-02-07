@@ -4,7 +4,7 @@
 
 set $mod Mod4
 set $term urxvt
-set $menu i3-dmenu-desktop --dmenu="dmenu -i -fn 'Consolas:pixelsize=20'"
+set $menu rofi -show drun -theme "solarized_alternate"
 set $barcmd i3status
 set $lockcmd i3lock
 
