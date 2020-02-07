@@ -174,7 +174,7 @@ update_bios() {
 	echo
 	echo "Checking for BIOS updates..."
 	echo
-	fwupdmgr refresh
+	fwupdmgr refresh --force
 	fwupdmgr get-updates
 	fwupdmgr update
 }
