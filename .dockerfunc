@@ -221,6 +221,20 @@ consul(){
 	hostess add consul "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' consul)"
 	browser-exec "http://consul:8500"
 }
+cura(){
+	del_stopped cura
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v "${HOME}/cura:/root/cura" \
+		-v "${HOME}/.cache/cura:/root/.cache/cura" \
+		-v "${HOME}/.config/cura:/root/.config/cura" \
+		--device /dev/dri \
+		--name cura \
+		${DOCKER_REPO_PREFIX}/cura
+}
 dcos(){
 	docker run -it --rm \
 		-v "${HOME}/.dcos:/root/.dcos" \
