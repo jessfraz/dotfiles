@@ -16,8 +16,7 @@ fi;
 prompt_git() {
     local gs='' s='' branch='';
     gs=$(git status --show-stash 2>&1) || return;
-    branch=$(echo "$gs" | head -n1)
-    branch=${branch#"On branch "}
+    [[ "$gs" =~ On\ branch\ ([[:print:]]*) ]] && branch=${BASH_REMATCH[1]} # credit @rasa. see https://github.com/jessfraz/dotfiles/pull/38#discussion_r382945541
     [[ "$gs" =~ "Changes to be committed:" ]] && s+="+";
     [[ "$gs" =~ "Changes not staged for commit:" ]] && s+="!";
     [[ "$gs" =~ "Untracked files" ]] && s+="?";
