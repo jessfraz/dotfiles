@@ -251,7 +251,7 @@ figma() {
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		-e DISPLAY=unix$DISPLAY \
+		-e "DISPLAY=unix${DISPLAY}" \
 		--name figma \
 		${DOCKER_REPO_PREFIX}/figma-wine bash
 }
