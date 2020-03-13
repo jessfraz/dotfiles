@@ -253,7 +253,7 @@ figma() {
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-e DISPLAY=unix$DISPLAY \
 		--name figma \
-		r.j3ss.co/figma-wine bash
+		${DOCKER_REPO_PREFIX}/figma-wine bash
 }
 firefox(){
 	del_stopped firefox
