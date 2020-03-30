@@ -73,6 +73,7 @@ for_window [class="VirtualBox"] floating enable
 for_window [class="vlc"] floating enable
 for_window [class="Wine"] floating enable
 for_window [class="Wireshark"] floating enable
+for_window [class="zoom"] floating enable
 
 # lock screen
 bindsym $mod+l exec $lockcmd -c 111111
