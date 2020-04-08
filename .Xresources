@@ -98,18 +98,18 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 ! -- Fonts -- !
-URxvt.font: xft:IBM Plex Mono:style=Regular:pixelsize=22:antialias=true:hinting=full,\
+URxvt.font: xft:IBM Plex Mono:style=Regular:pixelsize=32:antialias=true:hinting=full,\
             xft:Noto Color Emoji,\
-            xft:Symbola:pixelsize=22:antialias=true:hinting=full
-URxvt.boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=22:antialias=true:hinting=full,\
+            xft:Symbola:pixelsize=32:antialias=true:hinting=full
+URxvt.boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=32:antialias=true:hinting=full,\
                 xft:Noto Color Emoji,\
-                xft:Symbola:pixelsize=22:antialias=true:hinting=full
-URxvt.italicFont: xft:IBM Plex Mono:style=Italic:pixelsize=22:antialias=true:hinting=full,\
+                xft:Symbola:pixelsize=32:antialias=true:hinting=full
+URxvt.italicFont: xft:IBM Plex Mono:style=Italic:pixelsize=32:antialias=true:hinting=full,\
                 xft:Noto Color Emoji,\
-                xft:Symbola:pixelsize=22:antialias=true:hinting=full
-URxvt.boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=22:antialias=true:hinting=full,\
+                xft:Symbola:pixelsize=32:antialias=true:hinting=full
+URxvt.boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=32:antialias=true:hinting=full,\
                 xft:Noto Color Emoji,\
-                xft:Symbola:pixelsize=22:antialias=true:hinting=full
+                xft:Symbola:pixelsize=32:antialias=true:hinting=full
 URxvt.letterSpace: 0
 
 !!*faceSize:              10
