@@ -38,6 +38,12 @@ while read -r line; do
 	fi
 done <<< "$DEVICES"
 
+home_monitors() {
+	xrandr --output eDP1 --off \
+		--output DP2-2 --mode 3840x2160 --rate 60 --rotate normal --pos 0x900 \
+		--output DP1-2 --mode 3840x2160 --rate 60 --rotate left --pos 3840x0
+}
+
 # shellcheck disable=SC2154
 if [[ -n "$HDMI1" ]] && [[ -n "$VGA1" ]]; then
 	echo "HDMI1 and VGA1 are plugged in"
@@ -51,13 +57,20 @@ elif [[ -z "$HDMI1" ]] && [[ -n "$VGA1" ]]; then
 elif [[ -n "$eDP1" ]] && [[ -n "$DP4" ]] && [[ -n "$DP6" ]]; then
 	echo "DP1-2 and DP2-2 is plugged in"
 	# Do something.
-	xrandr --output eDP1 --primary --mode 3840x2160 --rate 60 --below DP2-2 \
-		--output DP2-2 --mode 3840x2160 --rate 60  --rotate normal --pos 0x900 \
-		--output DP1-2 --mode 3840x2160 --rate 60  --rotate left --pos 3840x0
-elif [[ -n "$eDP1" ]] && [[ -z "$DP4" ]] && [[ -z "$DP6" ]]; then
+	home_monitors;
+elif [[ -n "$eDP1" ]] && [[ -n "$DP6" ]] && [[ -n "$DP7" ]]; then
+	echo "DP1-2 and DP2-2 is plugged in"
+	# Do something.
+	home_monitors;
+elif [[ -n "$eDP1" ]] && [[ -n "$DP4" ]] && [[ -n "$DP8" ]]; then
+	echo "DP1-2 and DP2-2 is plugged in"
+	# Do something.
+	home_monitors;
+elif [[ -n "$eDP1" ]]; then
+	# This check obviously needs to be last.
 	echo "DP1-2 and DP2-2 are not plugged in"
 	# Do something.
-	xrandr --auto
+	xrandr --output eDP1 --primary --auto
 else
 	echo "No external monitors are plugged in"
 	# Do something.
