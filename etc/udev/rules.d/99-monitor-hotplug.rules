@@ -1,0 +1,1 @@
+ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="/usr/local/bin/hotplug-monitor"
