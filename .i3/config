@@ -35,6 +35,9 @@ font pango:Monospace 4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+floating_minimum_size 150 x 150
+floating_maximum_size 2500 x 1500
+
 # start a terminal
 bindsym $mod+Return exec $term
 
