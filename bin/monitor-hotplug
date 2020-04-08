@@ -70,7 +70,7 @@ elif [[ -n "$eDP1" ]]; then
 	# This check obviously needs to be last.
 	echo "DP1-2 and DP2-2 are not plugged in"
 	# Do something.
-	xrandr --output eDP1 --primary --auto
+	xrandr --output eDP1 --auto
 else
 	echo "No external monitors are plugged in"
 	# Do something.
