@@ -20,6 +20,7 @@ export XAUTHORITY="$xauth"
 while read -r line; do
 	dir=$(dirname "$line");
 	status=$(cat "$line");
+	# shellcheck disable=SC1001
 	dev=$(echo "$dir" | cut -d\- -f 2-);
 
 	if [[ "$dev" = "HDMI"* ]]; then
@@ -32,11 +33,12 @@ while read -r line; do
 	if [[ "connected" == "$status" ]]; then
 		echo "$dev is connected"
 		# Create the variable.
+		# shellcheck disable=SC2140
 		declare "$dev"="yes"
 	fi
 done <<< "$DEVICES"
 
-
+# shellcheck disable=SC2154
 if [[ -n "$HDMI1" ]] && [[ -n "$VGA1" ]]; then
 	echo "HDMI1 and VGA1 are plugged in"
 	# Do something.
