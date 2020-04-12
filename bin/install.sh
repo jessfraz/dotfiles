@@ -316,7 +316,7 @@ install_golang() {
 	set +e
 	go get golang.org/x/lint/golint
 	go get golang.org/x/tools/cmd/cover
-	go get golang.org/x/tools/cmd/gopls
+	go get golang.org/x/tools/gopls
 	go get golang.org/x/review/git-codereview
 	go get golang.org/x/tools/cmd/goimports
 	go get golang.org/x/tools/cmd/gorename
