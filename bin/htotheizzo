@@ -51,24 +51,6 @@ update_docker() {
 	mkdir -p /etc/bash_completion.d
 	curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
 
-	if [[ -d "${docker_dir}" ]]; then
-		(
-		cd "${docker_dir}"
-
-		# Clean up bundles
-		rm -rf bundles
-
-
-		# move vim syntax highlighting
-		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
-			mkdir -p "${user_home}/.vim/bundle/Dockerfile"
-		fi
-		# shellcheck disable=SC2216
-		yes | cp -r contrib/syntax/vim/* "${user_home}/.vim/bundle/Dockerfile/"
-		chown -R "${TARGET_USER}" "${user_home}/.vim/bundle/Dockerfile"
-		)
-	fi
-
 	# get the binary
 	local tmp_tar=/tmp/docker.tgz
 	local binary_uri="https://download.docker.com/linux/static/edge/x86_64"
