@@ -277,8 +277,14 @@ setup_sudo() {
 }
 
 # install rust
+
 install_rust() {
 	curl https://sh.rustup.rs -sSf | sh
+
+	# Install rust analyzer
+	rustup component add rust-src
+	# Install clippy
+	rustup component add clippy
 }
 
 # install/update golang from source
