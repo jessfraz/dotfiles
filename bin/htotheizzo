@@ -40,8 +40,6 @@ update_docker() {
 	echo "Updating docker..."
 	echo
 
-	local user_home="/home/${TARGET_USER}"
-
 	# stop docker
 	dcleanup || true
 	systemctl stop docker || true
