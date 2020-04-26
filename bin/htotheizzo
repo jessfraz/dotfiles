@@ -41,7 +41,6 @@ update_docker() {
 	echo
 
 	local user_home="/home/${TARGET_USER}"
-	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
 
 	# stop docker
 	dcleanup || true
