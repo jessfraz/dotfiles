@@ -281,8 +281,12 @@ setup_sudo() {
 install_rust() {
 	curl https://sh.rustup.rs -sSf | sh
 
-	# Install rust analyzer
+	# Install rust-src for rust analyzer
 	rustup component add rust-src
+	# Install rust-analyzer
+	curl -sSL "https://github.com/rust-analyzer/rust-analyzer/releases/download/2020-04-20/rust-analyzer-linux" -o "${HOME}/.cargo/bin/rust-analyzer"
+	chmod +x "${HOME}/.cargo/bin/rust-analyzer"
+
 	# Install clippy
 	rustup component add clippy
 }
