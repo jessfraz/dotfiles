@@ -28,11 +28,11 @@ jobs:
           git commit -m "Run date to update date" || echo "Nothing to commit"
       - name: Rebase
         run: |
-          cd meta
+          cd notes
           git remote set-url origin https://${{ github.actor }}:${{ secrets.GLOBAL_GITHUB_TOKEN }}@github.com/jessfraz/notes.git
           git fetch origin
           git rebase origin/master
       - name: Push Changes
         run: |
-          cd meta
+          cd notes
           git push origin master
