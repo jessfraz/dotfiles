@@ -1,4 +1,7 @@
 on:
+  push:
+    branches:
+      - master
   schedule:
     - cron: "*/10 * * * *"
 name: Run date
