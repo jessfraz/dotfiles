@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.GLOBAL_GITHUB_TOKEN }}
           path: notes
       - name: Run date
-        run: date > date
+        run: date > notes/date
         shell: bash
       - name: Commit changes to directory
         run: |
