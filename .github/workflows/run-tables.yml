@@ -1,0 +1,35 @@
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+name: Run date
+jobs:
+  runTables:
+    name: Run date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+        with:
+          repository: jessfraz/notes
+          token: ${{ secrets.GLOBAL_GITHUB_TOKEN }}
+          path: notes
+      - name: Run date
+        run: date > date
+        shell: bash
+      - name: Commit changes to directory
+        run: |
+          cd meta
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add date
+          git commit -m "Run date to update date" || echo "Nothing to commit"
+      - name: Rebase
+        run: |
+          cd meta
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GLOBAL_GITHUB_TOKEN }}@github.com/jessfraz/notes.git
+          git fetch origin
+          git rebase origin/master
+      - name: Push Changes
+        run: |
+          cd meta
+          git push origin master
