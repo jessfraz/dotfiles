@@ -458,6 +458,7 @@ install_wmapps() {
 		bluez \
 		bluez-firmware \
 		feh \
+		google-chrome-stable \
 		i3 \
 		i3lock \
 		i3status \
@@ -530,6 +531,12 @@ get_dotfiles() {
 }
 
 install_vim() {
+	# Install node, needed for coc.vim
+	sudo apt update || true
+	sudo apt install -y \
+		node \
+		--no-install-recommends
+
 	# create subshell
 	(
 	cd "$HOME"
