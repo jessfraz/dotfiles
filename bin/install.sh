@@ -75,17 +75,8 @@ setup_sources() {
 	setup_sources_min;
 
 	cat <<-EOF > /etc/apt/sources.list
-	deb http://httpredir.debian.org/debian buster main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster main contrib non-free
-
-	deb http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-
-	deb http://security.debian.org/ buster/updates main contrib non-free
-	deb-src http://security.debian.org/ buster/updates main contrib non-free
-
-	deb http://httpredir.debian.org/debian experimental main contrib non-free
-	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+	deb http://httpredir.debian.org/debian sid main contrib non-free
+	deb-src http://httpredir.debian.org/debian/ sid main contrib non-free
 	EOF
 
 	# yubico
@@ -94,13 +85,9 @@ setup_sources() {
 	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
 	EOF
 
-	# Create an environment variable for the correct distribution
-	CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-	export CLOUD_SDK_REPO
-
 	# Add the Cloud SDK distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
-	deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
+	deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
 	EOF
 
 	# Import the Google Cloud Platform public key
