@@ -87,7 +87,7 @@ setup_sources() {
 
 	# Add the Cloud SDK distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
-	deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+	deb https://packages.cloud.google.com/apt cloud-sdk main
 	EOF
 
 	# Import the Google Cloud Platform public key
@@ -532,9 +532,26 @@ get_dotfiles() {
 
 install_vim() {
 	# Install node, needed for coc.vim
+	curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+	# FROM: https://github.com/nodesource/distributions/blob/master/README.md
+	# Replace with the branch of Node.js or io.js you want to install: node_6.x,
+	# node_8.x, etc...
+	VERSION=node_14.x
+	# The below command will set this correctly, but if lsb_release isn't available, you can set it manually:
+	# - For Debian distributions: jessie, sid, etc...
+	# - For Ubuntu distributions: xenial, bionic, etc...
+	# - For Debian or Ubuntu derived distributions your best option is to use
+	# the codename corresponding to the upstream release your distribution is
+	# based off. This is an advanced scenario and unsupported if your
+	# distribution is not listed as supported per earlier in this README.
+	DISTRO="$(lsb_release -s -c)"
+	echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+	echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+
 	sudo apt update || true
 	sudo apt install -y \
-		node \
+		nodejs \
 		--no-install-recommends
 
 	# create subshell
