@@ -118,8 +118,6 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 		export SSH_AUTH_SOCK
 	fi
 fi
-# add alias for ssh to update the tty
-alias ssh="gpg-connect-agent updatestartuptty /bye >/dev/null; ssh"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
