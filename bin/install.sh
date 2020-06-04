@@ -180,7 +180,9 @@ base() {
 		libimobiledevice6 \
 		libltdl-dev \
 		libpam-systemd \
+		libpcsclite-dev \
 		libseccomp-dev \
+		pcscd \
 		pinentry-curses \
 		scdaemon \
 		systemd \
