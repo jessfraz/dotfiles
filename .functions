@@ -455,12 +455,12 @@ govendorcheck() {
 restart_gpgagent(){
 	# Restart the gpg agent.
 	echo "Restarting gpg-agent and scdaemon..."
-	printf "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)\n"
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
 
 	echo "Killing processes..."
 	# shellcheck disable=SC2046
 	kill -9 $(pgrep scdaemon) $(pgrep gpg-agent) >/dev/null 2>&1
-	printf "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)\n"
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
 
 	gpgconf --reload gpg-agent
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
