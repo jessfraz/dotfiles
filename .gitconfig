@@ -191,5 +191,3 @@
 	gpgsign = true
 [pull]
 	rebase = true
-[init]
-	templatedir = ~/.git-templates
