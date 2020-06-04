@@ -152,9 +152,9 @@ base_min() {
 		zip \
 		--no-install-recommends
 
-	apt autoremove
-	apt autoclean
-	apt clean
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
 
 	install_scripts
 }
@@ -188,9 +188,9 @@ base() {
 
 	setup_sudo
 
-	apt autoremove
-	apt autoclean
-	apt clean
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
 }
 
 # install and configure dropbear
@@ -202,9 +202,9 @@ install_dropbear() {
 		dropbear-initramfs \
 		--no-install-recommends
 
-	apt autoremove
-	apt autoclean
-	apt clean
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
 
 	# change the default port and settings
 	echo 'DROPBEAR_OPTIONS="-p 4748 -s -j -k -I 60"' >> /etc/dropbear-initramfs/config
