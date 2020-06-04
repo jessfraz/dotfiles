@@ -453,8 +453,8 @@ install_scripts() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	apt update || true
-	apt install -y \
+	sudo apt update || true
+	sudo apt install -y \
 		bluez \
 		bluez-firmware \
 		feh \
@@ -478,19 +478,6 @@ install_wmapps() {
 	systemctl --user enable pulseaudio.service
 	systemctl --user enable pulseaudio.socket
 	systemctl --user start pulseaudio.service
-
-	# update clickpad settings
-	mkdir -p /etc/X11/xorg.conf.d/
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf.d/50-synaptics-clickpad.conf > /etc/X11/xorg.conf.d/50-synaptics-clickpad.conf
-
-	# add xorg conf
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf > /etc/X11/xorg.conf
-
-	# get correct sound cards on boot
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/modprobe.d/intel.conf > /etc/modprobe.d/intel.conf
-
-	# pretty fonts
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/fonts/local.conf > /etc/fonts/local.conf
 
 	echo "Fonts file setup successfully now run:"
 	echo "	dpkg-reconfigure fontconfig-config"
@@ -635,8 +622,6 @@ main() {
 
 		install_graphics "$2"
 	elif [[ $cmd == "wm" ]]; then
-		check_is_sudo
-
 		install_wmapps
 	elif [[ $cmd == "dotfiles" ]]; then
 		get_user
