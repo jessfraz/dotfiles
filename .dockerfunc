@@ -333,11 +333,15 @@ hollywood(){
 		${DOCKER_REPO_PREFIX}/hollywood
 }
 htop(){
-	docker run --rm -it \
-		--pid host \
-		--net none \
-		--name htop \
-		${DOCKER_REPO_PREFIX}/htop
+	if [[ -n "$(which htop)" ]]; then
+		"$(which htop)" "$@"
+	else
+		docker run --rm -it \
+			--pid host \
+			--net none \
+			--name htop \
+			${DOCKER_REPO_PREFIX}/htop
+	fi
 }
 htpasswd(){
 	docker run --rm -it \
