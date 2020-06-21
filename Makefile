@@ -43,7 +43,6 @@ dotfiles: ## Installs the dotfiles.
 	fc-cache -f -v || true
 
 # Get the laptop's model number so we can generate xorg specific files.
-LAPTOP_MODEL_NUMBER := $(shell sudo dmidecode | grep "Product Name: XPS 13" | sed "s/Product Name: XPS 13 //" | xargs echo -n)
 LAPTOP_XORG_FILE=/etc/X11/xorg.conf.d/10-dell-xps-display.conf
 
 .PHONY: etc
@@ -59,7 +58,8 @@ etc: ## Installs the etc directory files.
 	sudo systemctl enable systemd-networkd systemd-resolved
 	sudo systemctl start systemd-networkd systemd-resolved
 	sudo ln -snf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-	if [[ "$(LAPTOP_MODEL_NUMBER)" == "9300" ]]; then \
+	LAPTOP_MODEL_NUMBER=$$(sudo dmidecode | grep "Product Name: XPS 13" | sed "s/Product Name: XPS 13 //" | xargs echo -n); \
+	if [[ "$$LAPTOP_MODEL_NUMBER" == "9300" ]]; then \
 		sudo ln -snf "$(CURDIR)/etc/X11/xorg.conf.d/dell-xps-display-9300" "$(LAPTOP_XORG_FILE)"; \
 	else \
 		sudo ln -snf "$(CURDIR)/etc/X11/xorg.conf.d/dell-xps-display" "$(LAPTOP_XORG_FILE)"; \
