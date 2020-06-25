@@ -165,3 +165,7 @@ for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
 done
 unset file
 
+
+export CODEQL_DIST=~/codeql_home/codeql-cli
+export CODEQL_PLATFORM=Darwin
+
