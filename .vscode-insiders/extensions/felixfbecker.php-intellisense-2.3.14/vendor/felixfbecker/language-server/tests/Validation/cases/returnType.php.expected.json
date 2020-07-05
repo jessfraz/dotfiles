@@ -1,0 +1,62 @@
+{
+    "references": {
+        "TestNamespace\\TestClass": [
+            "./returnType.php"
+        ],
+        "TestNamespace\\TestClass2": [
+            "./returnType.php"
+        ]
+    },
+    "definitions": {
+        "TestNamespace": {
+            "fqn": "TestNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "TestNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./returnType.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace TestNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestNamespace\\whatever()": {
+            "fqn": "TestNamespace\\whatever()",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "whatever",
+                "kind": 12,
+                "location": {
+                    "uri": "./returnType.php"
+                },
+                "containerName": "TestNamespace"
+            },
+            "type__tostring": "\\TestNamespace\\TestClass",
+            "type": {},
+            "declarationLine": "function whatever(TestClass $param): TestClass2 {",
+            "documentation": "Aute duis elit reprehenderit tempor cillum proident anim laborum eu laboris reprehenderit ea incididunt.",
+            "signatureInformation": {
+                "label": "(\\TestNamespace\\TestClass $param)",
+                "documentation": "Aute duis elit reprehenderit tempor cillum proident anim laborum eu laboris reprehenderit ea incididunt.",
+                "parameters": [
+                    {
+                        "label": "\\TestNamespace\\TestClass $param",
+                        "documentation": "Adipisicing non non cillum sint incididunt cillum enim mollit."
+                    }
+                ]
+            }
+        }
+    }
+}

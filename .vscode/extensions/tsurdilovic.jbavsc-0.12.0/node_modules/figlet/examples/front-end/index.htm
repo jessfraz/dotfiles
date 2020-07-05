@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FIGlet Example</title>
+</head>
+<body>
+    <div>
+        <label for="font">Font:</label>
+        <select id="font">
+            <option value="3D Diagonal">3D Diagonal</option>
+            <option value="Dancing Font">Dancing Font</option>
+            <option value="Ghost">Ghost</option>
+            <option value="Graffiti">Graffiti</option>
+            <option value="Patorjk's Cheese">Patorjk's Cheese</option>
+            <option value="Standard" selected>Standard</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="hLayout">Horizontal Layout:</label>
+        <select id="hLayout">
+            <option value="default" selected>Default</option>
+            <option value="full">Full</option>
+            <option value="fitted">Fitted</option>
+            <option value="controlled smushing">Controlled Smushing</option>
+            <option value="universal smushing">Universal Smushing</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="vLayout">Vertical Layout:</label>
+        <select id="vLayout">
+            <option value="default" selected>Default</option>
+            <option value="full">Full</option>
+            <option value="fitted">Fitted</option>
+            <option value="controlled smushing">Controlled Smushing</option>
+            <option value="universal smushing">Universal Smushing</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="inputText">Input:</label>
+    </div>
+    <textarea id="inputText" style="height:100px;width:200px;">test
+123</textarea>
+    <p></p>
+    <div>
+        <label for="outputFigDisplay">Output</label>
+    </div>
+    <div id="outputFigDisplay"></div>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/figlet.js"></script>
+    
+<script>
+
+if (window.location.protocol === 'file:') {
+    alert('fetch APi does not support file: protocol.');
+}
+    
+figlet.defaults({
+    fontPath: '../../fonts'
+});
+
+/*
+    Generates the put
+*/
+var update = function() {
+    var fontName = $('#font option:selected').val(),
+        inputText = $('#inputText').val(),
+        vLayout = $('#vLayout option:selected').val(),
+        hLayout = $('#hLayout option:selected').val();
+
+    /*
+        How to use the text output.
+
+        The below call could also have been: figlet.text(...
+    */
+    figlet(inputText, {
+        font: fontName,
+        horizontalLayout: hLayout,
+        verticalLayout: vLayout
+    }, function(err, text) {
+        if (err) {
+            console.log('something went wrong...');
+            console.dir(err);
+            return;
+        }
+        $('#outputFigDisplay').html("<pre>" + text + "</pre>");
+    });
+
+    /*
+        How to read the metadata for a font
+    */
+    /*
+    figlet.metadata(fontName, function(err, options, headerComment) {
+        if (err) {
+            console.log('something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.dir(options);
+        console.log(headerComment);
+    });
+    */
+};
+
+/*
+    GUI Controls
+*/
+
+$('#hLayout').change(update);
+$('#vLayout').change(update);
+$('#font').change(update);
+$('#inputText').keyup(update);
+
+update(); // init
+
+</script>
+    
+</body>
+</html>

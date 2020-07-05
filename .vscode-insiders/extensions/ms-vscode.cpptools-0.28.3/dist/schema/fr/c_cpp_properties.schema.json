@@ -1,0 +1,199 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"definitions": {
+		"configurations": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"name"
+				],
+				"properties": {
+					"name": {
+						"description": "Identificateur de configuration. Mac, Linux et Win32 sont des identificateurs spéciaux pour les configurations qui sont automatiquement sélectionnées sur ces plateformes, mais l'identificateur peut avoir n'importe quelle valeur.",
+						"type": "string"
+					},
+					"compilerPath": {
+						"description": "Chemin complet du compilateur utilisé, par ex., /usr/bin/gcc, pour améliorer la précision d'IntelliSense.",
+						"type": "string"
+					},
+					"compilerArgs": {
+						"description": "Arguments du compilateur permettant de modifier les inclusions ou les définitions utilisées, par exemple, -nostdinc++, -m32, etc.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"cStandard": {
+						"description": "Version de la norme de langage C à utiliser pour IntelliSense. Remarque : Les normes GNU sont utilisées uniquement pour interroger le compilateur défini afin d'obtenir les définitions GNU. IntelliSense émule la version C normalisée équivalente.",
+						"type": "string",
+						"enum": [
+							"c89",
+							"c99",
+							"c11",
+							"c18",
+							"gnu89",
+							"gnu99",
+							"gnu11",
+							"gnu18",
+							"${default}"
+						]
+					},
+					"cppStandard": {
+						"description": "Version de la norme de langage C++ à utiliser pour IntelliSense. Remarque : Les normes GNU sont utilisées uniquement pour interroger le compilateur défini afin d'obtenir les définitions GNU. IntelliSense émule la version C++ normalisée équivalente.",
+						"type": "string",
+						"enum": [
+							"c++98",
+							"c++03",
+							"c++11",
+							"c++14",
+							"c++17",
+							"c++20",
+							"gnu++98",
+							"gnu++03",
+							"gnu++11",
+							"gnu++14",
+							"gnu++17",
+							"gnu++20",
+							"${default}"
+						]
+					},
+					"compileCommands": {
+						"description": "Chemin complet du fichier compile_commands.json pour l'espace de travail.",
+						"type": "string"
+					},
+					"includePath": {
+						"description": "Liste de chemins que le moteur IntelliSense doit utiliser pour la recherche des en-têtes inclus. La recherche dans ces chemins n'est pas récursive.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"macFrameworkPath": {
+						"description": "Liste de chemins que le moteur IntelliSense doit utiliser pour la recherche des en-têtes inclus dans les frameworks Mac. Prise en charge uniquement sur la configuration Mac.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"windowsSdkVersion": {
+						"description": "Version du chemin d'inclusion du SDK Windows à utiliser sur Windows, par ex., '10.0.17134.0'.",
+						"type": "string",
+						"pattern": "^\\d{2}\\.\\d{1}\\.\\d{5}\\.\\d{1}$|^8\\.1$"
+					},
+					"defines": {
+						"description": "Liste des définitions de préprocesseur que le moteur IntelliSense doit utiliser pendant l'analyse des fichiers. Vous pouvez aussi utiliser = pour définir une valeur, par ex., VERSION=1.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"intelliSenseMode": {
+						"description": "Mode IntelliSense à utiliser qui correspond à une variante spécifique de l'architecture de MSVC, GCC ou Clang. Si la valeur n'est pas définie ou si elle est définie sur ${default}, l'extension choisit la valeur par défaut pour cette plateforme. Windows utilise la valeur par défaut msvc-x64, Linux utilise la valeur par défaut gcc-x64 et macOS la valeur par défaut clang-x64.",
+						"type": "string",
+						"enum": [
+							"clang-x86",
+							"clang-x64",
+							"clang-arm",
+							"clang-arm64",
+							"gcc-x86",
+							"gcc-x64",
+							"gcc-arm",
+							"gcc-arm64",
+							"msvc-x86",
+							"msvc-x64",
+							"msvc-arm",
+							"msvc-arm64",
+							"${default}"
+						]
+					},
+					"forcedInclude": {
+						"description": "Liste des fichiers qui doivent être inclus avant tout fichier d'inclusion dans une unité de traduction.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"configurationProvider": {
+						"description": "ID d'une extension VS Code pouvant fournir des informations de configuration IntelliSense pour les fichiers sources.",
+						"type": "string"
+					},
+					"browse": {
+						"type": "object",
+						"properties": {
+							"limitSymbolsToIncludedHeaders": {
+								"description": "true pour traiter uniquement les fichiers inclus directement ou indirectement comme des en-têtes, false pour traiter tous les fichiers sous les chemins d'inclusion spécifiés.",
+								"type": [
+									"boolean",
+									"string"
+								]
+							},
+							"databaseFilename": {
+								"description": "Chemin de la base de données de symboles générée. Si un chemin relatif est spécifié, il est relatif à l'emplacement de stockage par défaut de l'espace de travail.",
+								"type": "string"
+							},
+							"path": {
+								"description": "Liste de chemins que l'analyseur de balises doit utiliser pour la recherche des en-têtes inclus. La recherche dans ces chemins est récursive par défaut. Spécifiez '*' pour indiquer une recherche non récursive. Par exemple : '/usr/include' effectue une recherche dans tous les sous-répertoires, contrairement à '/usr/include/*'.",
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							}
+						},
+						"additionalProperties": false
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"env": {
+			"type": "object",
+			"description": "Variables personnalisées pouvant être réutilisées partout dans ce fichier à l'aide de la syntaxe ${variable} ou ${env:variable}.",
+			"patternProperties": {
+				"(?!^workspaceFolder$)(?!^workspaceRoot$)(?!^workspaceFolderBasename$)(?!^default$)(^.+$)": {
+					"oneOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					]
+				}
+			},
+			"additionalProperties": false
+		},
+		"version": {
+			"type": "integer",
+			"description": "Version du fichier de configuration. Cette propriété est gérée par l'extension. Ne la changez pas."
+		},
+		"enableConfigurationSquiggles": {
+			"type": "boolean",
+			"default": true,
+			"description": "Contrôle si l'extension signale les erreurs détectées dans c_cpp_properties.json."
+		}
+	},
+	"properties": {
+		"configurations": {
+			"$ref": "#/definitions/configurations"
+		},
+		"env": {
+			"$ref": "#/definitions/env"
+		},
+		"version": {
+			"$ref": "#/definitions/version"
+		},
+		"enableConfigurationSquiggles": {
+			"$ref": "#/definitions/enableConfigurationSquiggles"
+		}
+	},
+	"required": [
+		"configurations",
+		"version"
+	],
+	"additionalProperties": false
+}

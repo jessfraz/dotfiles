@@ -1,0 +1,13 @@
+{
+	"messages": [
+		"Start collaboration session...",
+		"Join collaboration session...",
+		"Start read-only collaboration session..."
+	],
+	"keys": [
+		"startCollaborationSession",
+		"joinCollaborationSession",
+		"startReadOnlyCollaborationSession"
+	],
+	"filePath": "src\\treeViews\\CollabActionTreeDataProvider"
+}

@@ -1,0 +1,134 @@
+/* context menu */
+.contextMenu {
+  position: absolute;
+  padding: 0px;
+  display: inline-block;
+  min-width: 100px;
+  z-index: 99999;
+  border: 1px;
+  outline: 0;
+  color: black;
+  background-color: white;
+  border-color: var(--border-color-default);
+  font-family: var(--font-family);
+}
+
+.contextMenu li {
+  padding: 4px 14px 4px 14px;
+  list-style: none;
+  cursor: default;
+}
+
+.contextMenu li+li {
+  border-top: 0.5px solid #E4E4E4;
+}
+
+.contextMenu li.disabled {
+  color: #777;
+  text-decoration: none;
+  background-color: transparent;
+  opacity: 0.4;
+}
+
+/* slick grid */
+
+.boxRow.content.horzBox.slickgrid {
+  margin-bottom: 2px;
+}
+
+.boxRow.content.horzBox.slickgrid:last-child {
+  margin-bottom: 0px;
+}
+
+.contextMenu li:hover:not(.disabled) {
+  background-color: #007ACC;
+  color: white;
+}
+
+.boxRow.content.padded {
+    padding: 15px
+}
+
+/* icon */
+.icon {
+  padding: 8px;
+  background-repeat: no-repeat;
+  background-position: 0px;
+}
+
+.gridIcon {
+    margin: 5px 5px;
+}
+
+/* messages */
+
+table#messageTable td.errorMessage {
+  color: var(--color-error);
+}
+
+table {
+  font-weight: inherit;
+  font-size: inherit;
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.wide {
+  width: 110px;
+}
+
+#messageTable td {
+  padding-right: 20px;
+  color: var(--color-content);
+}
+
+#messageTable tbody tr:last-child > td {
+  padding-bottom: 1em;
+}
+.messageValue {
+  white-space: pre-line;
+}
+
+/* headers */
+.header {
+    height: auto;
+    overflow: hidden;
+    height: 22px;
+    padding-left: 20px;
+    line-height: 22px;
+}
+
+.header > span {
+    float: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.resizableHandle {
+    font-size: 0.1px;
+    display: block;
+    float: right;
+    position: absolute;
+    cursor: row-resize;
+    top: 0;
+    height: 4px;
+    width: 100%;
+    z-index: 1;
+}
+
+#resizeHandle {
+    font-size: 0.1px;
+    position: absolute;
+    cursor: row-resize;
+    height: 4px;
+    width: 100%;
+    z-index: 2;
+    background-color: var(--color-resize-handle);
+}
+
+.header > span.shortCut {
+  float: right;
+  padding-right: 5px;
+}

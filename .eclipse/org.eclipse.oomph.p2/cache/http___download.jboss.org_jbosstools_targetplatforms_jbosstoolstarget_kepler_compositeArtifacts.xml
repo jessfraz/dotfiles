@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Target Platform - Kepler' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+" add this to your ~/.vimrc file, then use \ts to update timestamp to current
+fun! ReplaceTimestamp()
+	let tstamp = strftime("%s000")
+	exe ":%s#<property name='p2.timestamp' value='[0-9]\\+'/>#<property name='p2.timestamp' value='" . tstamp . "'/>#g"
+	echo "New time: " . tstamp
+endfun
+nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
+-->
+<property name='p2.timestamp' value='1395847208000'/>
+</properties>
+<children size='1'>
+<child location='http://download.jboss.org/jbosstools/static/targetplatforms/jbosstoolstarget/4.32.0.Final/REPO/'/>
+</children>
+</repository>

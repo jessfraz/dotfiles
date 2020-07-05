@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "esModuleInterop": true,
+    "target": "es2016"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/__tests__", "**/__mocks__"],
+  "references": [{ "path": "../apollo-env" }]
+}

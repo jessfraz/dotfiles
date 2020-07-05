@@ -1,0 +1,58 @@
+{
+  "name": "child-process-promise",
+  "description": "Simple wrapper around the \"child_process\" module that makes use of promises",
+  "main": "./index.js",
+  "files": [
+    "lib",
+    "lib-es5",
+    "Readme.md"
+  ],
+  "scripts": {
+    "lint": "eslint lib/*js test/*js",
+    "test": "npm run mocha",
+    "mocha": "mocha --ui bdd --reporter spec ./test/",
+    "prepublish": "babel lib --out-dir lib-es5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patrick-steele-idem/child-process-promise.git"
+  },
+  "keywords": [
+    "child",
+    "process",
+    "promises"
+  ],
+  "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patrick-steele-idem/child-process-promise/issues"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "cross-spawn": "^4.0.2",
+    "node-version": "^1.0.0",
+    "promise-polyfill": "^6.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-plugin-check-es2015-constants": "^6.8.0",
+    "babel-plugin-transform-es2015-block-scoping": "^6.10.1",
+    "babel-preset-es2015": "^6.13.2",
+    "chai": "^3.5.0",
+    "eslint": "^0.10.2",
+    "jshint": "^2.9.1",
+    "mocha": "^2.4.5"
+  },
+  "version": "2.2.1",
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "check-es2015-constants",
+      "transform-es2015-block-scoping"
+    ]
+  }
+}

@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="extension.i18ntest.JSON" source-language="en" target-language="es-ES">
+    <body>
+      <trans-unit id="msgStartedExecute">
+        <source xml:lang="en">Started query execution for document "{0}"</source>
+        <target state="translated">Se inició la ejecución de la consulta para el documento "{0}".</target>
+      </trans-unit>
+      <trans-unit id="msgFinishedExecute">
+        <source xml:lang="en">Finished query execution for document "{0}"</source>
+        <target state="translated">Finalizó la ejecución de la consulta para el documento "{0}".</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryInProgress">
+        <source xml:lang="en">A query is already running for this editor session. Please cancel this query or wait for its completion.</source>
+        <target state="translated">Ya se está ejecutando una consulta para esta sesión del editor. Cancele la consulta o espere a que finalice.</target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartMessage">
+        <source xml:lang="en">Started executing query at </source>
+        <target state="translated">La consulta comenzó a ejecutarse a las </target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartLine">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">Línea {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryFailed">
+        <source xml:lang="en">Canceling the query failed: {0}</source>
+        <target state="translated">Error al cancelar la consulta: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryNotRunning">
+        <source xml:lang="en">Cannot cancel query as no query is running.</source>
+        <target state="translated">No se puede cancelar la consulta, porque no hay ninguna en ejecución.</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabaseNotConnected">
+        <source xml:lang="en">No connection was found. Please connect to a server first.</source>
+        <target state="translated">No se encontró ninguna conexión. Conéctese a un servidor primero.</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabasePlaceholder">
+        <source xml:lang="en">Choose a database from the list below</source>
+        <target state="translated">Elegir una base de datos de la lista siguiente</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError">
+        <source xml:lang="en">Error {0}: {1}</source>
+        <target state="translated">Error {0}: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError2">
+        <source xml:lang="en">Failed to connect: {0}</source>
+        <target state="translated">No se pudo conectar: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionErrorPasswordExpired">
+        <source xml:lang="en">Error {0}: {1} Please login as a different user and change the password using ALTER LOGIN.</source>
+        <target state="translated">Error {0}: {1}. Inicie sesión como un usuario diferente y cambie la contraseña mediante ALTER LOGIN.</target>
+      </trans-unit>
+      <trans-unit id="connectionErrorChannelName">
+        <source xml:lang="en">Connection Errors</source>
+        <target state="translated">Errores de conexión</target>
+      </trans-unit>
+      <trans-unit id="msgPromptCancelConnect">
+        <source xml:lang="en">Server connection in progress. Do you want to cancel?</source>
+        <target state="translated">Hay una conexión del servidor en curso. ¿Quiere cancelarla?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptClearRecentConnections">
+        <source xml:lang="en">Confirm to clear recent connections list</source>
+        <target state="translated">Confirmar para borrar la lista de conexiones recientes</target>
+      </trans-unit>
+      <trans-unit id="msgOpenSqlFile">
+        <source xml:lang="en">To use this command, Open a .sql file -or- Change editor language to "SQL" -or- Select T-SQL text in the active SQL editor.</source>
+        <target state="translated">Para usar este comando, abra un archivo .sql, cambie el lenguaje del editor a "SQL" o seleccione el texto T-SQL en el editor SQL activo.</target>
+      </trans-unit>
+      <trans-unit id="recentConnectionsPlaceholder">
+        <source xml:lang="en">Choose a connection profile from the list below</source>
+        <target state="translated">Elegir un perfil de conexión de la lista siguiente</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileFromConnectionsListLabel">
+        <source xml:lang="en">Create Connection Profile</source>
+        <target state="translated">Crear un perfil de conexión</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileLabel">
+        <source xml:lang="en">Create</source>
+        <target state="translated">Crear</target>
+      </trans-unit>
+      <trans-unit id="ClearRecentlyUsedLabel">
+        <source xml:lang="en">Clear Recent Connections List</source>
+        <target state="translated">Borrar la lista de conexiones recientes</target>
+      </trans-unit>
+      <trans-unit id="EditProfilesLabel">
+        <source xml:lang="en">Edit</source>
+        <target state="translated">Editar</target>
+      </trans-unit>
+      <trans-unit id="RemoveProfileLabel">
+        <source xml:lang="en">Remove</source>
+        <target state="translated">Quitar</target>
+      </trans-unit>
+      <trans-unit id="ManageProfilesPrompt">
+        <source xml:lang="en">Manage Connection Profiles</source>
+        <target state="translated">Administrar perfiles de conexión</target>
+      </trans-unit>
+      <trans-unit id="SampleServerName">
+        <source xml:lang="en">{{put-server-name-here}}</source>
+        <target state="translated">{{poner-nombre-de-servidor-aquí}}</target>
+      </trans-unit>
+      <trans-unit id="serverPrompt">
+        <source xml:lang="en">Server name or ADO.NET connection string</source>
+        <target state="translated">Nombre del servidor o cadena de conexión de ADO.NET</target>
+      </trans-unit>
+      <trans-unit id="serverPlaceholder">
+        <source xml:lang="en">hostname\\instance or &lt;server&gt;.database.windows.net or ADO.NET connection string</source>
+        <target state="translated">nombreDeHost\\instancia o &lt;servidor&gt;.database.windows.net o cadena de conexión de ADO.NET</target>
+      </trans-unit>
+      <trans-unit id="databasePrompt">
+        <source xml:lang="en">Database name</source>
+        <target state="translated">Nombre de base de datos</target>
+      </trans-unit>
+      <trans-unit id="startIpAddressPrompt">
+        <source xml:lang="en">Start IP</source>
+        <target state="translated">IP inicial</target>
+      </trans-unit>
+      <trans-unit id="endIpAddressPrompt">
+        <source xml:lang="en">End IP</source>
+        <target state="translated">IP final</target>
+      </trans-unit>
+      <trans-unit id="databasePlaceholder">
+        <source xml:lang="en">[Optional] Database to connect (press Enter to connect to &lt;default&gt; database)</source>
+        <target state="translated">[Opcional] Base de datos a la que conectarse (presione Entrar para conectarse a la base de datos &lt;predeterminada&gt;).</target>
+      </trans-unit>
+      <trans-unit id="authTypePrompt">
+        <source xml:lang="en">Authentication Type</source>
+        <target state="translated">Tipo de autenticación</target>
+      </trans-unit>
+      <trans-unit id="authTypeIntegrated">
+        <source xml:lang="en">Integrated</source>
+        <target state="translated">Integrada</target>
+      </trans-unit>
+      <trans-unit id="authTypeSql">
+        <source xml:lang="en">SQL Login</source>
+        <target state="translated">Inicio de sesión de SQL</target>
+      </trans-unit>
+      <trans-unit id="usernamePrompt">
+        <source xml:lang="en">User name</source>
+        <target state="translated">Nombre de usuario</target>
+      </trans-unit>
+      <trans-unit id="usernamePlaceholder">
+        <source xml:lang="en">User name (SQL Login)</source>
+        <target state="translated">Nombre de usuario (inicio de sesión de SQL)</target>
+      </trans-unit>
+      <trans-unit id="passwordPrompt">
+        <source xml:lang="en">Password</source>
+        <target state="translated">Contraseña</target>
+      </trans-unit>
+      <trans-unit id="passwordPlaceholder">
+        <source xml:lang="en">Password (SQL Login)</source>
+        <target state="translated">Contraseña (inicio de sesión de SQL)</target>
+      </trans-unit>
+      <trans-unit id="msgSavePassword">
+        <source xml:lang="en">Save Password? If 'No', password will be required each time you connect</source>
+        <target state="translated">¿Quiere guardar la contraseña? Si selecciona "No", se le solicitará cada vez que se conecte.</target>
+      </trans-unit>
+      <trans-unit id="profileNamePrompt">
+        <source xml:lang="en">Profile Name</source>
+        <target state="translated">Nombre del perfil</target>
+      </trans-unit>
+      <trans-unit id="profileNamePlaceholder">
+        <source xml:lang="en">[Optional] Enter a display name for this connection profile</source>
+        <target state="translated">[Opcional] Especificar un nombre para mostrar de este perfil de conexión</target>
+      </trans-unit>
+      <trans-unit id="filepathPrompt">
+        <source xml:lang="en">File path</source>
+        <target state="translated">Ruta de acceso del archivo</target>
+      </trans-unit>
+      <trans-unit id="filepathMessage">
+        <source xml:lang="en">File name</source>
+        <target state="translated">Nombre de archivo</target>
+      </trans-unit>
+      <trans-unit id="overwritePrompt">
+        <source xml:lang="en">A file with this name already exists. Do you want to replace the existing file?</source>
+        <target state="translated">Ya existe un archivo con este nombre. ¿Quiere reemplazar el archivo existente?</target>
+      </trans-unit>
+      <trans-unit id="overwritePlaceholder">
+        <source xml:lang="en">A file with this name already exists</source>
+        <target state="translated">Ya existe un archivo con este nombre</target>
+      </trans-unit>
+      <trans-unit id="msgCannotOpenContent">
+        <source xml:lang="en">Error occurred opening content in editor.</source>
+        <target state="translated">Error al abrir contenido en el editor.</target>
+      </trans-unit>
+      <trans-unit id="msgSaveStarted">
+        <source xml:lang="en">Started saving results to </source>
+        <target state="translated">Se empezaron a guardar los resultados en </target>
+      </trans-unit>
+      <trans-unit id="msgSaveFailed">
+        <source xml:lang="en">Failed to save results. </source>
+        <target state="translated">No se pudieron guardar los resultados. </target>
+      </trans-unit>
+      <trans-unit id="msgSaveSucceeded">
+        <source xml:lang="en">Successfully saved results to </source>
+        <target state="translated">Los resultados se guardaron correctamente en </target>
+      </trans-unit>
+      <trans-unit id="msgSelectProfileToRemove">
+        <source xml:lang="en">Select profile to remove</source>
+        <target state="translated">Seleccionar el perfil que se va a quitar</target>
+      </trans-unit>
+      <trans-unit id="confirmRemoveProfilePrompt">
+        <source xml:lang="en">Confirm to remove this profile.</source>
+        <target state="translated">Confirme para quitar este perfil.</target>
+      </trans-unit>
+      <trans-unit id="msgNoProfilesSaved">
+        <source xml:lang="en">No connection profile to remove.</source>
+        <target state="translated">No hay ningún perfil de conexión para quitar.</target>
+      </trans-unit>
+      <trans-unit id="msgProfileRemoved">
+        <source xml:lang="en">Profile removed successfully</source>
+        <target state="translated">El perfil se ha eliminado correctamente.</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreated">
+        <source xml:lang="en">Profile created successfully</source>
+        <target state="translated">El perfil se ha creado correctamente.</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreatedAndConnected">
+        <source xml:lang="en">Profile created and connected</source>
+        <target state="translated">El perfil se ha creado y se ha conectado.</target>
+      </trans-unit>
+      <trans-unit id="msgClearedRecentConnections">
+        <source xml:lang="en">Recent connections list cleared</source>
+        <target state="translated">La lista de conexiones recientes se ha borrado</target>
+      </trans-unit>
+      <trans-unit id="msgIsRequired">
+        <source xml:lang="en"> is required.</source>
+        <target state="translated"> es obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="msgError">
+        <source xml:lang="en">Error: </source>
+        <target state="translated">Error: </target>
+      </trans-unit>
+      <trans-unit id="msgYes">
+        <source xml:lang="en">Yes</source>
+        <target state="translated">Sí</target>
+      </trans-unit>
+      <trans-unit id="msgNo">
+        <source xml:lang="en">No</source>
+        <target state="translated">No</target>
+      </trans-unit>
+      <trans-unit id="defaultDatabaseLabel">
+        <source xml:lang="en">&lt;default&gt;</source>
+        <target state="translated">&lt;predeterminado&gt;</target>
+      </trans-unit>
+      <trans-unit id="notConnectedLabel">
+        <source xml:lang="en">Disconnected</source>
+        <target state="translated">Desconectado</target>
+      </trans-unit>
+      <trans-unit id="notConnectedTooltip">
+        <source xml:lang="en">Click to connect to a database</source>
+        <target state="translated">Hacer clic para conectarse a una base de datos</target>
+      </trans-unit>
+      <trans-unit id="connectingLabel">
+        <source xml:lang="en">Connecting</source>
+        <target state="translated">Conectando</target>
+      </trans-unit>
+      <trans-unit id="connectingTooltip">
+        <source xml:lang="en">Connecting to: </source>
+        <target state="translated">Conexión con: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorLabel">
+        <source xml:lang="en">Connection error</source>
+        <target state="translated">Error de conexión</target>
+      </trans-unit>
+      <trans-unit id="connectErrorTooltip">
+        <source xml:lang="en">Error connecting to: </source>
+        <target state="translated">Error de conexión con: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorCode">
+        <source xml:lang="en">Error code: </source>
+        <target state="translated">Código de error: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorMessage">
+        <source xml:lang="en">Error Message: </source>
+        <target state="translated">Mensaje de error: </target>
+      </trans-unit>
+      <trans-unit id="cancelingQueryLabel">
+        <source xml:lang="en">Canceling query </source>
+        <target state="translated">Cancelando la consulta </target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseLabel">
+        <source xml:lang="en">Updating IntelliSense...</source>
+        <target state="translated">Actualizando IntelliSense...</target>
+      </trans-unit>
+      <trans-unit id="extensionNotInitializedError">
+        <source xml:lang="en">Unable to execute the command while the extension is initializing. Please try again later.</source>
+        <target state="translated">No se puede ejecutar el comando mientras se está inicializando la extensión. Vuelva a intentarlo más tarde.</target>
+      </trans-unit>
+      <trans-unit id="untitledScheme">
+        <source xml:lang="en">untitled</source>
+        <target state="translated">sin título</target>
+      </trans-unit>
+      <trans-unit id="msgChangeLanguageMode">
+        <source xml:lang="en">To use this command, you must set the language to "SQL". Confirm to change language mode.</source>
+        <target state="translated">Para usar este comando, debe establecer el lenguaje como "SQL". Confirme para cambiar el modo de lenguaje.</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabaseContext">
+        <source xml:lang="en">Changed database context to "{0}" for document "{1}"</source>
+        <target state="translated">El contexto de base de datos se ha cambiado a "{0}" para el documento "{1}".</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryCreateProfile">
+        <source xml:lang="en">Error: Unable to connect using the connection information provided. Retry profile creation?</source>
+        <target state="translated">Error: No puede conectarse con la información de conexión proporcionada. ¿Quiere reintentar la creación del perfil?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryConnectionDifferentCredentials">
+        <source xml:lang="en">Error: Login failed. Retry using different credentials?</source>
+        <target state="translated">Error: No se pudo iniciar sesión. ¿Quiere reintentar con otras credenciales?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleExtNotInstalled">
+        <source xml:lang="en">Your client IP address does not have access to the server. Download and install the Azure Account extension to sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">La dirección IP del cliente no tiene acceso al servidor. Descargue la extensión Azure Account e instálela para iniciar sesión en una cuenta de Azure y crear una regla de firewall para habilitar el acceso.</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleNotSignedIn">
+        <source xml:lang="en">Your client IP address does not have access to the server. Sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">La dirección IP del cliente no tiene acceso al servidor. Inicie sesión en una cuenta de Azure y cree una regla de firewall para habilitar el acceso.</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleSignedIn">
+        <source xml:lang="en">Account signed In. Create new firewall rule? </source>
+        <target state="translated">Se ha iniciado sesión con la cuenta. ¿Quiere crear una regla de firewall? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleAdded">
+        <source xml:lang="en">Firewall rule successfully added. Retry profile creation? </source>
+        <target state="translated">La regla de firewall se ha agregado correctamente. ¿Quiere reintentar la creación del perfil? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedNotSignedIn">
+        <source xml:lang="en">Azure Account extension activated. Sign in to an Azure account? </source>
+        <target state="translated">La extensión Azure Account está activada. ¿Quiere iniciar sesión en una cuenta de Azure? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedSignedIn">
+        <source xml:lang="en">Azure Account extension activated and signed in.</source>
+        <target state="translated">La extensión Azure Account está activada y se ha iniciado sesión.</target>
+      </trans-unit>
+      <trans-unit id="msgPromptFirewallRuleCreated">
+        <source xml:lang="en">Firewall rule successfully created.</source>
+        <target state="translated">La regla de firewall se ha creado correctamente.</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistory">
+        <source xml:lang="en">Choose Query History</source>
+        <target state="translated">Elegir historial de consultas</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistoryAction">
+        <source xml:lang="en">Choose An Action</source>
+        <target state="translated">Elegir una acción</target>
+      </trans-unit>
+      <trans-unit id="msgOpenQueryHistory">
+        <source xml:lang="en">Open Query History</source>
+        <target state="translated">Abrir historial de consultas</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryHistory">
+        <source xml:lang="en">Run Query History</source>
+        <target state="translated">Ejecutar historial de consultas</target>
+      </trans-unit>
+      <trans-unit id="msgInvalidIpAddress">
+        <source xml:lang="en">Invalid IP Address </source>
+        <target state="translated">Dirección IP no válida </target>
+      </trans-unit>
+      <trans-unit id="msgNoQueriesAvailable">
+        <source xml:lang="en">No Queries Available</source>
+        <target state="translated">No hay ninguna consulta disponible.</target>
+      </trans-unit>
+      <trans-unit id="retryLabel">
+        <source xml:lang="en">Retry</source>
+        <target state="translated">Reintentar</target>
+      </trans-unit>
+      <trans-unit id="signInLabel">
+        <source xml:lang="en">Sign In</source>
+        <target state="translated">Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="downloadAndInstallLabel">
+        <source xml:lang="en">Download and Install</source>
+        <target state="translated">Descargar e instalar</target>
+      </trans-unit>
+      <trans-unit id="createFirewallRuleLabel">
+        <source xml:lang="en">Create Firewall Rule</source>
+        <target state="translated">Crear regla de firewall</target>
+      </trans-unit>
+      <trans-unit id="msgConnecting">
+        <source xml:lang="en">Connecting to server "{0}" on document "{1}".</source>
+        <target state="translated">Conectando con el servidor "{0}" en el documento "{1}".</target>
+      </trans-unit>
+      <trans-unit id="msgConnectedServerInfo">
+        <source xml:lang="en">Connected to server "{0}" on document "{1}". Server information: {2}</source>
+        <target state="translated">Se conectó al servidor "{0}" en el documento "{1}". Información del servidor: {2}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionFailed">
+        <source xml:lang="en">Error connecting to server "{0}". Details: {1}</source>
+        <target state="translated">Error al conectar con el servidor "{0}". Detalles: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgChangingDatabase">
+        <source xml:lang="en">Changing database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">Cambiando el contexto de la base de datos a "{0}" en el servidor "{1}" en el documento "{2}".</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabase">
+        <source xml:lang="en">Changed database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">El contexto de la base de datos se cambió a "{0}" en el servidor "{1}" en el documento "{2}".</target>
+      </trans-unit>
+      <trans-unit id="msgDisconnected">
+        <source xml:lang="en">Disconnected on document "{0}"</source>
+        <target state="translated">Se desconectó en el documento "{0}"</target>
+      </trans-unit>
+      <trans-unit id="msgErrorReadingConfigFile">
+        <source xml:lang="en">Error: Unable to load connection profiles from [{0}]. Check if the file is formatted correctly.</source>
+        <target state="translated">Error: No se han podido cargar los perfiles de conexión de [{0}]. Compruebe si el archivo tiene el formato correcto.</target>
+      </trans-unit>
+      <trans-unit id="titleResultsPane">
+        <source xml:lang="en">Results: {0}</source>
+        <target state="translated">Resultados: {0}</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslErrorMessage">
+        <source xml:lang="en">OpenSSL version &gt;=1.0.1 is required to connect.</source>
+        <target state="translated">Se requiere OpenSSL versión &gt;=1.0.1 para conectarse.</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslHelpButton">
+        <source xml:lang="en">Help</source>
+        <target state="translated">Ayuda</target>
+      </trans-unit>
+      <trans-unit id="macSierraRequiredErrorMessage">
+        <source xml:lang="en">macOS Sierra or newer is required to use this feature.</source>
+        <target state="translated">Para usar esta función se requiere macOS Sierra o versiones posteriores.</target>
+      </trans-unit>
+      <trans-unit id="gettingDefinitionMessage">
+        <source xml:lang="en">Getting definition ...</source>
+        <target state="translated">Obteniendo la definición...</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestedStatus">
+        <source xml:lang="en">DefinitionRequested</source>
+        <target state="translated">Definición requerida</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestCompletedStatus">
+        <source xml:lang="en">DefinitionRequestCompleted</source>
+        <target state="translated">Solicitud de definición completada</target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseStatus">
+        <source xml:lang="en">updatingIntelliSense</source>
+        <target state="translated">updatingIntelliSense</target>
+      </trans-unit>
+      <trans-unit id="intelliSenseUpdatedStatus">
+        <source xml:lang="en">intelliSenseUpdated</source>
+        <target state="translated">intelliSenseUpdated</target>
+      </trans-unit>
+      <trans-unit id="testLocalizationConstant">
+        <source xml:lang="en">test</source>
+        <target state="translated">prueba</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionLabel">
+        <source xml:lang="en">Disconnect</source>
+        <target state="translated">Desconectar</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionDescription">
+        <source xml:lang="en">Close the current connection</source>
+        <target state="translated">Cierra la conexión actual.</target>
+      </trans-unit>
+      <trans-unit id="disconnectConfirmationMsg">
+        <source xml:lang="en">Are you sure you want to disconnect?</source>
+        <target state="translated">¿Seguro que quiere desconectar?</target>
+      </trans-unit>
+      <trans-unit id="elapsedBatchTime">
+        <source xml:lang="en">Batch execution time: {0}</source>
+        <target state="translated">Tiempo de ejecución por lotes: {0}</target>
+      </trans-unit>
+      <trans-unit id="noActiveEditorMsg">
+        <source xml:lang="en">A SQL editor must have focus before executing this command</source>
+        <target state="translated">Un editor de SQL debe tener el foco antes de ejecutar este comando.</target>
+      </trans-unit>
+      <trans-unit id="maximizeLabel">
+        <source xml:lang="en">Maximize</source>
+        <target state="translated">Maximizar</target>
+      </trans-unit>
+      <trans-unit id="restoreLabel">
+        <source xml:lang="en">Restore</source>
+        <target state="translated">Restaurar</target>
+      </trans-unit>
+      <trans-unit id="saveCSVLabel">
+        <source xml:lang="en">Save as CSV</source>
+        <target state="translated">Guardar como CSV</target>
+      </trans-unit>
+      <trans-unit id="saveJSONLabel">
+        <source xml:lang="en">Save as JSON</source>
+        <target state="translated">Guardar como JSON</target>
+      </trans-unit>
+      <trans-unit id="saveExcelLabel">
+        <source xml:lang="en">Save as Excel</source>
+        <target state="translated">Guardar como Excel</target>
+      </trans-unit>
+      <trans-unit id="fileTypeCSVLabel">
+        <source xml:lang="en">CSV</source>
+        <target state="translated">CSV</target>
+      </trans-unit>
+      <trans-unit id="fileTypeJSONLabel">
+        <source xml:lang="en">JSON</source>
+        <target state="translated">JSON</target>
+      </trans-unit>
+      <trans-unit id="fileTypeExcelLabel">
+        <source xml:lang="en">Excel</source>
+        <target state="translated">Excel</target>
+      </trans-unit>
+      <trans-unit id="resultPaneLabel">
+        <source xml:lang="en">Results</source>
+        <target state="translated">Resultados</target>
+      </trans-unit>
+      <trans-unit id="selectAll">
+        <source xml:lang="en">Select all</source>
+        <target state="translated">Seleccionar todo</target>
+      </trans-unit>
+      <trans-unit id="copyLabel">
+        <source xml:lang="en">Copy</source>
+        <target state="translated">Copiar</target>
+      </trans-unit>
+      <trans-unit id="copyWithHeadersLabel">
+        <source xml:lang="en">Copy with Headers</source>
+        <target state="translated">Copiar con encabezados</target>
+      </trans-unit>
+      <trans-unit id="executeQueryLabel">
+        <source xml:lang="en">Executing query...</source>
+        <target state="translated">Ejecutando la consulta...</target>
+      </trans-unit>
+      <trans-unit id="messagePaneLabel">
+        <source xml:lang="en">Messages</source>
+        <target state="translated">Mensajes</target>
+      </trans-unit>
+      <trans-unit id="lineSelectorFormatted">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">Línea {0}</target>
+      </trans-unit>
+      <trans-unit id="elapsedTimeLabel">
+        <source xml:lang="en">Total execution time: {0}</source>
+        <target state="translated">Tiempo total de ejecución: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCannotSaveMultipleSelections">
+        <source xml:lang="en">Save results command cannot be used with multiple selections.</source>
+        <target state="translated">El comando para guardar resultados no se puede usar con varias selecciones.</target>
+      </trans-unit>
+      <trans-unit id="mssqlProviderName">
+        <source xml:lang="en">MSSQL</source>
+        <target state="translated">MSSQL</target>
+      </trans-unit>
+      <trans-unit id="noneProviderName">
+        <source xml:lang="en">None</source>
+        <target state="translated">Ninguno</target>
+      </trans-unit>
+      <trans-unit id="chooseSqlLang">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">Elegir el lenguaje de SQL</target>
+      </trans-unit>
+      <trans-unit id="flavorChooseLanguage">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">Elegir el lenguaje de SQL</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionMssql">
+        <source xml:lang="en">Use T-SQL intellisense and syntax error checking on current document</source>
+        <target state="translated">Use la comprobación de errores de sintaxis e IntelliSense de T-SQL en el documento actual.</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionNone">
+        <source xml:lang="en">Disable intellisense and syntax error checking on current document</source>
+        <target state="translated">Deshabilite la comprobación de errores de sintaxis e IntelliSense en el documento actual.</target>
+      </trans-unit>
+      <trans-unit id="queryOutputDocumentTitle">
+        <source xml:lang="en">Query Output Document</source>
+        <target state="translated">Documento de salida de la consulta</target>
+      </trans-unit>
+      <trans-unit id="queryOutputHostTitle">
+        <source xml:lang="en">Query Output Document Host</source>
+        <target state="translated">Host de documentos de salida de la consulta</target>
+      </trans-unit>
+      <trans-unit id="msgAddConnection">
+        <source xml:lang="en">Add Connection</source>
+        <target state="translated">Agregar una conexión</target>
+      </trans-unit>
+      <trans-unit id="msgConnect">
+        <source xml:lang="en">Connect</source>
+        <target state="translated">Conectar</target>
+      </trans-unit>
+      <trans-unit id="azureSignIn">
+        <source xml:lang="en">Azure: Sign In</source>
+        <target state="translated">Azure: Iniciar sesión</target>
+      </trans-unit>
+      <trans-unit id="azureSignInDescription">
+        <source xml:lang="en">Sign in to your Azure subscription</source>
+        <target state="translated">Inicie sesión en la suscripción de Azure</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCode">
+        <source xml:lang="en">Azure: Sign In with Device Code</source>
+        <target state="translated">Azure: Iniciar sesión con código de dispositivo</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCodeDescription">
+        <source xml:lang="en">Sign in to your Azure subscription with a device code. Use this in setups where the Sign In command does not work</source>
+        <target state="translated">Inicie sesión en la suscripción de Azure con un código de dispositivo. Use esta opción en las instalaciones en las que no funciona el comando Iniciar sesión.</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloud">
+        <source xml:lang="en">Azure: Sign In to Azure Cloud</source>
+        <target state="translated">Azure: Iniciar sesión en Azure Cloud</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloudDescription">
+        <source xml:lang="en">Sign in to your Azure subscription in one of the sovereign clouds.</source>
+        <target state="translated">Inicie sesión en la suscripción de Azure en una de las nubes soberanas.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

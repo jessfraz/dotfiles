@@ -1,0 +1,78 @@
+{
+    "references": {
+        "CURLAUTH_BASIC": [
+            "./verifyFqsenOnClassProperty.php"
+        ],
+        "Foo->bar": [
+            "./verifyFqsenOnClassProperty.php"
+        ]
+    },
+    "definitions": {
+        "Foo": {
+            "fqn": "Foo",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "Foo",
+                "kind": 5,
+                "location": {
+                    "uri": "./verifyFqsenOnClassProperty.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class Foo {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "Foo->bar": {
+            "fqn": "Foo->bar",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "bar",
+                "kind": 7,
+                "location": {
+                    "uri": "./verifyFqsenOnClassProperty.php"
+                },
+                "containerName": "Foo"
+            },
+            "type__tostring": "\\",
+            "type": {},
+            "declarationLine": "protected $bar;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "Foo->foo()": {
+            "fqn": "Foo->foo()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "foo",
+                "kind": 6,
+                "location": {
+                    "uri": "./verifyFqsenOnClassProperty.php"
+                },
+                "containerName": "Foo"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public function foo () {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

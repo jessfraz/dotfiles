@@ -1,0 +1,275 @@
+{
+	"name": "graphql-for-vscode",
+	"displayName": "GraphQL for VSCode",
+	"version": "1.15.3",
+	"description": "GraphQL syntax highlighting, linting, auto-complete, and more!",
+	"author": {
+		"name": "Kumar Harsh",
+		"email": "khs@playlyfe.com",
+		"url": "https://github.com/kumarharsh"
+	},
+	"keywords": [
+		"multi-root ready",
+		"graphql",
+		"linter",
+		"ide",
+		"autocomplete",
+		"language server"
+	],
+	"publisher": "kumar-harsh",
+	"engines": {
+		"vscode": "^1.30.2"
+	},
+	"license": "MIT",
+	"contributors": [
+		{
+			"name": "Mayank Agarwal (@Mayank1791989)",
+			"url": "https://github.com/Mayank1791989",
+			"email": "mayank@playlyfe.com"
+		}
+	],
+	"categories": [
+		"Programming Languages",
+		"Linters",
+		"Snippets"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kumarharsh/graphql-for-vscode.git"
+	},
+	"bugs": {
+		"url": "https://github.com/kumarharsh/graphql-for-vscode/issues"
+	},
+	"homepage": "https://github.com/kumarharsh/graphql-for-vscode/blob/master/README.md",
+	"icon": "images/logo.png",
+	"activationEvents": [
+		"workspaceContains:.gqlconfig"
+	],
+	"main": "./out/extension",
+	"badges": [
+		{
+			"url": "https://img.shields.io/badge/%20%20%F0%9F%9A%80-semantic--release-e10079.svg",
+			"description": "Semantic Release",
+			"href": "https://github.com/kumarharsh/graphql-for-vscode"
+		}
+	],
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Graphql Configuration",
+			"properties": {
+				"graphqlForVSCode.nodePath": {
+					"scope": "resource",
+					"type": "string",
+					"description": "A path used for resolving the @playlyfe/gql module. (default: workspaceFolder)",
+					"default": "."
+				},
+				"graphqlForVSCode.runtime": {
+					"scope": "resource",
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
+					"description": "The location of the node binary to run gql-language-server under. (default: uses vscode bundled node)"
+				},
+				"graphqlForVSCode.loglevel": {
+					"scope": "resource",
+					"type": "string",
+					"default": "info",
+					"enum": [
+						"debug",
+						"info",
+						"error",
+						"off"
+					],
+					"description": "log level."
+				},
+				"graphqlForVSCode.trace.server": {
+					"scope": "window",
+					"anyOf": [
+						{
+							"type": "string",
+							"enum": [
+								"off",
+								"messages",
+								"verbose"
+							],
+							"default": "off"
+						},
+						{
+							"type": "object",
+							"properties": {
+								"verbosity": {
+									"type": "string",
+									"enum": [
+										"off",
+										"messages",
+										"verbose"
+									],
+									"default": "off"
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"text",
+										"json"
+									],
+									"default": "text"
+								}
+							}
+						}
+					],
+					"default": "off",
+					"description": "Traces the communication between VSCode and the gql language server."
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "graphqlForVSCode.showOutputChannel",
+				"title": "GraphQL for VSCode: Show Output Channel"
+			}
+		],
+		"languages": [
+			{
+				"id": "graphql",
+				"extensions": [
+					".gql",
+					".graphql",
+					".graphqls"
+				],
+				"aliases": [
+					"GraphQL"
+				],
+				"configuration": "./syntaxes/language-configuration.json"
+			},
+			{
+				"id": "json5",
+				"extensions": [
+					".gqlconfig"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "graphql",
+				"scopeName": "source.graphql",
+				"path": "./syntaxes/graphql.json"
+			},
+			{
+				"injectTo": [
+					"source.js",
+					"source.ts",
+					"source.js.jsx",
+					"source.tsx",
+					"source.vue"
+				],
+				"scopeName": "inline.graphql",
+				"path": "./syntaxes/graphql.js.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.graphql": "graphql"
+				}
+			},
+			{
+				"injectTo": [
+					"source.ruby"
+				],
+				"scopeName": "inline.graphql.rb",
+				"path": "./syntaxes/graphql.rb.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.graphql": "graphql"
+				}
+			},
+			{
+				"injectTo": [
+					"text.gherkin.feature"
+				],
+				"scopeName": "text.gherkin.feature.graphql",
+				"path": "./syntaxes/graphql.feature.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.graphql": "graphql"
+				}
+			},
+			{
+				"injectTo": [
+					"text.html.markdown"
+				],
+				"scopeName": "markdown.graphql.codeblock",
+				"path": "./syntaxes/graphql.markdown.codeblock.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.graphql": "graphql"
+				}
+			},
+			{
+				"injectTo": [
+					"source.reason",
+					"source.ocaml"
+				],
+				"scopeName": "inline.graphql.re",
+				"path": "./syntaxes/graphql.re.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.graphql": "graphql"
+				}
+			}
+		],
+		"snippets": [
+			{
+				"language": "graphql",
+				"path": "./snippets/graphql.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn install && yarn clean && yarn compile",
+		"clean": "rimraf out",
+		"compile": "yarn install && tsc -p src",
+		"watch": "tsc -watch -p src",
+		"lint": "tslint -p src",
+		"dev": "yarn clean && yarn watch",
+		"package": "yarn install && vsce package"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "8.1.0",
+		"@commitlint/config-conventional": "8.1.0",
+		"@semantic-release/changelog": "3.0.4",
+		"@semantic-release/commit-analyzer": "6.2.0",
+		"@semantic-release/git": "7.0.16",
+		"@semantic-release/release-notes-generator": "7.2.1",
+		"@types/node": "10.14.14",
+		"@types/vscode": "1.30.0",
+		"husky": "3.0.2",
+		"prettier": "1.18.2",
+		"rimraf": "2.6.3",
+		"semantic-release": "15.13.19",
+		"semantic-release-vsce": "2.2.8",
+		"tslint": "5.18.0",
+		"tslint-config-prettier": "1.18.0",
+		"tslint-plugin-prettier": "2.0.1",
+		"typescript": "3.5.3"
+	},
+	"dependencies": {
+		"@playlyfe/gql-language-server": "0.3.1",
+		"vscode-languageclient": "5.2.1"
+	},
+	"galleryBanner": {
+		"color": "#2e2348",
+		"theme": "dark"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+			"pre-commit": "yarn lint"
+		}
+	},
+	"__metadata": {
+		"id": "3e8a391a-f3f0-44b2-8631-7847b0c8839a",
+		"publisherId": "648f4d5a-b453-44ae-b4d2-038c3297108f",
+		"publisherDisplayName": "Kumar Harsh"
+	}
+}

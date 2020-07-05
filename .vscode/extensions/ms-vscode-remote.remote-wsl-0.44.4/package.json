@@ -1,0 +1,458 @@
+{
+	"name": "remote-wsl",
+	"private": true,
+	"displayName": "%displayName%",
+	"description": "%description%",
+	"version": "0.44.4",
+	"publisher": "ms-vscode-remote",
+	"icon": "resources/remote-wsl.png",
+	"preview": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/vscode-remote-release.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Microsoft/vscode-remote-release/issues"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"engines": {
+		"vscode": "^1.44.0"
+	},
+	"extensionKind": [
+		"ui"
+	],
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"remote",
+		"wsl",
+		"remote development"
+	],
+	"aiKey": "AIF-d9b70cd4-b9f9-4d70-929b-a071c400b217",
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"compile": "webpack --mode none && yarn shellcheck",
+		"watch": "webpack --mode none --watch",
+		"shellcheck": "node ./build/shellcheck.js",
+		"test": "yarn compile && mocha",
+		"lint": "eslint -c .eslintrc.js --rulesdir ./build/eslint --ext .ts ./src",
+		"package": "vsce package --yarn",
+		"preversion": "yarn compile",
+		"postversion": "git push && git push --tags",
+		"patch-insiders": "yarn compile && node ./build/patch-local.js"
+	},
+	"activationEvents": [
+		"onResolveRemoteAuthority:wsl",
+		"onCommand:remote-wsl.newWindow",
+		"onCommand:remote-wsl.newWindowForDistro",
+		"onCommand:remote-wsl.reopenInWSL",
+		"onCommand:remote-wsl.reopenInWindows",
+		"onCommand:remote-wsl.showLog",
+		"onCommand:remote-wsl.getHelp",
+		"onCommand:remote-wsl.getStarted",
+		"onCommand:remote-wsl.provideFeedback",
+		"onCommand:remote-wsl.reportIssue",
+		"onCommand:remote-wsl.revealInExplorer",
+		"onView:targetsWsl"
+	],
+	"main": "./dist/extension",
+	"enableProposedApi": true,
+	"devDependencies": {
+		"@types/mocha": "7.0.2",
+		"@types/node": "^8.10.25",
+		"@types/vscode": "1.43.0",
+		"@types/webpack": "^4.41.7",
+		"@typescript-eslint/eslint-plugin": "^3.1.0",
+		"@typescript-eslint/parser": "^3.1.0",
+		"copy-webpack-plugin": "^5.1.1",
+		"decompress": "^4.2.1",
+		"decompress-tarxz": "^3.0.0",
+		"eslint": "^7.1.0",
+		"event-stream": "^4.0.1",
+		"gulp": "^4.0.2",
+		"gulp-eslint": "^5.0.0",
+		"gulp-filter": "^6.0.0",
+		"husky": "^4.2.5",
+		"mocha": "^8.0.1",
+		"p-all": "^3.0.0",
+		"ts-loader": "^7.0.5",
+		"typescript": "^3.8.3",
+		"typescript-formatter": "^7.2.2",
+		"vinyl": "^2.2.0",
+		"vinyl-fs": "^3.0.3",
+		"vsce": "^1.77.0",
+		"vscode-nls-dev": "^3.3.1",
+		"vscode-test": "^1.4.0",
+		"webpack": "^4.43.0",
+		"webpack-cli": "^3.3.11"
+	},
+	"dependencies": {
+		"vscode-extension-telemetry": "0.1.1",
+		"vscode-jsonrpc": "5.0.1"
+	},
+	"contributes": {
+		"configuration": {
+			"title": "Remote - WSL",
+			"properties": {
+				"remote.WSL.fileWatcher.polling": {
+					"type": "boolean",
+					"description": "If set, polling is used for file watching inside WSL1. If not set, file events are used. Polling is less performant but fixes the WSL1 issue that folders can not be renamed when watched. WSL2 does not have that problem is not affected by this setting.\nThis option requires restart to take effect.",
+					"default": false
+				},
+				"remote.WSL.fileWatcher.pollingInterval": {
+					"type": "number",
+					"description": "The file watcher polling interval in ms used inside WSL1 distros if `remote.WSL.fileWatcher.polling` is set.\nThis option requires restart to take effect.",
+					"default": 5000
+				},
+				"remote.WSL.debug": {
+					"type": "boolean",
+					"description": "If set, the output in the WSL log shows debug information",
+					"default": false
+				}
+			}
+		},
+		"resourceLabelFormatters": [
+			{
+				"scheme": "vscode-remote",
+				"authority": "wsl+*",
+				"formatting": {
+					"label": "${path}",
+					"separator": "/",
+					"tildify": true,
+					"workspaceSuffix": "WSL"
+				}
+			}
+		],
+		"commands": [
+			{
+				"command": "remote-wsl.newWindow",
+				"title": "New Window",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.newWindowForDistro",
+				"title": "New Window using Distro...",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.reopenInWSL",
+				"title": "Reopen Folder in WSL",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.openFolderInWsl",
+				"title": "Open Folder in WSL",
+				"category": "Remote-WSL",
+				"icon": {
+					"light": "resources/light/reopen-folder.svg",
+					"dark": "resources/dark/reopen-folder.svg"
+				}
+			},
+			{
+				"command": "remote-wsl.reopenInWindows",
+				"title": "Reopen Folder in Windows",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.showLog",
+				"title": "Show Log",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.getHelp",
+				"title": "Help",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.getStarted",
+				"title": "Getting Started",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.provideFeedback",
+				"title": "Provide Feedback",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.reportIssue",
+				"title": "Report Issue...",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.removeRecentFolder",
+				"title": "Remove Recent Folder",
+				"category": "Remote-WSL",
+				"icon": {
+					"light": "resources/light/remove.svg",
+					"dark": "resources/dark/remove.svg"
+				}
+			},
+			{
+				"command": "remote-wsl.attachToWsl",
+				"title": "Connect to WSL",
+				"category": "Remote-WSL",
+				"icon": {
+					"light": "resources/light/new-window.svg",
+					"dark": "resources/dark/new-Window.svg"
+				}
+			},
+			{
+				"command": "remote-wsl.setDefaultDistro",
+				"title": "Set as Default Distro",
+				"category": "Remote-WSL"
+			},
+			{
+				"command": "remote-wsl.explorerTargetsRefresh",
+				"title": "Refresh",
+				"category": "Remote-WSL",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "remote-wsl.addDistro",
+				"title": "Add a Distro",
+				"category": "Remote-WSL",
+				"icon": {
+					"light": "resources/light/add.svg",
+					"dark": "resources/dark/add.svg"
+				}
+			},
+			{
+				"command": "remote-wsl.revealInExplorer",
+				"title": "Reveal in Explorer",
+				"category": "File"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "remote-wsl.newWindow",
+					"when": "isWindows"
+				},
+				{
+					"command": "remote-wsl.newWindowForDistro",
+					"when": "isWindows"
+				},
+				{
+					"command": "remote-wsl.reopenInWSL",
+					"when": "isWindows && !remoteName && !remote.wsl.noWSLPath && workspaceFolderCount != 0"
+				},
+				{
+					"command": "remote-wsl.reopenInWindows",
+					"when": "isWindows && remoteName == wsl && !remote.wsl.noWSLPath && workspaceFolderCount != 0"
+				},
+				{
+					"command": "remote-wsl.showLog",
+					"when": "isWindows"
+				},
+				{
+					"command": "remote-wsl.getHelp",
+					"when": "isWindows"
+				},
+				{
+					"command": "remote-wsl.getStarted",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.provideFeedback",
+					"when": "isWindows"
+				},
+				{
+					"command": "remote-wsl.reportIssue",
+					"when": "isWindows"
+				},
+				{
+					"command": "remote-wsl.openFolderInWsl",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.removeRecentFolder",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.attachToWsl",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.setDefaultDistro",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.explorerTargetsRefresh",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.addDistro",
+					"when": "false"
+				},
+				{
+					"command": "remote-wsl.revealInExplorer",
+					"when": "isWindows && remoteName == wsl && !remote.wsl.noWSLPath"
+				}
+			],
+			"statusBar/windowIndicator": [
+				{
+					"command": "remote-wsl.newWindow",
+					"when": "!remoteName && isWindows",
+					"group": "0_local_wsl@1"
+				},
+				{
+					"command": "remote-wsl.newWindowForDistro",
+					"when": "!remoteName && isWindows",
+					"group": "0_local_wsl@2"
+				},
+				{
+					"command": "remote-wsl.reopenInWSL",
+					"when": "!remoteName && isWindows && !remote.wsl.noWSLPath && workspaceFolderCount != 0",
+					"group": "0_local_wsl@3"
+				},
+				{
+					"command": "remote-wsl.getStarted",
+					"when": "!remoteName && isWindows",
+					"group": "0_local_wsl@9"
+				},
+				{
+					"command": "remote-wsl.newWindow",
+					"when": "remoteName == wsl",
+					"group": "1_remote_wsl_open@1"
+				},
+				{
+					"command": "remote-wsl.newWindowForDistro",
+					"when": "remoteName == wsl",
+					"group": "1_remote_wsl_open@2"
+				},
+				{
+					"command": "remote-wsl.reopenInWindows",
+					"when": "remoteName == wsl && workspaceFolderCount != 0",
+					"group": "1_remote_wsl_open@3"
+				},
+				{
+					"command": "remote-wsl.reopenInWSL",
+					"when": "remoteName == wsl && isWindows && !remote.wsl.noWSLPath && workspaceFolderCount != 0",
+					"group": "1_remote_wsl_open@4"
+				},
+				{
+					"command": "remote-wsl.showLog",
+					"when": "remoteName == wsl",
+					"group": "1_remote_wsl_open@9"
+				},
+				{
+					"command": "remote-wsl.reportIssue",
+					"when": "remoteName == wsl",
+					"group": "9_remote_wsl_help@1"
+				},
+				{
+					"command": "remote-wsl.provideFeedback",
+					"when": "remoteName == wsl",
+					"group": "9_remote_wsl_help@2"
+				},
+				{
+					"command": "remote-wsl.getHelp",
+					"when": "remoteName == wsl",
+					"group": "9_remote_wsl_help@3"
+				}
+			],
+			"view/title": [
+				{
+					"command": "remote-wsl.explorerTargetsRefresh",
+					"when": "view == targetsWsl",
+					"group": "navigation@1"
+				},
+				{
+					"command": "remote-wsl.addDistro",
+					"when": "view == targetsWsl",
+					"group": "navigation@2"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "remote-wsl.openFolderInWsl",
+					"when": "view == targetsWsl && viewItem == folder",
+					"group": "1_folder@1"
+				},
+				{
+					"command": "remote-wsl.openFolderInWsl",
+					"when": "view == targetsWsl && viewItem == folder",
+					"group": "inline@1"
+				},
+				{
+					"command": "remote-wsl.removeRecentFolder",
+					"when": "view == targetsWsl && viewItem == folder",
+					"group": "2_folder@1"
+				},
+				{
+					"command": "remote-wsl.removeRecentFolder",
+					"when": "view == targetsWsl && viewItem == folder",
+					"group": "inline@2"
+				},
+				{
+					"command": "remote-wsl.attachToWsl",
+					"when": "view == targetsWsl && viewItem == inactiveDistro",
+					"group": "1_distro@1"
+				},
+				{
+					"command": "remote-wsl.attachToWsl",
+					"when": "view == targetsWsl && viewItem == inactiveDistro",
+					"group": "inline@1"
+				},
+				{
+					"command": "remote-wsl.setDefaultDistro",
+					"when": "view == targetsWsl && viewItem =~ /^(inactive|active)Distro$/",
+					"group": "1_distro@2"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "remote-wsl.revealInExplorer",
+					"when": "isWindows && remoteName == wsl && !remote.wsl.noWSLPath",
+					"group": "navigation@20"
+				}
+			],
+			"editor/title/context": [
+				{
+					"command": "remote-wsl.revealInExplorer",
+					"when": "isWindows && remoteName == wsl && !remote.wsl.noWSLPath",
+					"group": "2_files@20"
+				}
+			]
+		},
+		"views": {
+			"remote": [
+				{
+					"id": "targetsWsl",
+					"name": "WSL Targets",
+					"group": "targets@3",
+					"when": "isWindows",
+					"remoteName": "wsl"
+				}
+			]
+		},
+		"keybindings": [
+			{
+				"command": "remote-wsl.revealInExplorer",
+				"key": "shift+alt+r",
+				"when": "editorFocus && isWindows && remoteName == wsl"
+			}
+		],
+		"remoteHelp": {
+			"getStarted": "https://aka.ms/vscode-remote/wsl/getting-started",
+			"feedback": "https://aka.ms/vscode-remote/wsl/provide-feedback",
+			"documentation": "https://aka.ms/vscode-remote/wsl",
+			"issues": "https://aka.ms/vscode-remote/wsl/issues",
+			"remoteName": "wsl"
+		}
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "node build/gulpfile.hygiene.js"
+		}
+	},
+	"__metadata": {
+		"id": "f0c5397b-d357-4197-99f0-cb4202f22818",
+		"publisherId": "ac9410a2-0d75-40ec-90de-b59bb705801d",
+		"publisherDisplayName": "Microsoft"
+	}
+}

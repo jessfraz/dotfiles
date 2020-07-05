@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+BIN_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+
+PLATFORM_SUFFIX=""
+ARCH_SUFFIX=""
+
+case `uname` in
+    "Darwin") PLATFORM_SUFFIX=".osx" ;;
+    "Linux")
+        PLATFORM_SUFFIX=".linux"
+        case `uname -m` in
+            "x86" | "i386" | "i686") ARCH_SUFFIX="-x86" ;;
+            "x86_64") ARCH_SUFFIX="-x86_64" ;;
+            "aarch64" | "arm64") ARCH_SUFFIX="-arm64" ;;
+            "armv"*) ARCH_SUFFIX="-armhf" ;;
+        esac
+        ;;
+esac
+
+MONO_CMD="${BIN_DIR}/mono${PLATFORM_SUFFIX}${ARCH_SUFFIX}"
+
+# If we don't have a mono binary from the platform, try a globally-installed one
+if [ ! -e "${MONO_CMD}" ] ; then
+    MONO_CMD="mono"
+fi
+
+export MONO_PATH="${BIN_DIR}/framework"
+MONO_ARGS=("--config" "${BIN_DIR}/framework/config${PLATFORM_SUFFIX}")
+
+# Uncomment to remote debug MIEngine
+#MONO_ARGS+=("--debug" "--debugger-agent=transport=dt_socket,address=0.0.0.0:1234,server=y")
+
+"${MONO_CMD}" "${MONO_ARGS[@]}" "${BIN_DIR}/bin/OpenDebugAD7.exe" $*

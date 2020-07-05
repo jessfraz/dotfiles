@@ -1,0 +1,54 @@
+{
+    "references": {
+        "A": [
+            "./nameToken.php"
+        ]
+    },
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./nameToken.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "A->b()": {
+            "fqn": "A->b()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "b",
+                "kind": 6,
+                "location": {
+                    "uri": "./nameToken.php"
+                },
+                "containerName": "A"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function b() {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

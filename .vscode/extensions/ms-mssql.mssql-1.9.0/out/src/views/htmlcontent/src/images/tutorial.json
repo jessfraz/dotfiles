@@ -1,0 +1,43 @@
+{
+    "welcomeText": "We've put together a short tutorial video that will get you started faster. You can also take a quick tour of general interface to see what's new and essential feature of this product.",
+    "mainVideo": {
+        "title": "Overview",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI",
+        "ratio": "16:9"
+    },
+    "videos": [{
+        "title": "Demo 1",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI",
+        "ratio": "16:9"
+    }, {
+        "title": "Demo 2",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI",
+        "ratio": "16:9"
+    }],
+    "newFeatures": [{
+        "title": "Data quality bar",
+        "description": "Displaying overview quality for each data column.",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    }, {
+        "title": "Inspector",
+        "description": "Profiling data from different angles.",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    }, {
+        "title": "Summarize editor",
+        "description": "An interactive way to perform  summarize transformation.",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    }],
+    "tutorials": [{
+        "label": "Tutorial 1",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    }, {
+        "label": "Tutorial 2",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    },{
+        "label": "Tutorial 3",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    }, {
+        "label": "Tutorial 4",
+        "url": "https://onedrive.live.com/embed?cid=A72B50246D328C43&resid=A72B50246D328C43%21118687&authkey=AJ8guXj9wIItsrI"
+    }]
+}

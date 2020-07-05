@@ -1,0 +1,6 @@
+*
+!src/**/*
+!lib/**/*
+lib/**/*.test.*
+!package.json
+!README.md

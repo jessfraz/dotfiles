@@ -1,0 +1,53 @@
+{
+    "references": {
+        "A": [
+            "./scopedPropertyAccess3.php"
+        ],
+        "A::$a": [
+            "./scopedPropertyAccess3.php"
+        ]
+    },
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./scopedPropertyAccess3.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "A::$a": {
+            "fqn": "A::$a",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": true,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "a",
+                "kind": 7,
+                "location": {
+                    "uri": "./scopedPropertyAccess3.php"
+                },
+                "containerName": "A"
+            },
+            "type__tostring": "string",
+            "type": {},
+            "declarationLine": "static $a;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

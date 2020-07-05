@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:CatalogSelection
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0">
+  <productCatalog
+      href="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']"/>
+  <productCatalog
+      href="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.applications']"/>
+  <projectCatalog
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
+  <projectCatalog
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
+  <projectCatalog
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.opendaylight']"/>
+  <defaultProductVersion
+      key="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']/@products[name='epp.package.jee']"
+      value="index:/org.eclipse.setup#//@productCatalogs[name='org.eclipse.products']/@products[name='epp.package.jee']/@versions[name='2020-03']"/>
+</setup:CatalogSelection>

@@ -1,0 +1,49 @@
+{
+  "_from": "@angular/common@~2.1.2",
+  "_id": "@angular/common@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-XFs3wh1uVz3vFnD0OWLCYryb6C4=",
+  "_location": "/@angular/common",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/common@~2.1.2",
+    "name": "@angular/common",
+    "escapedName": "@angular%2fcommon",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/common/-/common-2.1.2.tgz",
+  "_shasum": "5c5b37c21d6e573def1670f43962c262bc9be82e",
+  "_spec": "@angular/common@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - commonly needed directives and services",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/common.umd.js",
+  "module": "index.js",
+  "name": "@angular/common",
+  "peerDependencies": {
+    "@angular/core": "2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

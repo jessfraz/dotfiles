@@ -1,0 +1,9 @@
+{
+	"messages": [
+		"Live Share Workspace"
+	],
+	"keys": [
+		"emptyWorkspace.liveShareWorkspace"
+	],
+	"filePath": "src\\_new_\\commands\\ShareCommandUtilities"
+}

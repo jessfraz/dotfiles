@@ -1,0 +1,50 @@
+{
+  "_from": "@angular/core@~2.1.2",
+  "_id": "@angular/core@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-zjlSFkPz2XvFkj1aeqdmBOlz2sg=",
+  "_location": "/@angular/core",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/core@~2.1.2",
+    "name": "@angular/core",
+    "escapedName": "@angular%2fcore",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/core/-/core-2.1.2.tgz",
+  "_shasum": "ce39521643f3d97bc5923d5a7aa76604e973dac8",
+  "_spec": "@angular/core@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - the core framework",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/core.umd.js",
+  "module": "index.js",
+  "name": "@angular/core",
+  "peerDependencies": {
+    "rxjs": "5.0.0-beta.12",
+    "zone.js": "^0.6.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

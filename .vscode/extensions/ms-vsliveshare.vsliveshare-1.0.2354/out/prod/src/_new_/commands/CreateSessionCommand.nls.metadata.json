@@ -1,0 +1,11 @@
+{
+	"messages": [
+		"Creating a Reusable Session link...",
+		"Failed to create a Reusable Session link"
+	],
+	"keys": [
+		"CreateLinkProgress",
+		"CannotCreatePersistentSession"
+	],
+	"filePath": "src\\_new_\\commands\\CreateSessionCommand"
+}

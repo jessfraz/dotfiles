@@ -1,0 +1,46 @@
+{
+    "references": [],
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./arrayValueShouldBeBoolean.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "A->foo": {
+            "fqn": "A->foo",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "foo",
+                "kind": 7,
+                "location": {
+                    "uri": "./arrayValueShouldBeBoolean.php"
+                },
+                "containerName": "A"
+            },
+            "type__tostring": "bool[]",
+            "type": {},
+            "declarationLine": "protected $foo;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

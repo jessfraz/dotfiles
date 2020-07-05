@@ -1,0 +1,52 @@
+{
+  "_from": "@angular/platform-browser-dynamic@~2.1.2",
+  "_id": "@angular/platform-browser-dynamic@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-PVG0lM/gopNUyMHyg2mINnmYKvQ=",
+  "_location": "/@angular/platform-browser-dynamic",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/platform-browser-dynamic@~2.1.2",
+    "name": "@angular/platform-browser-dynamic",
+    "escapedName": "@angular%2fplatform-browser-dynamic",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.1.2.tgz",
+  "_shasum": "3d51b494cfe0a29354c8c1f28369883679982af4",
+  "_spec": "@angular/platform-browser-dynamic@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - library for using Angular in a web browser with JIT compilation",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/platform-browser-dynamic.umd.js",
+  "module": "index.js",
+  "name": "@angular/platform-browser-dynamic",
+  "peerDependencies": {
+    "@angular/core": "2.1.2",
+    "@angular/common": "2.1.2",
+    "@angular/compiler": "2.1.2",
+    "@angular/platform-browser": "2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

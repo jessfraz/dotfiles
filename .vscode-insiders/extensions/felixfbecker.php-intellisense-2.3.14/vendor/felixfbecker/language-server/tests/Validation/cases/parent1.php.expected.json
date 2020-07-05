@@ -1,0 +1,121 @@
+{
+    "references": {
+        "MyNamespace\\B": [
+            "./parent1.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace": {
+            "fqn": "MyNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./parent1.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\B": {
+            "fqn": "MyNamespace\\B",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "B",
+                "kind": 5,
+                "location": {
+                    "uri": "./parent1.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type": null,
+            "declarationLine": "class B {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\B->b()": {
+            "fqn": "MyNamespace\\B->b()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "b",
+                "kind": 6,
+                "location": {
+                    "uri": "./parent1.php"
+                },
+                "containerName": "MyNamespace\\B"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function b() {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        },
+        "MyNamespace\\A": {
+            "fqn": "MyNamespace\\A",
+            "extends": [
+                "MyNamespace\\B"
+            ],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./parent1.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type": null,
+            "declarationLine": "class A extends B {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\A->a()": {
+            "fqn": "MyNamespace\\A->a()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "a",
+                "kind": 6,
+                "location": {
+                    "uri": "./parent1.php"
+                },
+                "containerName": "MyNamespace\\A"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function a () {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

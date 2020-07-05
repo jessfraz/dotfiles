@@ -1,0 +1,49 @@
+{
+  "_from": "@angular/compiler@~2.1.2",
+  "_id": "@angular/compiler@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-vSpsVY3lNQvdQ6qOjedXlDrAHSo=",
+  "_location": "/@angular/compiler",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/compiler@~2.1.2",
+    "name": "@angular/compiler",
+    "escapedName": "@angular%2fcompiler",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/compiler/-/compiler-2.1.2.tgz",
+  "_shasum": "bd2a6c558de5350bdd43aa8e8de757943ac01d2a",
+  "_spec": "@angular/compiler@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - the compiler library",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/compiler.umd.js",
+  "module": "index.js",
+  "name": "@angular/compiler",
+  "peerDependencies": {
+    "@angular/core": "2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="extension.i18ntest.JSON" source-language="en" target-language="zh-CN">
+    <body>
+      <trans-unit id="msgStartedExecute">
+        <source xml:lang="en">Started query execution for document "{0}"</source>
+        <target state="translated">已开始执行对于文档 "{0}" 的查询</target>
+      </trans-unit>
+      <trans-unit id="msgFinishedExecute">
+        <source xml:lang="en">Finished query execution for document "{0}"</source>
+        <target state="translated">对文档 "{0}" 的查询已完成</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryInProgress">
+        <source xml:lang="en">A query is already running for this editor session. Please cancel this query or wait for its completion.</source>
+        <target state="translated">当前编辑器的会话中有正在执行的查询，请取消该查询或者等待查询执行完毕。</target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartMessage">
+        <source xml:lang="en">Started executing query at </source>
+        <target state="translated">开始执行查询的位置 </target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartLine">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">第 {0} 行</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryFailed">
+        <source xml:lang="en">Canceling the query failed: {0}</source>
+        <target state="translated">取消查询失败: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryNotRunning">
+        <source xml:lang="en">Cannot cancel query as no query is running.</source>
+        <target state="translated">取消查询失败，没有正在运行的查询。</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabaseNotConnected">
+        <source xml:lang="en">No connection was found. Please connect to a server first.</source>
+        <target state="translated">找不到任何连接。请先连接到服务器。</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabasePlaceholder">
+        <source xml:lang="en">Choose a database from the list below</source>
+        <target state="translated">从下面的列表中选择一个数据库</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError">
+        <source xml:lang="en">Error {0}: {1}</source>
+        <target state="translated">错误 {0}: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError2">
+        <source xml:lang="en">Failed to connect: {0}</source>
+        <target state="translated">连接失败︰ {0}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionErrorPasswordExpired">
+        <source xml:lang="en">Error {0}: {1} Please login as a different user and change the password using ALTER LOGIN.</source>
+        <target state="translated">错误 {0}: {1} 请以其他用户身份登录并使用 ALTER LOGIN 更改密码。</target>
+      </trans-unit>
+      <trans-unit id="connectionErrorChannelName">
+        <source xml:lang="en">Connection Errors</source>
+        <target state="translated">连接错误</target>
+      </trans-unit>
+      <trans-unit id="msgPromptCancelConnect">
+        <source xml:lang="en">Server connection in progress. Do you want to cancel?</source>
+        <target state="translated">正在连接服务器。要取消吗?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptClearRecentConnections">
+        <source xml:lang="en">Confirm to clear recent connections list</source>
+        <target state="translated">确认要清除最近连接列表</target>
+      </trans-unit>
+      <trans-unit id="msgOpenSqlFile">
+        <source xml:lang="en">To use this command, Open a .sql file -or- Change editor language to "SQL" -or- Select T-SQL text in the active SQL editor.</source>
+        <target state="translated">若要使用此命令，请打开一个 .sql 文件，或者将编辑器语言更改为 "SQL"，或者在运行中的 SQL 编辑器中选择 T-SQL 文本。</target>
+      </trans-unit>
+      <trans-unit id="recentConnectionsPlaceholder">
+        <source xml:lang="en">Choose a connection profile from the list below</source>
+        <target state="translated">从下面的列表中选择一个连接配置文件</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileFromConnectionsListLabel">
+        <source xml:lang="en">Create Connection Profile</source>
+        <target state="translated">创建连接配置文件</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileLabel">
+        <source xml:lang="en">Create</source>
+        <target state="translated">创建</target>
+      </trans-unit>
+      <trans-unit id="ClearRecentlyUsedLabel">
+        <source xml:lang="en">Clear Recent Connections List</source>
+        <target state="translated">清除最近连接列表</target>
+      </trans-unit>
+      <trans-unit id="EditProfilesLabel">
+        <source xml:lang="en">Edit</source>
+        <target state="translated">编辑</target>
+      </trans-unit>
+      <trans-unit id="RemoveProfileLabel">
+        <source xml:lang="en">Remove</source>
+        <target state="translated">删除</target>
+      </trans-unit>
+      <trans-unit id="ManageProfilesPrompt">
+        <source xml:lang="en">Manage Connection Profiles</source>
+        <target state="translated">管理连接配置文件</target>
+      </trans-unit>
+      <trans-unit id="SampleServerName">
+        <source xml:lang="en">{{put-server-name-here}}</source>
+        <target state="translated">{{在此处填入服务器的名称}}</target>
+      </trans-unit>
+      <trans-unit id="serverPrompt">
+        <source xml:lang="en">Server name or ADO.NET connection string</source>
+        <target state="translated">服务器名称或 ADO.NET 连接字符串</target>
+      </trans-unit>
+      <trans-unit id="serverPlaceholder">
+        <source xml:lang="en">hostname\\instance or &lt;server&gt;.database.windows.net or ADO.NET connection string</source>
+        <target state="translated">hostname\\instance 或 &lt;server&gt;.database.windows.net 或 ADO.NET 连接字符串</target>
+      </trans-unit>
+      <trans-unit id="databasePrompt">
+        <source xml:lang="en">Database name</source>
+        <target state="translated">数据库名称</target>
+      </trans-unit>
+      <trans-unit id="startIpAddressPrompt">
+        <source xml:lang="en">Start IP</source>
+        <target state="translated">开始 IP</target>
+      </trans-unit>
+      <trans-unit id="endIpAddressPrompt">
+        <source xml:lang="en">End IP</source>
+        <target state="translated">结束 IP</target>
+      </trans-unit>
+      <trans-unit id="databasePlaceholder">
+        <source xml:lang="en">[Optional] Database to connect (press Enter to connect to &lt;default&gt; database)</source>
+        <target state="translated">[可选] 要连接的数据库(按 Enter 连接到 &lt;default&gt; 数据库)</target>
+      </trans-unit>
+      <trans-unit id="authTypePrompt">
+        <source xml:lang="en">Authentication Type</source>
+        <target state="translated">身份验证类型</target>
+      </trans-unit>
+      <trans-unit id="authTypeIntegrated">
+        <source xml:lang="en">Integrated</source>
+        <target state="translated">集成</target>
+      </trans-unit>
+      <trans-unit id="authTypeSql">
+        <source xml:lang="en">SQL Login</source>
+        <target state="translated">SQL 登录名</target>
+      </trans-unit>
+      <trans-unit id="usernamePrompt">
+        <source xml:lang="en">User name</source>
+        <target state="translated">用户名</target>
+      </trans-unit>
+      <trans-unit id="usernamePlaceholder">
+        <source xml:lang="en">User name (SQL Login)</source>
+        <target state="translated">用户名(SQL 登录名)</target>
+      </trans-unit>
+      <trans-unit id="passwordPrompt">
+        <source xml:lang="en">Password</source>
+        <target state="translated">密码</target>
+      </trans-unit>
+      <trans-unit id="passwordPlaceholder">
+        <source xml:lang="en">Password (SQL Login)</source>
+        <target state="translated">密码(SQL 登录名)</target>
+      </trans-unit>
+      <trans-unit id="msgSavePassword">
+        <source xml:lang="en">Save Password? If 'No', password will be required each time you connect</source>
+        <target state="translated">是否保存密码? 如果选择 [否]，每次连接时都需要输入密码</target>
+      </trans-unit>
+      <trans-unit id="profileNamePrompt">
+        <source xml:lang="en">Profile Name</source>
+        <target state="translated">配置文件名称</target>
+      </trans-unit>
+      <trans-unit id="profileNamePlaceholder">
+        <source xml:lang="en">[Optional] Enter a display name for this connection profile</source>
+        <target state="translated">[可选] 输入此连接配置文件的显示名称</target>
+      </trans-unit>
+      <trans-unit id="filepathPrompt">
+        <source xml:lang="en">File path</source>
+        <target state="translated">文件路径</target>
+      </trans-unit>
+      <trans-unit id="filepathMessage">
+        <source xml:lang="en">File name</source>
+        <target state="translated">文件名</target>
+      </trans-unit>
+      <trans-unit id="overwritePrompt">
+        <source xml:lang="en">A file with this name already exists. Do you want to replace the existing file?</source>
+        <target state="translated">具有此名称的文件已存在。是否要取代现有文件?</target>
+      </trans-unit>
+      <trans-unit id="overwritePlaceholder">
+        <source xml:lang="en">A file with this name already exists</source>
+        <target state="translated">具有此名称的文件已存在</target>
+      </trans-unit>
+      <trans-unit id="msgCannotOpenContent">
+        <source xml:lang="en">Error occurred opening content in editor.</source>
+        <target state="translated">在编辑器中打开內容时发生错误。</target>
+      </trans-unit>
+      <trans-unit id="msgSaveStarted">
+        <source xml:lang="en">Started saving results to </source>
+        <target state="translated">开始保存结果至 </target>
+      </trans-unit>
+      <trans-unit id="msgSaveFailed">
+        <source xml:lang="en">Failed to save results. </source>
+        <target state="translated">未能保存结果。 </target>
+      </trans-unit>
+      <trans-unit id="msgSaveSucceeded">
+        <source xml:lang="en">Successfully saved results to </source>
+        <target state="translated">已成功保存结果至 </target>
+      </trans-unit>
+      <trans-unit id="msgSelectProfileToRemove">
+        <source xml:lang="en">Select profile to remove</source>
+        <target state="translated">选择要移除的配置文件</target>
+      </trans-unit>
+      <trans-unit id="confirmRemoveProfilePrompt">
+        <source xml:lang="en">Confirm to remove this profile.</source>
+        <target state="translated">确认要删除此配置文件。</target>
+      </trans-unit>
+      <trans-unit id="msgNoProfilesSaved">
+        <source xml:lang="en">No connection profile to remove.</source>
+        <target state="translated">沒有可删除的连接配置文件。</target>
+      </trans-unit>
+      <trans-unit id="msgProfileRemoved">
+        <source xml:lang="en">Profile removed successfully</source>
+        <target state="translated">已成功删除配置文件</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreated">
+        <source xml:lang="en">Profile created successfully</source>
+        <target state="translated">已成功创建配置文件</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreatedAndConnected">
+        <source xml:lang="en">Profile created and connected</source>
+        <target state="translated">已创建并连接配置文件</target>
+      </trans-unit>
+      <trans-unit id="msgClearedRecentConnections">
+        <source xml:lang="en">Recent connections list cleared</source>
+        <target state="translated">已清空最近的连接列表</target>
+      </trans-unit>
+      <trans-unit id="msgIsRequired">
+        <source xml:lang="en"> is required.</source>
+        <target state="translated"> 是必需的。</target>
+      </trans-unit>
+      <trans-unit id="msgError">
+        <source xml:lang="en">Error: </source>
+        <target state="translated">错误: </target>
+      </trans-unit>
+      <trans-unit id="msgYes">
+        <source xml:lang="en">Yes</source>
+        <target state="translated">是</target>
+      </trans-unit>
+      <trans-unit id="msgNo">
+        <source xml:lang="en">No</source>
+        <target state="translated">否</target>
+      </trans-unit>
+      <trans-unit id="defaultDatabaseLabel">
+        <source xml:lang="en">&lt;default&gt;</source>
+        <target state="translated">&lt;default&gt;</target>
+      </trans-unit>
+      <trans-unit id="notConnectedLabel">
+        <source xml:lang="en">Disconnected</source>
+        <target state="translated">已断开连接</target>
+      </trans-unit>
+      <trans-unit id="notConnectedTooltip">
+        <source xml:lang="en">Click to connect to a database</source>
+        <target state="translated">单击以连接到数据库</target>
+      </trans-unit>
+      <trans-unit id="connectingLabel">
+        <source xml:lang="en">Connecting</source>
+        <target state="translated">连接中</target>
+      </trans-unit>
+      <trans-unit id="connectingTooltip">
+        <source xml:lang="en">Connecting to: </source>
+        <target state="translated">正在连接至: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorLabel">
+        <source xml:lang="en">Connection error</source>
+        <target state="translated">连接错误</target>
+      </trans-unit>
+      <trans-unit id="connectErrorTooltip">
+        <source xml:lang="en">Error connecting to: </source>
+        <target state="translated">连接到此处时出错: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorCode">
+        <source xml:lang="en">Error code: </source>
+        <target state="translated">错误代码: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorMessage">
+        <source xml:lang="en">Error Message: </source>
+        <target state="translated">错误信息: </target>
+      </trans-unit>
+      <trans-unit id="cancelingQueryLabel">
+        <source xml:lang="en">Canceling query </source>
+        <target state="translated">正在取消查询 </target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseLabel">
+        <source xml:lang="en">Updating IntelliSense...</source>
+        <target state="translated">正在更新 IntelliSense…</target>
+      </trans-unit>
+      <trans-unit id="extensionNotInitializedError">
+        <source xml:lang="en">Unable to execute the command while the extension is initializing. Please try again later.</source>
+        <target state="translated">扩展组件正在初始化中，无法执行此命令。请稍后再试。</target>
+      </trans-unit>
+      <trans-unit id="untitledScheme">
+        <source xml:lang="en">untitled</source>
+        <target state="translated">无标题</target>
+      </trans-unit>
+      <trans-unit id="msgChangeLanguageMode">
+        <source xml:lang="en">To use this command, you must set the language to "SQL". Confirm to change language mode.</source>
+        <target state="translated">若要使用此命令，必须将语言设定为 "SQL"。确认要更改语言模式。</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabaseContext">
+        <source xml:lang="en">Changed database context to "{0}" for document "{1}"</source>
+        <target state="translated">已将文档 "{1}" 的数据库上下文切换至 "{0}"</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryCreateProfile">
+        <source xml:lang="en">Error: Unable to connect using the connection information provided. Retry profile creation?</source>
+        <target state="translated">错误: 无法使用所提供的连接信息进行连接。是否重新创建配置文件?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryConnectionDifferentCredentials">
+        <source xml:lang="en">Error: Login failed. Retry using different credentials?</source>
+        <target state="translated">错误: 登录失败。使用不同的凭据再试一次?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleExtNotInstalled">
+        <source xml:lang="en">Your client IP address does not have access to the server. Download and install the Azure Account extension to sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">你的客户端 IP 地址无权访问此服务器。请下载并安装 Azure 帐户扩展，登录到 Azure 帐户，然后新建一个防火墙规则以启用访问。</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleNotSignedIn">
+        <source xml:lang="en">Your client IP address does not have access to the server. Sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">你的客户端 IP 地址无权访问此服务器。请登录到 Azure 帐户，然后新建一个防火墙规则以启用访问。</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleSignedIn">
+        <source xml:lang="en">Account signed In. Create new firewall rule? </source>
+        <target state="translated">已登录帐户。是否新建防火墙规则? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleAdded">
+        <source xml:lang="en">Firewall rule successfully added. Retry profile creation? </source>
+        <target state="translated">已成功添加防火墙规则。是否重试创建配置文件? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedNotSignedIn">
+        <source xml:lang="en">Azure Account extension activated. Sign in to an Azure account? </source>
+        <target state="translated">Azure 帐户扩展已激活。是否登录到 Azure 帐户? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedSignedIn">
+        <source xml:lang="en">Azure Account extension activated and signed in.</source>
+        <target state="translated">Azure 帐户扩展已激活并已登录到该帐户。</target>
+      </trans-unit>
+      <trans-unit id="msgPromptFirewallRuleCreated">
+        <source xml:lang="en">Firewall rule successfully created.</source>
+        <target state="translated">已成功创建防火墙规则。</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistory">
+        <source xml:lang="en">Choose Query History</source>
+        <target state="translated">选择“查询历史记录”</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistoryAction">
+        <source xml:lang="en">Choose An Action</source>
+        <target state="translated">选择一个操作</target>
+      </trans-unit>
+      <trans-unit id="msgOpenQueryHistory">
+        <source xml:lang="en">Open Query History</source>
+        <target state="translated">打开“查询历史记录”</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryHistory">
+        <source xml:lang="en">Run Query History</source>
+        <target state="translated">运行“查询历史记录”</target>
+      </trans-unit>
+      <trans-unit id="msgInvalidIpAddress">
+        <source xml:lang="en">Invalid IP Address </source>
+        <target state="translated">IP 地址无效 </target>
+      </trans-unit>
+      <trans-unit id="msgNoQueriesAvailable">
+        <source xml:lang="en">No Queries Available</source>
+        <target state="translated">没有可用的查询</target>
+      </trans-unit>
+      <trans-unit id="retryLabel">
+        <source xml:lang="en">Retry</source>
+        <target state="translated">重试</target>
+      </trans-unit>
+      <trans-unit id="signInLabel">
+        <source xml:lang="en">Sign In</source>
+        <target state="translated">登录</target>
+      </trans-unit>
+      <trans-unit id="downloadAndInstallLabel">
+        <source xml:lang="en">Download and Install</source>
+        <target state="translated">下载并安装</target>
+      </trans-unit>
+      <trans-unit id="createFirewallRuleLabel">
+        <source xml:lang="en">Create Firewall Rule</source>
+        <target state="translated">创建防火墙规则</target>
+      </trans-unit>
+      <trans-unit id="msgConnecting">
+        <source xml:lang="en">Connecting to server "{0}" on document "{1}".</source>
+        <target state="translated">对于文档 "{1}"，正在连接服务器 "{0}"。</target>
+      </trans-unit>
+      <trans-unit id="msgConnectedServerInfo">
+        <source xml:lang="en">Connected to server "{0}" on document "{1}". Server information: {2}</source>
+        <target state="translated">对于文档 "{1}"，已连接服务器 "{0}"。服务器信息: {2}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionFailed">
+        <source xml:lang="en">Error connecting to server "{0}". Details: {1}</source>
+        <target state="translated">连接服务器 "{0}" 时出错。详细信息: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgChangingDatabase">
+        <source xml:lang="en">Changing database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">对于文挡 "{2}"，正在将服务器 "{1}" 上的数据库上下文更改为 "{0}"。</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabase">
+        <source xml:lang="en">Changed database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">对于文挡 "{2}"，已将服务器 "{1}" 上的数据库上下文更改为 "{0}"。</target>
+      </trans-unit>
+      <trans-unit id="msgDisconnected">
+        <source xml:lang="en">Disconnected on document "{0}"</source>
+        <target state="translated">已断开文档 "{0}" 的连接</target>
+      </trans-unit>
+      <trans-unit id="msgErrorReadingConfigFile">
+        <source xml:lang="en">Error: Unable to load connection profiles from [{0}]. Check if the file is formatted correctly.</source>
+        <target state="translated">错误: 无法从 [{0}] 加载连接配置文件。请检查该文件的格式是否正确。</target>
+      </trans-unit>
+      <trans-unit id="titleResultsPane">
+        <source xml:lang="en">Results: {0}</source>
+        <target state="translated">结果: {0}</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslErrorMessage">
+        <source xml:lang="en">OpenSSL version &gt;=1.0.1 is required to connect.</source>
+        <target state="translated">连接需要 OpenSSL 版本 1.0.1 及更高版本。</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslHelpButton">
+        <source xml:lang="en">Help</source>
+        <target state="translated">帮助</target>
+      </trans-unit>
+      <trans-unit id="macSierraRequiredErrorMessage">
+        <source xml:lang="en">macOS Sierra or newer is required to use this feature.</source>
+        <target state="translated">需要 macOS Sierra 或更高版本才能使用该功能。</target>
+      </trans-unit>
+      <trans-unit id="gettingDefinitionMessage">
+        <source xml:lang="en">Getting definition ...</source>
+        <target state="translated">正在获取定义…</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestedStatus">
+        <source xml:lang="en">DefinitionRequested</source>
+        <target state="translated">DefinitionRequested</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestCompletedStatus">
+        <source xml:lang="en">DefinitionRequestCompleted</source>
+        <target state="translated">DefinitionRequestCompleted</target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseStatus">
+        <source xml:lang="en">updatingIntelliSense</source>
+        <target state="translated">updatingIntelliSense</target>
+      </trans-unit>
+      <trans-unit id="intelliSenseUpdatedStatus">
+        <source xml:lang="en">intelliSenseUpdated</source>
+        <target state="translated">intelliSenseUpdated</target>
+      </trans-unit>
+      <trans-unit id="testLocalizationConstant">
+        <source xml:lang="en">test</source>
+        <target state="translated">测试</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionLabel">
+        <source xml:lang="en">Disconnect</source>
+        <target state="translated">断开连接</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionDescription">
+        <source xml:lang="en">Close the current connection</source>
+        <target state="translated">关闭当前连接</target>
+      </trans-unit>
+      <trans-unit id="disconnectConfirmationMsg">
+        <source xml:lang="en">Are you sure you want to disconnect?</source>
+        <target state="translated">确定要断开连接吗?</target>
+      </trans-unit>
+      <trans-unit id="elapsedBatchTime">
+        <source xml:lang="en">Batch execution time: {0}</source>
+        <target state="translated">批处理执行时间: {0}</target>
+      </trans-unit>
+      <trans-unit id="noActiveEditorMsg">
+        <source xml:lang="en">A SQL editor must have focus before executing this command</source>
+        <target state="translated">在执行此命令前，必须聚焦在一个 SQL 编辑器。</target>
+      </trans-unit>
+      <trans-unit id="maximizeLabel">
+        <source xml:lang="en">Maximize</source>
+        <target state="translated">最大化</target>
+      </trans-unit>
+      <trans-unit id="restoreLabel">
+        <source xml:lang="en">Restore</source>
+        <target state="translated">还原</target>
+      </trans-unit>
+      <trans-unit id="saveCSVLabel">
+        <source xml:lang="en">Save as CSV</source>
+        <target state="translated">另存为 CSV 文件</target>
+      </trans-unit>
+      <trans-unit id="saveJSONLabel">
+        <source xml:lang="en">Save as JSON</source>
+        <target state="translated">另存为 JSON 文件</target>
+      </trans-unit>
+      <trans-unit id="saveExcelLabel">
+        <source xml:lang="en">Save as Excel</source>
+        <target state="translated">另存为 Excel 文件</target>
+      </trans-unit>
+      <trans-unit id="fileTypeCSVLabel">
+        <source xml:lang="en">CSV</source>
+        <target state="translated">CSV</target>
+      </trans-unit>
+      <trans-unit id="fileTypeJSONLabel">
+        <source xml:lang="en">JSON</source>
+        <target state="translated">JSON</target>
+      </trans-unit>
+      <trans-unit id="fileTypeExcelLabel">
+        <source xml:lang="en">Excel</source>
+        <target state="translated">Excel</target>
+      </trans-unit>
+      <trans-unit id="resultPaneLabel">
+        <source xml:lang="en">Results</source>
+        <target state="translated">结果</target>
+      </trans-unit>
+      <trans-unit id="selectAll">
+        <source xml:lang="en">Select all</source>
+        <target state="translated">全选</target>
+      </trans-unit>
+      <trans-unit id="copyLabel">
+        <source xml:lang="en">Copy</source>
+        <target state="translated">复制</target>
+      </trans-unit>
+      <trans-unit id="copyWithHeadersLabel">
+        <source xml:lang="en">Copy with Headers</source>
+        <target state="translated">连同标题一起复制</target>
+      </trans-unit>
+      <trans-unit id="executeQueryLabel">
+        <source xml:lang="en">Executing query...</source>
+        <target state="translated">正在执行查询…</target>
+      </trans-unit>
+      <trans-unit id="messagePaneLabel">
+        <source xml:lang="en">Messages</source>
+        <target state="translated">消息</target>
+      </trans-unit>
+      <trans-unit id="lineSelectorFormatted">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">第 {0} 行</target>
+      </trans-unit>
+      <trans-unit id="elapsedTimeLabel">
+        <source xml:lang="en">Total execution time: {0}</source>
+        <target state="translated">总执行时间: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCannotSaveMultipleSelections">
+        <source xml:lang="en">Save results command cannot be used with multiple selections.</source>
+        <target state="translated">多选时不能使用保存结果命令。</target>
+      </trans-unit>
+      <trans-unit id="mssqlProviderName">
+        <source xml:lang="en">MSSQL</source>
+        <target state="translated">MSSQL</target>
+      </trans-unit>
+      <trans-unit id="noneProviderName">
+        <source xml:lang="en">None</source>
+        <target state="translated">无</target>
+      </trans-unit>
+      <trans-unit id="chooseSqlLang">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">选择 SQL 语言</target>
+      </trans-unit>
+      <trans-unit id="flavorChooseLanguage">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">选择 SQL 语言</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionMssql">
+        <source xml:lang="en">Use T-SQL intellisense and syntax error checking on current document</source>
+        <target state="translated">在当前文档中使用 T-SQL Intellisense 和语法错误检查</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionNone">
+        <source xml:lang="en">Disable intellisense and syntax error checking on current document</source>
+        <target state="translated">在当前文档中禁用 Intellisense 和语法错误检查</target>
+      </trans-unit>
+      <trans-unit id="queryOutputDocumentTitle">
+        <source xml:lang="en">Query Output Document</source>
+        <target state="translated">查询输出文档</target>
+      </trans-unit>
+      <trans-unit id="queryOutputHostTitle">
+        <source xml:lang="en">Query Output Document Host</source>
+        <target state="translated">查询输出文档主机</target>
+      </trans-unit>
+      <trans-unit id="msgAddConnection">
+        <source xml:lang="en">Add Connection</source>
+        <target state="translated">添加连接</target>
+      </trans-unit>
+      <trans-unit id="msgConnect">
+        <source xml:lang="en">Connect</source>
+        <target state="translated">连接</target>
+      </trans-unit>
+      <trans-unit id="azureSignIn">
+        <source xml:lang="en">Azure: Sign In</source>
+        <target state="translated">Azure: 登录</target>
+      </trans-unit>
+      <trans-unit id="azureSignInDescription">
+        <source xml:lang="en">Sign in to your Azure subscription</source>
+        <target state="translated">登录到 Azure 订阅</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCode">
+        <source xml:lang="en">Azure: Sign In with Device Code</source>
+        <target state="translated">Azure: 使用设备代码登录</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCodeDescription">
+        <source xml:lang="en">Sign in to your Azure subscription with a device code. Use this in setups where the Sign In command does not work</source>
+        <target state="translated">使用设备代码登录到 Azure 订阅。“登录”命令不起作用时使用此选项进行设置。</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloud">
+        <source xml:lang="en">Azure: Sign In to Azure Cloud</source>
+        <target state="translated">Azure: 登录到 Azure 云服务</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloudDescription">
+        <source xml:lang="en">Sign in to your Azure subscription in one of the sovereign clouds.</source>
+        <target state="translated">使用以下主权云之一登录到 Azure 订阅。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

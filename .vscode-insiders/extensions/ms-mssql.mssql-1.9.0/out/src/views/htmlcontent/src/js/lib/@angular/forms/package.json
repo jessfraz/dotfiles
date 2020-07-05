@@ -1,0 +1,50 @@
+{
+  "_from": "@angular/forms@~2.1.2",
+  "_id": "@angular/forms@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-xVU56l2m1g9kR185OSrl3Xan6ZA=",
+  "_location": "/@angular/forms",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/forms@~2.1.2",
+    "name": "@angular/forms",
+    "escapedName": "@angular%2fforms",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/forms/-/forms-2.1.2.tgz",
+  "_shasum": "c55539ea5da6d60f64475f39392ae5dd76a7e990",
+  "_spec": "@angular/forms@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - directives and services for creating forms",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/forms.umd.js",
+  "module": "index.js",
+  "name": "@angular/forms",
+  "peerDependencies": {
+    "@angular/core": "2.1.2",
+    "@angular/common": "2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

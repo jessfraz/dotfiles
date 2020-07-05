@@ -1,0 +1,5 @@
+{
+	"name": "remote-ssh-edit-nightly",
+	"displayName": "Remote - SSH: Editing Configuration Files (Nightly)",
+	"icon": "resources/remote-ssh-nightly.png"
+}

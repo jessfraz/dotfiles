@@ -1,0 +1,15 @@
+<Project>
+    <Target Name="GetTargetPath">
+        <MSBuild
+            Projects="$(ProjectFilename)"
+            Targets="GetTargetPath">
+            <Output
+                TaskParameter="TargetOutputs"
+                ItemName="TargetOutput" />
+        </MSBuild>
+        <WriteLinesToFile
+            File="$(TargetOutputFilename)"
+            Lines="@(TargetOutput)"
+            Overwrite="True" />
+    </Target>
+</Project>

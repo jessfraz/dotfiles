@@ -1,0 +1,165 @@
+{
+	"name": "vscode-graphql",
+	"version": "0.2.14",
+	"preview": true,
+	"private": false,
+	"license": "MIT",
+	"displayName": "GraphQL",
+	"keywords": [
+		"multi-root ready"
+	],
+	"description": "GraphQL extension for VSCode adds syntax highlighting, validation, and language features like go to definition, hover information and autocompletion for graphql projects. This extension also works with queries annotated with gql tag.",
+	"icon": "assets/images/logo.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/prisma-labs/vscode-graphql"
+	},
+	"homepage": "https://github.com/prisma-labs/vscode-graphql/blob/master/README.md",
+	"galleryBanner": {
+		"color": "#032539",
+		"theme": "dark"
+	},
+	"publisher": "Prisma",
+	"engines": {
+		"vscode": "^1.32.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Snippets",
+		"Linters",
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.isDebugging",
+		"onCommand:extension.contentProvider",
+		"onLanguage:graphql",
+		"workspaceContains:**/.graphqlconfig",
+		"workspaceContains:**/.graphqlconfig.yml",
+		"workspaceContains:**/.graphqlconfig.yaml"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"languages": [
+			{
+				"id": "graphql",
+				"extensions": [
+					".gql",
+					".graphql"
+				],
+				"aliases": [
+					"GraphQL",
+					"graphql"
+				],
+				"configuration": "./language/language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "graphql",
+				"path": "./grammars/graphql.json",
+				"scopeName": "source.graphql"
+			},
+			{
+				"injectTo": [
+					"source.js",
+					"source.ts",
+					"source.js.jsx",
+					"source.tsx",
+					"source.vue"
+				],
+				"scopeName": "inline.graphql",
+				"path": "./grammars/graphql.js.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.graphql": "graphql"
+				}
+			}
+		],
+		"snippets": [
+			{
+				"language": "graphql",
+				"path": "./snippets/graphql.json"
+			}
+		],
+		"configuration": {
+			"vscode-graphql.debug": {
+				"type": [
+					"boolean",
+					"null"
+				],
+				"title": "VSCode GraphQL - Debug Mode",
+				"default": false,
+				"description": "Enable debug logs"
+			},
+			"vscode-graphql.trace.server": {
+				"type": [
+					"string"
+				],
+				"title": "VSCode GraphQL - Trace Language Server",
+				"default": "off",
+				"description": "Enable tracing for language server"
+			}
+		},
+		"commands": [
+			{
+				"command": "extension.isDebugging",
+				"title": "VSCode GraphQL - Is Debugging?"
+			},
+			{
+				"command": "extension.contentProvider",
+				"title": "Execute GraphQL Operations"
+			}
+		],
+		"typescriptServerPlugins": [
+			{
+				"name": "@divyenduz/ts-graphql-plugin"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test",
+		"vsce:package": "vsce package",
+		"env:source": "export $(cat .envrc | xargs)",
+		"vsce:publish": "sh publish.sh",
+		"upgrade-interactive": "npx npm-check -u"
+	},
+	"devDependencies": {
+		"@types/capitalize": "1.0.1",
+		"@types/dotenv": "6.1.1",
+		"@types/graphql": "14.5.0",
+		"@types/mocha": "5.2.7",
+		"@types/node": "12.12.29",
+		"@types/ws": "6.0.4",
+		"tslint": "5.20.1",
+		"typescript": "3.8.3",
+		"vsce": "1.71.0",
+		"vscode": "1.1.36"
+	},
+	"dependencies": {
+		"@divyenduz/ts-graphql-plugin": "0.1.0",
+		"apollo-cache-inmemory": "1.6.5",
+		"apollo-client": "2.6.8",
+		"apollo-link": "1.2.13",
+		"apollo-link-http": "1.5.16",
+		"apollo-link-ws": "1.0.19",
+		"babel-polyfill": "6.26.0",
+		"capitalize": "1.0.0",
+		"dotenv": "6.2.0",
+		"graphql": "0.12.x",
+		"graphql-config": "2.2.1",
+		"graphql-config-extension-prisma": "0.3.0",
+		"graphql-language-service-server": "2.3.3",
+		"graphql-tag": "^2.10.3",
+		"subscriptions-transport-ws": "0.9.16",
+		"vscode-languageclient": "5.2.1",
+		"ws": "^7.2.3"
+	},
+	"__metadata": {
+		"id": "55ef6448-487b-49a0-a66e-4d2d9bb82229",
+		"publisherId": "2397d6f3-c7f1-4b03-9029-414f731a68ec",
+		"publisherDisplayName": "Prisma"
+	}
+}

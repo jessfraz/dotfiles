@@ -1,0 +1,15 @@
+<Project>
+    <!-- All the relevant info is in root-level PropertyGroups, so there are no dependent targets to make this work -->
+    <Target Name="GetBlazorManifestLocations">
+        <PropertyGroup>
+            <BlazorManifestInputLocation>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), $(_GeneratedStaticWebAssetsDevelopmentManifest)))</BlazorManifestInputLocation>
+            <BlazorManifestOutputLocation>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), $(OutputPath), $(TargetName).StaticWebAssets.xml))</BlazorManifestOutputLocation>
+        </PropertyGroup>
+
+        <WriteLinesToFile
+            File="$(BlazorManifestLocationsOutput)"
+            Lines="$(BlazorManifestInputLocation)
+$(BlazorManifestOutputLocation)"
+            Overwrite="True" />
+    </Target>
+</Project>

@@ -1,0 +1,43 @@
+{
+	"messages": [
+		"Default Configuration",
+		"Select a configuration",
+		"{0} build and debug is only usable when VS Code is run from the Developer Command Prompt for VS.",
+		"Debugger of type: '{0}' is only available on Windows. Use type: '{1}' on the current OS platform.",
+		"More Info",
+		"Unable to locate 'LLDB.framework' for lldb-mi. Please install XCode or XCode Command Line Tools.",
+		"Missing dependency '{0}' for lldb-mi executable.",
+		"Searched in:",
+		"To resolve this issue, either install XCode through the Apple App Store or install the XCode Command Line Tools by running '{0}' in a Terminal window.",
+		"Failed to use {0}. Reason: {1}",
+		"Replacing {0} '{1}' with '{2}'.",
+		"Replacing {0} '{1}' with '{2}'.",
+		"Resolving variables in {0}...",
+		"Open {0}",
+		"Unexpected OS type",
+		"full path to pipe program such as {0}",
+		"Enable pretty-printing for {0}",
+		"Enable pretty-printing for {0}"
+	],
+	"keys": [
+		"default.configuration.menuitem",
+		"select.configuration",
+		"cl.exe.not.available",
+		"debugger.not.available",
+		"lldb.framework.install.xcode",
+		"lldb.framework.not.found",
+		"lldb.find.failed",
+		"lldb.search.paths",
+		"lldb.install.help",
+		"envfale.failed",
+		"replacing.sourcepath",
+		"replacing.targetpath",
+		"resolving.variables.in.sourcefilemap",
+		"open.envfile",
+		"unexpected.os",
+		"path.to.pipe.program",
+		"enable.pretty.printing",
+		"enable.pretty.printing"
+	],
+	"filePath": "src\\Debugger\\configurationProvider"
+}

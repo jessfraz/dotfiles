@@ -1,0 +1,70 @@
+{
+    "references": {
+        "MyNamespace\\PHP_INT_MAX": [
+            "./constants5.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace": {
+            "fqn": "MyNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./constants5.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\Mbstring": {
+            "fqn": "MyNamespace\\Mbstring",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "Mbstring",
+                "kind": 5,
+                "location": {
+                    "uri": "./constants5.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type": null,
+            "declarationLine": "class Mbstring",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\Mbstring::MB_CASE_FOLD": {
+            "fqn": "MyNamespace\\Mbstring::MB_CASE_FOLD",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MB_CASE_FOLD",
+                "kind": 14,
+                "location": {
+                    "uri": "./constants5.php"
+                },
+                "containerName": "MyNamespace\\Mbstring"
+            },
+            "type__tostring": "\\MyNamespace\\PHP_INT_MAX",
+            "type": {},
+            "declarationLine": "const MB_CASE_FOLD = PHP_INT_MAX;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

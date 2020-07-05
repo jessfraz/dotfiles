@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="extension.i18ntest.JSON" source-language="en" target-language="zh-CN">
+    <body>
+      <trans-unit id="extension.runQuery">
+        <source xml:lang="en">Execute Query</source>
+        <target state="translated">执行查询</target>
+      </trans-unit>
+      <trans-unit id="extension.runCurrentStatement">
+        <source xml:lang="en">Execute Current Statement</source>
+        <target state="translated">执行当前语句</target>
+      </trans-unit>
+      <trans-unit id="extension.cancelQuery">
+        <source xml:lang="en">Cancel Query</source>
+        <target state="translated">取消查询</target>
+      </trans-unit>
+      <trans-unit id="extension.connect">
+        <source xml:lang="en">Connect</source>
+        <target state="translated">连接</target>
+      </trans-unit>
+      <trans-unit id="extension.disconnect">
+        <source xml:lang="en">Disconnect</source>
+        <target state="translated">断开连接</target>
+      </trans-unit>
+      <trans-unit id="extension.manageProfiles">
+        <source xml:lang="en">Manage Connection Profiles</source>
+        <target state="translated">管理连接配置文件</target>
+      </trans-unit>
+      <trans-unit id="extension.chooseDatabase">
+        <source xml:lang="en">Use Database</source>
+        <target state="translated">使用数据库</target>
+      </trans-unit>
+      <trans-unit id="extension.chooseLanguageFlavor">
+        <source xml:lang="en">Choose SQL handler for this file</source>
+        <target state="translated">为此文件选择 SQL 句柄</target>
+      </trans-unit>
+      <trans-unit id="extension.showGettingStarted">
+        <source xml:lang="en">Getting Started Guide</source>
+        <target state="translated">入门指南</target>
+      </trans-unit>
+      <trans-unit id="extension.newQuery">
+        <source xml:lang="en">New Query</source>
+        <target state="translated">新建查询</target>
+      </trans-unit>
+      <trans-unit id="extension.rebuildIntelliSenseCache">
+        <source xml:lang="en">Refresh IntelliSense Cache</source>
+        <target state="translated">刷新 IntelliSense 缓存</target>
+      </trans-unit>
+      <trans-unit id="mssql.logDebugInfo">
+        <source xml:lang="en">[Optional] Log debug output to the VS Code console (Help -&gt; Toggle Developer Tools)</source>
+        <target state="translated">[可选] 将调试输出记录到 VS Code 控制台(“帮助”-&gt;“切换开发人员工具”)</target>
+      </trans-unit>
+      <trans-unit id="mssql.maxRecentConnections">
+        <source xml:lang="en">The maximum number of recently used connections to store in the connection list.</source>
+        <target state="translated">连接列表中可保存的最近使用的最大连接数</target>
+      </trans-unit>
+      <trans-unit id="mssql.connections">
+        <source xml:lang="en">Connection profiles defined in 'User Settings' are shown under 'MS SQL: Connect' command in the command palette.</source>
+        <target state="translated">“用户设置”中定义的连接配置文件显示在命令面板的“MS SQL: 连接”命令下。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.server">
+        <source xml:lang="en"><![CDATA[[Required] Specify the server name to connect to. Use 'hostname\\instance' or '<server>.database.windows.net' for Azure SQL Database.]]></source>
+        <target state="translated">[必需] 请指定要连接到的服务器名称。对于 Azure SQL 数据库，请使用 "hostname\\instance" 或 "&lt;server&gt;.database.windows.net"。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.database">
+        <source xml:lang="en">[Optional] Specify the database name to connect to. If database is not specified, the default user database setting is used, typically 'master'.</source>
+        <target state="translated">[可选] 请指定要连接到的数据库名称。如果未指定数据库，则会使用默认的用户数据库设置，通常为 "master" 数据库。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.user">
+        <source xml:lang="en">[Optional] Specify the user name for SQL Server authentication. If user name is not specified, when you connect, you will be asked again.</source>
+        <target state="translated">[可选] 请指定 SQL Server 身份验证的用户名。如果未指定用户名，连接时会被再次询问。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.password">
+        <source xml:lang="en">[Optional] Specify the password for SQL Server authentication. If password is not specified or already saved, when you connect, you will be asked again.</source>
+        <target state="translated">[可选] 请指定 SQL Server 身份验证的密码。如果未指定密码或保存，连接时会被再次询问。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.authenticationType">
+        <source xml:lang="en">[Optional] Specify the SQL Server authentication type.</source>
+        <target state="translated">[可选] 请指定 SQL Server 验证类型。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.port">
+        <source xml:lang="en">[Optional] Specify the port number to connect to.</source>
+        <target state="translated">[可选] 请指定要连接的端口号。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.encrypt">
+        <source xml:lang="en">[Optional] When set to 'true', SQL Server uses SSL encryption for data sent between the client and the server if the server has a certificate installed. Set 'true' for Azure SQL Database connection.</source>
+        <target state="translated">[可选] 当设置为 "true" 时，如果服务器安装了证书，SQL Server 将对客户端和服务端间传输的数据进行 SSL 加密。使用 Azure SQL 数据库连接时，请设置为 "true"。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.trustServerCertificate">
+        <source xml:lang="en">[Optional] When set to 'true', the SQL Server SSL certificate is automatically trusted when the communication layer is encrypted using SSL. Set 'false' for Azure SQL Database connection.</source>
+        <target state="translated">[可选] 当设置为 "true" 时，如果通信层使用 SSL 进行加密，将自动信任 SQL Server SSL 证书。使用 Azure SQL 数据库连接时，请设置为 "false"。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.persistSecurityInfo">
+        <source xml:lang="en">[Optional] When set to false, security-sensitive information, such as the password, is not returned as part of the connection if the connection is open or has ever been in an open state.</source>
+        <target state="translated">[可选] 当设置为 "false" 时，如果连接处于打开状态或曾经处于打开状态，则安全敏感信息(如密码等)将不会作为连接的一部分返回。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectTimeout">
+        <source xml:lang="en">[Optional] Specify the length of time in seconds to wait for a connection to the server before it times out. The default timeout value for Azure SQL Database is 30.</source>
+        <target state="translated">[可选] 请指定在连接服务器超时前等待的时长(以秒为单位)。Azure SQL 数据库的默认超时值为 30。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectRetryCount">
+        <source xml:lang="en">[Optional] Specify the number of attempts to restore connection.</source>
+        <target state="translated">[可选] 请指定恢复连接的尝试次数。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectRetryInterval">
+        <source xml:lang="en">[Optional] Specify the delay between attempts to restore connection.</source>
+        <target state="translated">[可选] 请指定恢复连接尝试之间的延迟。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.workstationId">
+        <source xml:lang="en">[Optional] Specify the name of the workstation connecting to SQL Server.</source>
+        <target state="translated">[可选] 请指定连接 SQL Server 的工作站名称。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.applicationName">
+        <source xml:lang="en">[Optional] Specify the name of the application used for SQL Server to log (default: 'vscode-mssql').</source>
+        <target state="translated">[可选] 请指定 SQL Server 记录日志使用的应用程序名称(默认为 "vscode-mssql")。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.applicationIntent">
+        <source xml:lang="en">[Optional] Declares the application workload type when connecting to SQL Server such as ReadWrite or ReadOnly. Refer to SQL Server AlwaysOn for more detail.</source>
+        <target state="translated">[可选] 请声明连接到 SQL Server 时的应用程序工作负载类型，例如 ReadWrite 或 ReadOnly。有关详细信息，请参阅 SQL Server AlwaysOn 可用性组。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.currentLanguage">
+        <source xml:lang="en">[Optional] Indicates the SQL Server language settings.</source>
+        <target state="translated">[可选] 请指定 SQL Server 的语言设置。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.pooling">
+        <source xml:lang="en">[Optional] When set to 'true', the connection object is drawn from the appropriate pool, or if necessary, is created and added to the appropriate pool.</source>
+        <target state="translated">[可选] 当设置为 "true" 时，将从合适的池中提取连接对象，或者必要时，将创建对象并添加到合适的池中。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.maxPoolSize">
+        <source xml:lang="en">[Optional] Specify the maximum number of connections allowed in the pool.</source>
+        <target state="translated">[可选] 请指定池中允许的最大连接数。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.minPoolSize">
+        <source xml:lang="en">[Optional] Specify the minimum number of connections allowed in the pool.</source>
+        <target state="translated">[可选] 请指定池中允许的最小连接数。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.loadBalanceTimeout">
+        <source xml:lang="en">[Optional] Specify the minimum amount of time in seconds for this connection to live in the pool before being removed/deleted.</source>
+        <target state="translated">[可选] 请指定此连接在池中保存直至被删除的最短时间(以秒为单位)。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.replication">
+        <source xml:lang="en">[Optional] Used by SQL Server in replication.</source>
+        <target state="translated">[可选] 在复制时由 SQL Server 使用。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.attachDbFilename">
+        <source xml:lang="en">[Optional] Specify the name of the primary file, including the full path name, of an attachable database.</source>
+        <target state="translated">[可选] 请指定可附加数据库的主文件名称，包含完整路径名。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.failoverPartner">
+        <source xml:lang="en">[Optional] Specify the name or network address of the instance of SQL Server that acts as a failover partner.</source>
+        <target state="translated">[可选] 请指定充当故障转移伙伴的 SQL Server 实例的名称或网络地址。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.multiSubnetFailover">
+        <source xml:lang="en">[Optional] When set to 'true', the detection and connection to the active server is faster if AlwaysOn Availability Group is configured on different subnets.</source>
+        <target state="translated">[可选] 当设置为 "true" 时，如果在不同子网上配置了 AlwaysOn 可用性组，对活动服务器的检测和连接将会更快。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.multipleActiveResultSets">
+        <source xml:lang="en">[Optional] When set to 'true', multiple result sets can be returned and read from on connection.</source>
+        <target state="translated">[可选] 当设置为 "true" 时，将能从连接返回并读取多个结果集。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.packetSize">
+        <source xml:lang="en">[Optional] Specify the size in bytes of the network packets to communicate with SQL Server.</source>
+        <target state="translated">[可选] 请指定与 SQL Server 通信的网络数据包大小(以字节为单位)。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.typeSystemVersion">
+        <source xml:lang="en">[Optional] Indicates which server type the provider will expose through the DataReader.</source>
+        <target state="translated">[可选] 指示提供程序通过 DataReader 公开的服务器类型。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectionString">
+        <source xml:lang="en">[Optional] The ADO.NET connection string to use for the connection. Overrides any other options given in this connection.</source>
+        <target state="translated">[可选] 连接使用的 ADO.NET 连接字符串。覆盖此连接中的其他任何选项。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.profileName">
+        <source xml:lang="en">[Optional] Specify a custom name for this connection profile to easily browse and search in the command palette of Visual Studio Code.</source>
+        <target state="translated">[可选] 请指定此连接配置文件的自定义名称，可使用它在 Visual Studio Code 的命令面板中轻松浏览和搜索。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.savePassword">
+        <source xml:lang="en">[Optional] When set to 'true', the password for SQL Server authentication is saved in the secure store of your operating system such as KeyChain in MacOS or Secure Store in Windows.</source>
+        <target state="translated">[可选] 当设置为 "true" 时，SQL Server 身份验证的密码将被保存在操作系统的安全存储区中，例如，KeyChain 保存在 MacOS 中，Secure Store 保存在 Windows 中。</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.emptyPasswordInput">
+        <source xml:lang="en">[Optional] Indicates whether this profile has an empty password explicitly set</source>
+        <target state="translated">[可选] 指示此配置文件显式设置为空密码</target>
+      </trans-unit>
+      <trans-unit id="mssql.shortcuts">
+        <source xml:lang="en">Shortcuts related to the results window</source>
+        <target state="translated">与“结果”窗口相关的快捷方式</target>
+      </trans-unit>
+      <trans-unit id="mssql.messagesDefaultOpen">
+        <source xml:lang="en">True for the messages pane to be open by default; false for closed</source>
+        <target state="translated">"true" 时默认开启消息面板；"false" 时默认关闭</target>
+      </trans-unit>
+      <trans-unit id="mssql.resultsFontFamily">
+        <source xml:lang="en">Set the font family for the results grid; set to blank to use the editor font</source>
+        <target state="translated">设置结果网格的字体系列；留空时使用编辑器字体</target>
+      </trans-unit>
+      <trans-unit id="mssql.resultsFontSize">
+        <source xml:lang="en">Set the font size for the results grid; set to blank to use the editor size</source>
+        <target state="translated">设置结果网格的字号；留空时使用编辑器字体</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.includeHeaders">
+        <source xml:lang="en">[Optional] When true, column headers are included when saving results as CSV</source>
+        <target state="translated">[可选] 当为 "true" 时，将结果保存为 CSV 时包含列标题</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.delimiter">
+        <source xml:lang="en">[Optional] Delimiter for separating data items when saving results as CSV</source>
+        <target state="translated">[可选] 将结果保存为 CSV 时用于分隔数据项的分隔符</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.lineSeparator">
+        <source xml:lang="en">[Optional] Character(s) used for separating rows when saving results as CSV</source>
+        <target state="translated">[可选] 将结果保存为 CSV 时用于分隔行的字符</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.textIdentifier">
+        <source xml:lang="en">[Optional] Character used for enclosing text fields when saving results as CSV</source>
+        <target state="translated">[可选] 将结果保存为 CSV 时用于封闭文本字段的字符</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.encoding">
+        <source xml:lang="en">[Optional] File encoding used when saving results as CSV</source>
+        <target state="translated">[可选] 将结果保存为 CSV 时使用的文件编码</target>
+      </trans-unit>
+      <trans-unit id="mssql.copyIncludeHeaders">
+        <source xml:lang="en">[Optional] Configuration options for copying results from the Results View</source>
+        <target state="translated">[可选] 从结果视图复制结果的配置选项</target>
+      </trans-unit>
+      <trans-unit id="mssql.copyRemoveNewLine">
+        <source xml:lang="en">[Optional] Configuration options for copying multi-line results from the Results View</source>
+        <target state="translated">[可选] 从结果视图复制多行结果的配置选项</target>
+      </trans-unit>
+      <trans-unit id="mssql.showBatchTime">
+        <source xml:lang="en">[Optional] Should execution time be shown for individual batches</source>
+        <target state="translated">[可选] 是否显示每个批处理的执行时间</target>
+      </trans-unit>
+      <trans-unit id="mssql.splitPaneSelection">
+        <source xml:lang="en">[Optional] Configuration options for which column new result panes should open in</source>
+        <target state="translated">[可选] 用于指示新结果窗格应在哪一列打开的配置选项</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.alignColumnDefinitionsInColumns">
+        <source xml:lang="en">Should column definitions be aligned?</source>
+        <target state="translated">列定义是否应对齐?</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.datatypeCasing">
+        <source xml:lang="en">Should data types be formatted as UPPERCASE, lowercase, or none (not formatted)</source>
+        <target state="translated">数据类型格式是否应统一为“大写”("uppercase")、“小写”("lowercase") 或不进行统一 ("none")</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.keywordCasing">
+        <source xml:lang="en">Should keywords be formatted as UPPERCASE, lowercase, or none (not formatted)</source>
+        <target state="translated">关键字格式是否应统一为“大写”("uppercase")、“小写”("lowercase") 或不进行统一 ("none")</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.placeCommasBeforeNextStatement">
+        <source xml:lang="en">should commas be placed at the beginning of each statement in a list e.g. ', mycolumn2' instead of at the end e.g. 'mycolumn1,'</source>
+        <target state="translated">逗号是否应位于一串语句中每一条的开头(例如 ", mycolumn2")而不是结尾(例如 "mycolumn1,")</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.placeSelectStatementReferencesOnNewLine">
+        <source xml:lang="en">Should references to objects in a select statements be split into separate lines? E.g. for 'SELECT C1, C2 FROM T1' both C1 and C2 will be on separate lines</source>
+        <target state="translated">select 语句中的对象引用是否应分为不同行? 例如，在 "SELECT C1, C2 FROM T1" 中，C1 和 C2 将位于不同行</target>
+      </trans-unit>
+      <trans-unit id="mssql.applyLocalization">
+        <source xml:lang="en">[Optional] Configuration options for localizing into VSCode's configured locale (must restart VSCode for settings to take effect)</source>
+        <target state="translated">[可选] 本选项控制是否使用 VSCode 的区域设置进行本地化(必须重启 VSCode，设置才能生效)</target>
+      </trans-unit>
+      <trans-unit id="mssql.query.displayBitAsNumber">
+        <source xml:lang="en">Should BIT columns be displayed as numbers (1 or 0)? If false, BIT columns will be displayed as 'true' or 'false'</source>
+        <target state="translated">是否应将 BIT 列显示为数字 (1 或 0)? 若为 "false"，BIT 列将显示为 "true" 或 "false"</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableIntelliSense">
+        <source xml:lang="en">Should IntelliSense be enabled</source>
+        <target state="translated">是否启用 IntelliSense</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableErrorChecking">
+        <source xml:lang="en">Should IntelliSense error checking be enabled</source>
+        <target state="translated">是否启用 IntelliSense 错误检查</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableSuggestions">
+        <source xml:lang="en">Should IntelliSense suggestions be enabled</source>
+        <target state="translated">是否启用 IntelliSense 建议</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableQuickInfo">
+        <source xml:lang="en">Should IntelliSense quick info be enabled</source>
+        <target state="translated">是否启用 IntelliSense 快速信息提示</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.lowerCaseSuggestions">
+        <source xml:lang="en">Should IntelliSense suggestions be lowercase</source>
+        <target state="translated">是否小写显式 IntelliSense 建议</target>
+      </trans-unit>
+      <trans-unit id="mssql.persistQueryResultTabs">
+        <source xml:lang="en">Should query result selections and scroll positions be saved when switching tabs (may impact performance)</source>
+        <target state="translated">切换选项卡时是否应保存查询结果选择项和滚动位置(可能影响性能)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

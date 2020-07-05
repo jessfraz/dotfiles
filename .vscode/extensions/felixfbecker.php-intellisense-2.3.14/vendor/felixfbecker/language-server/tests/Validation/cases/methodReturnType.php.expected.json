@@ -1,0 +1,79 @@
+{
+    "references": {
+        "FooClass": [
+            "./methodReturnType.php"
+        ]
+    },
+    "definitions": {
+        "FooClass": {
+            "fqn": "FooClass",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "FooClass",
+                "kind": 5,
+                "location": {
+                    "uri": "./methodReturnType.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class FooClass {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "FooClass->foo()": {
+            "fqn": "FooClass->foo()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "foo",
+                "kind": 6,
+                "location": {
+                    "uri": "./methodReturnType.php"
+                },
+                "containerName": "FooClass"
+            },
+            "type__tostring": "\\FooClass",
+            "type": {},
+            "declarationLine": "public function foo(): FooClass {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        },
+        "FooClass->bar()": {
+            "fqn": "FooClass->bar()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "bar",
+                "kind": 6,
+                "location": {
+                    "uri": "./methodReturnType.php"
+                },
+                "containerName": "FooClass"
+            },
+            "type__tostring": "\\FooClass",
+            "type": {},
+            "declarationLine": "public function bar() { }",
+            "documentation": "",
+            "signatureInformation": {
+                "label": "()",
+                "documentation": "",
+                "parameters": []
+            }
+        }
+    }
+}

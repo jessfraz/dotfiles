@@ -1,6 +1,12 @@
-[submodule ".ohmyzsh"]
-	path = .ohmyzsh
-	url = https://github.com/ohmyzsh/ohmyzsh/
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = https://github.com/ohmyzsh/ohmyzsh/
+[submodule ".nvm"]
+	path = .nvm
+	url = https://github.com/creationix/nvm.git
+[submodule "sdkman-cli"]
+	path = sdkman-cli
+	url = https://github.com/sdkman/sdkman-cli.git
+[submodule "sdkman-gui"]
+	path = sdkman-gui
+	url = https://github.com/sdkman/sdkman-gui.git
+[submodule "homebrew"]
+	path = homebrew
+	url = https://github.com/Homebrew/homebrew.git

@@ -68,7 +68,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git nvm gcloud)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -89,6 +89,8 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+export CLI_REPO=~/Development/drew-angular-cli
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -97,3 +99,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias registry="docker run -d -p 5000:5000 --restart=always --name registry -v ~/registry:/var/lib/registry registry:2"
+alias nodepackages="npm -g install corona-cli expo-cli mdb-cli npm npm-check typescript yarn @angular/cli@latest eslint gatsby gatsby-cli npm-check react react-dom typescript webpack next.js"
+alias verdaccio="docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio"

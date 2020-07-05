@@ -1,0 +1,17 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "platform": {
+            "php": "7.1.0"
+        }
+    },
+    "require": {
+        "felixfbecker/language-server": "5.4.6"
+    },
+    "scripts": {
+        "parse-stubs": "LanguageServer\\ComposerScripts::parseStubs",
+        "post-update-cmd": "@parse-stubs",
+        "post-install-cmd": "@parse-stubs"
+    }
+}

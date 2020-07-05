@@ -1,0 +1,17 @@
+{
+	"messages": [
+		"Build and debug active file",
+		"Cannot build and debug because the active file is not a C or C++ source file.",
+		"No compiler found",
+		"Select a compiler",
+		"{0} build and debug is only usable when VS Code is run from the Developer Command Prompt for VS."
+	],
+	"keys": [
+		"build.and.debug.active.file",
+		"cannot.build.non.cpp",
+		"no.compiler.found",
+		"select.compiler",
+		"cl.exe.not.available"
+	],
+	"filePath": "src\\Debugger\\extension"
+}

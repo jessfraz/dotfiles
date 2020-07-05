@@ -1,0 +1,48 @@
+{
+	"name": "chrome-tools",
+	"displayName": "chrome tools",
+	"description": "",
+	"icon": "chrome.jpg",
+	"version": "0.0.3",
+	"publisher": "mshzjcom",
+	"engines": {
+		"vscode": "^1.19.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.ToChrome"
+	],
+	"main": "./extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.ToChrome",
+				"title": "To Chrome"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "extension.ToChrome",
+				"key": "alt+q"
+			}
+		]
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^2.6.1",
+		"vscode": "^1.1.6",
+		"eslint": "^4.6.1",
+		"@types/node": "^7.0.43",
+		"@types/mocha": "^2.2.42"
+	},
+	"__metadata": {
+		"id": "13ccaec2-8ef7-4908-9064-fd8c506a514e",
+		"publisherId": "46333913-9b10-4248-a5f7-708201d1fd9f",
+		"publisherDisplayName": "mshzj"
+	}
+}

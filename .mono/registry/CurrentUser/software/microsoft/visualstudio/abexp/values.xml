@@ -1,0 +1,18 @@
+<values>
+<value name="ShippedFlights"
+type="string-array">
+<string>lazytoolboxinit</string>
+<string>fwlargebuffer</string>
+<string>refactoring</string>
+<string>spmoretempsbtn1</string>
+<string>asloff</string>
+<string>keybindgoldbarext</string>
+<string>asynccsproj</string>
+<string>vsfricheditor</string>
+<string>completionapi</string>
+</value>
+<value name="DisabledFlights"
+type="string-array">
+<string>testflight</string>
+</value>
+</values>

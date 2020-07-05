@@ -1,0 +1,21 @@
+{
+    "name": "microsoft/tolerant-php-parser",
+    "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
+    "type": "library",
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rob Lourens",
+            "email": "roblou@microsoft.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Microsoft\\PhpParser\\": ["src/"] }
+    }
+}

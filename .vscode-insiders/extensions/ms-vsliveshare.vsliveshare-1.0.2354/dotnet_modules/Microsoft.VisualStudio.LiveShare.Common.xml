@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.VisualStudio.LiveShare.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Cascade.Common.AsyncDisposable">
+            <summary>
+            Base class that makes it easier to implement IAsyncDisposable.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cascade.Common.ConcurrencyGuard">
+            <summary>
+            Helper to ensure that an exception is thrown when certain operations are attempted concurrently.
+            </summary>
+            <remarks>
+            Throws an exception if a concurrent operation is attempted, rather than waiting for the previous
+            operation to finish. (If a wait is desired, use an ordinary lock / mutex.)
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.ConcurrencyGuard.StartOperation(System.String)">
+             <summary>
+             Begins a new guarded operation.
+             </summary>
+             <param name="operationName">Name of the operation. Defaults to the calling method name.</param>
+             <returns>Object that must be disposed when the guarded operation is complete.</returns>
+             <exception cref="T:System.InvalidOperationException">If another guarded operation currently running.</exception>
+             <example>
+                 class Example
+                 {
+                     private readonly ConcurrencyGuard concurrencyGuard = new ConcurrencyGuard();
+            
+                     public void SomeGuardedMethod()
+                     {
+                         using (concurrencyGuard.StartOperation())
+                         {
+                             // Perform the operation without concern for concurrent calls.
+                         }
+                     }
+                 }
+             </example>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.Http.EnvironmentWebProxy.GetUriFromString(System.String)">
+            <summary>
+            This function will evaluate given string and it will try to convert
+            it to Uri object. The string could contain URI fragment, IP address and  port
+            tuple or just IP address or name. It will return null if parsing fails.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.Http.EnvironmentWebProxy.IsMatchInBypassList(System.Uri)">
+            <summary>
+            This function returns true if given Host match bypass list.
+            Note, that the list is common for http and https.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.Http.EnvironmentWebProxy.EnvironementWebProxyCredentials.GetCredentialsFromString(System.String)">
+            <summary>
+            Converts string containing user:password to NetworkCredential object
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.IdGenerator.GenerateToken">
+            <summary>
+            Generates an URL-friendly unique ID
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathUtility.CombineAndNormalizeSlashes(System.String,System.String)">
+            <summary>
+            Combine paths and ensure that they have the same slashes (forward\backslash).
+            </summary>
+            <param name="absolutePath">Absolute path so that we can determine the type</param>
+            <param name="path">relative path to combine</param>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.ProtocolConverter.ConverterUtils.NormalizePath(System.String)">
+            <summary>
+            Normalize a path to always use the forward '/' directory separator when mixing path generated in Windows
+            amd Mac/Linux clients
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.ProtocolConverter.ConverterUtils.NormalizePathIf(System.String)">
+            <summary>
+            Normalize a path if not null or empty
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cascade.Common.ProtocolConverter.ProtocolConverterUtils">
+            <summary>
+            Class to use the IProtocolConverter interface by converting values from/to generic protocol objects
+            </summary>
+        </member>
+        <member name="T:Microsoft.Cascade.Common.ProtocolConverter.SystemUriConverter">
+            <summary>
+            Implements IProtocolConverter by converting to a Uri with a scheme
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.ProtocolConverter.SystemUriConverter.ToFullyQualifiedPath(System.String)">
+             <summary>
+             When provided with a path that is not rooted (e.g. that is relative), it will
+             find the root it's relative to, and return the fully qualified path for the file.
+            
+             If the file is _already_ rooted, it'll make sure that it resolves the actual
+             path through ..\..\.. etc.
+             </summary>
+             <param name="path"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.TaskExtensions.Yield(System.Threading.CancellationToken)">
+            <summary>
+            Check for cancellation, yield, and check for cancellation again.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.TaskExtensions.Ignore(System.Threading.Tasks.Task)">
+            <summary>
+            Helper method for firing and forgetting Task's, and with a continuation
+            that will log an error if the original task throws an exception.
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="T:Microsoft.Cascade.Common.PathHelper">
+            <summary>
+            A collection of file system path analysis and manipulation functions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.MakeRooted(System.String,System.String)">
+            <summary>
+            Generates an absolute path from a base path and another path.
+            </summary>
+            <param name="basePath">
+            An absolute path to use as the root if <paramref name="path"/> is relative.
+            IMPORTANT: if basePath is a directory, it must end with a directory separator character or else
+            it will be treated like a filename and discarded.
+            </param>
+            <param name="path">A relative or absolute path, that needs to be absolute.</param>
+            <exception cref="T:System.ArgumentException">Thrown when the <paramref name="basePath"/> argument is not an absolute path.</exception>
+            <returns>
+            A normalized, absolute path.  A path with relative parents (i.e. c:\temp\tmp\..\a.txt) will never be returned.
+            Not necessarily canonical, in that the file casing of the path is not guaranteed to be consistent.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.MakeRelative(System.String,System.String)">
+            <summary>
+            given the absolute location of a file, and a disc location, returns relative file path to that disk location.
+            </summary>
+            <param name="basePath">
+            The base path we want to relativize to. Must be absolute.
+            Should <i>not</i> include a filename as the last segment will be interpreted as a directory.
+            </param>
+            <param name="path">
+            The path we need to make relative to basePath.  The path can be either absolute path or a relative path in which case it is relative to the base path
+            </param>
+            <returns>
+            The relative path (can be the full path when no relationship exists).
+            If <paramref name="basePath"/> and <paramref name="path"/> are equivalent, the empty string is returned.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.EnsureNoTrailingSlash(System.String)">
+            <summary>
+            Make sure there is no [unnecessary] trailing directory separator.
+            </summary>
+            <param name="path">directory path</param>
+            <returns>directory path without trailing slash</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.EnsureTrailingSlash(System.String,System.Char)">
+            <summary>
+            Make sure there is a trailing directory separator.
+            </summary>
+            <param name="path">directory path</param>
+            <param name="directorySeparatorChar">Directory separator char</param>
+            <returns>directory path with trailing slash</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.IsInDirectoryCone(System.String,System.String)">
+            <summary>
+            Detects whether a given file falls within a given directory.
+            </summary>
+            <param name="directory">The absolute, normalized path to the directory.</param>
+            <param name="file">The absolute, normalized path to the file.</param>
+            <returns><c>true</c> if the given file falls within the given directory.</returns>
+            <remarks>
+            The current implementation of this method does NOT normalize the paths before the check.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.IsRooted(System.String)">
+            <summary>
+            Tests a path to see if it is absolute or not.  More reliable that Path.IsPathRooted.
+            </summary>
+            <param name="path">The path to check.</param>
+            <returns><c>true</c> if the path is rooted; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.IsFolder(System.String)">
+            <summary>
+            Check if path is a directory
+            </summary>
+            <param name="fullPath">The path to check</param>
+            <returns>true if the path is a directory</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.GetCorrectCapitalization(System.IO.DirectoryInfo)">
+            <summary>
+            Gets the correctly cased path for a given directory.
+            </summary>
+            <param name="di">Directory to find the correct casing for.</param>
+            <returns>New directory with correctly cased path.</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.IsPathValid(System.String)">
+            <summary>
+            Verify a valid path
+            </summary>
+            <param name="path">The path to verify</param>
+            <returns>True if a valid path</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.PathNeedsNormalization(System.String)">
+            <summary>
+            A few fast checks that determine whether normalization of a path is warranted.
+            </summary>
+            <param name="path">A non-empty path.</param>
+            <returns><c>true</c> if normalization is likely needed; <c>false</c> if normalization doesn't appear to be needed.</returns>
+            <remarks>
+            In the interest of executing very fast (since this method is used in fast-or-slow-path checks)
+            this method by no means is comprehensive, but it should catch the common causes for needing normalization.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.CreateUriFromPath(System.String)">
+            <summary>
+            Helper function to create Uri object form path.
+            </summary>
+            <param name="path">path string</param>
+            <returns>uri object</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Common.PathHelper.CleanupLocalFilePath(System.String)">
+            <summary>
+            Fixes common problems with local paths like double-backslash.
+            </summary>
+            <param name="path">The path to fix up.</param>
+            <returns>The cleaned up path.</returns>
+        </member>
+        <member name="M:Microsoft.Cascade.Tracing.TracingConfig.CreateTraceSource(System.String,System.Nullable{System.Diagnostics.SourceLevels},System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Creates a new trace source with pre-configured console and log-file trace listeners,
+            suitable for use with a console app.
+            </summary>
+            <param name="name">Name of the trace source, and log file suffix.</param>
+            <param name="consoleVerbosity">Verbosity level of console trace filtering,
+            if overriding the default.</param>
+            <param name="unfilteredConsoleEvents">Optional enumeration of event ids that go to console unfiltered, ignoring console verbosity.</param>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,19 @@
+{
+  "fileTypes": ["re"],
+  "injectionSelector": "L:source -string -comment",
+  "patterns": [
+    {
+      "contentName": "meta.embedded.block.graphql",
+      "begin": "(\\[%(graphql|relay\\.([a-zA-Z]*)))s*$",
+      "end": "(?<=])",
+      "patterns": [
+        {
+          "begin": "^\\s*({\\|)$",
+          "end": "^\\s*(\\|})",
+          "patterns": [{ "include": "source.graphql" }]
+        }
+      ]
+    }
+  ],
+  "scopeName": "inline.graphql.reason"
+}

@@ -1,0 +1,83 @@
+{
+    "references": {
+        "MyNamespace\\Request::create()": [
+            "./memberAccess4.php"
+        ],
+        "MyNamespace\\Request": [
+            "./memberAccess4.php"
+        ],
+        "MyNamespace\\Url->toString()": [
+            "./memberAccess4.php"
+        ],
+        "MyNamespace\\Url": [
+            "./memberAccess4.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace": {
+            "fqn": "MyNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./memberAccess4.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\A": {
+            "fqn": "MyNamespace\\A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./memberAccess4.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\A->testRequest()": {
+            "fqn": "MyNamespace\\A->testRequest()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "testRequest",
+                "kind": 6,
+                "location": {
+                    "uri": "./memberAccess4.php"
+                },
+                "containerName": "MyNamespace\\A"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public function testRequest()",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

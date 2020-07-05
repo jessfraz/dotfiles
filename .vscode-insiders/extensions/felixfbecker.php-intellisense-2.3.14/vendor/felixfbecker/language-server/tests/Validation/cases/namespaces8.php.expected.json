@@ -1,0 +1,35 @@
+{
+    "references": {
+        "LanguageServer": [
+            "./namespaces8.php"
+        ],
+        "LanguageServer\\pathToUri()": [
+            "./namespaces8.php"
+        ],
+        "LanguageServer\\uriToPath()": [
+            "./namespaces8.php"
+        ]
+    },
+    "definitions": {
+        "LanguageServer\\Tests\\Utils": {
+            "fqn": "LanguageServer\\Tests\\Utils",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "LanguageServer\\Tests\\Utils",
+                "kind": 3,
+                "location": {
+                    "uri": "./namespaces8.php"
+                },
+                "containerName": "LanguageServer\\Tests"
+            },
+            "type": null,
+            "declarationLine": "namespace LanguageServer\\Tests\\Utils;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

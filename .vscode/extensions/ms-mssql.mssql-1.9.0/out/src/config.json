@@ -1,0 +1,39 @@
+{
+    "service": {
+        "downloadUrl": "https://download.microsoft.com/download/4/1/c/41ceb814-b8d3-4157-9dd0-b4aa0e11484d/microsoft.sqltools.servicelayer-{#fileName#}",
+        "version": "1.9.0",
+        "downloadFileNames": {
+            "Windows_7_86": "win-x86-netcoreapp2.2.zip",
+            "Windows_7_64": "win-x64-netcoreapp2.2.zip",
+            "OSX_10_11_64": "osx-x64-netcoreapp2.2.tar.gz",
+            "CentOS_7": "rhel-x64-netcoreapp2.2.tar.gz",
+            "Debian_8": "rhel-x64-netcoreapp2.2.tar.gz",
+            "Fedora_23": "rhel-x64-netcoreapp2.2.tar.gz",
+            "OpenSUSE_13_2": "rhel-x64-netcoreapp2.2.tar.gz",
+            "SLES_12_2": "rhel-x64-netcoreapp2.2.tar.gz",
+            "RHEL_7": "rhel-x64-netcoreapp2.2.tar.gz",
+            "Ubuntu_14": "rhel-x64-netcoreapp2.2.tar.gz",
+            "Ubuntu_16": "rhel-x64-netcoreapp2.2.tar.gz"
+        },
+        "installDir": "../sqltoolsservice/{#version#}/{#platform#}",
+        "executableFiles": ["MicrosoftSqlToolsServiceLayer.exe", "MicrosoftSqlToolsServiceLayer", "MicrosoftSqlToolsServiceLayer.dll"]
+    },
+    "v1Service": {
+        "downloadUrl": "https://download.microsoft.com/download/3/A/E/3AE0DD0F-86A1-46CD-BFE2-E106E7CC8508/microsoft.sqltools.servicelayer-{#fileName#}",
+        "version": "1.0.0",
+        "downloadFileNames": {
+            "Windows_7_86": "win-x86-netcoreapp1.0.zip",
+            "Windows_7_64": "win-x64-netcoreapp1.0.zip",
+            "OSX_10_11_64": "osx-x64-netcoreapp1.0.tar.gz",
+            "CentOS_7": "centos-x64-netcoreapp1.0.tar.gz",
+            "Debian_8": "debian-x64-netcoreapp1.0.tar.gz",
+            "Fedora_23": "fedora-x64-netcoreapp1.0.tar.gz",
+            "OpenSUSE_13_2": "opensuse-x64-netcoreapp1.0.tar.gz",
+            "RHEL_7": "rhel-x64-netcoreapp1.0.tar.gz",
+            "Ubuntu_14": "ubuntu14-x64-netcoreapp1.0.tar.gz",
+            "Ubuntu_16": "ubuntu16-x64-netcoreapp1.0.tar.gz"
+        },
+        "installDir": "../sqltoolsservice/{#version#}/{#platform#}",
+        "executableFiles": ["Microsoft.SqlTools.ServiceLayer.exe", "Microsoft.SqlTools.ServiceLayer", "Microsoft.SqlTools.ServiceLayer.dll"]
+    }
+}

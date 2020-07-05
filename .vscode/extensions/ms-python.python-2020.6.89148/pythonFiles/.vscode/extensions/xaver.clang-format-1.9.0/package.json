@@ -1,0 +1,259 @@
+{
+	"name": "clang-format",
+	"displayName": "Clang-Format",
+	"description": "Use Clang-Format in Visual Studio Code",
+	"version": "1.9.0",
+	"publisher": "xaver",
+	"engines": {
+		"vscode": "^1.1.0"
+	},
+	"galleryBanner": {
+		"color": "#005577",
+		"theme": "dark"
+	},
+	"dependencies": {
+		"sax": "^1.2.1"
+	},
+	"categories": [
+		"Formatters"
+	],
+	"keywords": [
+		"C++",
+		"JavaScript",
+		"Objective-C",
+		"Clang",
+		"LLVM",
+		"Protobuf",
+		"CUDA"
+	],
+	"main": "./out/src/extension",
+	"activationEvents": [
+		"onLanguage:cpp",
+		"onLanguage:c",
+		"onLanguage:objective-c",
+		"onLanguage:objective-cpp",
+		"onLanguage:java",
+		"onLanguage:javascript",
+		"onLanguage:typescript",
+		"onLanguage:proto",
+		"onLanguage:proto3",
+		"onLanguage:apex",
+		"onLanguage:glsl",
+		"onLanguage:cuda"
+	],
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Clang-Format configuration",
+			"properties": {
+				"clang-format.executable": {
+					"type": "string",
+					"default": "clang-format",
+					"description": "clang-format executable path"
+				},
+				"clang-format.style": {
+					"type": "string",
+					"default": "file",
+					"description": "clang-format style.(-style=value, value can be file, LLVM, Google, Chromium, Mozilla, WebKit or json configure)"
+				},
+				"clang-format.fallbackStyle": {
+					"type": "string",
+					"default": "LLVM",
+					"description": "clang-format fallback style.(-fallback-style=value, value can be none, LLVM, Google, Chromium, Mozilla, WebKit)"
+				},
+				"clang-format.language.cpp.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for C++ (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.cpp.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for C++, left empty to use clang-format.style"
+				},
+				"clang-format.language.cpp.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for C++, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.c.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for C (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.c.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for C, left empty to use clang-format.style"
+				},
+				"clang-format.language.c.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for C, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.objective-c.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for Objective-C (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.objective-c.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Objective-C, left empty to use clang-format.style"
+				},
+				"clang-format.language.objective-c.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Objective-C, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.objective-cpp.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for Objective-C++ (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.objective-cpp.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Objective-C++, left empty to use clang-format.style"
+				},
+				"clang-format.language.objective-cpp.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Objective-C++, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.java.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for Java (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.java.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Java, left empty to use clang-format.style"
+				},
+				"clang-format.language.java.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Java, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.javascript.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for JavaScript (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.javascript.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for JavaScript, left empty to use clang-format.style"
+				},
+				"clang-format.language.javascript.fallbackStyle": {
+					"type": "string",
+					"default": "google",
+					"description": "clang-format fallback style for JavaScript"
+				},
+				"clang-format.language.typescript.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for TypeScript (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.typescript.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for TypeScript, left empty to use clang-format.style"
+				},
+				"clang-format.language.typescript.fallbackStyle": {
+					"type": "string",
+					"default": "google",
+					"description": "clang-format fallback style for TypeScript"
+				},
+				"clang-format.language.proto.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for Protobuf (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.proto.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Protobuf, left empty to use clang-format.style"
+				},
+				"clang-format.language.proto.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Protobuf, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.apex.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for Apex (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.apex.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Apex, left empty to use clang-format.style"
+				},
+				"clang-format.language.apex.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for Apex, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.glsl.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for GLSL (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.glsl.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for GLSL, left empty to use clang-format.style"
+				},
+				"clang-format.language.glsl.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for GLSL, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.language.cuda.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable formatting for CUDA (requires reloading Visual Studio Code)"
+				},
+				"clang-format.language.cuda.style": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for CUDA, left empty to use clang-format.style"
+				},
+				"clang-format.language.cuda.fallbackStyle": {
+					"type": "string",
+					"default": "",
+					"description": "clang-format fallback style for CUDA, left empty to use clang-format.fallbackStyle"
+				},
+				"clang-format.assumeFilename": {
+					"type": "string",
+					"default": "",
+					"description": "When reading from stdin, clang-format assumes this filename to look for a style config file (with -style=file) and to determine the language."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install"
+	},
+	"devDependencies": {
+		"@types/node": "^7.10.2",
+		"@types/sax": "^1.0.1",
+		"typescript": "^3.1.6",
+		"vscode": "^1.1.22"
+	},
+	"icon": "clang-format.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/xaverh/vscode-clang-format-provider"
+	},
+	"license": "MIT",
+	"__metadata": {
+		"id": "04208f17-8aed-4d49-b0a2-fbce829efbeb",
+		"publisherId": "e2b66979-7a17-46dc-8d1c-988bb0f2b1bf",
+		"publisherDisplayName": "xaver"
+	}
+}

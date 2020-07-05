@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+	<defs>
+		<mask id="mask" x="0" y="0" width="16" height="16">
+			<circle cx="8" cy="8" r="7" style="fill: white;"/>
+			<circle cx="5" cy="8" r="1" style="fill: black;"/>
+			<circle cx="8" cy="8" r="1" style="fill: black;"/>
+			<circle cx="11" cy="8" r="1" style="fill: black;"/>
+		</mask>
+	</defs>
+	<rect x="0" y="0" width="16" height="16" style="fill: #4070f0; mask: url(#mask);"/>
+</svg>

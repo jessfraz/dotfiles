@@ -1,0 +1,51 @@
+{
+  "_from": "@angular/http@~2.1.2",
+  "_id": "@angular/http@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-UKqWw7aKRLmOP4N4hsluWTDrVDo=",
+  "_location": "/@angular/http",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/http@~2.1.2",
+    "name": "@angular/http",
+    "escapedName": "@angular%2fhttp",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/http/-/http-2.1.2.tgz",
+  "_shasum": "50aa96c3b68a44b98e3f837886c96e5930eb543a",
+  "_spec": "@angular/http@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": "Package no longer supported. Use @angular/common instead, see https://angular.io/guide/deprecations#angularhttp",
+  "description": "Angular - the http service",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/http.umd.js",
+  "module": "index.js",
+  "name": "@angular/http",
+  "peerDependencies": {
+    "rxjs": "5.0.0-beta.12",
+    "@angular/core": "2.1.2",
+    "@angular/platform-browser": "2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

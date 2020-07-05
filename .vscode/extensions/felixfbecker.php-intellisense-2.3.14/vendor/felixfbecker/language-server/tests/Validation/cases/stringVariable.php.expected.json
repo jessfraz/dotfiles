@@ -1,0 +1,75 @@
+{
+    "references": {
+        "B->hi": [
+            "./stringVariable.php"
+        ]
+    },
+    "definitions": {
+        "B": {
+            "fqn": "B",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "B",
+                "kind": 5,
+                "location": {
+                    "uri": "./stringVariable.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class B",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "B->hi": {
+            "fqn": "B->hi",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "hi",
+                "kind": 7,
+                "location": {
+                    "uri": "./stringVariable.php"
+                },
+                "containerName": "B"
+            },
+            "type__tostring": "int",
+            "type": {},
+            "declarationLine": "public $hi;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "B->a()": {
+            "fqn": "B->a()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "a",
+                "kind": 6,
+                "location": {
+                    "uri": "./stringVariable.php"
+                },
+                "containerName": "B"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function a () {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

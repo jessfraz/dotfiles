@@ -1,0 +1,54 @@
+{
+    "references": {
+        "A->args": [
+            "./objectCreation3.php"
+        ]
+    },
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./objectCreation3.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "A->a()": {
+            "fqn": "A->a()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "a",
+                "kind": 6,
+                "location": {
+                    "uri": "./objectCreation3.php"
+                },
+                "containerName": "A"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function a () {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

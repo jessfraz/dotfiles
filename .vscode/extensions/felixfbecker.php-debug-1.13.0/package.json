@@ -1,0 +1,264 @@
+{
+	"name": "php-debug",
+	"displayName": "PHP Debug",
+	"version": "1.13.0",
+	"publisher": "felixfbecker",
+	"license": "MIT",
+	"description": "Debug support for PHP with XDebug",
+	"keywords": [
+		"php",
+		"debug",
+		"xdebug"
+	],
+	"author": {
+		"name": "Felix Becker",
+		"email": "felix.b@outlook.com"
+	},
+	"engines": {
+		"vscode": "^1.6.0",
+		"node": ">=6.0.0"
+	},
+	"icon": "images/logo.png",
+	"galleryBanner": {
+		"color": "#6682BA",
+		"theme": "dark"
+	},
+	"categories": [
+		"Debuggers"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/felixfbecker/vscode-php-debug.git"
+	},
+	"bugs": {
+		"url": "https://github.com/felixfbecker/vscode-php-debug/issues"
+	},
+	"dependencies": {
+		"file-url": "^2.0.0",
+		"iconv-lite": "^0.4.15",
+		"minimatch": "^3.0.3",
+		"moment": "^2.17.1",
+		"url-relative": "^1.0.0",
+		"urlencode": "^1.1.0",
+		"vscode-debugadapter": "^1.11.0",
+		"vscode-debugprotocol": "^1.11.0",
+		"xmldom": "^0.1.22"
+	},
+	"devDependencies": {
+		"@types/chai": "4.0.6",
+		"@types/chai-as-promised": "^7.1.0",
+		"@types/file-url": "^2.0.0",
+		"@types/minimatch": "^3.0.1",
+		"@types/mocha": "^2.2.44",
+		"@types/node": "7.0.32",
+		"@types/semver": "^5.4.0",
+		"@types/xmldom": "^0.1.29",
+		"chai": "^4.0.2",
+		"chai-as-promised": "^7.0.0",
+		"husky": "^0.14.3",
+		"mocha": "^5.0.0",
+		"nyc": "^11.0.2",
+		"prettier": "1.14.2",
+		"semantic-release": "^15.9.8",
+		"semantic-release-vsce": "^2.1.2",
+		"semver": "^5.3.0",
+		"tslint": "^5.4.3",
+		"tslint-config-prettier": "^1.6.0",
+		"typescript": "^2.1.4",
+		"validate-commit-msg": "^2.14.0",
+		"vsce": "^1.28.0",
+		"vscode-debugadapter-testsupport": "^1.11.0"
+	},
+	"release": {
+		"verifyConditions": [
+			"semantic-release-vsce",
+			"@semantic-release/github"
+		],
+		"prepare": {
+			"path": "semantic-release-vsce",
+			"packageVsix": "php-debug.vsix"
+		},
+		"publish": [
+			"semantic-release-vsce",
+			{
+				"path": "@semantic-release/github",
+				"assets": "php-debug.vsix"
+			}
+		]
+	},
+	"greenkeeper": {
+		"ignore": [
+			"@types/node"
+		]
+	},
+	"scripts": {
+		"build": "tsc -p .",
+		"watch": "tsc -w -p .",
+		"start": "code testproject --extensionDevelopmentPath=.",
+		"test": "mocha out/test --timeout 20000 --slow 1000 --retries 4",
+		"cover": "nyc --all mocha out/test --timeout 20000 --slow 1000 --retries 4",
+		"lint": "npm run tslint && npm run prettier",
+		"tslint": "tslint -c tslint.json 'src/**/*.ts'",
+		"prettier": "prettier \"**/{*.json,*.yml,.*.yml,*.ts,.prettierrc,*.md}\" --write --list-different",
+		"semantic-release": "semantic-release",
+		"commitmsg": "validate-commit-msg"
+	},
+	"nyc": {
+		"include": [
+			"out/**/*.js"
+		],
+		"exclude": [
+			"out/test/**/*.js"
+		]
+	},
+	"contributes": {
+		"debuggers": [
+			{
+				"type": "php",
+				"label": "PHP",
+				"enableBreakpointsFor": {
+					"languageIds": [
+						"php"
+					]
+				},
+				"program": "./out/phpDebug.js",
+				"runtime": "node",
+				"configurationAttributes": {
+					"launch": {
+						"required": [],
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Absolute path to the program."
+							},
+							"stopOnEntry": {
+								"type": "boolean",
+								"description": "Automatically stop program after launch.",
+								"default": false
+							},
+							"externalConsole": {
+								"type": "boolean",
+								"description": "Launch debug target in external console.",
+								"default": false
+							},
+							"args": {
+								"type": "array",
+								"description": "Command line arguments passed to the program.",
+								"items": {
+									"type": "string"
+								},
+								"default": []
+							},
+							"cwd": {
+								"type": "string",
+								"description": "Absolute path to the working directory of the program being debugged. Default is the current workspace.",
+								"default": "${workspaceRoot}"
+							},
+							"runtimeExecutable": {
+								"type": "string",
+								"description": "Absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.",
+								"default": "php"
+							},
+							"runtimeArgs": {
+								"type": "array",
+								"description": "Optional arguments passed to the runtime executable.",
+								"items": {
+									"type": "string"
+								},
+								"default": []
+							},
+							"env": {
+								"type": "object",
+								"additionalProperties": {
+									"type": "string"
+								},
+								"description": "Environment variables passed to the program.",
+								"default": {}
+							},
+							"hostname": {
+								"type": "string",
+								"description": "Address to bind to when listening for XDebug",
+								"default": "::"
+							},
+							"port": {
+								"type": "number",
+								"description": "Port on which to listen for XDebug",
+								"default": 9000
+							},
+							"serverSourceRoot": {
+								"type": "string",
+								"description": "Deprecated: The source root when debugging a remote host",
+								"deprecationMessage": "Property serverSourceRoot is deprecated, please use pathMappings to define a server root."
+							},
+							"localSourceRoot": {
+								"type": "string",
+								"description": "Deprecated: The source root on this machine that is the equivalent to the serverSourceRoot on the server.",
+								"deprecationMessage": "Property localSourceRoot is deprecated, please use pathMappings to define a local root."
+							},
+							"pathMappings": {
+								"type": "object",
+								"default": {},
+								"description": "A mapping of server paths to local paths."
+							},
+							"ignore": {
+								"type": "array",
+								"items": "string",
+								"description": "Array of glob patterns that errors should be ignored from",
+								"default": [
+									"**/vendor/**/*.php"
+								]
+							},
+							"log": {
+								"type": "boolean",
+								"description": "If true, will log all communication between VS Code and the adapter"
+							},
+							"xdebugSettings": {
+								"type": "object",
+								"properties": {
+									"max_children": {
+										"type": "integer",
+										"description": "max number of array or object children to initially retrieve"
+									},
+									"max_data": {
+										"type": "integer",
+										"description": "max amount of variable data to initially retrieve"
+									},
+									"show_hidden": {
+										"enum": [
+											0,
+											1
+										],
+										"description": "This feature can get set by the IDE if it wants to have more detailed internal information on properties (eg. private members of classes, etc.) Zero means that hidden members are not shown to the IDE"
+									}
+								},
+								"description": "Overrides for XDebug remote debugging settings. See https://xdebug.org/docs-dbgp.php#feature-names",
+								"default": {}
+							}
+						}
+					}
+				},
+				"initialConfigurations": [
+					{
+						"name": "Listen for XDebug",
+						"type": "php",
+						"request": "launch",
+						"port": 9000
+					},
+					{
+						"name": "Launch currently open script",
+						"type": "php",
+						"request": "launch",
+						"program": "${file}",
+						"cwd": "${fileDirname}",
+						"port": 9000
+					}
+				]
+			}
+		]
+	},
+	"__metadata": {
+		"id": "044b4b31-2969-4af3-895d-855433b8b46d",
+		"publisherId": "2bbbc574-aea7-4866-8f36-2d56ef365f8c",
+		"publisherDisplayName": "Felix Becker"
+	}
+}

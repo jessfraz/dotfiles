@@ -1,0 +1,114 @@
+pool:
+  name: Hosted macOS
+  demands:
+  - npm
+  - node.js
+
+steps:
+- task: ArchiveFiles@1
+  displayName: 'Archive source '
+  inputs:
+    rootFolder: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: tar
+    archiveFile: '$(Build.BinariesDirectory)/source.tar.gz'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: source'
+  inputs:
+    PathtoPublish: '$(Build.BinariesDirectory)/source.tar.gz'
+    ArtifactName: source
+
+- task: Npm@1
+  displayName: 'Use npm 6.5.0'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'install -g npm@6.5.0'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    workingDir: '$(Build.SourcesDirectory)'
+    verbose: false
+
+- task: Npm@1
+  displayName: 'npm custom'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'install -g gulp-cli'
+
+- bash: |
+   export BUILDMACHINE=true
+   export VsMsSqlEnv=dev
+   node node_modules/gulp/bin/gulp.js build --gulpfile $(Build.SourcesDirectory)/gulpfile.js
+  displayName: 'gulp build (dev)'
+  condition: and(succeeded(), eq(variables['release'], false))
+
+- bash: |
+   export BUILDMACHINE=true
+   export VsMsSqlEnv=production
+   node node_modules/gulp/bin/gulp.js build --gulpfile $(Build.SourcesDirectory)/gulpfile.js
+  displayName: 'gulp build (release)'
+  condition: and(succeeded(), eq(variables['release'], true))
+
+- bash: 'npm install -g vsce'
+  displayName: 'npm install vsce'
+
+- task: Gulp@0
+  displayName: 'gulp package:offline'
+  inputs:
+    targets: 'package:offline'
+
+- task: Gulp@0
+  displayName: 'gulp package:online'
+  inputs:
+    targets: 'package:online'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '*.vsix'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+
+- script: |
+   brew update
+   brew cask install visual-studio-code
+  displayName: 'Install VS Code for testing'
+
+- task: Gulp@0
+  displayName: 'gulp ext:install-service'
+  inputs:
+    targets: 'ext:install-service'
+
+- task: Gulp@0
+  displayName: 'gulp cover:jenkins'
+  inputs:
+    targets: 'cover:jenkins'
+    publishJUnitResults: true
+    testResultsFiles: '$(Build.SourcesDirectory)/test-reports/*.xml'
+  continueOnError: true
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage from $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+
+trigger:
+  - master
+
+pr:
+  - master
+
+schedules:
+- cron: "0 3 * * Mon-Fri"
+  displayName: Mon-Fri at 3:00AM
+  branches:
+    include:
+    - master

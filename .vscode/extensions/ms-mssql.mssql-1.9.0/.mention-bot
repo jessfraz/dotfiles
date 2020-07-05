@@ -1,0 +1,7 @@
+{
+  "maxReviewers": 3,
+  "requiredOrgs": ["Microsoft"],
+  "skipAlreadyAssignedPR": true,
+  "skipAlreadyMentionedPR": true,
+  "skipCollaboratorPR": false
+}

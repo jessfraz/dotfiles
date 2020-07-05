@@ -1,0 +1,9 @@
+<values>
+<value name="EnabledFlights"
+type="string-array">
+<string>tn-vsmacnps-7</string>
+<string>toggleblockcomment</string>
+<string>tasmigddvs</string>
+<string>multitenanttasmigration_002</string>
+</value>
+</values>

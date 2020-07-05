@@ -1,0 +1,103 @@
+{
+    "references": {
+        "SomeNamespace\\Goo": [
+            "./classProperty1.php"
+        ],
+        "SomeNamespace": [
+            "./classProperty1.php"
+        ]
+    },
+    "definitions": {
+        "TestNamespace": {
+            "fqn": "TestNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "TestNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./classProperty1.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace TestNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestNamespace\\TestClass": {
+            "fqn": "TestNamespace\\TestClass",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "TestClass",
+                "kind": 5,
+                "location": {
+                    "uri": "./classProperty1.php"
+                },
+                "containerName": "TestNamespace"
+            },
+            "type": null,
+            "declarationLine": "class TestClass",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestNamespace\\TestClass->testProperty": {
+            "fqn": "TestNamespace\\TestClass->testProperty",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "testProperty",
+                "kind": 7,
+                "location": {
+                    "uri": "./classProperty1.php"
+                },
+                "containerName": "TestNamespace\\TestClass"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public $testProperty;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestNamespace\\TestClass->testMethod()": {
+            "fqn": "TestNamespace\\TestClass->testMethod()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "testMethod",
+                "kind": 6,
+                "location": {
+                    "uri": "./classProperty1.php"
+                },
+                "containerName": "TestNamespace\\TestClass"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public function testMethod($testParameter)",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "(mixed $testParameter)",
+                "documentation": null,
+                "parameters": [
+                    {
+                        "label": "mixed $testParameter",
+                        "documentation": null
+                    }
+                ]
+            }
+        }
+    }
+}

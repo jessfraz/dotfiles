@@ -1,0 +1,23 @@
+script:
+  - "make test"
+
+language: node_js
+
+node_js:
+  - "0.10"
+  - "0.12"
+
+branches:
+  only:
+    - master
+    - dev
+
+matrix:
+  fast_finish: true
+  include:
+    - node_js: "0.10"
+      env: COVERAGE=true
+  allow_failures:
+    - env: COVERAGE=true
+
+sudo: false

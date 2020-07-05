@@ -1,0 +1,82 @@
+{
+	"name": "jbavsc",
+	"publisher": "tsurdilovic",
+	"displayName": "jBPM Business Application",
+	"description": "Generate jBPM Business Application",
+	"version": "0.12.0",
+	"author": "Tihomir Surdilovic",
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/BootstrapJBPM/jbavcs/blob/master/README.md",
+	"readmeFilename": "README.md",
+	"icon": "icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BootstrapJBPM/jbavcs.git"
+	},
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Other"
+	],
+	"keywords": [
+		"jBPM",
+		"business",
+		"application",
+		"java"
+	],
+	"activationEvents": [
+		"onCommand:jbpm.jbavsc",
+		"onCommand:jbpm.jbavsc.debug",
+		"onCommand:jbpm.jbavsc.processquickview"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "jbpm.jbavsc",
+				"title": "Generate jBPM Business Application"
+			},
+			{
+				"command": "jbpm.jbavsc.debug",
+				"title": "Debug your jBPM Business Application"
+			},
+			{
+				"command": "jbpm.jbavsc.processquickview",
+				"title": "Process Quick View"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "resourceFilename =~ /.*\\.(bpmn|bpmn2)/",
+					"command": "jbpm.jbavsc.processquickview",
+					"group": "jbavscgroup"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"tslint": "^5.8.0",
+		"@types/node": "^8.10.25",
+		"@types/mocha": "^2.2.42",
+		"vscode": "^1.1.25"
+	},
+	"dependencies": {
+		"typescript": "^3.1.4",
+		"jba-cli": "^1.0.18"
+	},
+	"__metadata": {
+		"id": "24273ade-2aa8-4837-92a7-2332d83f9134",
+		"publisherId": "263edc84-a572-43e8-bf3b-e6492a2c6838",
+		"publisherDisplayName": "Tihomir Surdilovic"
+	}
+}

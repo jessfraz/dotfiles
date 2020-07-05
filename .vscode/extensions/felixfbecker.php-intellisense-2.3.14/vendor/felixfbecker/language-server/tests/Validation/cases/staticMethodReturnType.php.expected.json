@@ -1,0 +1,104 @@
+{
+    "references": {
+        "FooClass": [
+            "./staticMethodReturnType.php"
+        ]
+    },
+    "definitions": {
+        "FooClass": {
+            "fqn": "FooClass",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "FooClass",
+                "kind": 5,
+                "location": {
+                    "uri": "./staticMethodReturnType.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class FooClass {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "FooClass::staticFoo()": {
+            "fqn": "FooClass::staticFoo()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": true,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "staticFoo",
+                "kind": 6,
+                "location": {
+                    "uri": "./staticMethodReturnType.php"
+                },
+                "containerName": "FooClass"
+            },
+            "type__tostring": "\\FooClass",
+            "type": {},
+            "declarationLine": "public static function staticFoo(): FooClass {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        },
+        "FooClass::staticSelf()": {
+            "fqn": "FooClass::staticSelf()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": true,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "staticSelf",
+                "kind": 6,
+                "location": {
+                    "uri": "./staticMethodReturnType.php"
+                },
+                "containerName": "FooClass"
+            },
+            "type__tostring": "\\FooClass",
+            "type": {},
+            "declarationLine": "public static function staticSelf(): self { }",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        },
+        "FooClass->bar()": {
+            "fqn": "FooClass->bar()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "bar",
+                "kind": 6,
+                "location": {
+                    "uri": "./staticMethodReturnType.php"
+                },
+                "containerName": "FooClass"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public function bar() { }",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

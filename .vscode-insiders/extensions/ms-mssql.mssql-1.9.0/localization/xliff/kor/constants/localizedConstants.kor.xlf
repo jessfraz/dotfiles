@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="extension.i18ntest.JSON" source-language="en" target-language="ko-KR">
+    <body>
+      <trans-unit id="msgStartedExecute">
+        <source xml:lang="en">Started query execution for document "{0}"</source>
+        <target state="translated">문서 "{0}"에 대한 쿼리 실행을 시작함</target>
+      </trans-unit>
+      <trans-unit id="msgFinishedExecute">
+        <source xml:lang="en">Finished query execution for document "{0}"</source>
+        <target state="translated">문서 "{0}"에 대한 쿼리 실행을 완료함</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryInProgress">
+        <source xml:lang="en">A query is already running for this editor session. Please cancel this query or wait for its completion.</source>
+        <target state="translated">이 편집기 세션에서 쿼리가 이미 실행 중입니다. 이 쿼리를 취소하거나 완료될 때까지 기다리세요.</target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartMessage">
+        <source xml:lang="en">Started executing query at </source>
+        <target state="translated">다음에서 쿼리 실행 시작: </target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartLine">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">줄 {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryFailed">
+        <source xml:lang="en">Canceling the query failed: {0}</source>
+        <target state="translated">쿼리 취소 실패: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryNotRunning">
+        <source xml:lang="en">Cannot cancel query as no query is running.</source>
+        <target state="translated">실행 중인 쿼리가 없으므로 쿼리를 취소할 수 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabaseNotConnected">
+        <source xml:lang="en">No connection was found. Please connect to a server first.</source>
+        <target state="translated">연결을 찾을 수 없습니다. 먼저 서버에 연결하세요.</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabasePlaceholder">
+        <source xml:lang="en">Choose a database from the list below</source>
+        <target state="translated">아래 목록에서 데이터베이스 선택</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError">
+        <source xml:lang="en">Error {0}: {1}</source>
+        <target state="translated">오류 {0}: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError2">
+        <source xml:lang="en">Failed to connect: {0}</source>
+        <target state="translated">연결 실패: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionErrorPasswordExpired">
+        <source xml:lang="en">Error {0}: {1} Please login as a different user and change the password using ALTER LOGIN.</source>
+        <target state="translated">오류 {0}: {1} 다른 사용자로 로그인한 다음, ALTER LOGIN을 사용하여 암호를 변경하세요.</target>
+      </trans-unit>
+      <trans-unit id="connectionErrorChannelName">
+        <source xml:lang="en">Connection Errors</source>
+        <target state="translated">연결 오류</target>
+      </trans-unit>
+      <trans-unit id="msgPromptCancelConnect">
+        <source xml:lang="en">Server connection in progress. Do you want to cancel?</source>
+        <target state="translated">서버에 연결하는 중입니다. 취소하시겠습니까?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptClearRecentConnections">
+        <source xml:lang="en">Confirm to clear recent connections list</source>
+        <target state="translated">최근 연결 목록 삭제 확인</target>
+      </trans-unit>
+      <trans-unit id="msgOpenSqlFile">
+        <source xml:lang="en">To use this command, Open a .sql file -or- Change editor language to "SQL" -or- Select T-SQL text in the active SQL editor.</source>
+        <target state="translated">이 명령을 사용하려면 .sql 파일을 열거나, 편집기 언어를 "SQL"로 변경하거나, 현재 SQL 편집기에서 T-SQL 텍스트를 선택하세요.</target>
+      </trans-unit>
+      <trans-unit id="recentConnectionsPlaceholder">
+        <source xml:lang="en">Choose a connection profile from the list below</source>
+        <target state="translated">아래 목록에서 연결 프로필을 선택하세요.</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileFromConnectionsListLabel">
+        <source xml:lang="en">Create Connection Profile</source>
+        <target state="translated">연결 프로필 만들기</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileLabel">
+        <source xml:lang="en">Create</source>
+        <target state="translated">만들기</target>
+      </trans-unit>
+      <trans-unit id="ClearRecentlyUsedLabel">
+        <source xml:lang="en">Clear Recent Connections List</source>
+        <target state="translated">최근 연결 목록 삭제</target>
+      </trans-unit>
+      <trans-unit id="EditProfilesLabel">
+        <source xml:lang="en">Edit</source>
+        <target state="translated">편집</target>
+      </trans-unit>
+      <trans-unit id="RemoveProfileLabel">
+        <source xml:lang="en">Remove</source>
+        <target state="translated">제거</target>
+      </trans-unit>
+      <trans-unit id="ManageProfilesPrompt">
+        <source xml:lang="en">Manage Connection Profiles</source>
+        <target state="translated">연결 프로필 관리</target>
+      </trans-unit>
+      <trans-unit id="SampleServerName">
+        <source xml:lang="en">{{put-server-name-here}}</source>
+        <target state="translated">{{put-server-name-here}}</target>
+      </trans-unit>
+      <trans-unit id="serverPrompt">
+        <source xml:lang="en">Server name or ADO.NET connection string</source>
+        <target state="translated">서버 이름 또는 ADO.NET 연결 문자열</target>
+      </trans-unit>
+      <trans-unit id="serverPlaceholder">
+        <source xml:lang="en">hostname\\instance or &lt;server&gt;.database.windows.net or ADO.NET connection string</source>
+        <target state="translated">hostname\\instance 또는 &lt;server&gt;.database.windows.net 또는 ADO.NET 연결 문자열</target>
+      </trans-unit>
+      <trans-unit id="databasePrompt">
+        <source xml:lang="en">Database name</source>
+        <target state="translated">데이터베이스 이름</target>
+      </trans-unit>
+      <trans-unit id="startIpAddressPrompt">
+        <source xml:lang="en">Start IP</source>
+        <target state="translated">시작 IP</target>
+      </trans-unit>
+      <trans-unit id="endIpAddressPrompt">
+        <source xml:lang="en">End IP</source>
+        <target state="translated">끝 IP</target>
+      </trans-unit>
+      <trans-unit id="databasePlaceholder">
+        <source xml:lang="en">[Optional] Database to connect (press Enter to connect to &lt;default&gt; database)</source>
+        <target state="translated">[옵션] 연결할 데이터베이스(&lt;default&gt; 데이터베이스에 연결하려면 Enter 키 누름)</target>
+      </trans-unit>
+      <trans-unit id="authTypePrompt">
+        <source xml:lang="en">Authentication Type</source>
+        <target state="translated">인증 유형</target>
+      </trans-unit>
+      <trans-unit id="authTypeIntegrated">
+        <source xml:lang="en">Integrated</source>
+        <target state="translated">통합</target>
+      </trans-unit>
+      <trans-unit id="authTypeSql">
+        <source xml:lang="en">SQL Login</source>
+        <target state="translated">SQL 로그인</target>
+      </trans-unit>
+      <trans-unit id="usernamePrompt">
+        <source xml:lang="en">User name</source>
+        <target state="translated">사용자 이름</target>
+      </trans-unit>
+      <trans-unit id="usernamePlaceholder">
+        <source xml:lang="en">User name (SQL Login)</source>
+        <target state="translated">사용자 이름(SQL 로그인)</target>
+      </trans-unit>
+      <trans-unit id="passwordPrompt">
+        <source xml:lang="en">Password</source>
+        <target state="translated">암호</target>
+      </trans-unit>
+      <trans-unit id="passwordPlaceholder">
+        <source xml:lang="en">Password (SQL Login)</source>
+        <target state="translated">암호(SQL 로그인)</target>
+      </trans-unit>
+      <trans-unit id="msgSavePassword">
+        <source xml:lang="en">Save Password? If 'No', password will be required each time you connect</source>
+        <target state="translated">암호를 저장하시겠습니까? '아니요'를 선택하면 연결할 때마다 암호를 입력해야 합니다.</target>
+      </trans-unit>
+      <trans-unit id="profileNamePrompt">
+        <source xml:lang="en">Profile Name</source>
+        <target state="translated">프로필 이름</target>
+      </trans-unit>
+      <trans-unit id="profileNamePlaceholder">
+        <source xml:lang="en">[Optional] Enter a display name for this connection profile</source>
+        <target state="translated">[옵션] 이 연결 프로필의 표시 이름 입력</target>
+      </trans-unit>
+      <trans-unit id="filepathPrompt">
+        <source xml:lang="en">File path</source>
+        <target state="translated">파일 경로</target>
+      </trans-unit>
+      <trans-unit id="filepathMessage">
+        <source xml:lang="en">File name</source>
+        <target state="translated">파일 이름</target>
+      </trans-unit>
+      <trans-unit id="overwritePrompt">
+        <source xml:lang="en">A file with this name already exists. Do you want to replace the existing file?</source>
+        <target state="translated">같은 이름의 파일이 이미 있습니다. 기존 파일을 바꾸시겠습니까?</target>
+      </trans-unit>
+      <trans-unit id="overwritePlaceholder">
+        <source xml:lang="en">A file with this name already exists</source>
+        <target state="translated">같은 이름의 파일이 이미 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgCannotOpenContent">
+        <source xml:lang="en">Error occurred opening content in editor.</source>
+        <target state="translated">편집기에서 콘텐츠를 여는 동안 오류가 발생했습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgSaveStarted">
+        <source xml:lang="en">Started saving results to </source>
+        <target state="translated">다음 위치에 결과 저장 시작: </target>
+      </trans-unit>
+      <trans-unit id="msgSaveFailed">
+        <source xml:lang="en">Failed to save results. </source>
+        <target state="translated">결과를 저장하지 못했습니다. </target>
+      </trans-unit>
+      <trans-unit id="msgSaveSucceeded">
+        <source xml:lang="en">Successfully saved results to </source>
+        <target state="translated">다음 위치에 결과 저장 완료: </target>
+      </trans-unit>
+      <trans-unit id="msgSelectProfileToRemove">
+        <source xml:lang="en">Select profile to remove</source>
+        <target state="translated">제거할 프로필 선택</target>
+      </trans-unit>
+      <trans-unit id="confirmRemoveProfilePrompt">
+        <source xml:lang="en">Confirm to remove this profile.</source>
+        <target state="translated">이 프로필을 제거할지 확인합니다.</target>
+      </trans-unit>
+      <trans-unit id="msgNoProfilesSaved">
+        <source xml:lang="en">No connection profile to remove.</source>
+        <target state="translated">제거할 연결 프로필이 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgProfileRemoved">
+        <source xml:lang="en">Profile removed successfully</source>
+        <target state="translated">프로필을 제거함</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreated">
+        <source xml:lang="en">Profile created successfully</source>
+        <target state="translated">프로필을 생성함</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreatedAndConnected">
+        <source xml:lang="en">Profile created and connected</source>
+        <target state="translated">프로필을 만들고 연결함</target>
+      </trans-unit>
+      <trans-unit id="msgClearedRecentConnections">
+        <source xml:lang="en">Recent connections list cleared</source>
+        <target state="translated">최근 연결 목록을 삭제함</target>
+      </trans-unit>
+      <trans-unit id="msgIsRequired">
+        <source xml:lang="en"> is required.</source>
+        <target state="translated">은(는) 필수입니다.</target>
+      </trans-unit>
+      <trans-unit id="msgError">
+        <source xml:lang="en">Error: </source>
+        <target state="translated">오류: </target>
+      </trans-unit>
+      <trans-unit id="msgYes">
+        <source xml:lang="en">Yes</source>
+        <target state="translated">예</target>
+      </trans-unit>
+      <trans-unit id="msgNo">
+        <source xml:lang="en">No</source>
+        <target state="translated">아니요</target>
+      </trans-unit>
+      <trans-unit id="defaultDatabaseLabel">
+        <source xml:lang="en">&lt;default&gt;</source>
+        <target state="translated">&lt;default&gt;</target>
+      </trans-unit>
+      <trans-unit id="notConnectedLabel">
+        <source xml:lang="en">Disconnected</source>
+        <target state="translated">연결 끊김</target>
+      </trans-unit>
+      <trans-unit id="notConnectedTooltip">
+        <source xml:lang="en">Click to connect to a database</source>
+        <target state="translated">데이터베이스에 연결하려면 클릭</target>
+      </trans-unit>
+      <trans-unit id="connectingLabel">
+        <source xml:lang="en">Connecting</source>
+        <target state="translated">연결 중</target>
+      </trans-unit>
+      <trans-unit id="connectingTooltip">
+        <source xml:lang="en">Connecting to: </source>
+        <target state="translated">다음에 연결 중: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorLabel">
+        <source xml:lang="en">Connection error</source>
+        <target state="translated">연결 오류</target>
+      </trans-unit>
+      <trans-unit id="connectErrorTooltip">
+        <source xml:lang="en">Error connecting to: </source>
+        <target state="translated">다음에 연결하는 중 오류 발생: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorCode">
+        <source xml:lang="en">Error code: </source>
+        <target state="translated">오류 코드: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorMessage">
+        <source xml:lang="en">Error Message: </source>
+        <target state="translated">오류 메시지: </target>
+      </trans-unit>
+      <trans-unit id="cancelingQueryLabel">
+        <source xml:lang="en">Canceling query </source>
+        <target state="translated">쿼리 취소 중 </target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseLabel">
+        <source xml:lang="en">Updating IntelliSense...</source>
+        <target state="translated">IntelliSense 업데이트 중...</target>
+      </trans-unit>
+      <trans-unit id="extensionNotInitializedError">
+        <source xml:lang="en">Unable to execute the command while the extension is initializing. Please try again later.</source>
+        <target state="translated">확장을 초기화하는 동안 명령을 실행할 수 없습니다. 나중에 다시 시도하세요.</target>
+      </trans-unit>
+      <trans-unit id="untitledScheme">
+        <source xml:lang="en">untitled</source>
+        <target state="translated">제목 없음</target>
+      </trans-unit>
+      <trans-unit id="msgChangeLanguageMode">
+        <source xml:lang="en">To use this command, you must set the language to "SQL". Confirm to change language mode.</source>
+        <target state="translated">이 명령을 사용하려면 언어를 "SQL"로 설정해야 합니다. 언어 모드를 변경할지 확인합니다.</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabaseContext">
+        <source xml:lang="en">Changed database context to "{0}" for document "{1}"</source>
+        <target state="translated">문서 "{1}"에 대해 데이터베이스 컨텍스트를 "{0}"(으)로 변경함</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryCreateProfile">
+        <source xml:lang="en">Error: Unable to connect using the connection information provided. Retry profile creation?</source>
+        <target state="translated">오류: 제공된 연결 정보로 연결할 수 없습니다. 프로필을 다시 만드시겠습니까?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryConnectionDifferentCredentials">
+        <source xml:lang="en">Error: Login failed. Retry using different credentials?</source>
+        <target state="translated">오류: 로그인하지 못했습니다. 다른 자격 증명을 사용하여 다시 시도하시겠습니까?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleExtNotInstalled">
+        <source xml:lang="en">Your client IP address does not have access to the server. Download and install the Azure Account extension to sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">클라이언트 IP 주소에서 서버에 액세스할 수 없습니다. Azure Account 확장을 다운로드한 후 설치하여 Azure 계정에 로그인하고 액세스를 허용하는 새 방화벽 규칙을 만드세요.</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleNotSignedIn">
+        <source xml:lang="en">Your client IP address does not have access to the server. Sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">클라이언트 IP 주소에서 서버에 액세스할 수 없습니다. Azure 계정에 로그인하고 액세스를 허용하는 새 방화벽 규칙을 만드세요.</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleSignedIn">
+        <source xml:lang="en">Account signed In. Create new firewall rule? </source>
+        <target state="translated">계정에 로그인했습니다. 새 방화벽 규칙을 만드시겠습니까? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleAdded">
+        <source xml:lang="en">Firewall rule successfully added. Retry profile creation? </source>
+        <target state="translated">방화벽 규칙을 추가했습니다. 프로필을 다시 만드시겠습니까? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedNotSignedIn">
+        <source xml:lang="en">Azure Account extension activated. Sign in to an Azure account? </source>
+        <target state="translated">Azure Account 확장을 활성화했습니다. Azure 계정에 로그인하시겠습니까? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedSignedIn">
+        <source xml:lang="en">Azure Account extension activated and signed in.</source>
+        <target state="translated">Azure Account 확장을 활성화하고 로그인했습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgPromptFirewallRuleCreated">
+        <source xml:lang="en">Firewall rule successfully created.</source>
+        <target state="translated">방화벽 규칙을 만들었습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistory">
+        <source xml:lang="en">Choose Query History</source>
+        <target state="translated">쿼리 기록 선택</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistoryAction">
+        <source xml:lang="en">Choose An Action</source>
+        <target state="translated">작업 선택</target>
+      </trans-unit>
+      <trans-unit id="msgOpenQueryHistory">
+        <source xml:lang="en">Open Query History</source>
+        <target state="translated">쿼리 기록 열기</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryHistory">
+        <source xml:lang="en">Run Query History</source>
+        <target state="translated">쿼리 기록 실행</target>
+      </trans-unit>
+      <trans-unit id="msgInvalidIpAddress">
+        <source xml:lang="en">Invalid IP Address </source>
+        <target state="translated">잘못된 IP 주소 </target>
+      </trans-unit>
+      <trans-unit id="msgNoQueriesAvailable">
+        <source xml:lang="en">No Queries Available</source>
+        <target state="translated">사용 가능한 쿼리 없음</target>
+      </trans-unit>
+      <trans-unit id="retryLabel">
+        <source xml:lang="en">Retry</source>
+        <target state="translated">다시 시도</target>
+      </trans-unit>
+      <trans-unit id="signInLabel">
+        <source xml:lang="en">Sign In</source>
+        <target state="translated">로그인</target>
+      </trans-unit>
+      <trans-unit id="downloadAndInstallLabel">
+        <source xml:lang="en">Download and Install</source>
+        <target state="translated">다운로드 및 설치</target>
+      </trans-unit>
+      <trans-unit id="createFirewallRuleLabel">
+        <source xml:lang="en">Create Firewall Rule</source>
+        <target state="translated">방화벽 규칙 만들기</target>
+      </trans-unit>
+      <trans-unit id="msgConnecting">
+        <source xml:lang="en">Connecting to server "{0}" on document "{1}".</source>
+        <target state="translated">문서 "{1}"에서 서버 "{0}"에 연결하는 중입니다.</target>
+      </trans-unit>
+      <trans-unit id="msgConnectedServerInfo">
+        <source xml:lang="en">Connected to server "{0}" on document "{1}". Server information: {2}</source>
+        <target state="translated">문서 "{1}"에서 서버 "{0}"에 연결했습니다. 서버 정보: {2}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionFailed">
+        <source xml:lang="en">Error connecting to server "{0}". Details: {1}</source>
+        <target state="translated">서버 "{0}"에 연결하는 동안 오류가 발생했습니다. 세부 정보: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgChangingDatabase">
+        <source xml:lang="en">Changing database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">데이터베이스 컨텍스트를 문서 {2}에서 서버 {1}의 {0}(으)로 변경하는 중입니다.</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabase">
+        <source xml:lang="en">Changed database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">데이터베이스 컨텍스트를 문서 {2}에서 서버 {1}의 {0}(으)로 변경했습니다.</target>
+      </trans-unit>
+      <trans-unit id="msgDisconnected">
+        <source xml:lang="en">Disconnected on document "{0}"</source>
+        <target state="translated">문서 "{0}"에서 연결을 끊음</target>
+      </trans-unit>
+      <trans-unit id="msgErrorReadingConfigFile">
+        <source xml:lang="en">Error: Unable to load connection profiles from [{0}]. Check if the file is formatted correctly.</source>
+        <target state="translated">오류: [{0}]에서 연결 프로필을 로드할 수 없습니다. 파일 형식이 올바른지 확인하세요.</target>
+      </trans-unit>
+      <trans-unit id="titleResultsPane">
+        <source xml:lang="en">Results: {0}</source>
+        <target state="translated">결과: {0}</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslErrorMessage">
+        <source xml:lang="en">OpenSSL version &gt;=1.0.1 is required to connect.</source>
+        <target state="translated">연결하려면 OpenSSL 버전 1.0.1 이상이 필요합니다.</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslHelpButton">
+        <source xml:lang="en">Help</source>
+        <target state="translated">도움말</target>
+      </trans-unit>
+      <trans-unit id="macSierraRequiredErrorMessage">
+        <source xml:lang="en">macOS Sierra or newer is required to use this feature.</source>
+        <target state="translated">이 기능을 사용하려면 macOS Sierra 이상이 필요합니다.</target>
+      </trans-unit>
+      <trans-unit id="gettingDefinitionMessage">
+        <source xml:lang="en">Getting definition ...</source>
+        <target state="translated">정의를 가져오는 중...</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestedStatus">
+        <source xml:lang="en">DefinitionRequested</source>
+        <target state="translated">DefinitionRequested</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestCompletedStatus">
+        <source xml:lang="en">DefinitionRequestCompleted</source>
+        <target state="translated">DefinitionRequestCompleted</target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseStatus">
+        <source xml:lang="en">updatingIntelliSense</source>
+        <target state="translated">updatingIntelliSense</target>
+      </trans-unit>
+      <trans-unit id="intelliSenseUpdatedStatus">
+        <source xml:lang="en">intelliSenseUpdated</source>
+        <target state="translated">intelliSenseUpdated</target>
+      </trans-unit>
+      <trans-unit id="testLocalizationConstant">
+        <source xml:lang="en">test</source>
+        <target state="translated">테스트</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionLabel">
+        <source xml:lang="en">Disconnect</source>
+        <target state="translated">연결 끊기</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionDescription">
+        <source xml:lang="en">Close the current connection</source>
+        <target state="translated">현재 연결 닫기</target>
+      </trans-unit>
+      <trans-unit id="disconnectConfirmationMsg">
+        <source xml:lang="en">Are you sure you want to disconnect?</source>
+        <target state="translated">연결을 끊으시겠습니까?</target>
+      </trans-unit>
+      <trans-unit id="elapsedBatchTime">
+        <source xml:lang="en">Batch execution time: {0}</source>
+        <target state="translated">일괄 처리 실행 시간: {0}</target>
+      </trans-unit>
+      <trans-unit id="noActiveEditorMsg">
+        <source xml:lang="en">A SQL editor must have focus before executing this command</source>
+        <target state="translated">이 명령을 실행하기 전에 SQL 편집기에 포커스가 있어야 합니다.</target>
+      </trans-unit>
+      <trans-unit id="maximizeLabel">
+        <source xml:lang="en">Maximize</source>
+        <target state="translated">최대화</target>
+      </trans-unit>
+      <trans-unit id="restoreLabel">
+        <source xml:lang="en">Restore</source>
+        <target state="translated">복원</target>
+      </trans-unit>
+      <trans-unit id="saveCSVLabel">
+        <source xml:lang="en">Save as CSV</source>
+        <target state="translated">CSV로 저장</target>
+      </trans-unit>
+      <trans-unit id="saveJSONLabel">
+        <source xml:lang="en">Save as JSON</source>
+        <target state="translated">JSON으로 저장</target>
+      </trans-unit>
+      <trans-unit id="saveExcelLabel">
+        <source xml:lang="en">Save as Excel</source>
+        <target state="translated">Excel로 저장</target>
+      </trans-unit>
+      <trans-unit id="fileTypeCSVLabel">
+        <source xml:lang="en">CSV</source>
+        <target state="translated">CSV</target>
+      </trans-unit>
+      <trans-unit id="fileTypeJSONLabel">
+        <source xml:lang="en">JSON</source>
+        <target state="translated">JSON</target>
+      </trans-unit>
+      <trans-unit id="fileTypeExcelLabel">
+        <source xml:lang="en">Excel</source>
+        <target state="translated">Excel</target>
+      </trans-unit>
+      <trans-unit id="resultPaneLabel">
+        <source xml:lang="en">Results</source>
+        <target state="translated">결과</target>
+      </trans-unit>
+      <trans-unit id="selectAll">
+        <source xml:lang="en">Select all</source>
+        <target state="translated">모두 선택</target>
+      </trans-unit>
+      <trans-unit id="copyLabel">
+        <source xml:lang="en">Copy</source>
+        <target state="translated">복사</target>
+      </trans-unit>
+      <trans-unit id="copyWithHeadersLabel">
+        <source xml:lang="en">Copy with Headers</source>
+        <target state="translated">복사(머리글 포함)</target>
+      </trans-unit>
+      <trans-unit id="executeQueryLabel">
+        <source xml:lang="en">Executing query...</source>
+        <target state="translated">쿼리를 실행하는 중...</target>
+      </trans-unit>
+      <trans-unit id="messagePaneLabel">
+        <source xml:lang="en">Messages</source>
+        <target state="translated">메시지</target>
+      </trans-unit>
+      <trans-unit id="lineSelectorFormatted">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">줄 {0}</target>
+      </trans-unit>
+      <trans-unit id="elapsedTimeLabel">
+        <source xml:lang="en">Total execution time: {0}</source>
+        <target state="translated">총 실행 시간: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCannotSaveMultipleSelections">
+        <source xml:lang="en">Save results command cannot be used with multiple selections.</source>
+        <target state="translated">결과 저장 명령에서는 여러 항목을 선택할 수 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="mssqlProviderName">
+        <source xml:lang="en">MSSQL</source>
+        <target state="translated">MSSQL</target>
+      </trans-unit>
+      <trans-unit id="noneProviderName">
+        <source xml:lang="en">None</source>
+        <target state="translated">없음</target>
+      </trans-unit>
+      <trans-unit id="chooseSqlLang">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">SQL 언어 선택</target>
+      </trans-unit>
+      <trans-unit id="flavorChooseLanguage">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">SQL 언어 선택</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionMssql">
+        <source xml:lang="en">Use T-SQL intellisense and syntax error checking on current document</source>
+        <target state="translated">현재 문서에서 T-SQL IntelliSense 및 구문 오류 검사 사용</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionNone">
+        <source xml:lang="en">Disable intellisense and syntax error checking on current document</source>
+        <target state="translated">현재 문서에서 IntelliSense 및 구문 오류 검사 사용 안 함</target>
+      </trans-unit>
+      <trans-unit id="queryOutputDocumentTitle">
+        <source xml:lang="en">Query Output Document</source>
+        <target state="translated">쿼리 출력 문서</target>
+      </trans-unit>
+      <trans-unit id="queryOutputHostTitle">
+        <source xml:lang="en">Query Output Document Host</source>
+        <target state="translated">쿼리 출력 문서 호스트</target>
+      </trans-unit>
+      <trans-unit id="msgAddConnection">
+        <source xml:lang="en">Add Connection</source>
+        <target state="translated">연결 추가</target>
+      </trans-unit>
+      <trans-unit id="msgConnect">
+        <source xml:lang="en">Connect</source>
+        <target state="translated">연결</target>
+      </trans-unit>
+      <trans-unit id="azureSignIn">
+        <source xml:lang="en">Azure: Sign In</source>
+        <target state="translated">Azure: 로그인</target>
+      </trans-unit>
+      <trans-unit id="azureSignInDescription">
+        <source xml:lang="en">Sign in to your Azure subscription</source>
+        <target state="translated">Azure 구독에 로그인</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCode">
+        <source xml:lang="en">Azure: Sign In with Device Code</source>
+        <target state="translated">Azure: 디바이스 코드로 로그인</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCodeDescription">
+        <source xml:lang="en">Sign in to your Azure subscription with a device code. Use this in setups where the Sign In command does not work</source>
+        <target state="translated">디바이스 코드를 사용해서 Azure 구독에 로그인합니다. 설정에서 로그인 명령이 작동하지 않을 때 이 코드를 사용합니다.</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloud">
+        <source xml:lang="en">Azure: Sign In to Azure Cloud</source>
+        <target state="translated">Azure: Azure Cloud에 로그인</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloudDescription">
+        <source xml:lang="en">Sign in to your Azure subscription in one of the sovereign clouds.</source>
+        <target state="translated">소버린 클라우드 중 하나에서 Azure 구독에 로그인합니다.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

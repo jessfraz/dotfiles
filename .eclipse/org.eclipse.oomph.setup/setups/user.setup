@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:User
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    name="drew">
+  <acceptedLicense>DEFAULT_LICENSE Marker to remember license pre-prompting</acceptedLicense>
+  <acceptedLicense>8d3137b6d090b6860d1b977a88ceb334 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>d77cfd8b73fc71776727fcbb2605709 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>6a3d083ad2bd7d3a80ee293235f8c5b1 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>abc76a6cc9d06e4684ff61ed74a972c Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>be4a7d94b4e1903e628a3001859739a8 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>318bcab4617b336391ac7ab40514ccc3 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>aa1a84ed6378c1cdba13a100c225aa57 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>425529a69afe7129289ce9a30b4d2b6c Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>84f0b7f0a433c033764dd28540d6d199 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedLicense>4450aa10f21d146d6a6a80f84275f5b2 Eclipse Foundation Software User Agreement</acceptedLicense>
+  <acceptedCertificate>4ZhdJKvF6nGvSHtFl+/jgLm65Mc= CN=&quot;Eclipse.org Foundation, Inc.&quot;, OU=IT, O=&quot;Eclipse.org Foundation, Inc.&quot;, L=Ottawa, ST=Ontario, C=CA</acceptedCertificate>
+  <acceptedCertificate>tJZh2hU5KnqPrEeuc53mrDp4ROY= CN=DigiCert High Assurance Code Signing CA-1, OU=www.digicert.com, O=DigiCert Inc, C=US</acceptedCertificate>
+  <acceptedCertificate>VJn0AMraVI05FoBx2w9S9LwQixQ= CN=DigiCert High Assurance EV Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US</acceptedCertificate>
+  <acceptedCertificate>7E2hb80ATfmRA6ZISRkbS+aEedc= CN=GTE CyberTrust Global Root, OU=&quot;GTE CyberTrust Solutions, Inc.&quot;, O=GTE Corporation, C=US</acceptedCertificate>
+</setup:User>

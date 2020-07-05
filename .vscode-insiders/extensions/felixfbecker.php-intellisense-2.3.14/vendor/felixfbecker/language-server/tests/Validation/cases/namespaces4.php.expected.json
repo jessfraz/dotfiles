@@ -1,0 +1,11 @@
+{
+    "references": {
+        "a\\b": [
+            "./namespaces4.php"
+        ],
+        "a": [
+            "./namespaces4.php"
+        ]
+    },
+    "definitions": []
+}
