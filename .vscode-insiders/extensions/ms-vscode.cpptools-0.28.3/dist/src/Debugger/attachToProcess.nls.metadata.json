@@ -1,0 +1,17 @@
+{
+	"messages": [
+		"Chosen debug configuration does not contain {0}",
+		"Select the process to attach to",
+		"Process not selected.",
+		"Pipe transport failed to get OS and processes.",
+		"Transport attach could not obtain processes list."
+	],
+	"keys": [
+		"no.pipetransport",
+		"select.process.attach",
+		"process.not.selected",
+		"pipe.failed",
+		"no.process.list"
+	],
+	"filePath": "src\\Debugger\\attachToProcess"
+}

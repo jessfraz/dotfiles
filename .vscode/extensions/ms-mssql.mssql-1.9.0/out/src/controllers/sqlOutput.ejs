@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self' vscode-resource: https:;
+              script-src vscode-resource: 'self' 'unsafe-inline' 'unsafe-eval' https:;
+              style-src vscode-resource: 'self' 'unsafe-inline';
+              img-src 'self' vscode-resource: data:"/>
+    <base href="<%=basehref%>">
+    <link rel="stylesheet" type="text/css" href="views/htmlcontent/src/css/slick.grid.css"/>
+    <link rel="stylesheet" type="text/css" href="views/htmlcontent/src/css/SlickGrid.css"/>
+    <link rel="stylesheet" type="text/css" href="views/htmlcontent/src/css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="views/htmlcontent/src/css/color-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="views/htmlcontent/src/css/flexbox.css"/>
+  </head>
+  <!-- 3. Display the application -->
+  <body>
+    <my-app></my-app>
+  </body>
+    <% if (prod) { %>
+    <script src="dist/js/app.bundle.js"></script>
+    <% } else { %>
+    <script src="views/htmlcontent/src/js/lib/jquery-1.8.3.js"></script>
+    <script src="views/htmlcontent/src/js/lib/jquery.event.drag-2.2.js"></script>
+    <script src="views/htmlcontent/src/js/lib/jquery-ui-1.9.2.js"></script>
+    <script src="views/htmlcontent/src/js/lib/underscore-min.js"></script>
+    <script src="views/htmlcontent/src/js/lib/slick.core.js"></script>
+    <script src="views/htmlcontent/src/js/lib/slick.grid.js"></script>
+    <script src="views/htmlcontent/src/js/lib/slick.editors.js"></script>
+    <script src="views/htmlcontent/src/js/slick.autosizecolumn.js"></script>
+    <script src="views/htmlcontent/src/js/slick.dragrowselector.js"></script>
+    <script src="views/htmlcontent/src/js/lib/rangy-core.js"></script>
+    <script src="views/htmlcontent/src/js/lib/rangy-textrange.js"></script>
+     <!-- Polyfill(s) for older browsers -->
+    <script src="views/htmlcontent/src/js/lib/shim.min.js"></script>
+    <script src="views/htmlcontent/src/js/lib/zone.js/dist/zone.js"></script>
+    <script src="views/htmlcontent/src/js/lib/Reflect.js"></script>
+    <script src="views/htmlcontent/src/js/lib/system.src.js"></script>
+    <script src="views/htmlcontent/systemjs.config.js"></script>
+    <% } %>
+    <script>
+      System.import('app').catch(function(err){ console.error(err); });
+    </script>
+</html>

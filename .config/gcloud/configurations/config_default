@@ -1,0 +1,8 @@
+[core]
+account = andytswanner@gmail.com
+project = drew-swanner-app
+
+[compute]
+zone = us-central1-c
+region = us-central1
+

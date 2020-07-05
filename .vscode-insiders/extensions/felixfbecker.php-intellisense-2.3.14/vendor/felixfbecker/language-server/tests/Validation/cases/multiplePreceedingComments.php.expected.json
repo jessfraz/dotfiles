@@ -1,0 +1,50 @@
+{
+    "references": [],
+    "definitions": {
+        "Foo": {
+            "fqn": "Foo",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "Foo",
+                "kind": 5,
+                "location": {
+                    "uri": "./multiplePreceedingComments.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class Foo",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "Foo->fn()": {
+            "fqn": "Foo->fn()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "fn",
+                "kind": 6,
+                "location": {
+                    "uri": "./multiplePreceedingComments.php"
+                },
+                "containerName": "Foo"
+            },
+            "type__tostring": "\\Iterator",
+            "type": {},
+            "declarationLine": "public function fn()",
+            "documentation": "Foo",
+            "signatureInformation": {
+                "label": "()",
+                "documentation": "Foo",
+                "parameters": []
+            }
+        }
+    }
+}

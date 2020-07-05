@@ -1,0 +1,33 @@
+{
+	"name": "theme-chrome-devtools-dark",
+	"displayName": "Dark Chrome DevTools",
+	"description": "Dark Theme like Chrome DevTools (inspired by ZeroDarkMatrix theme for Sublime)",
+	"version": "0.0.1",
+	"publisher": "ivanzusko",
+	"icon": "images/screenshot.png",
+	"galleryBanner": {
+		"color": "#663399",
+		"theme": "dark"
+	},
+	"engines": {
+		"vscode": "*"
+	},
+	"categories": [
+		"Themes"
+	],
+	"repositoryURL": "",
+	"contributes": {
+		"themes": [
+			{
+				"label": "Dark Chrome DevTools",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Jo-Chrome-DevToolS-dark.tmTheme"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "54894d27-9199-46d6-9aad-26f33eadc74d",
+		"publisherId": "48613b1e-7778-4a11-b943-52137b11a368",
+		"publisherDisplayName": "Ivan Zusko"
+	}
+}

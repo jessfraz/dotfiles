@@ -1,0 +1,25 @@
+{
+    "references": [],
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 11,
+                "location": {
+                    "uri": "./interfaceProperty.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "interface A  {",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "references": {
+        "MyNamespace\\ParseErrorsTest->args": [
+            "./memberAccess5.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace": {
+            "fqn": "MyNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./memberAccess5.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\ParseErrorsTest": {
+            "fqn": "MyNamespace\\ParseErrorsTest",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "ParseErrorsTest",
+                "kind": 5,
+                "location": {
+                    "uri": "./memberAccess5.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type": null,
+            "declarationLine": "class ParseErrorsTest {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\ParseErrorsTest->setUp()": {
+            "fqn": "MyNamespace\\ParseErrorsTest->setUp()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "setUp",
+                "kind": 6,
+                "location": {
+                    "uri": "./memberAccess5.php"
+                },
+                "containerName": "MyNamespace\\ParseErrorsTest"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public function setUp()",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

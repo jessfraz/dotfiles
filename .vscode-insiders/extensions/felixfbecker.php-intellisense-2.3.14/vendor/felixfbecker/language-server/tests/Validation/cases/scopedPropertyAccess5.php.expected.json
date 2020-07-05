@@ -1,0 +1,59 @@
+{
+    "references": {
+        "TestInterface": [
+            "./scopedPropertyAccess5.php"
+        ],
+        "TestClass": [
+            "./scopedPropertyAccess5.php"
+        ],
+        "TestClass::$testProperty": [
+            "./scopedPropertyAccess5.php"
+        ],
+        "TestClass::$staticTestProperty": [
+            "./scopedPropertyAccess5.php"
+        ]
+    },
+    "definitions": {
+        "TestClass": {
+            "fqn": "TestClass",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "TestClass",
+                "kind": 5,
+                "location": {
+                    "uri": "./scopedPropertyAccess5.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class TestClass implements TestInterface {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestClass::$testProperty": {
+            "fqn": "TestClass::$testProperty",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": true,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "testProperty",
+                "kind": 7,
+                "location": {
+                    "uri": "./scopedPropertyAccess5.php"
+                },
+                "containerName": "TestClass"
+            },
+            "type__tostring": "\\TestClass[]",
+            "type": {},
+            "declarationLine": "public static $testProperty;",
+            "documentation": "Lorem excepteur officia sit anim velit veniam enim.",
+            "signatureInformation": null
+        }
+    }
+}

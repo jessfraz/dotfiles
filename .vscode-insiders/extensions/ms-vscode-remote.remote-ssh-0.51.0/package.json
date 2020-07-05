@@ -1,0 +1,640 @@
+{
+	"name": "remote-ssh",
+	"displayName": "Remote - SSH",
+	"description": "Open any folder on a remote machine using SSH and take advantage of VS Code's full feature set.",
+	"version": "0.51.0",
+	"preview": true,
+	"publisher": "ms-vscode-remote",
+	"icon": "resources/remote-ssh.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/vscode-remote-release.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Microsoft/vscode-remote-release/issues"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"engines": {
+		"vscode": "^1.43.0"
+	},
+	"extensionKind": [
+		"ui"
+	],
+	"extensionPack": [
+		"ms-vscode-remote.remote-ssh-edit"
+	],
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"remote development",
+		"remote",
+		"ssh"
+	],
+	"activationEvents": [
+		"onCommand:opensshremotes.openEmptyWindow",
+		"onCommand:opensshremotes.openEmptyWindowInCurrentWindow",
+		"onCommand:opensshremotes.openConfigFile",
+		"onCommand:opensshremotes.cleanDevBox",
+		"onCommand:opensshremotes.cleanRemoteServer",
+		"onCommand:opensshremotes.cleanLocalServer",
+		"onCommand:opensshremotes.getHelp",
+		"onCommand:opensshremotes.getStarted",
+		"onCommand:opensshremotes.reportIssue",
+		"onCommand:opensshremotes.settings",
+		"onCommand:opensshremotes.provideFeedback",
+		"onCommand:opensshremotes.showLog",
+		"onCommand:opensshremotes.addNewSshHost",
+		"onResolveRemoteAuthority:ssh-remote",
+		"onView:sshHosts"
+	],
+	"main": "./out/extension",
+	"enableProposedApi": true,
+	"aiKey": "AIF-d9b70cd4-b9f9-4d70-929b-a071c400b217",
+	"contributes": {
+		"configuration": {
+			"title": "Remote - SSH",
+			"properties": {
+				"remote.SSH.configFile": {
+					"type": "string",
+					"description": "The absolute file path to a custom SSH config file.",
+					"default": "",
+					"scope": "application"
+				},
+				"remote.SSH.showLoginTerminal": {
+					"type": "boolean",
+					"description": "Always reveal the SSH login terminal.",
+					"default": false
+				},
+				"remote.SSH.defaultForwardedPorts": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": [
+							"remotePort"
+						],
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"remotePort": {
+								"type": "number"
+							},
+							"localPort": {
+								"type": "number"
+							}
+						}
+					},
+					"description": "A list of ports to forward when the connection is established.",
+					"default": []
+				},
+				"remote.SSH.defaultExtensions": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "List of extensions that should be installed automatically on all SSH hosts."
+				},
+				"remote.SSH.path": {
+					"type": "string",
+					"description": "An absolute path to the SSH executable. When empty, it will use \"ssh\" on the path or in common install locations.",
+					"default": "",
+					"scope": "application"
+				},
+				"remote.SSH.lockfilesInTmp": {
+					"type": "boolean",
+					"markdownDescription": "Whether to keep lockfiles in `/tmp` instead of in the server's install folder. Useful for connecting to hosts which have issues with locking, such as hosts with a home directory using NFS or another distributed filesystem.",
+					"default": false
+				},
+				"remote.SSH.useFlock": {
+					"type": "boolean",
+					"markdownDescription": "Whether to use `flock` for creating lockfiles on Linux/macOS remotes instead of `ln -s`, the default.",
+					"default": false
+				},
+				"remote.SSH.enableDynamicForwarding": {
+					"type": "boolean",
+					"description": "Whether to use SSH dynamic forwarding to allow setting up new port tunnels over an existing SSH connection. When this is used, a password only needs to be entered once for each remote window.",
+					"default": true
+				},
+				"remote.SSH.enableAgentForwarding": {
+					"type": "boolean",
+					"markdownDescription": "Enable SSH agent forwarding via the SSH config option `ForwardAgent`.",
+					"default": true
+				},
+				"remote.SSH.allowLocalServerDownload": {
+					"type": "boolean",
+					"description": "If downloading the VS Code Server fails on the host, fall back to downloading on the client and transferring it to the host with scp.",
+					"default": true
+				},
+				"remote.SSH.enableAzureIntegration": {
+					"type": "boolean",
+					"markdownDescription": "**Experimental**: Detect SSH connections that target Azure VMs in the SSH hosts explorer. Requires that you are logged in using the `Azure Account` extension.",
+					"default": false
+				},
+				"remote.SSH.windowsRemotes": {
+					"type": "array",
+					"markdownDescription": "**Deprecated**: Enables experimental support for connecting to Windows remotes. Add the names of windows remotes to this list.",
+					"deprecationMessage": "Deprecated: Please use `remote.SSH.remotePlatorm` instead",
+					"default": [],
+					"items": {
+						"type": "string"
+					}
+				},
+				"remote.SSH.useLocalServer": {
+					"type": "boolean",
+					"markdownDescription": "Enables a mode for connecting using a single connection shared between windows and across window reloads. This makes it faster to open new windows and reduces the number of times a password needs to be entered.",
+					"default": true
+				},
+				"remote.SSH.connectTimeout": {
+					"type": "number",
+					"description": "Specifies the timeout in seconds used for the SSH command that connects to the remote.",
+					"default": 15,
+					"minimum": 1
+				},
+				"remote.SSH.logLevel": {
+					"type": "string",
+					"description": "The log level for the extension.",
+					"default": "debug",
+					"scope": "application",
+					"enum": [
+						"debug",
+						"trace"
+					]
+				},
+				"remote.SSH.maxReconnectionAttempts": {
+					"type": [
+						"number",
+						"null"
+					],
+					"markdownDescription": "The maximum number of times to attempt reconnection. Use 0 to disallow reconnection, and `null` to use the maximum of 8.",
+					"default": null,
+					"scope": "application",
+					"maximum": 8,
+					"minimum": 0
+				},
+				"remote.SSH.suppressWindowsSshWarning": {
+					"type": "boolean",
+					"description": "Due to a bug with password handling in some versions of the SSH client bundled with Windows, the extension prefers a non-Windows SSH client, such as the one bundled with Git, and will show a warning when another one can't be found. This setting disables that warning.",
+					"default": false,
+					"scope": "application"
+				},
+				"remote.SSH.remotePlatform": {
+					"type": "object",
+					"markdownDescription": "A map of the remote hostname to the platform for that remote. Valid values: `linux`, `macOS`, `windows`. Note - this setting will soon be required when useLocalServer is disabled, so it is currently being autopopulated for successful connections, but is not currently used.",
+					"scope": "application",
+					"patternProperties": {
+						".*": {
+							"type": "string",
+							"enum": [
+								"macOS",
+								"windows",
+								"linux"
+							]
+						}
+					}
+				}
+			}
+		},
+		"views": {
+			"remote": [
+				{
+					"id": "sshHosts",
+					"name": "SSH Targets",
+					"group": "targets@1",
+					"remoteName": "ssh-remote"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "opensshremotes.openWebUI",
+				"title": "Open Web UI",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.openEmptyWindow",
+				"title": "Connect to Host...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.openEmptyWindowOnCurrentHost",
+				"title": "New Window on Active Host",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.openEmptyWindowInCurrentWindow",
+				"title": "Connect Current Window to Host...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.openConfigFile",
+				"title": "Open Configuration File...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.addNewSshHost",
+				"title": "Add New SSH Host...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.cleanDevBox",
+				"title": "Uninstall VS Code Server from Host...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.cleanRemoteServer",
+				"title": "Kill VS Code Server on Host...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.cleanLocalServer",
+				"title": "Kill Local Connection Server For Host...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.getHelp",
+				"title": "Help",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.getStarted",
+				"title": "Getting Started",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.reportIssue",
+				"title": "Report Issue...",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.settings",
+				"title": "Settings",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.provideFeedback",
+				"title": "Provide Feedback",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotes.showLog",
+				"title": "Show Log",
+				"category": "Remote-SSH"
+			},
+			{
+				"command": "opensshremotesexplorer.emptyWindowInNewWindow",
+				"title": "Connect to Host in New Window",
+				"icon": {
+					"light": "resources/light/empty-window.svg",
+					"dark": "resources/dark/empty-window.svg",
+					"highContrast": "resources/highContrast/empty-window.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.emptyWindowInCurrentWindow",
+				"title": "Connect to Host in Current Window"
+			},
+			{
+				"command": "opensshremotesexplorer.startManagedHost",
+				"title": "Start VM",
+				"icon": {
+					"light": "resources/light/vm-start.svg",
+					"dark": "resources/dark/vm-start.svg",
+					"highContrast": "resources/highContrast/vm-start.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.stopManagedHost",
+				"title": "Stop VM",
+				"icon": {
+					"light": "resources/light/vm-stop.svg",
+					"dark": "resources/dark/vm-stop.svg",
+					"highContrast": "resources/highContrast/vm-stop.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.reopenFolderInCurrentWindow",
+				"title": "Open on SSH Host in Current Window"
+			},
+			{
+				"command": "opensshremotesexplorer.reopenFolderInNewWindow",
+				"title": "Open on SSH Host in New Window",
+				"icon": {
+					"light": "resources/light/reopen-folder.svg",
+					"dark": "resources/dark/reopen-folder.svg",
+					"highContrast": "resources/highContrast/reopen-folder.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.deleteFolderHistoryItem",
+				"title": "Remove From Recent List",
+				"icon": {
+					"light": "resources/light/remove.svg",
+					"dark": "resources/dark/remove.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.refresh",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.configure",
+				"title": "Configure",
+				"icon": {
+					"light": "resources/light/configure.svg",
+					"dark": "resources/dark/configure.svg"
+				}
+			},
+			{
+				"command": "opensshremotesexplorer.add",
+				"title": "Add New",
+				"icon": {
+					"light": "resources/light/plus.svg",
+					"dark": "resources/dark/plus.svg"
+				}
+			}
+		],
+		"resourceLabelFormatters": [
+			{
+				"scheme": "vscode-remote",
+				"authority": "ssh-remote+*",
+				"formatting": {
+					"label": "${path}",
+					"separator": "/",
+					"tildify": true,
+					"workspaceSuffix": "SSH"
+				}
+			}
+		],
+		"menus": {
+			"statusBar/windowIndicator": [
+				{
+					"command": "opensshremotes.openEmptyWindow",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "1_remote_ssh_general@1"
+				},
+				{
+					"command": "opensshremotes.openConfigFile",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "1_remote_ssh_general@2"
+				},
+				{
+					"command": "opensshremotes.showLog",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "1_remote_ssh_general@5"
+				},
+				{
+					"command": "opensshremotes.settings",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "9_remote_ssh_help@1"
+				},
+				{
+					"command": "opensshremotes.reportIssue",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "9_remote_ssh_help@2"
+				},
+				{
+					"command": "opensshremotes.provideFeedback",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "9_remote_ssh_help@3"
+				},
+				{
+					"command": "opensshremotes.getHelp",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
+					"group": "9_remote_ssh_help@4"
+				},
+				{
+					"command": "opensshremotes.openEmptyWindow",
+					"when": "remoteConnectionState == disconnected",
+					"group": "1_local_ssh@1"
+				},
+				{
+					"command": "opensshremotes.openConfigFile",
+					"when": "remoteConnectionState == disconnected",
+					"group": "1_local_ssh@2"
+				},
+				{
+					"command": "opensshremotes.getStarted",
+					"when": "remoteConnectionState == disconnected",
+					"group": "1_local_ssh@3"
+				},
+				{
+					"command": "opensshremotes.openEmptyWindow",
+					"when": "!remoteName",
+					"group": "1_local_ssh@1"
+				},
+				{
+					"command": "opensshremotes.openConfigFile",
+					"when": "!remoteName",
+					"group": "1_local_ssh@2"
+				},
+				{
+					"command": "opensshremotes.getStarted",
+					"when": "!remoteName",
+					"group": "1_local_ssh@3"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "opensshremotes.getStarted",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotes.openEmptyWindowOnCurrentHost",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected"
+				},
+				{
+					"command": "opensshremotes.provideFeedback",
+					"when": "remoteName =~ /^ssh-remote$/"
+				},
+				{
+					"command": "opensshremotes.cleanLocalServer",
+					"when": "config.remote.SSH.useLocalServer"
+				},
+				{
+					"command": "opensshremotesexplorer.emptyWindowInCurrentWindow",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.emptyWindowInNewWindow",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.startManagedHost",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.stopManagedHost",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.refresh",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.configure",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.add",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.reopenFolderInCurrentWindow",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.reopenFolderInNewWindow",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotesexplorer.deleteFolderHistoryItem",
+					"when": "false"
+				},
+				{
+					"command": "opensshremotes.openWebUI",
+					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected && config.remote.SSH.enableWebAccess"
+				}
+			],
+			"view/title": [
+				{
+					"command": "opensshremotesexplorer.add",
+					"when": "view == sshHosts",
+					"group": "navigation"
+				},
+				{
+					"command": "opensshremotesexplorer.configure",
+					"when": "view == sshHosts",
+					"group": "navigation"
+				},
+				{
+					"command": "opensshremotesexplorer.refresh",
+					"when": "view == sshHosts",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "opensshremotesexplorer.emptyWindowInNewWindow",
+					"when": "viewItem =~ /^opensshremotesexplorer.host(.managed.running)?$/",
+					"group": "inline@1"
+				},
+				{
+					"command": "opensshremotesexplorer.emptyWindowInNewWindow",
+					"when": "viewItem =~ /^opensshremotesexplorer.host(.managed.running)?$/",
+					"group": "navigation@2"
+				},
+				{
+					"command": "opensshremotesexplorer.emptyWindowInCurrentWindow",
+					"when": "viewItem =~ /^opensshremotesexplorer.host(.managed.running)?$/",
+					"group": "navigation@1"
+				},
+				{
+					"command": "opensshremotesexplorer.startManagedHost",
+					"when": "viewItem == opensshremotesexplorer.host.managed.deallocated",
+					"group": "navigation@1"
+				},
+				{
+					"command": "opensshremotesexplorer.startManagedHost",
+					"when": "viewItem == opensshremotesexplorer.host.managed.deallocated",
+					"group": "inline@1"
+				},
+				{
+					"command": "opensshremotesexplorer.stopManagedHost",
+					"when": "viewItem == opensshremotesexplorer.host.managed.running",
+					"group": "navigation@3"
+				},
+				{
+					"command": "opensshremotesexplorer.reopenFolderInNewWindow",
+					"when": "viewItem == opensshremotesexplorer.folder.reachable",
+					"group": "inline@1"
+				},
+				{
+					"command": "opensshremotesexplorer.reopenFolderInNewWindow",
+					"when": "viewItem == opensshremotesexplorer.folder.reachable",
+					"group": "navigation@2"
+				},
+				{
+					"command": "opensshremotesexplorer.reopenFolderInCurrentWindow",
+					"when": "viewItem == opensshremotesexplorer.folder.reachable",
+					"group": "navigation@1"
+				},
+				{
+					"command": "opensshremotesexplorer.deleteFolderHistoryItem",
+					"when": "viewItem =~ /^opensshremotesexplorer.folder/",
+					"group": "navigation@3"
+				},
+				{
+					"command": "opensshremotesexplorer.deleteFolderHistoryItem",
+					"when": "viewItem =~ /^opensshremotesexplorer.folder/",
+					"group": "inline@2"
+				}
+			]
+		},
+		"remoteHelp": {
+			"getStarted": "https://aka.ms/vscode-remote/ssh/getting-started",
+			"feedback": "https://aka.ms/vscode-remote/ssh/provide-feedback",
+			"documentation": "https://aka.ms/vscode-remote/ssh",
+			"issues": "https://aka.ms/vscode-remote/ssh/issues",
+			"remoteName": "ssh-remote"
+		}
+	},
+	"scripts": {
+		"postinstall": "npm run downloadapi",
+		"downloadapi": "npx vscode-dts master",
+		"postdownloadapi": "npx vscode-dts dev",
+		"vscode:prepublish": "webpack --mode production",
+		"compile": "webpack --mode none",
+		"watch": "webpack --mode none --watch",
+		"watch2": "tsc -w -p .",
+		"package": "vsce package --yarn",
+		"lint": "tslint -p .",
+		"pretest": "tsc -p . --outDir out-test",
+		"test": "node ./out-test/test/runTests.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/lockfile": "^1.0.1",
+		"@types/minimist": "^1.2.0",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.26",
+		"@types/shell-quote": "^1.6.1",
+		"@types/sinon": "^7.5.1",
+		"@types/webpack": "^4.41.6",
+		"azure-arm-resource": "^2.0.0-preview",
+		"azure-arm-website": "^1.0.0-preview",
+		"copy-webpack-plugin": "^5.0.2",
+		"glob": "^7.1.4",
+		"mocha": "^7.0.1",
+		"sinon": "^9.0.0",
+		"ts-loader": "^6.2.1",
+		"tslint": "^5.15.0",
+		"tslint-webpack-plugin": "^2.0.4",
+		"typescript": "^3.8.2",
+		"vsce": "^1.73.0",
+		"vscode-nls-dev": "^3.2.6",
+		"vscode-test": "^1.2.0",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0"
+	},
+	"dependencies": {
+		"azure-arm-compute": "^9.1.0",
+		"azure-arm-network": "^12.0.0",
+		"lockfile": "^1.0.4",
+		"minimist": "^1.2.0",
+		"posix-getopt": "^1.2.0",
+		"shell-quote": "^1.7.1",
+		"socks": "^2.3.2",
+		"ssh-config": "^4.0.2",
+		"vscode-extension-telemetry": "^0.1.1"
+	},
+	"__metadata": {
+		"id": "607fd052-be03-4363-b657-2bd62b83d28a",
+		"publisherId": "ac9410a2-0d75-40ec-90de-b59bb705801d",
+		"publisherDisplayName": "Microsoft"
+	}
+}

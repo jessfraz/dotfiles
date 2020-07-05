@@ -1,0 +1,57 @@
+{
+  "_from": "@angular/router@~3.1.2",
+  "_id": "@angular/router@3.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-EEbJQ6znlQJ+LlBX34yJfalo/NY=",
+  "_location": "/@angular/router",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/router@~3.1.2",
+    "name": "@angular/router",
+    "escapedName": "@angular%2frouter",
+    "scope": "@angular",
+    "rawSpec": "~3.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~3.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/router/-/router-3.1.2.tgz",
+  "_shasum": "1046c943ace795027e2e5057df8c897da968fcd6",
+  "_spec": "@angular/router@~3.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - the routing library",
+  "homepage": "https://github.com/angular/angular/blob/master/modules/%40angular/router/README.md",
+  "keywords": [
+    "angular2",
+    "angular",
+    "router"
+  ],
+  "license": "MIT",
+  "main": "bundles/router.umd.js",
+  "module": "index.js",
+  "name": "@angular/router",
+  "peerDependencies": {
+    "@angular/core": "2.1.2",
+    "@angular/common": "2.1.2",
+    "@angular/platform-browser": "2.1.2",
+    "rxjs": "5.0.0-beta.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "3.1.2"
+}

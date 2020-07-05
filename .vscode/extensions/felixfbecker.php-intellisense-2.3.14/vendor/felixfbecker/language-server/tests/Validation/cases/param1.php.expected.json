@@ -1,0 +1,59 @@
+{
+    "references": {
+        "MyNamespace\\Hi": [
+            "./param1.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace": {
+            "fqn": "MyNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./param1.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\init()": {
+            "fqn": "MyNamespace\\init()",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "init",
+                "kind": 12,
+                "location": {
+                    "uri": "./param1.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function init(Hi $view)",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "(\\MyNamespace\\Hi $view)",
+                "documentation": null,
+                "parameters": [
+                    {
+                        "label": "\\MyNamespace\\Hi $view",
+                        "documentation": null
+                    }
+                ]
+            }
+        }
+    }
+}

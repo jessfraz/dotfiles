@@ -1,0 +1,16 @@
+{
+	"name": "clang-format",
+	"dependencies": {},
+	"exclude": [
+		"typings/browser",
+		"typings/browser.d.ts",
+		"node_modules"
+	],
+	"devDependencies": {},
+	"ambientDependencies": {
+		"sax": "registry:dt/sax#0.0.0+20160225202428"
+	},
+	"globalDevDependencies": {
+		"sax": "registry:dt/sax#0.0.0+20160316155526"
+	}
+}

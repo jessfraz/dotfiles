@@ -1,0 +1,46 @@
+{
+    "references": [],
+    "definitions": {
+        "MyClass": {
+            "fqn": "MyClass",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "MyClass",
+                "kind": 5,
+                "location": {
+                    "uri": "./propertyName1.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class MyClass",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyClass->mainPropertyName": {
+            "fqn": "MyClass->mainPropertyName",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "mainPropertyName",
+                "kind": 7,
+                "location": {
+                    "uri": "./propertyName1.php"
+                },
+                "containerName": "MyClass"
+            },
+            "type__tostring": "string",
+            "type": {},
+            "declarationLine": "protected $mainPropertyName;",
+            "documentation": "The name of the main property, or NULL if there is none.",
+            "signatureInformation": null
+        }
+    }
+}

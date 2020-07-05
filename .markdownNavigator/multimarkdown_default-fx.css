@@ -1,0 +1,223 @@
+/*
+Copyright (c) Vladimir Schneider vladimir.schneider@gmail.com
+adapted and tweaked from https://github.com/sindresorhus/github-markdown-css
+
+Copyright (c) Sindre Sorhus sindresorhus@gmail.com (sindresorhus.com)
+
+The MIT License (MIT)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+/*
+ * default color scheme - light
+ * Colors and rendering only CSS to ease maintenance of multiple color schemes
+ */
+
+.markdown-body,
+.wiki-body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+}
+
+.boxed-group > h3, .boxed-group .heading {
+    background-color: #f5f5f5;
+    border: 1px solid #d8d8d8;
+}
+
+#readme .markdown-body {
+    background-color: transparent;
+    border: 1px solid #ddd;
+}
+
+#readme .wiki-body {
+    background-color: transparent;
+    border: none;
+}
+
+.focus-highlight {
+    background-color: rgba(255, 0, 255, 0.12) !important;
+}
+
+img.focus-highlight {
+    border: solid rgba(255, 0, 255, 0.50) 2px !important;
+}
+
+thead tr.focus-highlight, thead tr.focus-highlight th {
+    /*
+    border: solid rgba(160, 0, 160, 0.5) 2px !important;
+    */
+    background-color: rgba(160, 0, 160, 0.1) !important;
+}
+
+tbody tr.focus-highlight {
+    /*
+    border: solid rgba(255, 0, 255, 0.5) 2px !important;
+    */
+    background-color: rgba(255, 0, 255, 0.07) !important;
+}
+
+img.local-only {
+    border: 2px solid #b0a803;
+}
+
+img.absent {
+    border: 2px solid #B00020;
+    color: #B00020;
+    /*font-weight: bold;*/
+}
+
+a {
+    color: #0366d6;
+}
+
+a.mail-link {
+    color: #aa33bb;
+}
+
+a.absent {
+    color: #B00020;
+}
+
+a.local-only {
+    color: #be8000;
+}
+
+a.page-anchor {
+    color: #000;
+}
+
+a.page-anchor:hover {
+    color: #0366d6;
+}
+
+abbr {
+    text-decoration: none;
+    border-bottom: 1px dashed #0366d6;
+}
+
+hr {
+    background-color: #e7e7e7;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+    color: #000;
+}
+
+h1,
+h2 {
+    border-bottom: 1px solid #eee;
+}
+
+h6 {
+    color: #777;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    color: #777;
+}
+
+blockquote h1,
+blockquote h2,
+blockquote h3,
+blockquote h4,
+blockquote h5,
+blockquote h6 {
+    color: #777;
+}
+
+aside {
+    border-left: 4px solid #C80010;
+}
+
+th {
+    border: 1px solid #d4d4d4;
+}
+
+table tbody tr {
+    background-color: #ffffff;
+}
+
+table thead tr {
+    background-color: #e8e8e8;
+}
+
+table thead tr:nth-child(2n) {
+    background-color: #dcdcdc;
+}
+
+td {
+    border: 1px solid #dddddd;
+}
+
+table tbody tr:nth-child(2n) {
+    background-color: #f4f4f4;
+}
+
+var,
+code {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: #dbdbdb;
+    /*color: #B00020;*/
+}
+
+.highlight pre,
+pre {
+    background-color: #f7f7f7;
+    border: 1px solid #f8f8f8;
+}
+
+pre code {
+    color: #000;
+}
+
+kbd {
+    background-color: #fcfcfc;
+    border-color: #ccc;
+    box-shadow: inset 0 -1px 0 #bbb;
+    color: #555;
+}
+
+del {
+    /*text-decoration-color: #B00020;*/
+}
+
+.search-highlight {
+    color: #000;
+    padding:1px 0 1px 0;
+    background-color: #ffff00;
+}
+
+.selection-highlight {
+    color: #FFFFFF;
+    padding:1px 0 1px 0;
+    background-color: #5974AB;
+}
+

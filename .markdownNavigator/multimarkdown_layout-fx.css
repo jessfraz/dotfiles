@@ -1,0 +1,716 @@
+/*
+Copyright (c) Vladimir Schneider vladimir.schneider@gmail.com
+adapted and tweaked from https://github.com/sindresorhus/github-markdown-css
+
+Copyright (c) Sindre Sorhus sindresorhus@gmail.com (sindresorhus.com)
+
+The MIT License (MIT)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+/*
+ * Layout only CSS to ease maintenance of multiple color schemes
+ */
+
+@font-face {
+    font-family: 'task-items';
+    src: url('file:///Users/drew/.markdownNavigator/multimarkdown_taskitems.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'noto-serif';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSerif-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'noto-serif';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSerif-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'noto-serif';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSerif-BoldItalic.ttf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'noto-serif';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSerif-Italic.ttf');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'noto-sans';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSans-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'noto-sans';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSans-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'noto-sans';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSans-BoldItalic.ttf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'noto-sans';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoSans-Italic.ttf');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+@font-face {
+  font-family: 'noto-mono';
+  src: url('file:///Users/drew/.markdownNavigator/multimarkdown_NotoMono-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.container {
+    width: 980px;
+    margin: 0 auto;
+    padding-left: 10px;
+    float: left !important;
+}
+
+.wiki-container {
+    width: 830px;
+    margin: 0 auto;
+    padding-left: 20px;
+    float: left !important;
+}
+
+.wiki-body {
+    width: 700px;
+    margin-left: -20px;
+    padding-left: 20px;
+}
+
+.markdown-body,
+.wiki-body {
+    font-family: Helvetica, Arial, "Helvetica Neue", "Segoe UI", freesans, sans-serif;
+    overflow: hidden;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+var,
+code,
+kbd,
+pre {
+    font: 0.9em Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+#readme .markdown-body {
+    /*corner radii on a large body of text causes very slow scrolling and updates in WebView */
+    /*border-bottom-left-radius: 3px;*/
+    /*border-bottom-right-radius: 3px;*/
+    border-bottom-right-radius: 0;
+    padding: 45px 38px 45px 38px;
+    word-wrap: break-word;
+}
+
+.boxed-group > h3, .boxed-group .heading {
+    border-bottom: 0;
+    /*border-radius: 3px 3px 0 0;*/
+    border-radius: 0;
+    display: block;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0;
+    padding: 6px 10px 6px;
+}
+
+.boxed-group {
+    border-radius: 0;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    text-indent: 0;
+    -webkit-text-size-adjust: none;
+}
+
+a {
+    background-color: transparent;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+img {
+    border: 0;
+}
+
+hr {
+    border: 0 none;
+    box-sizing: content-box;
+    height: 2px;
+    margin: 16px 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+hr:before {
+    content: "";
+    display: table;
+}
+
+hr:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+pre {
+    overflow: auto;
+}
+
+var,
+code,
+kbd {
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1em;
+    padding: 0.1em;
+    padding-top: 0.2em;
+    vertical-align: middle;
+    border: 1px solid;
+    border-radius: 2px;
+}
+
+kbd {
+    padding: 0.3em 0.2em 0.12em;
+    border: 2px solid;
+}
+
+pre {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+var {
+    font-style: italic;
+}
+
+code:before,
+code:after {
+    content: "\00a0";
+    letter-spacing: -0.2em;
+}
+
+code.line-spliced:before {
+    content: "";
+    margin-left: -0.3em;
+}
+
+pre > code {
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+    word-break: normal;
+}
+
+.highlight {
+    margin-bottom: 16px;
+}
+
+.highlight pre,
+pre {
+    border-radius: 0;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+}
+
+.highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+}
+
+pre {
+    word-wrap: normal;
+}
+
+pre code {
+    background-color: transparent;
+    border-radius: 0;
+    border: 0;
+    display: inline;
+    line-height: inherit;
+    margin: 0;
+    max-width: initial;
+    overflow: initial;
+    padding: 0;
+    word-wrap: normal;
+}
+
+pre code:before,
+pre code:after {
+    content: normal;
+}
+
+input {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+html input[disabled] {
+    cursor: default;
+}
+
+input {
+    line-height: normal;
+}
+
+input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input {
+    font-size: 11px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.1;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+h5 {
+    font-size: 0.875em;
+}
+
+h6 {
+    font-size: 0.85em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    margin-top: 1em;
+    position: relative;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+    display: none;
+    font-weight: normal;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+    margin-left: -30px;
+    padding-left: 0;
+    text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+    display: inline-block;
+}
+
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    padding-bottom: 0.3em;
+}
+
+.wiki-container > h1 {
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: normal;
+}
+
+h1 .anchor {
+    line-height: 1;
+}
+
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    padding-bottom: 0.3em;
+}
+
+h2 .anchor {
+    line-height: 1;
+}
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+
+h3 .anchor {
+    line-height: 1.2;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h4 .anchor {
+    line-height: 1.2;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+h5 .anchor {
+    line-height: 1.1;
+}
+
+h6 {
+    font-size: 1em;
+}
+
+h6 .anchor {
+    line-height: 1.1;
+}
+
+blockquote,
+aside {
+    margin: 0;
+}
+
+dd {
+    margin-left: 0;
+}
+
+.octicon {
+    display: inline-block;
+    font: normal normal normal 28px/1 task-items;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.bookicon {
+    display: inline-block;
+    font: normal normal normal 20px/1 task-items;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.octicon-link:before {
+    content: 'C';
+}
+
+.octicon-book:before {
+    content: 'B';
+}
+
+.markdown-body > *:first-child {
+    margin-top: 0 !important;
+}
+
+.markdown-body > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+}
+
+.anchor {
+    display: block;
+    left: 0;
+    margin-left: -30px;
+    padding-left: 30px;
+    padding-right: 6px;
+    position: absolute;
+    top: 0;
+}
+
+.anchor:focus {
+    outline: none;
+}
+
+blockquote,
+aside,
+ul,
+ol,
+table,
+pre {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+/* loosely spaced list items that reflect the markdown source */
+p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+/* loosely spaced list items that duplicate quirky GFM implementation */
+p {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+ul,
+ol {
+    padding: 0;
+}
+
+ol ol,
+ul ol {
+    list-style-type: lower-roman;
+    text-indent: 0;
+}
+
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+    list-style-type: lower-alpha;
+    text-indent: 0;
+}
+
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-item-closed,
+.task-item-open {
+    display: inline-block;
+    font: normal normal normal 18px/1 task-items;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-left: -1.48em;
+    margin-right: 0.48em;
+}
+
+.task-item-closed:before {
+    content: 'X';
+}
+
+.task-item-open:before {
+    content: 'O';
+}
+
+ul,
+ol {
+    padding-left: 2em;
+    margin-top: 16px;
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.task-list-item + .task-list-item-checkbox {
+    margin-top: 3px;
+}
+
+.task-list-item input {
+    margin: 0 0.35em 0.25em -0.6em;
+    vertical-align: middle;
+}
+
+dl {
+    margin: 16px 0;
+    padding: 0;
+}
+
+dl dt {
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 16px;
+    padding: 0;
+}
+
+dl dd {
+    margin-top: 0;
+    padding: 0 16px;
+}
+
+blockquote,
+aside {
+
+    padding: 0 15px;
+}
+
+blockquote > :first-child,
+aside > :first-child {
+    margin-top: 0;
+}
+
+blockquote > :last-child,
+aside > :last-child {
+    margin-bottom: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 10px;
+    display: block;
+    line-height: inherit !important;
+    overflow: auto;
+    word-break: normal;
+}
+
+table th {
+    font-weight: bold;
+}
+
+table caption {
+    font-weight: bold;
+    padding: 5px 0 5px 10px;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 6px 10px 2px 10px !important;
+}
+
+img {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+img.emoji {
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: middle /*text-bottom*/;
+}
+

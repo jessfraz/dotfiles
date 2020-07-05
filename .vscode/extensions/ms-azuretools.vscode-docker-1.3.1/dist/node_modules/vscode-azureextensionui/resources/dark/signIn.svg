@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+    <style type="text/css">
+	.icon_x002D_canvas_x002D_transparent{opacity:0;fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_out{fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_bg{fill:#c5c5c5;}
+	.icon_x002D_vs_x002D_action_x002D_blue{fill:#75beff;}
+    </style>
+    <g id="canvas">
+        <path class="icon_x002D_canvas_x002D_transparent" d="M16,16H0V0h16V16z"/>
+    </g>
+    <g id="outline" style="display: none;">
+        <path class="icon_x002D_vs_x002D_out" d="M5,0v3h1.836L4.982,4.854L6.629,6.5H0v3h6.629l-1.646,1.646L6.836,13H5v3h11V0H5z M13,13
+		H7.371l5-5l-5-5H13V13z"/>
+    </g>
+    <g id="iconBg">
+        <path class="icon_x002D_vs_x002D_bg" d="M6,14v1h9V1H6v1h8v12H6z"/>
+    </g>
+    <g id="colorAction">
+        <path class="icon_x002D_vs_x002D_action_x002D_blue" d="M10.957,8l-3.854,3.854l-0.707-0.707L9.043,8.5H1v-1h8.043L6.396,4.854
+		l0.707-0.707L10.957,8z"/>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,150 @@
+{
+    "references": {
+        "MyNamespace2\\MyNamespace1\\B": [
+            "./multipleNamespaces.php"
+        ],
+        "MyNamespace2\\MyNamespace1": [
+            "./multipleNamespaces.php"
+        ],
+        "MyNamespace2": [
+            "./multipleNamespaces.php"
+        ],
+        "MyNamespace2\\A->b()": [
+            "./multipleNamespaces.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace1": {
+            "fqn": "MyNamespace1",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace1",
+                "kind": 3,
+                "location": {
+                    "uri": "./multipleNamespaces.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace1;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace1\\B": {
+            "fqn": "MyNamespace1\\B",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "B",
+                "kind": 5,
+                "location": {
+                    "uri": "./multipleNamespaces.php"
+                },
+                "containerName": "MyNamespace1"
+            },
+            "type": null,
+            "declarationLine": "class B {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace1\\B->b()": {
+            "fqn": "MyNamespace1\\B->b()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "b",
+                "kind": 6,
+                "location": {
+                    "uri": "./multipleNamespaces.php"
+                },
+                "containerName": "MyNamespace1\\B"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function b() {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        },
+        "MyNamespace2": {
+            "fqn": "MyNamespace2",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace2",
+                "kind": 3,
+                "location": {
+                    "uri": "./multipleNamespaces.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace2;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace2\\A": {
+            "fqn": "MyNamespace2\\A",
+            "extends": [
+                "MyNamespace2\\MyNamespace1\\B"
+            ],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./multipleNamespaces.php"
+                },
+                "containerName": "MyNamespace2"
+            },
+            "type": null,
+            "declarationLine": "class A extends MyNamespace1\\B {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace2\\A->a()": {
+            "fqn": "MyNamespace2\\A->a()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "a",
+                "kind": 6,
+                "location": {
+                    "uri": "./multipleNamespaces.php"
+                },
+                "containerName": "MyNamespace2\\A"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function a () {",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "()",
+                "documentation": null,
+                "parameters": []
+            }
+        }
+    }
+}

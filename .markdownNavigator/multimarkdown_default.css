@@ -1,0 +1,221 @@
+/*
+  ~ Copyright (c) 2015-2019 Vladimir Schneider vladimir.schneider@gmail.com
+  ~
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+
+*/
+
+/*
+   Default Color Theme for the MultiMarkdown plugin
+*/
+
+
+address {
+    color: #333366;
+}
+
+kbd,
+span.kbd{
+    background-color: #fcfcfc;
+    border: solid 1px #ccc;
+    box-shadow: inset 0 -1px 0 #bbb;
+    color: #555;
+}
+
+body.multimarkdown-preview,
+body.multimarkdown-wiki-preview {
+    color: #222222;
+}
+
+img.local-only {
+    border: 2px solid #b0a803;
+}
+
+img.absent {
+    border: 2px solid #B00020;
+    color: #B00020;
+}
+
+/**********************************
+ *  Anchor Related Formatting
+ **********************************/
+
+a {
+    color: #4183C4;
+}
+
+a.mail-link {
+    color:  #aa33bb;
+}
+
+a.absent {
+    color: #B00020;
+}
+
+a.local-only {
+    color: #be8000;
+}
+
+/**********************************
+ *  Header Related Formatting
+ **********************************/
+div.page-header {
+    background-color: #E0E0E0;
+}
+
+div.page-header a {
+    color: #000;
+}
+
+h2,
+h2 a {
+    color: #222222;
+}
+
+h1,
+h3,
+h4,
+h5,
+h1 a,
+h3 a,
+h4 a,
+h5 a {
+    color: #222222;
+}
+
+h6,
+h6 a {
+    color: #777777;
+}
+
+h1 {
+    border-bottom: 1px solid #bbbbbb;
+}
+
+h2 {
+    border-bottom: 1px solid #bbbbbb;
+}
+
+/**********************************
+ *  Block Quote Related Formatting
+ **********************************/
+
+blockquote {
+    border-left: 4px solid #cccccc;
+    color: #666666;
+}
+
+blockquote h1,
+blockquote h2,
+blockquote h3,
+blockquote h4,
+blockquote h5,
+blockquote h6,
+blockquote h1 a,
+blockquote h2 a,
+blockquote h3 a,
+blockquote h4 a,
+blockquote h5 a,
+blockquote h6 a {
+    color: #666666;
+}
+
+/**********************************
+* Code Block Related Formatting
+ **********************************/
+
+tt,
+span.tt {
+    border: 1px solid #eaeaea;
+    background-color: #f0f0f0;
+}
+
+pre code,
+pre span.code {
+    color: #222222;
+}
+
+pre {
+    background-color: #f0f0f0;
+    border: 1px solid #cccccc;
+}
+
+code,
+span.code {
+    color: #B00020;
+    background-color: #f0f0f0;
+}
+
+/**********************************
+ * Table Related formatting
+ **********************************/
+
+table tr th {
+    border: solid 1px #d4d4d4;
+}
+
+table tr.thead-first-child,
+table tr.thead-odd-child {
+    background-color: #e8e8e8;
+}
+
+table tr.thead-even-child {
+    background-color: #dcdcdc;
+}
+
+table tr td {
+    border: solid 1px #dddddd;
+}
+
+table tr.tbody-first-child,
+table tr.tbody-odd-child {
+    background-color: #ffffff;
+}
+
+table tr.tbody-even-child {
+    background-color: #f4f4f4;
+}
+
+body table {
+    border: solid 0px #dddddd;
+    background-color: #ffffff;
+}
+
+/************************************
+ * Horizontal Rule Related Formatting
+ ************************************/
+
+hr {
+}
+
+div.hr {
+    border-top: 1px solid #bbbbbb;
+}
+
+.search-highlight {
+    color: #000;
+    padding:1px 0 1px 0;
+    background-color: #ffff00;
+}
+
+.selection-highlight {
+    color: #FFFFFF;
+    padding:1px 0 1px 0;
+    background-color: #5974AB;
+}
+

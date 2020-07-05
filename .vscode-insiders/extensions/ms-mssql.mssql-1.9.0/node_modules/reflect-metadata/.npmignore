@@ -1,0 +1,12 @@
+.vscode
+node_modules
+out
+spec
+temp
+test
+typings
+bower.json
+gulpfile.js
+Reflect.ts
+spec.html
+tsconfig.json

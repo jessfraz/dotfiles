@@ -1,0 +1,41 @@
+{
+  "extends": ["config:base", ":maintainLockFilesMonthly"],
+  "prCreation": "not-pending",
+  "rangeStrategy": "pin",
+  "semanticCommits": true,
+  "npm": {
+    "packageRules": [
+      {
+        "packagePatterns": ["*"],
+        "semanticCommitType": "chore",
+        "minor": {
+          "groupName": "all non-major dependencies",
+          "groupSlug": "all-minor-patch"
+        }
+      }
+    ]
+  },
+  "separateMinorPatch": true,
+  "composer": {
+    "enabled": true,
+    "rollbackPrs": false
+  },
+  "packageRules": [
+    {
+      "packagePatterns": ["^@types/"],
+      "automerge": true
+    },
+    {
+      "packageNames": ["felixfbecker/language-server"],
+      "schedule": [],
+      "updateTypes": ["minor"],
+      "semanticCommitType": "feat"
+    },
+    {
+      "packageNames": ["felixfbecker/language-server"],
+      "schedule": [],
+      "updateTypes": ["patch"],
+      "semanticCommitType": "fix"
+    }
+  ]
+}

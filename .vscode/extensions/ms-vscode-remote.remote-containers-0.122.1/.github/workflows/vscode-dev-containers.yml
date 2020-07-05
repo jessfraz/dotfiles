@@ -1,0 +1,72 @@
+name: Dev Container Regression
+
+on:
+  repository_dispatch:
+  schedule:
+    - cron: '0 0 * * 2,4'
+
+jobs:
+  
+  regression-test-templates:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+       
+    - name: Install dependencies
+      shell: bash
+      run: |
+        set -e
+        yarn install
+
+    - name: Test templates
+      shell: bash
+      run: |
+        set -e
+        TS_NODE_PROJECT=test/dev-containers/tsconfig.json npx mocha -r ts-node/register --exit "./test/dev-containers/src/devContainerTemplates.test.ts"
+
+  regression-test-definitions:
+
+    strategy:
+      matrix:
+        page: [1, 2, 3, 4, 4, 6, 7, 8, 9, 10]
+        page-total: [10]
+      fail-fast: false
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+       
+    - name: Install dependencies
+      shell: bash
+      run: |
+        set -e
+        yarn install
+        
+    - name: Test definitions
+      shell: bash
+      run: |
+        set -e
+        export TEST_PAGE=${{matrix.page}}
+        export TEST_PAGE_TOTAL=${{matrix.page-total}}
+        TS_NODE_PROJECT=test/dev-containers/tsconfig.json npx mocha -r ts-node/register --exit "./test/dev-containers/src/devContainerDefinitions.test.ts"
+
+  regression-test-try-repos:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+       
+    - name: Install dependencies
+      shell: bash
+      run: |
+        set -e
+        yarn install
+
+    - name: Test try repositories
+      shell: bash
+      run: |
+        set -e
+        TS_NODE_PROJECT=test/dev-containers/tsconfig.json npx mocha -r ts-node/register --exit "./test/dev-containers/src/tryRepositories.test.ts"

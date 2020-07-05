@@ -1,0 +1,66 @@
+{
+    "references": {
+        "ParamType": [
+            "./_cases/parameterTypeResolution1.php"
+        ],
+        "static": [
+            "./_cases/parameterTypeResolution1.php"
+        ],
+        "ParamType->getAccount()": [
+            "./_cases/parameterTypeResolution1.php"
+        ]
+    },
+    "definitions": {
+        "ParamType": {
+            "extends": [],
+            "isGlobal": true,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "ParamType",
+                "kind": 5,
+                "location": {
+                    "uri": "./_cases/parameterTypeResolution1.php"
+                },
+                "containerName": ""
+            },
+            "type__class": "LanguageServer\\Tests\\ValidationTest",
+            "type": null,
+            "documentation": null
+        },
+        "ParamType->setAccount()": {
+            "extends": [],
+            "isGlobal": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "setAccount",
+                "kind": 6,
+                "location": {
+                    "uri": "./_cases/parameterTypeResolution1.php"
+                },
+                "containerName": "ParamType"
+            },
+            "type__class": "phpDocumentor\\Reflection\\Types\\Mixed",
+            "type": {},
+            "documentation": null
+        },
+        "ParamType->getAccount()": {
+            "extends": [],
+            "isGlobal": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "getAccount",
+                "kind": 6,
+                "location": {
+                    "uri": "./_cases/parameterTypeResolution1.php"
+                },
+                "containerName": "ParamType"
+            },
+            "type__class": "phpDocumentor\\Reflection\\Types\\Mixed",
+            "type": {},
+            "documentation": null
+        }
+    }
+}

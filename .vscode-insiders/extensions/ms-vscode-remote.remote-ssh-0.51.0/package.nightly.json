@@ -1,0 +1,8 @@
+{
+	"name": "remote-ssh-nightly",
+	"displayName": "Remote - SSH (Nightly)",
+	"icon": "resources/remote-ssh-nightly.png",
+	"extensionPack": [
+		"ms-vscode-remote.remote-ssh-edit-nightly"
+	]
+}

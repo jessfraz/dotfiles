@@ -1,0 +1,120 @@
+/*
+
+github.com style (c) Vasily Polovnyov vast@whiteants.net
+modified for idea darcula (c) Vladimir Schneider vladimir.schneider@gmail.com
+
+*/
+
+.hljs {
+  color: #bababa;
+  background: transparent;
+}
+
+.hljs-comment,
+.diff .hljs-header {
+  color: #7f7f7f;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.css .rule .hljs-keyword,
+.hljs-winutils,
+.nginx .hljs-title,
+.hljs-subst,
+.hljs-request,
+.hljs-status {
+  color: #cb7832;
+  /*font-weight: bold;*/
+}
+
+.hljs-number,
+.hljs-hexcolor,
+.ruby .hljs-constant {
+  color: #6896ba;
+}
+
+.hljs-string,
+.hljs-tag .hljs-value,
+.hljs-doctag,
+.tex .hljs-formula {
+  color: #e0c46c;
+}
+
+.hljs-title,
+.hljs-id,
+.scss .hljs-preprocessor {
+  color: #9876AA;
+  /*font-weight: bold;*/
+}
+
+.hljs-list .hljs-keyword,
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-class .hljs-title,
+.hljs-type,
+.vhdl .hljs-literal,
+.tex .hljs-command {
+  color: #9876AA;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-tag .hljs-title,
+.hljs-rule .hljs-property,
+.django .hljs-tag .hljs-keyword {
+  color: #cb7832;
+  font-weight: normal;
+}
+
+.hljs-attribute,
+.hljs-variable,
+.lisp .hljs-body,
+.hljs-name {
+  color: #cb7832;
+}
+
+.hljs-regexp {
+  color: #6896ba;
+}
+
+.hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.lisp .hljs-keyword,
+.clojure .hljs-keyword,
+.scheme .hljs-keyword,
+.tex .hljs-special,
+.hljs-prompt {
+  color: #cb7832;
+}
+
+.hljs-built_in {
+  color: #e0c46c;
+}
+
+.hljs-preprocessor,
+.hljs-pragma,
+.hljs-pi,
+.hljs-doctype,
+.hljs-shebang,
+.hljs-cdata {
+  color: #bababa;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #7f7f7f;
+}
+
+.hljs-addition {
+  background: #8660b3;
+}
+
+.diff .hljs-change {
+  background: #6086b3;
+}
+
+.hljs-chunk {
+  color: #888888;
+}

@@ -1,0 +1,50 @@
+{
+  "_from": "@angular/platform-browser@~2.1.2",
+  "_id": "@angular/platform-browser@2.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-HwfDpWaKwjgacyT5ABUh3u3hWbw=",
+  "_location": "/@angular/platform-browser",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@angular/platform-browser@~2.1.2",
+    "name": "@angular/platform-browser",
+    "escapedName": "@angular%2fplatform-browser",
+    "scope": "@angular",
+    "rawSpec": "~2.1.2",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-2.1.2.tgz",
+  "_shasum": "1f07c3a5668ac2381a7324f9001521deede159bc",
+  "_spec": "@angular/platform-browser@~2.1.2",
+  "_where": "/Users/runner/runners/2.165.0/work/1/s",
+  "author": {
+    "name": "angular"
+  },
+  "bugs": {
+    "url": "https://github.com/angular/angular/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Angular - library for using Angular in a web browser",
+  "homepage": "https://github.com/angular/angular#readme",
+  "license": "MIT",
+  "main": "bundles/platform-browser.umd.js",
+  "module": "index.js",
+  "name": "@angular/platform-browser",
+  "peerDependencies": {
+    "@angular/core": "2.1.2",
+    "@angular/common": "2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.git"
+  },
+  "typings": "index.d.ts",
+  "version": "2.1.2"
+}

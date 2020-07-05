@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.oomph.setup.ui.LicensePrePrompter">
+		<item key="dialogWidth" value="700"/>
+		<item key="dialogHeight" value="700"/>
+	</section>
+</section>

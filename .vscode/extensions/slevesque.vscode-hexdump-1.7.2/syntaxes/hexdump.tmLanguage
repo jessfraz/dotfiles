@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>hexdump</string>
+	</array>
+	<key>name</key>
+	<string>Hex</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>Hex Inspector</string>
+			<key>name</key>
+			<string>markup.heading.2.html</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(Big|Little|Endian)</string>
+			<key>name</key>
+			<string>markup.italic</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(Address|Selection)</string>
+			<key>name</key>
+			<string>entity.name.function</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(Int8|Uint8|Int16|Uint16|Int32|Uint32|Int64|Uint64|Float32|Float64|String)</string>
+			<key>name</key>
+			<string>entity.name.type</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^(\s\sOffset:\s)?.*\t$</string>
+			<key>name</key>
+			<string>keyword.header.hex</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^([a-fA-F\d]{8}:)</string>
+			<key>name</key>
+			<string>keyword.address.hex</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>  [^\s]*$</string>
+			<key>name</key>
+			<string>comment.ascii.hex</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\(Reached the maximum size to display\. You can change \"hexdump.sizeDisplay\" in your settings\.\)</string>
+			<key>name</key>
+			<string>invalid.illegal</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\(hexdump cancelled\.\)</string>
+			<key>name</key>
+			<string>invalid.illegal</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.hexdump</string>
+	<key>uuid</key>
+	<string>B8374ECF-69FA-40C0-8CEA-385C4AA08663</string>
+</dict>
+</plist>

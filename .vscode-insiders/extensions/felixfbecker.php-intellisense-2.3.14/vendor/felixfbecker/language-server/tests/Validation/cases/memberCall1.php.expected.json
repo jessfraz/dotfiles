@@ -1,0 +1,85 @@
+{
+    "references": {
+        "MyNamespace\\AccountInterface": [
+            "./memberCall1.php"
+        ],
+        "MyNamespace\\A": [
+            "./memberCall1.php"
+        ],
+        "MyNamespace\\AccountInterface->getAccount()": [
+            "./memberCall1.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace": {
+            "fqn": "MyNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./memberCall1.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\ParseErrorsTest": {
+            "fqn": "MyNamespace\\ParseErrorsTest",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "ParseErrorsTest",
+                "kind": 5,
+                "location": {
+                    "uri": "./memberCall1.php"
+                },
+                "containerName": "MyNamespace"
+            },
+            "type": null,
+            "declarationLine": "class ParseErrorsTest",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "MyNamespace\\ParseErrorsTest->setAccount()": {
+            "fqn": "MyNamespace\\ParseErrorsTest->setAccount()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "setAccount",
+                "kind": 6,
+                "location": {
+                    "uri": "./memberCall1.php"
+                },
+                "containerName": "MyNamespace\\ParseErrorsTest"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "public function setAccount(AccountInterface $account)",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "(\\MyNamespace\\AccountInterface $account)",
+                "documentation": null,
+                "parameters": [
+                    {
+                        "label": "\\MyNamespace\\AccountInterface $account",
+                        "documentation": null
+                    }
+                ]
+            }
+        }
+    }
+}

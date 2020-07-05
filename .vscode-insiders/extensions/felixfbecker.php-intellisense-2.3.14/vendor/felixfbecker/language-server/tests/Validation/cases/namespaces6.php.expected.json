@@ -1,0 +1,25 @@
+{
+    "references": [],
+    "definitions": {
+        "A\\B": {
+            "fqn": "A\\B",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "A\\B",
+                "kind": 3,
+                "location": {
+                    "uri": "./namespaces6.php"
+                },
+                "containerName": "A"
+            },
+            "type": null,
+            "declarationLine": "namespace A \\ B;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

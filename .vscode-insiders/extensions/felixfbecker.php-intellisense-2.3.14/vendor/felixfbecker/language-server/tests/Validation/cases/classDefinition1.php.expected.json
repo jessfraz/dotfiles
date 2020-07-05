@@ -1,0 +1,73 @@
+{
+    "references": {
+        "TestNamespace\\A": [
+            "./classDefinition1.php"
+        ],
+        "TestNamespace\\A->a": [
+            "./classDefinition1.php"
+        ]
+    },
+    "definitions": {
+        "TestNamespace": {
+            "fqn": "TestNamespace",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "TestNamespace",
+                "kind": 3,
+                "location": {
+                    "uri": "./classDefinition1.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace TestNamespace;",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestNamespace\\A": {
+            "fqn": "TestNamespace\\A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./classDefinition1.php"
+                },
+                "containerName": "TestNamespace"
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "TestNamespace\\A->a": {
+            "fqn": "TestNamespace\\A->a",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "a",
+                "kind": 7,
+                "location": {
+                    "uri": "./classDefinition1.php"
+                },
+                "containerName": "TestNamespace\\A"
+            },
+            "type__tostring": "int",
+            "type": {},
+            "declarationLine": "public $a;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "references": {
+        "a\\b": [
+            "./_cases/namespaces3.php"
+        ],
+        "b": [
+            "./_cases/namespaces3.php"
+        ],
+        "c": [
+            "./_cases/namespaces3.php"
+        ]
+    },
+    "definitions": []
+}

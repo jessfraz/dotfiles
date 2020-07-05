@@ -1,0 +1,15 @@
+{
+	"messages": [
+		"More info",
+		"Copy again",
+		"Copy link",
+		"Start Sharing"
+	],
+	"keys": [
+		"CreateLink.MoreInfo",
+		"CreateLink.CopyAgain",
+		"CreateLink.CopyLink",
+		"CreateLink.Share"
+	],
+	"filePath": "src\\_new_\\util\\WorkspacePromptsUtil"
+}

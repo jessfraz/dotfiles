@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="extension.i18ntest.JSON" source-language="en" target-language="ru-RU">
+    <body>
+      <trans-unit id="extension.runQuery">
+        <source xml:lang="en">Execute Query</source>
+        <target state="translated">Выполнить запрос</target>
+      </trans-unit>
+      <trans-unit id="extension.runCurrentStatement">
+        <source xml:lang="en">Execute Current Statement</source>
+        <target state="translated">Выполнить текущую инструкцию</target>
+      </trans-unit>
+      <trans-unit id="extension.cancelQuery">
+        <source xml:lang="en">Cancel Query</source>
+        <target state="translated">Отменить запрос</target>
+      </trans-unit>
+      <trans-unit id="extension.connect">
+        <source xml:lang="en">Connect</source>
+        <target state="translated">Подключить</target>
+      </trans-unit>
+      <trans-unit id="extension.disconnect">
+        <source xml:lang="en">Disconnect</source>
+        <target state="translated">Отключить</target>
+      </trans-unit>
+      <trans-unit id="extension.manageProfiles">
+        <source xml:lang="en">Manage Connection Profiles</source>
+        <target state="translated">Управление профилями подключения</target>
+      </trans-unit>
+      <trans-unit id="extension.chooseDatabase">
+        <source xml:lang="en">Use Database</source>
+        <target state="translated">Использовать базу данных</target>
+      </trans-unit>
+      <trans-unit id="extension.chooseLanguageFlavor">
+        <source xml:lang="en">Choose SQL handler for this file</source>
+        <target state="translated">Выберите обработчик SQL для этого файла</target>
+      </trans-unit>
+      <trans-unit id="extension.showGettingStarted">
+        <source xml:lang="en">Getting Started Guide</source>
+        <target state="translated">Руководство по началу работы</target>
+      </trans-unit>
+      <trans-unit id="extension.newQuery">
+        <source xml:lang="en">New Query</source>
+        <target state="translated">Создать запрос</target>
+      </trans-unit>
+      <trans-unit id="extension.rebuildIntelliSenseCache">
+        <source xml:lang="en">Refresh IntelliSense Cache</source>
+        <target state="translated">Обновить кэш IntelliSense</target>
+      </trans-unit>
+      <trans-unit id="mssql.logDebugInfo">
+        <source xml:lang="en">[Optional] Log debug output to the VS Code console (Help -&gt; Toggle Developer Tools)</source>
+        <target state="translated">[Необязательно] Выводить выходные данные отладки в консоль VS Code (Справка -&gt; Переключить средства разработчика)</target>
+      </trans-unit>
+      <trans-unit id="mssql.maxRecentConnections">
+        <source xml:lang="en">The maximum number of recently used connections to store in the connection list.</source>
+        <target state="translated">Максимальное количество недавно использованных подключений для хранения в списке подключений.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connections">
+        <source xml:lang="en">Connection profiles defined in 'User Settings' are shown under 'MS SQL: Connect' command in the command palette.</source>
+        <target state="translated">Профили подключения, заданные в разделе «Параметры пользователей», отображаются в команде «MS SQL: Connect» палитры команд.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.server">
+        <source xml:lang="en"><![CDATA[[Required] Specify the server name to connect to. Use 'hostname\\instance' or '<server>.database.windows.net' for Azure SQL Database.]]></source>
+        <target state="translated">[Обязательно] Укажите имя сервера, к которому необходимо подключиться. Используйте формат «имя_узла\\экземпляр» или «&lt;сервер&gt;.database.windows.net» для Базы данных Azure SQL Database.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.database">
+        <source xml:lang="en">[Optional] Specify the database name to connect to. If database is not specified, the default user database setting is used, typically 'master'.</source>
+        <target state="translated">[Необязательно] Укажите имя базы данных, к которой необходимо подключиться. Если база данных не указана, будет использована база данных пользователя по умолчанию, обычно «master».</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.user">
+        <source xml:lang="en">[Optional] Specify the user name for SQL Server authentication. If user name is not specified, when you connect, you will be asked again.</source>
+        <target state="translated">[Необязательно] Укажите имя пользователя для проверки подлинности на сервере SQL Server. Если имя пользователя не указано, при подключении будет снова выведен запрос.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.password">
+        <source xml:lang="en">[Optional] Specify the password for SQL Server authentication. If password is not specified or already saved, when you connect, you will be asked again.</source>
+        <target state="translated">[Необязательно] Укажите пароль для проверки подлинности на сервере SQL Server. Если пароль не указан или уже сохранен, при подключении будет снова выведен запрос.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.authenticationType">
+        <source xml:lang="en">[Optional] Specify the SQL Server authentication type.</source>
+        <target state="translated">[Необязательно] Укажите тип проверки подлинности для сервера SQL Server.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.port">
+        <source xml:lang="en">[Optional] Specify the port number to connect to.</source>
+        <target state="translated">[Необязательно] Укажите номер порта для подключения.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.encrypt">
+        <source xml:lang="en">[Optional] When set to 'true', SQL Server uses SSL encryption for data sent between the client and the server if the server has a certificate installed. Set 'true' for Azure SQL Database connection.</source>
+        <target state="translated">[Необязательно] Когда установлено значение «TRUE», сервер SQL Server использует шифрование SSL для данных, передаваемых между клиентом и сервером, если сервер имеет установленный сертификат. Установите значение «TRUE», для соединения с базой данных SQL Azure.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.trustServerCertificate">
+        <source xml:lang="en">[Optional] When set to 'true', the SQL Server SSL certificate is automatically trusted when the communication layer is encrypted using SSL. Set 'false' for Azure SQL Database connection.</source>
+        <target state="translated">[Необязательно] Если этот параметр имеет значение «TRUE», SSL-сертификат сервера SQL Server будет автоматически считаться доверенным, если слой связи зашифрован с использованием SSL. Установите значение «false», чтобы использовать подключение к Базе данных SQL Azure.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.persistSecurityInfo">
+        <source xml:lang="en">[Optional] When set to false, security-sensitive information, such as the password, is not returned as part of the connection if the connection is open or has ever been in an open state.</source>
+        <target state="translated">[Необязательно] Когда установлено значение «FALSE», то секретные данные (например, пароль) не возвращаются в составе подключения, если подключение открыто или когда-либо находилось в открытом состоянии.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectTimeout">
+        <source xml:lang="en">[Optional] Specify the length of time in seconds to wait for a connection to the server before it times out. The default timeout value for Azure SQL Database is 30.</source>
+        <target state="translated">[Необязательно] Укажите продолжительность времени в секундах, в течение которого будет выполняться попытка подключения к серверу до завершения времени ожидания. Значение времени ожидания по умолчанию для Базы данных Azure SQL — 30 с.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectRetryCount">
+        <source xml:lang="en">[Optional] Specify the number of attempts to restore connection.</source>
+        <target state="translated">[Необязательно] Укажите количество попыток восстановления соединения.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectRetryInterval">
+        <source xml:lang="en">[Optional] Specify the delay between attempts to restore connection.</source>
+        <target state="translated">[Необязательно] Укажите задержку между попытками восстановления подключения.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.workstationId">
+        <source xml:lang="en">[Optional] Specify the name of the workstation connecting to SQL Server.</source>
+        <target state="translated">[Необязательно] Укажите имя рабочей станции, подключающейся к серверу SQL Server.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.applicationName">
+        <source xml:lang="en">[Optional] Specify the name of the application used for SQL Server to log (default: 'vscode-mssql').</source>
+        <target state="translated">[Необязательно] Укажите имя приложения, используемого для ведения журнала сервера SQL Server (значение по умолчанию: «vscode-mssql»).</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.applicationIntent">
+        <source xml:lang="en">[Optional] Declares the application workload type when connecting to SQL Server such as ReadWrite or ReadOnly. Refer to SQL Server AlwaysOn for more detail.</source>
+        <target state="translated">[Необязательно] Объявляет тип рабочей нагрузки приложения при подключении к серверу SQL Server, например ReadWrite или ReadOnly. Дополнительные сведения см. в SQL Server AlwaysOn.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.currentLanguage">
+        <source xml:lang="en">[Optional] Indicates the SQL Server language settings.</source>
+        <target state="translated">[Необязательно] Указывает параметры языка сервера SQL Server.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.pooling">
+        <source xml:lang="en">[Optional] When set to 'true', the connection object is drawn from the appropriate pool, or if necessary, is created and added to the appropriate pool.</source>
+        <target state="translated">[Необязательно] Когда установлено значение «TRUE», объект подключения извлекается из соответствующего пула или, при необходимости, создается и добавляется в соответствующий пул.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.maxPoolSize">
+        <source xml:lang="en">[Optional] Specify the maximum number of connections allowed in the pool.</source>
+        <target state="translated">[Необязательно] Укажите максимальное количество подключений в пуле.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.minPoolSize">
+        <source xml:lang="en">[Optional] Specify the minimum number of connections allowed in the pool.</source>
+        <target state="translated">[Необязательно] Укажите минимальное количество подключений, разрешенных в пуле.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.loadBalanceTimeout">
+        <source xml:lang="en">[Optional] Specify the minimum amount of time in seconds for this connection to live in the pool before being removed/deleted.</source>
+        <target state="translated">[Необязательно] Укажите минимальное количество времени в секундах, в течении которого это подключение будет находиться в пуле, прежде чем оно будет удалено.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.replication">
+        <source xml:lang="en">[Optional] Used by SQL Server in replication.</source>
+        <target state="translated">[Необязательно] Используется сервером SQL Server при репликации.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.attachDbFilename">
+        <source xml:lang="en">[Optional] Specify the name of the primary file, including the full path name, of an attachable database.</source>
+        <target state="translated">[Необязательно] Укажите полный путь к первичному файлу присоединяемой базы данных.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.failoverPartner">
+        <source xml:lang="en">[Optional] Specify the name or network address of the instance of SQL Server that acts as a failover partner.</source>
+        <target state="translated">[Необязательно] Укажите имя или сетевой адрес экземпляра SQL Server, который выполняет функцию партнера по обеспечению отработки отказа.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.multiSubnetFailover">
+        <source xml:lang="en">[Optional] When set to 'true', the detection and connection to the active server is faster if AlwaysOn Availability Group is configured on different subnets.</source>
+        <target state="translated">[Необязательно] Когда установлено значение «TRUE», обнаружение активного сервера и подключение к нему происходит быстрее, если группа доступности AlwaysOn настроена в других подсетях.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.multipleActiveResultSets">
+        <source xml:lang="en">[Optional] When set to 'true', multiple result sets can be returned and read from on connection.</source>
+        <target state="translated">[Необязательно] Когда установлено значение «TRUE», из подключения может быть возвращено и прочитано несколько результирующих наборов.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.packetSize">
+        <source xml:lang="en">[Optional] Specify the size in bytes of the network packets to communicate with SQL Server.</source>
+        <target state="translated">[Необязательно] Укажите размер в байтах сетевых пакетов, с помощью которых осуществляется связь с сервером SQL Server.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.typeSystemVersion">
+        <source xml:lang="en">[Optional] Indicates which server type the provider will expose through the DataReader.</source>
+        <target state="translated">[Необязательно] Указывает, к какому типу сервера поставщик предоставит доступ через DataReader.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.connectionString">
+        <source xml:lang="en">[Optional] The ADO.NET connection string to use for the connection. Overrides any other options given in this connection.</source>
+        <target state="translated">[Необязательно] Строка подключения ADO.NET, используемая для подключения. Переопределяет любые другие параметры, заданные в этом подключении.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.profileName">
+        <source xml:lang="en">[Optional] Specify a custom name for this connection profile to easily browse and search in the command palette of Visual Studio Code.</source>
+        <target state="translated">[Необязательно] Укажите пользовательское имя для этого профиля подключения для простой навигации и поиска в палитре команд Visual Studio Code.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.savePassword">
+        <source xml:lang="en">[Optional] When set to 'true', the password for SQL Server authentication is saved in the secure store of your operating system such as KeyChain in MacOS or Secure Store in Windows.</source>
+        <target state="translated">[Необязательно] Когда установлено значение «TRUE», пароль для проверки подлинности на сервере SQL Server сохраняется в безопасном хранилище операционной системы, например KeyChain в macOS или Secure Store в Windows.</target>
+      </trans-unit>
+      <trans-unit id="mssql.connection.emptyPasswordInput">
+        <source xml:lang="en">[Optional] Indicates whether this profile has an empty password explicitly set</source>
+        <target state="translated">[Необязательно] Указывает, задан ли явным образом пустой пароль для этого профиля</target>
+      </trans-unit>
+      <trans-unit id="mssql.shortcuts">
+        <source xml:lang="en">Shortcuts related to the results window</source>
+        <target state="translated">Сочетания клавиш, связанные с окном результатов</target>
+      </trans-unit>
+      <trans-unit id="mssql.messagesDefaultOpen">
+        <source xml:lang="en">True for the messages pane to be open by default; false for closed</source>
+        <target state="translated">Если указать значение TRUE, панель сообщения по умолчанию будет открыта, если указать значение FALSE — закрыта.</target>
+      </trans-unit>
+      <trans-unit id="mssql.resultsFontFamily">
+        <source xml:lang="en">Set the font family for the results grid; set to blank to use the editor font</source>
+        <target state="translated">Задайте семейство шрифтов для сетки результатов; задайте значение «blank» (пустой), чтобы использовать размер шрифта редактора</target>
+      </trans-unit>
+      <trans-unit id="mssql.resultsFontSize">
+        <source xml:lang="en">Set the font size for the results grid; set to blank to use the editor size</source>
+        <target state="translated">Задайте размер шрифта для сетки результатов; задайте значение «blank» (пустой), чтобы использовать размер шрифта редактора</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.includeHeaders">
+        <source xml:lang="en">[Optional] When true, column headers are included when saving results as CSV</source>
+        <target state="translated">[Необязательно] Если указано значение TRUE, заголовки столбцов включаются при сохранении результатов в формате CSV</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.delimiter">
+        <source xml:lang="en">[Optional] Delimiter for separating data items when saving results as CSV</source>
+        <target state="translated">[Необязательно] Разделитель для разграничения элементов данных при сохранении результатов в формате CSV</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.lineSeparator">
+        <source xml:lang="en">[Optional] Character(s) used for separating rows when saving results as CSV</source>
+        <target state="translated">[Необязательно] Символы, используемые для разделения строк при сохранении результатов в формате CSV</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.textIdentifier">
+        <source xml:lang="en">[Optional] Character used for enclosing text fields when saving results as CSV</source>
+        <target state="translated">[Необязательно] Символы, используемые для обрамления текстовых полей при сохранении результатов в формате CSV</target>
+      </trans-unit>
+      <trans-unit id="mssql.saveAsCsv.encoding">
+        <source xml:lang="en">[Optional] File encoding used when saving results as CSV</source>
+        <target state="translated">[Необязательно] Кодировка файла, используемая при сохранении результатов в формате CSV</target>
+      </trans-unit>
+      <trans-unit id="mssql.copyIncludeHeaders">
+        <source xml:lang="en">[Optional] Configuration options for copying results from the Results View</source>
+        <target state="translated">[Необязательно] Параметры конфигурации для копирования результатов из представления результатов</target>
+      </trans-unit>
+      <trans-unit id="mssql.copyRemoveNewLine">
+        <source xml:lang="en">[Optional] Configuration options for copying multi-line results from the Results View</source>
+        <target state="translated">[Необязательно] Параметры конфигурации для копирования многострочных результатов из представления результатов</target>
+      </trans-unit>
+      <trans-unit id="mssql.showBatchTime">
+        <source xml:lang="en">[Optional] Should execution time be shown for individual batches</source>
+        <target state="translated">[Необязательно] Должно ли отображаться время выполнения для отдельных пакетов</target>
+      </trans-unit>
+      <trans-unit id="mssql.splitPaneSelection">
+        <source xml:lang="en">[Optional] Configuration options for which column new result panes should open in</source>
+        <target state="translated">[Необязательно] Параметры конфигурации, определяющие, для какого столбца должны открываться новые области результатов</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.alignColumnDefinitionsInColumns">
+        <source xml:lang="en">Should column definitions be aligned?</source>
+        <target state="translated">Должны ли столбцы подсказок быть выровнены?</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.datatypeCasing">
+        <source xml:lang="en">Should data types be formatted as UPPERCASE, lowercase, or none (not formatted)</source>
+        <target state="translated">Должен ли формат типов данных быть «ВЕРХНИЙ РЕГИСТР», «нижний регистр» или «нет» (формат отсутствует)</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.keywordCasing">
+        <source xml:lang="en">Should keywords be formatted as UPPERCASE, lowercase, or none (not formatted)</source>
+        <target state="translated">Должен ли формат ключевых слов быть «ВЕРХНИЙ РЕГИСТР», «нижний регистр» или «нет» (формат отсутствует)</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.placeCommasBeforeNextStatement">
+        <source xml:lang="en">should commas be placed at the beginning of each statement in a list e.g. ', mycolumn2' instead of at the end e.g. 'mycolumn1,'</source>
+        <target state="translated">Следует ли поместить запятые в начале каждой инструкции списка — «, mycolumn2», а не в конце — «mycolumn1»</target>
+      </trans-unit>
+      <trans-unit id="mssql.format.placeSelectStatementReferencesOnNewLine">
+        <source xml:lang="en">Should references to objects in a select statements be split into separate lines? E.g. for 'SELECT C1, C2 FROM T1' both C1 and C2 will be on separate lines</source>
+        <target state="translated">Должны ли ссылки на объекты в инструкции SELECT быть разделены на отдельные строки? Например, для «SELECT C1, C2 FROM T1» C1 и C2 будут расположены в отдельных строках.</target>
+      </trans-unit>
+      <trans-unit id="mssql.applyLocalization">
+        <source xml:lang="en">[Optional] Configuration options for localizing into VSCode's configured locale (must restart VSCode for settings to take effect)</source>
+        <target state="translated">[Необязательно] Параметры конфигурации для перехода на языковой стандарт, указанных в параметрах VSCode. (Чтобы эти параметры вступили в силу, необходимо перезапустить VSCode.)</target>
+      </trans-unit>
+      <trans-unit id="mssql.query.displayBitAsNumber">
+        <source xml:lang="en">Should BIT columns be displayed as numbers (1 or 0)? If false, BIT columns will be displayed as 'true' or 'false'</source>
+        <target state="translated">Должны ли столбцы BIT отображаться как числа (1 или 0)? Если задать значение FALSE, столбцы будут отображаться как значения «TRUE» или «FALSE»</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableIntelliSense">
+        <source xml:lang="en">Should IntelliSense be enabled</source>
+        <target state="translated">Должен ли быть включен IntelliSense</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableErrorChecking">
+        <source xml:lang="en">Should IntelliSense error checking be enabled</source>
+        <target state="translated">Должна ли быть включена проверка ошибок IntelliSense</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableSuggestions">
+        <source xml:lang="en">Should IntelliSense suggestions be enabled</source>
+        <target state="translated">Должны ли быть включены подсказки IntelliSense</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.enableQuickInfo">
+        <source xml:lang="en">Should IntelliSense quick info be enabled</source>
+        <target state="translated">Должны ли быть включены краткие сведения IntelliSense</target>
+      </trans-unit>
+      <trans-unit id="mssql.intelliSense.lowerCaseSuggestions">
+        <source xml:lang="en">Should IntelliSense suggestions be lowercase</source>
+        <target state="translated">Должны ли подсказки IntelliSense быть в нижнем регистре?</target>
+      </trans-unit>
+      <trans-unit id="mssql.persistQueryResultTabs">
+        <source xml:lang="en">Should query result selections and scroll positions be saved when switching tabs (may impact performance)</source>
+        <target state="translated">Должны ли сохраняться выбранные элементы результатов запросов и позиции прокрутки при переключении между вкладками (может повлиять на производительность)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

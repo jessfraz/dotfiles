@@ -1,0 +1,77 @@
+{
+	"name": "vscode-remote-extensionpack",
+	"displayName": "Remote Development",
+	"description": "An extension pack that lets you open any folder in a container, on a remote machine, or in WSL and take advantage of VS Code's full feature set.",
+	"version": "0.20.0",
+	"publisher": "ms-vscode-remote",
+	"icon": "resources/remote-extensionpack.png",
+	"preview": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/vscode-remote-release.git"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"engines": {
+		"vscode": "^1.34.20"
+	},
+	"extensionKind": [
+		"ui"
+	],
+	"extensionPack": [
+		"ms-vscode-remote.remote-wsl",
+		"ms-vscode-remote.remote-containers",
+		"ms-vscode-remote.remote-ssh"
+	],
+	"categories": [
+		"Other",
+		"Extension Packs"
+	],
+	"keywords": [
+		"remote",
+		"containers",
+		"docker",
+		"wsl",
+		"ssh",
+		"remote development",
+		"dev container",
+		"development container"
+	],
+	"scripts": {
+		"vscode:prepublish": "webpack --env.production",
+		"compile": "webpack --env.development",
+		"watch": "webpack --watch --env.development",
+		"precommit": "node build/gulpfile.hygiene.js",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"dependencies": {
+		"markdown-it": "^8.4.0"
+	},
+	"devDependencies": {
+		"@types/node": "^10.12.26",
+		"@types/webpack": "^4.4.27",
+		"copy-webpack-plugin": "^5.0.2",
+		"css-loader": "^0.28.11",
+		"event-stream": "^4.0.1",
+		"gulp": "^4.0.0",
+		"gulp-filter": "^5.1.0",
+		"husky": "^1.3.1",
+		"p-all": "^2.1.0",
+		"style-loader": "^0.23.1",
+		"ts-loader": "^5.3.3",
+		"tslint": "^5.8.0",
+		"tslint-webpack-plugin": "^1.3.0",
+		"typescript": "^3.4.2",
+		"typescript-formatter": "^7.2.2",
+		"vinyl": "^2.2.0",
+		"vinyl-fs": "^3.0.3",
+		"vscode": "^1.1.33",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0"
+	},
+	"__metadata": {
+		"id": "23d72dfc-8dd1-4e30-926e-8783b4378f13",
+		"publisherId": "ac9410a2-0d75-40ec-90de-b59bb705801d",
+		"publisherDisplayName": "Microsoft"
+	}
+}

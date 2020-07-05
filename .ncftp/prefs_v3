@@ -1,0 +1,21 @@
+# NcFTP 3 preferences file
+# This file is loaded and overwritten each time NcFTP is run.
+#
+anon-password=NcFTP@
+auto-ascii=|.txt|.asc|.html|.htm|.css|.xml|.ini|.pl|.hqx|.cfg|.c|.h|.cpp|.hpp|.bat|.m3u|.pls|
+auto-resume=no
+autosave-bookmark-changes=no
+confirm-close=no
+connect-timeout=20
+control-timeout=135
+logsize=10240
+one-time-messages-seen=
+pager=less
+passive=off
+progress-meter=2 (statbar)
+redial-delay=20
+save-passwords=yes
+show-status-in-xterm-titlebar=no
+so-bufsize=0 (use system default)
+xfer-timeout=3600
+yes-i-know-about-NcFTPd=no

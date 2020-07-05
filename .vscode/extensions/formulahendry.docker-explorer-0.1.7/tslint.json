@@ -1,0 +1,18 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-pascal-case",
+            "allow-leading-underscore"
+        ],
+        "max-line-length": [
+            true,
+            2000
+        ],
+        "no-empty": false,
+        "object-literal-sort-keys": false
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "name": "sabre/uri",
+    "description": "Functions for making sense out of URIs.",
+    "keywords": [
+        "URI",
+        "URL",
+        "rfc3986"
+    ],
+    "homepage": "http://sabre.io/uri/",
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=7"
+    },
+    "authors": [
+        {
+            "name": "Evert Pot",
+            "email": "me@evertpot.com",
+            "homepage": "http://evertpot.com/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "forum": "https://groups.google.com/group/sabredav-discuss",
+        "source": "https://github.com/fruux/sabre-uri"
+    },
+    "autoload": {
+        "files" : [
+            "lib/functions.php"
+        ],
+        "psr-4" : {
+            "Sabre\\Uri\\" : "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sabre\\Uri\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "^6"
+    },
+    "config" : {
+        "bin-dir" : "bin/"
+    }
+}

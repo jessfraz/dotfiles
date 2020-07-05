@@ -1,0 +1,59 @@
+{
+    "references": {
+        "MY_CONSTANT": [
+            "./constantsInFunctionParamDefault.php"
+        ]
+    },
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 11,
+                "location": {
+                    "uri": "./constantsInFunctionParamDefault.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "interface A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "A->b()": {
+            "fqn": "A->b()",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "b",
+                "kind": 6,
+                "location": {
+                    "uri": "./constantsInFunctionParamDefault.php"
+                },
+                "containerName": "A"
+            },
+            "type__tostring": "mixed",
+            "type": {},
+            "declarationLine": "function b ($a = MY_CONSTANT);",
+            "documentation": null,
+            "signatureInformation": {
+                "label": "(\\MY_CONSTANT $a = MY_CONSTANT)",
+                "documentation": null,
+                "parameters": [
+                    {
+                        "label": "\\MY_CONSTANT $a = MY_CONSTANT",
+                        "documentation": null
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "references": {
+        "ForLoopReference1->foo()": [
+            "./_cases/forLoopReference1.php"
+        ]
+    },
+    "definitions": {
+        "ForLoopReference1": {
+            "extends": [],
+            "isGlobal": true,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "ForLoopReference1",
+                "kind": 5,
+                "location": {
+                    "uri": "./_cases/forLoopReference1.php"
+                },
+                "containerName": ""
+            },
+            "type__class": "LanguageServer\\Tests\\ValidationTest",
+            "type": null,
+            "documentation": null
+        },
+        "ForLoopReference1->getThat()": {
+            "extends": [],
+            "isGlobal": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "getThat",
+                "kind": 6,
+                "location": {
+                    "uri": "./_cases/forLoopReference1.php"
+                },
+                "containerName": "ForLoopReference1"
+            },
+            "type__class": "phpDocumentor\\Reflection\\Types\\Mixed",
+            "type": {},
+            "documentation": null
+        },
+        "ForLoopReference1->foo()": {
+            "extends": [],
+            "isGlobal": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "foo",
+                "kind": 6,
+                "location": {
+                    "uri": "./_cases/forLoopReference1.php"
+                },
+                "containerName": "ForLoopReference1"
+            },
+            "type__class": "phpDocumentor\\Reflection\\Types\\Mixed",
+            "type": {},
+            "documentation": null
+        }
+    }
+}

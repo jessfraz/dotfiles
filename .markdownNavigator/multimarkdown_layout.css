@@ -1,0 +1,522 @@
+/*
+  ~ Copyright (c) 2015-2019 Vladimir Schneider vladimir.schneider@gmail.com
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/* Swing Layout Stylesheet */
+
+strike {
+    text-decoration: line-through;
+}
+
+/* del is simulated via span.del */
+del,
+span.del {
+    text-decoration: line-through;
+}
+
+s {
+    text-decoration: line-through;
+}
+
+cite {
+    font-style: italic;
+}
+
+sub {
+    font-size: 0.9em;
+}
+
+sup {
+    font-size: 0.9em;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+b {
+    font-weight: bold;
+}
+
+u {
+    text-decoration: underline;
+}
+
+address {
+    font-style: italic;
+}
+
+i {
+    font-style: italic;
+}
+
+var,
+span.var {
+    font-weight: bold;
+    font-style: italic;
+}
+
+kbd,
+span.kbd{
+    display: inline-block;
+    padding: 3px 5px;
+    vertical-align: middle;
+}
+
+/* NOTE: all other font sizes are set relative to font size given here and this is overridden in the CssProvider */
+body.multimarkdown-preview,
+body.multimarkdown-wiki-preview {
+    background-color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, freesans, sans-serif;
+    font-size: 11px;
+    padding: 20px;
+}
+
+img.local-only {
+}
+
+img.absent {
+    font-weight: bold;
+}
+
+/**********************************
+ *  Anchor Related Formatting
+ **********************************/
+
+a {
+    text-decoration: underline;
+}
+
+a.mail-link {
+}
+
+a.absent {
+}
+
+a.local-only {
+}
+
+a.anchor {
+    display: block;
+    padding-left: 30px;
+    margin-left: -30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+/**********************************
+ *  Header Related Formatting
+ **********************************/
+div.page-header {
+    padding: 2px 0 4px 15px;
+}
+
+div.page-header a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    padding: 0;
+    cursor: text;
+    position: relative;
+}
+
+h2,
+h2 a {
+    text-decoration: none;
+}
+
+h1,
+h3,
+h4,
+h5,
+h1 a,
+h3 a,
+h4 a,
+h5 a {
+    text-decoration: none;
+}
+
+h1 p,
+h2 p,
+h3 p,
+h4 p,
+h5 p,
+h6 p {
+    margin-top: 0;
+}
+
+h6,
+h6 a {
+    text-decoration: none;
+}
+
+h1 tt,
+h2 tt,
+h3 tt,
+h4 tt,
+h5 tt,
+h6 tt,
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code,
+h1 span.code,
+h2 span.code,
+h3 span.code,
+h4 span.code,
+h5 span.code,
+h6 span.code {
+    font-size: inherit;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 20px 0 10px 0;
+}
+
+h1.first-child,
+h2.first-child,
+h3.first-child,
+h4.first-child,
+h5.first-child,
+h6.first-child {
+    margin-top: 0;
+}
+
+.multimarkdown-wiki-preview h1 {
+    font-weight: normal;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.35em;
+    margin: 20px 0 10px 0;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 1.25em;
+    margin: 20px 0 10px 0;
+}
+
+h4 {
+    font-weight: bold;
+    font-size: 1.15em;
+    margin: 10px 0 7px;
+}
+
+h5 {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin: 7px 0 7px;
+}
+
+h6 {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin: 7px 0 7px;
+}
+
+/**********************************
+ *  Block Quote Related Formatting
+ **********************************/
+
+blockquote {
+    margin: 5px 0;
+    padding: 0 15px;
+    font-size: 1em;
+}
+
+blockquote h1,
+blockquote h2,
+blockquote h3,
+blockquote h4,
+blockquote h5,
+blockquote h6,
+blockquote h1 a,
+blockquote h2 a,
+blockquote h3 a,
+blockquote h4 a,
+blockquote h5 a,
+blockquote h6 a {
+}
+
+/**********************************
+* Code Block Related Formatting
+ **********************************/
+
+code,
+span.code,
+samp,
+var,
+span.var,
+kbd,
+span.kbd,
+span.tt {
+    font-family: Consolas, Inconsolata, "Liberation Mono", Menlo, Courier, Monospaced, monospace;
+    font-size: 1em;
+}
+
+pre {
+    margin: 5px 0;
+    overflow: auto;
+    padding: 6px 0 6px 10px;
+    white-space: pre;
+}
+
+tt,
+span.tt {
+    margin: 0 2px;
+    padding: 0 5px;
+    white-space: nowrap;
+}
+
+pre code,
+pre span.code {
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+    border: none;
+    background: transparent;
+}
+
+code,
+span.code {
+    padding: 3px;
+    white-space: normal;
+}
+
+/**********************************
+ * Table Related formatting
+ **********************************/
+
+body table {
+    background-color: transparent;
+    margin-bottom: 20px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: inherit;
+}
+
+table tr th {
+    font-weight: bold;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr td {
+    margin: 0;
+    padding: 6px 13px;
+}
+
+th {
+    text-align: center;
+}
+
+table caption {
+  font-weight: bold;
+  padding: 5px 0 5px 10px;
+  text-align: left;
+}
+
+table thead tr th {
+    vertical-align: bottom;
+}
+
+/************************************
+ * Horizontal Rule Related Formatting
+ ************************************/
+
+hr {
+    /*
+    nothing is used in the CSS by the HTMLEditorKit hr element except alignment, margin, width.
+    size and noshade attributes are only setable in the element and size is 2px minimum, of any
+    color you want just as long as its black, hardcoded in the library.
+
+    ie. nothing useful that we can use to change the look so hr is simulated with a div and nbsp
+    */
+}
+
+div.hr {
+    height: 1px;
+    margin: 10px 0 5px 0;
+}
+
+/**********************************
+ *  List Item Related Formatting
+ **********************************/
+
+ul,
+ol {
+    margin: 10px 0 10px 0;
+    padding-left: 30px;
+}
+
+ul {
+    list-style-type: disc;
+}
+
+ol {
+    list-style-type: decimal;
+}
+
+
+li {
+    margin: 2px 0 3px 0;
+}
+
+li.dtask,
+li.bulleti,
+li.taski {
+    margin: 1px 0 1px 0;
+}
+
+/* loosely spaced list items that reflect the markdown source */
+li.bulletp,
+li.dtaskp,
+li.taskp,
+li.p {
+    margin: 0 0 10px 0;
+}
+
+/* loosely spaced list items that duplicate quirky GFM implementation */
+li.bulletp,
+li.dtaskp,
+li.taskp,
+li.p {
+    margin: 10px 0 10px 0;
+}
+
+p {
+    margin: 5px 0 5px 0;
+}
+
+li p {
+    margin: 10px 0 10px 0;
+}
+
+/* loose list item first paragraph, loose task item first paragraph */
+li.bulletp p.p,
+li.taskp p.p,
+li.dtaskp p.p,
+li.p p.p {
+    margin: 0;
+}
+
+ul ul,
+ol ul {
+    list-style-type: circle;
+}
+
+ul li.bulleti,
+ul li.bulletp,
+ul li.task-chk,
+ul li.taskp-chk {
+    list-style-type: none;
+    padding-left: 0;
+    text-indent: -17px;
+}
+
+ul li.task-list-item {
+    list-style-type: none;
+}
+
+ul li.taski,
+ul li.taskp,
+ul li.dtask,
+ul li.dtaskp {
+    list-style-type: square;
+}
+
+ul li.img-taski,
+ul li.img-taskp,
+ul li.img-dtask,
+ul li.img-dtaskp {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    text-indent: -10px;
+}
+
+ul ol,
+ol ol {
+    list-style-type: lower-roman;
+}
+
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+    list-style-type: lower-alpha;
+}
+
+dfn {
+    font-style: italic;
+}
+
+dt {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+dl {
+    margin: 5px 0 5px 0;
+    padding: 0;
+}
+
+dl dt {
+    font-size: 1.05em;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 5px 0 5px;
+}
+
+dl dd {
+    margin: 0 0 5px;
+    padding: 0 20px;
+}
+
+
+caption {
+    text-align: center;
+}
+
+img.emoji {
+    width: 20px;
+    height: 20px;
+    vertical-alignment: text-bottom;
+}

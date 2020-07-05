@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="code-settings-sync" Version="3.4.3" Publisher="Shan"/>
+    <DisplayName>Settings Sync</DisplayName>
+    <Description xml:space="preserve">Synchronize Settings, Snippets, Themes, File Icons, Launch, Keybindings, Workspaces and Extensions Across Multiple Machines Using GitHub Gist.</Description>
+    <Tags>vscode-sync,vscode-settings-sync,code-settings-sync,settings-sync,workspace-sync,multi-root ready,keybindings</Tags>
+    <Categories>Other</Categories>
+    <GalleryFlags>Public</GalleryFlags>
+    <Badges><Badge Link="https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync" ImgUri="https://vsmarketplacebadge.apphb.com/version/Shan.code-settings-sync.svg" Description="Latest Version" /><Badge Link="https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync" ImgUri="https://vsmarketplacebadge.apphb.com/installs/Shan.code-settings-sync.svg" Description="Total Downloads" /><Badge Link="https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync" ImgUri="https://vsmarketplacebadge.apphb.com/rating/Shan.code-settings-sync.svg" Description="Ratings" /><Badge Link="https://join.slack.com/t/codesettingssync/shared_invite/enQtNzQyODMzMzI5MDQ3LWNmZjVkZjE2YTg0MzY1Y2EyYzVmYThmNzg2YjZkNjhhZWY3ZTEzN2I3ZTAxMjkwNWU0ZjMyZGFhMjdiZDI3ODU" ImgUri="https://img.shields.io/badge/Join%20Community-slack-green.svg" Description="Join Slack Community" /></Badges>
+    <Properties>
+      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.35.1" />
+      <Property Id="Microsoft.VisualStudio.Code.ExtensionDependencies" Value="" />
+      <Property Id="Microsoft.VisualStudio.Code.ExtensionPack" Value="" />
+      <Property Id="Microsoft.VisualStudio.Code.LocalizedLanguages" Value="" />
+      
+        <Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/shanalikhan/code-settings-sync.git" />
+        <Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/shanalikhan/code-settings-sync.git" />
+        
+          <Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/shanalikhan/code-settings-sync.git" />
+        
+      
+      <Property Id="Microsoft.VisualStudio.Services.Links.Support" Value="https://github.com/shanalikhan/code-settings-sync/issues" />
+      <Property Id="Microsoft.VisualStudio.Services.Links.Learn" Value="https://shanalikhan.github.io" />
+      <Property Id="Microsoft.VisualStudio.Services.Branding.Color" Value="#3B4859" />
+      <Property Id="Microsoft.VisualStudio.Services.Branding.Theme" Value="dark" />
+      <Property Id="Microsoft.VisualStudio.Services.GitHubFlavoredMarkdown" Value="true" />
+      
+      
+    </Properties>
+    <License>extension/LICENSE.txt</License>
+    <Icon>extension/images/logo-128.png</Icon>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Code"/>
+  </Installation>
+  <Dependencies/>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true" />
+    <Asset Type="Microsoft.VisualStudio.Services.Content.Details" Path="extension/README.md" Addressable="true" /><Asset Type="Microsoft.VisualStudio.Services.Content.Changelog" Path="extension/CHANGELOG.md" Addressable="true" /><Asset Type="Microsoft.VisualStudio.Services.Content.License" Path="extension/LICENSE.txt" Addressable="true" /><Asset Type="Microsoft.VisualStudio.Services.Icons.Default" Path="extension/images/logo-128.png" Addressable="true" />
+  </Assets>
+</PackageManifest>

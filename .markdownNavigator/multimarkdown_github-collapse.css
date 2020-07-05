@@ -1,0 +1,40 @@
+/*
+   styles needed by GitHub Collapse Markdown
+ */
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3,
+.markdown-body h4, .markdown-body h5, .markdown-body h6,
+.wiki-body h1, .wiki-body h2, .wiki-body h3,
+.wiki-body h4, .wiki-body h5, .wiki-body h6,
+.markdown-format h1, .markdown-format h2, .markdown-format h3,
+.markdown-format h4, .markdown-format h5, .markdown-format h6 {
+    position:relative;
+    padding-right:.8em;
+    cursor:pointer;
+}
+.markdown-body h1:after, .markdown-body h2:after, .markdown-body h3:after,
+.markdown-body h4:after, .markdown-body h5:after, .markdown-body h6:after,
+.wiki-body h1:after, .wiki-body h2:after, .wiki-body h3:after,
+.wiki-body h4:after, .wiki-body h5:after, .wiki-body h6:after,
+.markdown-format h1:after, .markdown-format h2:after, .markdown-format h3:after,
+.markdown-format h4:after, .markdown-format h5:after, .markdown-format h6:after {
+    display:inline-block;
+    position:absolute;
+    right:0;
+    top:calc(50% - .5em);
+    font-size:14pt;
+    content: '▼';
+}
+
+.markdown-body .ghcm-collapsed:after, .wiki-body .ghcm-collapsed:after, .markdown-format .ghcm-collapsed:after {
+    transform: rotate(90deg);
+}
+
+/* clicking on header link won't pass svg as the event.target */
+.octicon-link, .octicon-link > * {
+    pointer-events:none;
+}
+
+.ghcm-hidden {
+    display:none !important;
+}

@@ -1,0 +1,9 @@
+{
+	"messages": [
+		"Operating system \"{0}\" not supported."
+	],
+	"keys": [
+		"os.not.supported"
+	],
+	"filePath": "src\\Debugger\\nativeAttach"
+}

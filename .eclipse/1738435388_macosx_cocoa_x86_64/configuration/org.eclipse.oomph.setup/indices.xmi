@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:Annotation
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:base="http://www.eclipse.org/oomph/base/1.0"
+    source="IndexLocations">
+  <detail key="archive:http://www.eclipse.org/setups/setups.zip!/http/git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/org.eclipse.setup">
+    <value>Eclipse</value>
+  </detail>
+</base:Annotation>

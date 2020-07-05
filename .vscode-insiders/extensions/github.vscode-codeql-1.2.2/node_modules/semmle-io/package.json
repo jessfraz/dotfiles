@@ -1,0 +1,30 @@
+{
+  "name": "semmle-io",
+  "description": "I/O utilities",
+  "author": "GitHub",
+  "private": true,
+  "version": "0.0.1",
+  "publisher": "GitHub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/github/vscode-codeql"
+  },
+  "main": "./out/index",
+  "files": [
+    "out/**",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "gulp",
+    "format": "tsfmt -r"
+  },
+  "dependencies": {
+    "leb": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.8",
+    "build-tasks": "^0.0.1",
+    "typescript-config": "^0.0.1",
+    "typescript-formatter": "^7.2.2"
+  }
+}

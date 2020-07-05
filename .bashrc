@@ -11,7 +11,7 @@ esac
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+#shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -169,3 +169,5 @@ unset file
 export CODEQL_DIST=~/codeql_home/codeql-cli
 export CODEQL_PLATFORM=Darwin
 
+alias rusticchic='ssh -X drew@cms.rusticchicdesigns.com'
+alias buildcube'ssh -X andytswanner_gmail_com@34.68.254.19'

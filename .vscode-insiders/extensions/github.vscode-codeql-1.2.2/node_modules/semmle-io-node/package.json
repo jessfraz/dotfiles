@@ -1,0 +1,32 @@
+{
+  "name": "semmle-io-node",
+  "description": "I/O utilities for the Node.js runtime",
+  "author": "GitHub",
+  "private": true,
+  "version": "0.0.1",
+  "publisher": "GitHub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/github/vscode-codeql"
+  },
+  "main": "./out/index",
+  "files": [
+    "out/**",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "gulp",
+    "format": "tsfmt -r"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "semmle-io": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.0.0",
+    "@types/node": "^12.0.8",
+    "build-tasks": "^0.0.1",
+    "typescript-config": "^0.0.1",
+    "typescript-formatter": "^7.2.2"
+  }
+}

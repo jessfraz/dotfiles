@@ -1,0 +1,11 @@
+#!/bin/sh
+ID=.
+if [ -e /etc/os-release ]; then
+  . /etc/os-release
+fi
+if [ $ID = alpine ] && [ -e /remote_debugger/linux-musl-x64/latest/vsdbg ]; then
+  VSDBGPATH=/remote_debugger/linux-musl-x64/latest
+else
+  VSDBGPATH=/remote_debugger/linux-x64/latest
+fi
+$VSDBGPATH/vsdbg $@

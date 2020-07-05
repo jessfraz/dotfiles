@@ -1,0 +1,4 @@
+# NcFTP uses this file to mark that you have run it before, and that you do not
+# need any special first-time instructions or setup.
+#
+runs=16

@@ -1,0 +1,113 @@
+# NcFTP firewall preferences
+# ==========================
+#
+# If you need to use a proxy for FTP, you can configure it below.
+# If you do not need one, leave the ``firewall-type'' variable set
+# to 0.  Any line that does not begin with the ``#'' character is
+# considered a configuration command line.
+#
+# NOTE:  NcFTP does NOT support HTTP proxies that do FTP, such as "squid"
+#        or Netscape Proxy Server.  Why?  Because you have to communicate with
+#        them using HTTP, and this is a FTP only program.
+#
+# Types of firewalls:
+# ------------------
+#
+#    type 1:  Connect to firewall host, but send "USER user@real.host.name"
+#
+#    type 2:  Connect to firewall, login with "USER fwuser" and
+#             "PASS fwpassword", and then "USER user@real.host.name"
+#
+#    type 3:  Connect to and login to firewall, and then use
+#             "SITE real.host.name", followed by the regular USER and PASS.
+#
+#    type 4:  Connect to and login to firewall, and then use
+#             "OPEN real.host.name", followed by the regular USER and PASS.
+#
+#    type 5:  Connect to firewall host, but send
+#             "USER user@fwuser@real.host.name" and
+#             "PASS pass@fwpass" to login.
+#
+#    type 6:  Connect to firewall host, but send
+#             "USER fwuser@real.host.name" and
+#             "PASS fwpass" followed by a regular
+#             "USER user" and
+#             "PASS pass" to complete the login.
+#
+#    type 7:  Connect to firewall host, but send
+#             "USER user@real.host.name fwuser" and
+#             "PASS pass" followed by
+#             "ACCT fwpass" to complete the login.
+#
+#    type 8:  Connect to firewall host, but send "USER user@real.host.name:port"
+#
+#    type 9:  Connect to firewall host, but send "USER user@real.host.name port"
+#
+#    type 0:  Do NOT use a firewall (most users will choose this).
+#
+firewall-type=0
+#
+#
+#
+# The ``firewall-host'' variable should be the IP address or hostname of
+# your firewall server machine.
+#
+firewall-host=firewall.localdomain
+#
+#
+#
+# The ``firewall-user'' variable tells NcFTP what to use as the user ID
+# when it logs in to the firewall before connecting to the outside world.
+#
+firewall-user=drew
+#
+#
+#
+# The ``firewall-password'' variable is the password associated with
+# the firewall-user ID.  If you set this here, be sure to change the
+# permissions on this file so that no one (except the superuser) can
+# see your password.  You may also leave this commented out, and then
+# NcFTP will prompt you each time for the password.
+#
+firewall-password=fwpass
+#
+#
+#
+# Your firewall may require you to connect to a non-standard port for
+# outside FTP services, instead of the internet standard port number (21).
+#
+firewall-port=21
+#
+#
+#
+# You probably do not want to FTP to the firewall for hosts on your own
+# domain.  You can set ``firewall-exception-list'' to a list of domains
+# or hosts where the firewall should not be used.  For example, if your
+# domain was ``probe.net'' you could set this to ``.probe.net''.
+#
+# If you leave this commented out, the default behavior is to attempt to
+# lookup the current domain, and exclude hosts for it.  Otherwise, set it
+# to a list of comma-delimited domains or hostnames.  The special token
+# ``localdomain'' is used for unqualified hostnames, so if you want hosts
+# without explicit domain names to avoid the firewall, be sure to include
+# that in your list.
+#
+firewall-exception-list=.localdomain,localhost,localdomain
+#
+#
+#
+# You may also specify passive mode here.  Normally this is set in the
+# regular $HOME/.ncftp/prefs file.  This must be set to one of
+# "on", "off", or "optional", which mean always use PASV,
+# always use PORT, and try PASV then PORT, respectively.
+#
+#passive=on
+#
+#
+#
+# NOTE:  This file was created for you on Wed Aug 26 19:54:22 2020
+#        by NcFTP 3.2.6.  Removing this file will cause the next run of NcFTP
+#        to generate a new one, possibly with more configurable options.
+#
+# ALSO:  A /usr/local/Cellar/ncftp/3.2.6/etc/ncftp.firewall file, if present, is processed before this file,
+#        and a /usr/local/Cellar/ncftp/3.2.6/etc/ncftp.firewall.fixed file, if present, is processed after.

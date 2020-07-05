@@ -1,0 +1,53 @@
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: "12.8.1"
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@2
+  inputs:
+    versionSpec: "1.21.1"
+
+- script: |
+    set -e
+    yarn
+  displayName: Install Dependencies
+
+- script: |
+    set -e
+
+    yarn compile
+    
+    PUBLISHER=$(node -p "require('./package.json').publisher")
+    NAME=$(node -p "require('./package.json').name")
+    VERSION=$(node -p "require('./package.json').version")
+
+    if [[ "$BUILD_SOURCEBRANCH" != refs/tags/* ]]; then
+      VERSION="$VERSION-${BUILD_SOURCEVERSION:0:8}"
+    fi
+
+    VSIX_NAME="$PUBLISHER.$NAME-$VERSION.vsix"
+
+    VSIX="$SYSTEM_ARTIFACTSDIRECTORY/$VSIX_NAME"
+    npx vsce package --yarn -o $VSIX
+
+    echo "##vso[task.setvariable variable=VsixName]$VSIX_NAME"
+    echo "##vso[task.setvariable variable=Vsix]$VSIX"
+  displayName: Build
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    artifactName: $(VsixName)
+    targetPath: $(Vsix)
+
+- script: |
+    set -e
+    yarn test
+  displayName: Run Tests
+
+- task: GitHubRelease@0
+  displayName: 'Create GitHub Release'
+  inputs:
+    gitHubConnection: 'GitHub Connection'
+    repositoryName: $(Build.Repository.Name)
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))

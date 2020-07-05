@@ -1,0 +1,50 @@
+{
+    "references": {
+        "__CLASS__": [
+            "./magicConsts.php"
+        ]
+    },
+    "definitions": {
+        "A": {
+            "fqn": "A",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": true,
+            "symbolInformation": {
+                "name": "A",
+                "kind": 5,
+                "location": {
+                    "uri": "./magicConsts.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "class A {",
+            "documentation": null,
+            "signatureInformation": null
+        },
+        "A::$deprecationsTriggered": {
+            "fqn": "A::$deprecationsTriggered",
+            "extends": [],
+            "isMember": true,
+            "roamed": false,
+            "isStatic": true,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "deprecationsTriggered",
+                "kind": 7,
+                "location": {
+                    "uri": "./magicConsts.php"
+                },
+                "containerName": "A"
+            },
+            "type__tostring": "bool[]",
+            "type": {},
+            "declarationLine": "private static $deprecationsTriggered;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

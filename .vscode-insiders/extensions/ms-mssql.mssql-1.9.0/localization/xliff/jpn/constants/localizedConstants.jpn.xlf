@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" original="extension.i18ntest.JSON" source-language="en" target-language="ja-JP">
+    <body>
+      <trans-unit id="msgStartedExecute">
+        <source xml:lang="en">Started query execution for document "{0}"</source>
+        <target state="translated">ドキュメント "{0}" のクエリ実行を開始しました</target>
+      </trans-unit>
+      <trans-unit id="msgFinishedExecute">
+        <source xml:lang="en">Finished query execution for document "{0}"</source>
+        <target state="translated">ドキュメント "{0}" のクエリ実行を完了しました</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryInProgress">
+        <source xml:lang="en">A query is already running for this editor session. Please cancel this query or wait for its completion.</source>
+        <target state="translated">このエディター セッションのクエリは既に実行中です。このクエリをキャンセルするか、完了まで待ってください。</target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartMessage">
+        <source xml:lang="en">Started executing query at </source>
+        <target state="translated">次の場所でクエリの実行を開始しました: </target>
+      </trans-unit>
+      <trans-unit id="runQueryBatchStartLine">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">行 {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryFailed">
+        <source xml:lang="en">Canceling the query failed: {0}</source>
+        <target state="translated">失敗したクエリのキャンセル中: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCancelQueryNotRunning">
+        <source xml:lang="en">Cannot cancel query as no query is running.</source>
+        <target state="translated">クエリが実行されていないため、クエリをキャンセルできません。</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabaseNotConnected">
+        <source xml:lang="en">No connection was found. Please connect to a server first.</source>
+        <target state="translated">接続が見つかりませんでした。最初にサーバーに接続してください。</target>
+      </trans-unit>
+      <trans-unit id="msgChooseDatabasePlaceholder">
+        <source xml:lang="en">Choose a database from the list below</source>
+        <target state="translated">下の一覧からデータベースを選択してください</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError">
+        <source xml:lang="en">Error {0}: {1}</source>
+        <target state="translated">エラー {0}: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionError2">
+        <source xml:lang="en">Failed to connect: {0}</source>
+        <target state="translated">接続に失敗しました: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionErrorPasswordExpired">
+        <source xml:lang="en">Error {0}: {1} Please login as a different user and change the password using ALTER LOGIN.</source>
+        <target state="translated">エラー {0}: {1} 別のユーザーとしてログインし、ALTER LOGIN を使用してパスワードを変更してください。</target>
+      </trans-unit>
+      <trans-unit id="connectionErrorChannelName">
+        <source xml:lang="en">Connection Errors</source>
+        <target state="translated">接続エラー</target>
+      </trans-unit>
+      <trans-unit id="msgPromptCancelConnect">
+        <source xml:lang="en">Server connection in progress. Do you want to cancel?</source>
+        <target state="translated">サーバーへ接続中です。キャンセルしますか?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptClearRecentConnections">
+        <source xml:lang="en">Confirm to clear recent connections list</source>
+        <target state="translated">最近の接続履歴のクリアを確認</target>
+      </trans-unit>
+      <trans-unit id="msgOpenSqlFile">
+        <source xml:lang="en">To use this command, Open a .sql file -or- Change editor language to "SQL" -or- Select T-SQL text in the active SQL editor.</source>
+        <target state="translated">このコマンドを使用するには、アクティブな SQL エディターで、.sql ファイルを開くか、エディターの言語を "SQL" に変更するか、T-SQL テキストを選択してください。</target>
+      </trans-unit>
+      <trans-unit id="recentConnectionsPlaceholder">
+        <source xml:lang="en">Choose a connection profile from the list below</source>
+        <target state="translated">下の一覧から、接続プロファイルを選択します</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileFromConnectionsListLabel">
+        <source xml:lang="en">Create Connection Profile</source>
+        <target state="translated">接続プロファイルの作成</target>
+      </trans-unit>
+      <trans-unit id="CreateProfileLabel">
+        <source xml:lang="en">Create</source>
+        <target state="translated">作成</target>
+      </trans-unit>
+      <trans-unit id="ClearRecentlyUsedLabel">
+        <source xml:lang="en">Clear Recent Connections List</source>
+        <target state="translated">最近の接続履歴をクリア</target>
+      </trans-unit>
+      <trans-unit id="EditProfilesLabel">
+        <source xml:lang="en">Edit</source>
+        <target state="translated">編集</target>
+      </trans-unit>
+      <trans-unit id="RemoveProfileLabel">
+        <source xml:lang="en">Remove</source>
+        <target state="translated">削除</target>
+      </trans-unit>
+      <trans-unit id="ManageProfilesPrompt">
+        <source xml:lang="en">Manage Connection Profiles</source>
+        <target state="translated">接続プロファイルの管理</target>
+      </trans-unit>
+      <trans-unit id="SampleServerName">
+        <source xml:lang="en">{{put-server-name-here}}</source>
+        <target state="translated">{{ここにサーバー名を指定}}</target>
+      </trans-unit>
+      <trans-unit id="serverPrompt">
+        <source xml:lang="en">Server name or ADO.NET connection string</source>
+        <target state="translated">サーバー名または ADO.NET 接続文字列</target>
+      </trans-unit>
+      <trans-unit id="serverPlaceholder">
+        <source xml:lang="en">hostname\\instance or &lt;server&gt;.database.windows.net or ADO.NET connection string</source>
+        <target state="translated">hostname\\instance または &lt;server&gt;.database.windows.net または ADO.NET 接続文字列</target>
+      </trans-unit>
+      <trans-unit id="databasePrompt">
+        <source xml:lang="en">Database name</source>
+        <target state="translated">データベース名</target>
+      </trans-unit>
+      <trans-unit id="startIpAddressPrompt">
+        <source xml:lang="en">Start IP</source>
+        <target state="translated">開始 IP</target>
+      </trans-unit>
+      <trans-unit id="endIpAddressPrompt">
+        <source xml:lang="en">End IP</source>
+        <target state="translated">終了 IP</target>
+      </trans-unit>
+      <trans-unit id="databasePlaceholder">
+        <source xml:lang="en">[Optional] Database to connect (press Enter to connect to &lt;default&gt; database)</source>
+        <target state="translated">[省略可能] 接続するデータベース (&lt;既定の&gt; データベースに接続するには、Enter を押します)</target>
+      </trans-unit>
+      <trans-unit id="authTypePrompt">
+        <source xml:lang="en">Authentication Type</source>
+        <target state="translated">認証の種類</target>
+      </trans-unit>
+      <trans-unit id="authTypeIntegrated">
+        <source xml:lang="en">Integrated</source>
+        <target state="translated">統合</target>
+      </trans-unit>
+      <trans-unit id="authTypeSql">
+        <source xml:lang="en">SQL Login</source>
+        <target state="translated">SQL ログイン</target>
+      </trans-unit>
+      <trans-unit id="usernamePrompt">
+        <source xml:lang="en">User name</source>
+        <target state="translated">ユーザー名</target>
+      </trans-unit>
+      <trans-unit id="usernamePlaceholder">
+        <source xml:lang="en">User name (SQL Login)</source>
+        <target state="translated">ユーザー名 (SQL ログイン)</target>
+      </trans-unit>
+      <trans-unit id="passwordPrompt">
+        <source xml:lang="en">Password</source>
+        <target state="translated">パスワード</target>
+      </trans-unit>
+      <trans-unit id="passwordPlaceholder">
+        <source xml:lang="en">Password (SQL Login)</source>
+        <target state="translated">パスワード (SQL ログイン)</target>
+      </trans-unit>
+      <trans-unit id="msgSavePassword">
+        <source xml:lang="en">Save Password? If 'No', password will be required each time you connect</source>
+        <target state="translated">パスワードを保存しますか? [いいえ] を選ぶと、毎回の接続の際にパスワードが要求されます</target>
+      </trans-unit>
+      <trans-unit id="profileNamePrompt">
+        <source xml:lang="en">Profile Name</source>
+        <target state="translated">プロファイル名</target>
+      </trans-unit>
+      <trans-unit id="profileNamePlaceholder">
+        <source xml:lang="en">[Optional] Enter a display name for this connection profile</source>
+        <target state="translated">[省略可能] この接続プロファイルの表示名を入力してください。</target>
+      </trans-unit>
+      <trans-unit id="filepathPrompt">
+        <source xml:lang="en">File path</source>
+        <target state="translated">ファイル パス</target>
+      </trans-unit>
+      <trans-unit id="filepathMessage">
+        <source xml:lang="en">File name</source>
+        <target state="translated">ファイル名</target>
+      </trans-unit>
+      <trans-unit id="overwritePrompt">
+        <source xml:lang="en">A file with this name already exists. Do you want to replace the existing file?</source>
+        <target state="translated">この名前のファイルは既に存在します。既存のファイルを置き換えますか?</target>
+      </trans-unit>
+      <trans-unit id="overwritePlaceholder">
+        <source xml:lang="en">A file with this name already exists</source>
+        <target state="translated">この名前のファイルが既に存在します</target>
+      </trans-unit>
+      <trans-unit id="msgCannotOpenContent">
+        <source xml:lang="en">Error occurred opening content in editor.</source>
+        <target state="translated">エディターでコンテンツを開くときにエラーが発生しました。</target>
+      </trans-unit>
+      <trans-unit id="msgSaveStarted">
+        <source xml:lang="en">Started saving results to </source>
+        <target state="translated">次の場所への結果の保存を開始しました: </target>
+      </trans-unit>
+      <trans-unit id="msgSaveFailed">
+        <source xml:lang="en">Failed to save results. </source>
+        <target state="translated">結果を保存できませんでした。 </target>
+      </trans-unit>
+      <trans-unit id="msgSaveSucceeded">
+        <source xml:lang="en">Successfully saved results to </source>
+        <target state="translated">次の場所に結果が正常に保存されました: </target>
+      </trans-unit>
+      <trans-unit id="msgSelectProfileToRemove">
+        <source xml:lang="en">Select profile to remove</source>
+        <target state="translated">削除するプロファイルを選択します</target>
+      </trans-unit>
+      <trans-unit id="confirmRemoveProfilePrompt">
+        <source xml:lang="en">Confirm to remove this profile.</source>
+        <target state="translated">このプロファイルを削除することを確認します。</target>
+      </trans-unit>
+      <trans-unit id="msgNoProfilesSaved">
+        <source xml:lang="en">No connection profile to remove.</source>
+        <target state="translated">削除する接続プロファイルがありません。</target>
+      </trans-unit>
+      <trans-unit id="msgProfileRemoved">
+        <source xml:lang="en">Profile removed successfully</source>
+        <target state="translated">プロファイルが正常に削除されました</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreated">
+        <source xml:lang="en">Profile created successfully</source>
+        <target state="translated">プロファイルが正常に作成されました</target>
+      </trans-unit>
+      <trans-unit id="msgProfileCreatedAndConnected">
+        <source xml:lang="en">Profile created and connected</source>
+        <target state="translated">プロファイルが作成され、接続されました</target>
+      </trans-unit>
+      <trans-unit id="msgClearedRecentConnections">
+        <source xml:lang="en">Recent connections list cleared</source>
+        <target state="translated">最近の接続履歴をクリアしました</target>
+      </trans-unit>
+      <trans-unit id="msgIsRequired">
+        <source xml:lang="en"> is required.</source>
+        <target state="translated">必須です。</target>
+      </trans-unit>
+      <trans-unit id="msgError">
+        <source xml:lang="en">Error: </source>
+        <target state="translated">エラー: </target>
+      </trans-unit>
+      <trans-unit id="msgYes">
+        <source xml:lang="en">Yes</source>
+        <target state="translated">はい</target>
+      </trans-unit>
+      <trans-unit id="msgNo">
+        <source xml:lang="en">No</source>
+        <target state="translated">いいえ</target>
+      </trans-unit>
+      <trans-unit id="defaultDatabaseLabel">
+        <source xml:lang="en">&lt;default&gt;</source>
+        <target state="translated">&lt;既定&gt;</target>
+      </trans-unit>
+      <trans-unit id="notConnectedLabel">
+        <source xml:lang="en">Disconnected</source>
+        <target state="translated">切断</target>
+      </trans-unit>
+      <trans-unit id="notConnectedTooltip">
+        <source xml:lang="en">Click to connect to a database</source>
+        <target state="translated">クリックすると、データベースに接続します</target>
+      </trans-unit>
+      <trans-unit id="connectingLabel">
+        <source xml:lang="en">Connecting</source>
+        <target state="translated">接続中</target>
+      </trans-unit>
+      <trans-unit id="connectingTooltip">
+        <source xml:lang="en">Connecting to: </source>
+        <target state="translated">次の場所に接続します: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorLabel">
+        <source xml:lang="en">Connection error</source>
+        <target state="translated">接続エラー</target>
+      </trans-unit>
+      <trans-unit id="connectErrorTooltip">
+        <source xml:lang="en">Error connecting to: </source>
+        <target state="translated">次の場所への接続エラー: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorCode">
+        <source xml:lang="en">Error code: </source>
+        <target state="translated">エラー コード: </target>
+      </trans-unit>
+      <trans-unit id="connectErrorMessage">
+        <source xml:lang="en">Error Message: </source>
+        <target state="translated">エラー メッセージ: </target>
+      </trans-unit>
+      <trans-unit id="cancelingQueryLabel">
+        <source xml:lang="en">Canceling query </source>
+        <target state="translated">クエリを取り消しています </target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseLabel">
+        <source xml:lang="en">Updating IntelliSense...</source>
+        <target state="translated">IntelliSense を更新しています...</target>
+      </trans-unit>
+      <trans-unit id="extensionNotInitializedError">
+        <source xml:lang="en">Unable to execute the command while the extension is initializing. Please try again later.</source>
+        <target state="translated">拡張機能の初期化中はコマンドを実行できません。後でもう一度やり直してください。</target>
+      </trans-unit>
+      <trans-unit id="untitledScheme">
+        <source xml:lang="en">untitled</source>
+        <target state="translated">無題</target>
+      </trans-unit>
+      <trans-unit id="msgChangeLanguageMode">
+        <source xml:lang="en">To use this command, you must set the language to "SQL". Confirm to change language mode.</source>
+        <target state="translated">このコマンドを使用するには、"SQL" に言語を設定する必要があります。言語モードの変更を確認してください。</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabaseContext">
+        <source xml:lang="en">Changed database context to "{0}" for document "{1}"</source>
+        <target state="translated">ドキュメント "{1}" のデータベース コンテキストが "{0}" に変更されました</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryCreateProfile">
+        <source xml:lang="en">Error: Unable to connect using the connection information provided. Retry profile creation?</source>
+        <target state="translated">エラー: 指定した接続情報を使用して接続できません。プロファイルの作成を再試行しますか?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryConnectionDifferentCredentials">
+        <source xml:lang="en">Error: Login failed. Retry using different credentials?</source>
+        <target state="translated">エラー: ログインに失敗しました。別の資格情報を使用して再試行しますか?</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleExtNotInstalled">
+        <source xml:lang="en">Your client IP address does not have access to the server. Download and install the Azure Account extension to sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">ご使用のクライアント IP アドレスには、サーバーへのアクセス権がありません。Azure Account 拡張機能をダウンロードおよびインストールして Azure アカウントにサインインし、アクセスを可能にするための新しいファイアウォール規則を作成してください。</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleNotSignedIn">
+        <source xml:lang="en">Your client IP address does not have access to the server. Sign in to an Azure account and create a new firewall rule to enable access.</source>
+        <target state="translated">ご使用のクライアント IP アドレスには、サーバーへのアクセス権がありません。Azure アカウントにサインインし、アクセスを可能にするための新しいファイアウォール規則を作成してください。</target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleSignedIn">
+        <source xml:lang="en">Account signed In. Create new firewall rule? </source>
+        <target state="translated">アカウントがサインインしました。新しいファイアウォール規則を作成しますか? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptRetryFirewallRuleAdded">
+        <source xml:lang="en">Firewall rule successfully added. Retry profile creation? </source>
+        <target state="translated">ファイアウォール規則が正常に追加されました。プロファイルの作成を再試行しますか? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedNotSignedIn">
+        <source xml:lang="en">Azure Account extension activated. Sign in to an Azure account? </source>
+        <target state="translated">Azure Account 拡張機能がライセンス認証されました。Azure アカウントにサインインしますか? </target>
+      </trans-unit>
+      <trans-unit id="msgPromptAzureExtensionActivatedSignedIn">
+        <source xml:lang="en">Azure Account extension activated and signed in.</source>
+        <target state="translated">Azure Account 拡張機能がライセンス認証され、サインインしました。</target>
+      </trans-unit>
+      <trans-unit id="msgPromptFirewallRuleCreated">
+        <source xml:lang="en">Firewall rule successfully created.</source>
+        <target state="translated">ファイアウォール規則が正常に作成されました。</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistory">
+        <source xml:lang="en">Choose Query History</source>
+        <target state="translated">クエリ履歴の選択</target>
+      </trans-unit>
+      <trans-unit id="msgChooseQueryHistoryAction">
+        <source xml:lang="en">Choose An Action</source>
+        <target state="translated">アクションの選択</target>
+      </trans-unit>
+      <trans-unit id="msgOpenQueryHistory">
+        <source xml:lang="en">Open Query History</source>
+        <target state="translated">クエリ履歴を開く</target>
+      </trans-unit>
+      <trans-unit id="msgRunQueryHistory">
+        <source xml:lang="en">Run Query History</source>
+        <target state="translated">クエリ履歴の実行</target>
+      </trans-unit>
+      <trans-unit id="msgInvalidIpAddress">
+        <source xml:lang="en">Invalid IP Address </source>
+        <target state="translated">IP アドレスが無効です </target>
+      </trans-unit>
+      <trans-unit id="msgNoQueriesAvailable">
+        <source xml:lang="en">No Queries Available</source>
+        <target state="translated">使用できるクエリはありません</target>
+      </trans-unit>
+      <trans-unit id="retryLabel">
+        <source xml:lang="en">Retry</source>
+        <target state="translated">再試行</target>
+      </trans-unit>
+      <trans-unit id="signInLabel">
+        <source xml:lang="en">Sign In</source>
+        <target state="translated">サインイン</target>
+      </trans-unit>
+      <trans-unit id="downloadAndInstallLabel">
+        <source xml:lang="en">Download and Install</source>
+        <target state="translated">ダウンロードとインストール</target>
+      </trans-unit>
+      <trans-unit id="createFirewallRuleLabel">
+        <source xml:lang="en">Create Firewall Rule</source>
+        <target state="translated">ファイアウォール規則を作成する</target>
+      </trans-unit>
+      <trans-unit id="msgConnecting">
+        <source xml:lang="en">Connecting to server "{0}" on document "{1}".</source>
+        <target state="translated">ドキュメント "{1}" でサーバー "{0}" に接続中です。</target>
+      </trans-unit>
+      <trans-unit id="msgConnectedServerInfo">
+        <source xml:lang="en">Connected to server "{0}" on document "{1}". Server information: {2}</source>
+        <target state="translated">ドキュメント "{1}" でサーバー "{0}" に接続しました。サーバー情報: {2}</target>
+      </trans-unit>
+      <trans-unit id="msgConnectionFailed">
+        <source xml:lang="en">Error connecting to server "{0}". Details: {1}</source>
+        <target state="translated">サーバー "{0}" への接続に失敗しました。詳細: {1}</target>
+      </trans-unit>
+      <trans-unit id="msgChangingDatabase">
+        <source xml:lang="en">Changing database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">ドキュメント "{2}" でサーバー "{1}" のデータベース コンテキストを "{0}"に変更中です。</target>
+      </trans-unit>
+      <trans-unit id="msgChangedDatabase">
+        <source xml:lang="en">Changed database context to "{0}" on server "{1}" on document "{2}".</source>
+        <target state="translated">ドキュメント "{2}" でサーバー "{1}" のデータベース コンテキストを "{0}"に変更しました。</target>
+      </trans-unit>
+      <trans-unit id="msgDisconnected">
+        <source xml:lang="en">Disconnected on document "{0}"</source>
+        <target state="translated">ドキュメント "{0}" で切断されました</target>
+      </trans-unit>
+      <trans-unit id="msgErrorReadingConfigFile">
+        <source xml:lang="en">Error: Unable to load connection profiles from [{0}]. Check if the file is formatted correctly.</source>
+        <target state="translated">エラー: [{0}] から接続プロファイルを読み込むことができません。ファイルが正しいフォーマットになっているか確認してください。</target>
+      </trans-unit>
+      <trans-unit id="titleResultsPane">
+        <source xml:lang="en">Results: {0}</source>
+        <target state="translated">結果: {0}</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslErrorMessage">
+        <source xml:lang="en">OpenSSL version &gt;=1.0.1 is required to connect.</source>
+        <target state="translated">接続するには、OpenSSL バージョン 1.0.1 以上が必要です。</target>
+      </trans-unit>
+      <trans-unit id="macOpenSslHelpButton">
+        <source xml:lang="en">Help</source>
+        <target state="translated">ヘルプ</target>
+      </trans-unit>
+      <trans-unit id="macSierraRequiredErrorMessage">
+        <source xml:lang="en">macOS Sierra or newer is required to use this feature.</source>
+        <target state="translated">この機能を使用するには、macOS Sierra 以降が必要です。</target>
+      </trans-unit>
+      <trans-unit id="gettingDefinitionMessage">
+        <source xml:lang="en">Getting definition ...</source>
+        <target state="translated">定義を取得中...</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestedStatus">
+        <source xml:lang="en">DefinitionRequested</source>
+        <target state="translated">DefinitionRequested</target>
+      </trans-unit>
+      <trans-unit id="definitionRequestCompletedStatus">
+        <source xml:lang="en">DefinitionRequestCompleted</source>
+        <target state="translated">DefinitionRequestCompleted</target>
+      </trans-unit>
+      <trans-unit id="updatingIntelliSenseStatus">
+        <source xml:lang="en">updatingIntelliSense</source>
+        <target state="translated">updatingIntelliSense</target>
+      </trans-unit>
+      <trans-unit id="intelliSenseUpdatedStatus">
+        <source xml:lang="en">intelliSenseUpdated</source>
+        <target state="translated">intelliSenseUpdated</target>
+      </trans-unit>
+      <trans-unit id="testLocalizationConstant">
+        <source xml:lang="en">test</source>
+        <target state="translated">テスト</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionLabel">
+        <source xml:lang="en">Disconnect</source>
+        <target state="translated">切断</target>
+      </trans-unit>
+      <trans-unit id="disconnectOptionDescription">
+        <source xml:lang="en">Close the current connection</source>
+        <target state="translated">現在の接続を閉じる</target>
+      </trans-unit>
+      <trans-unit id="disconnectConfirmationMsg">
+        <source xml:lang="en">Are you sure you want to disconnect?</source>
+        <target state="translated">切断してよろしいですか?</target>
+      </trans-unit>
+      <trans-unit id="elapsedBatchTime">
+        <source xml:lang="en">Batch execution time: {0}</source>
+        <target state="translated">バッチ実行時間: {0}</target>
+      </trans-unit>
+      <trans-unit id="noActiveEditorMsg">
+        <source xml:lang="en">A SQL editor must have focus before executing this command</source>
+        <target state="translated">このコマンドを実行する前に、SQL エディターはフォーカスされている必要があります</target>
+      </trans-unit>
+      <trans-unit id="maximizeLabel">
+        <source xml:lang="en">Maximize</source>
+        <target state="translated">最大化</target>
+      </trans-unit>
+      <trans-unit id="restoreLabel">
+        <source xml:lang="en">Restore</source>
+        <target state="translated">復元</target>
+      </trans-unit>
+      <trans-unit id="saveCSVLabel">
+        <source xml:lang="en">Save as CSV</source>
+        <target state="translated">CSV として保存</target>
+      </trans-unit>
+      <trans-unit id="saveJSONLabel">
+        <source xml:lang="en">Save as JSON</source>
+        <target state="translated">JSON として保存</target>
+      </trans-unit>
+      <trans-unit id="saveExcelLabel">
+        <source xml:lang="en">Save as Excel</source>
+        <target state="translated">Excel として保存</target>
+      </trans-unit>
+      <trans-unit id="fileTypeCSVLabel">
+        <source xml:lang="en">CSV</source>
+        <target state="translated">CSV</target>
+      </trans-unit>
+      <trans-unit id="fileTypeJSONLabel">
+        <source xml:lang="en">JSON</source>
+        <target state="translated">JSON</target>
+      </trans-unit>
+      <trans-unit id="fileTypeExcelLabel">
+        <source xml:lang="en">Excel</source>
+        <target state="translated">Excel</target>
+      </trans-unit>
+      <trans-unit id="resultPaneLabel">
+        <source xml:lang="en">Results</source>
+        <target state="translated">結果</target>
+      </trans-unit>
+      <trans-unit id="selectAll">
+        <source xml:lang="en">Select all</source>
+        <target state="translated">すべて選択</target>
+      </trans-unit>
+      <trans-unit id="copyLabel">
+        <source xml:lang="en">Copy</source>
+        <target state="translated">コピー</target>
+      </trans-unit>
+      <trans-unit id="copyWithHeadersLabel">
+        <source xml:lang="en">Copy with Headers</source>
+        <target state="translated">ヘッダー付きでコピー</target>
+      </trans-unit>
+      <trans-unit id="executeQueryLabel">
+        <source xml:lang="en">Executing query...</source>
+        <target state="translated">クエリを実行しています...</target>
+      </trans-unit>
+      <trans-unit id="messagePaneLabel">
+        <source xml:lang="en">Messages</source>
+        <target state="translated">メッセージ</target>
+      </trans-unit>
+      <trans-unit id="lineSelectorFormatted">
+        <source xml:lang="en">Line {0}</source>
+        <target state="translated">行 {0}</target>
+      </trans-unit>
+      <trans-unit id="elapsedTimeLabel">
+        <source xml:lang="en">Total execution time: {0}</source>
+        <target state="translated">総実行時間: {0}</target>
+      </trans-unit>
+      <trans-unit id="msgCannotSaveMultipleSelections">
+        <source xml:lang="en">Save results command cannot be used with multiple selections.</source>
+        <target state="translated">結果の保存コマンドは、複数が選択された状態では使用できません。</target>
+      </trans-unit>
+      <trans-unit id="mssqlProviderName">
+        <source xml:lang="en">MSSQL</source>
+        <target state="translated">MSSQL</target>
+      </trans-unit>
+      <trans-unit id="noneProviderName">
+        <source xml:lang="en">None</source>
+        <target state="translated">なし</target>
+      </trans-unit>
+      <trans-unit id="chooseSqlLang">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">SQL 言語の選択</target>
+      </trans-unit>
+      <trans-unit id="flavorChooseLanguage">
+        <source xml:lang="en">Choose SQL Language</source>
+        <target state="translated">SQL 言語の選択</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionMssql">
+        <source xml:lang="en">Use T-SQL intellisense and syntax error checking on current document</source>
+        <target state="translated">現在のドキュメントで T-SQL インテリセンスと構文エラー チェックを使用する</target>
+      </trans-unit>
+      <trans-unit id="flavorDescriptionNone">
+        <source xml:lang="en">Disable intellisense and syntax error checking on current document</source>
+        <target state="translated">現在のドキュメントで T-SQL インテリセンスと構文エラー チェックを無効にする</target>
+      </trans-unit>
+      <trans-unit id="queryOutputDocumentTitle">
+        <source xml:lang="en">Query Output Document</source>
+        <target state="translated">クエリ出力ドキュメント</target>
+      </trans-unit>
+      <trans-unit id="queryOutputHostTitle">
+        <source xml:lang="en">Query Output Document Host</source>
+        <target state="translated">クエリ出力ドキュメント ホスト</target>
+      </trans-unit>
+      <trans-unit id="msgAddConnection">
+        <source xml:lang="en">Add Connection</source>
+        <target state="translated">接続の追加</target>
+      </trans-unit>
+      <trans-unit id="msgConnect">
+        <source xml:lang="en">Connect</source>
+        <target state="translated">接続</target>
+      </trans-unit>
+      <trans-unit id="azureSignIn">
+        <source xml:lang="en">Azure: Sign In</source>
+        <target state="translated">Azure: サインイン</target>
+      </trans-unit>
+      <trans-unit id="azureSignInDescription">
+        <source xml:lang="en">Sign in to your Azure subscription</source>
+        <target state="translated">Azure サブスクリプションにサインイン</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCode">
+        <source xml:lang="en">Azure: Sign In with Device Code</source>
+        <target state="translated">Azure: デバイス コードを使ってサインイン</target>
+      </trans-unit>
+      <trans-unit id="azureSignInWithDeviceCodeDescription">
+        <source xml:lang="en">Sign in to your Azure subscription with a device code. Use this in setups where the Sign In command does not work</source>
+        <target state="translated">デバイス コードを使って Azure サブスクリプションにサインインします。Sign In コマンドが機能しないセットアップでは、この方法を使用してください</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloud">
+        <source xml:lang="en">Azure: Sign In to Azure Cloud</source>
+        <target state="translated">Azure: Azure Cloud にサインイン</target>
+      </trans-unit>
+      <trans-unit id="azureSignInToAzureCloudDescription">
+        <source xml:lang="en">Sign in to your Azure subscription in one of the sovereign clouds.</source>
+        <target state="translated">いずれかのソブリン クラウドで、Azure サブスクリプションにサインインします。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

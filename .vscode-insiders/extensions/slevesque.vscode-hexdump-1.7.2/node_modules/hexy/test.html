@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<!-- 
+  Extremely rudimentary test for browser support.
+  Open this file in a browser and see if it works.
+-->
+<head>
+  <style>
+    .hexy {
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+<script src="hexy.js"></script>
+<script type="text/javascript">
+  var test_thingie = document.querySelector("#test")
+  test_thingie.innerHTML=hexy([2,3, 0xff, 0x0f, 0xf0, 0x31], {html: true})
+</script>
+</body>
+
+</html>

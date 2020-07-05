@@ -1,0 +1,50 @@
+{
+  "name": "find-config",
+  "version": "1.0.0",
+  "description": "Find the first config file matching a given name in the current directory or the nearest ancestor directory.",
+  "main": "src/find-config.js",
+  "scripts": {
+    "bench": "node test/benchmark",
+    "coveralls": "nyc report -r text-lcov | coveralls",
+    "pretest": "xo src/*.js test/**/*.js",
+    "test": "nyc -r html -r text ava -v test/*.js",
+    "watch": "watch 'npm test' src test -du --wait=5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shannonmoeller/find-config.git"
+  },
+  "keywords": [
+    "config",
+    "dot",
+    "rc",
+    "file",
+    "find",
+    "glob",
+    "xdg"
+  ],
+  "author": "Shannon Moeller <me@shannonmoeller.com> (http://shannonmoeller.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shannonmoeller/find-config/issues"
+  },
+  "homepage": "https://github.com/shannonmoeller/find-config",
+  "dependencies": {
+    "user-home": "^2.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.11.0",
+    "benchmark": "^2.1.0",
+    "coveralls": "^2.11.6",
+    "expect": "^1.14.0",
+    "findup-sync": "^0.3.0",
+    "look-up": "^0.8.3",
+    "microtime": "^2.0.0",
+    "nyc": "^5.6.0",
+    "watch": "^0.17.1",
+    "xo": "^0.12.1"
+  },
+  "engines": {
+    "node": ">= 0.12"
+  }
+}

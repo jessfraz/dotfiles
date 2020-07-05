@@ -1,0 +1,32 @@
+{
+    "references": {
+        "B\\__FILE__": [
+            "./magicConstantsShouldBeGlobal.php"
+        ],
+        "__FILE__": [
+            "./magicConstantsShouldBeGlobal.php"
+        ]
+    },
+    "definitions": {
+        "B": {
+            "fqn": "B",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "B",
+                "kind": 3,
+                "location": {
+                    "uri": "./magicConstantsShouldBeGlobal.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace B;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}

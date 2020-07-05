@@ -1,0 +1,88 @@
+{
+	"name": "remote-ssh-edit",
+	"displayName": "Remote - SSH: Editing Configuration Files",
+	"description": "Edit SSH configuration files",
+	"version": "0.51.0",
+	"preview": true,
+	"publisher": "ms-vscode-remote",
+	"icon": "resources/remote-ssh.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/vscode-remote-release.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Microsoft/vscode-remote-release/issues"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"engines": {
+		"vscode": "^1.38.0"
+	},
+	"extensionKind": [
+		"ui"
+	],
+	"categories": [
+		"Programming Languages",
+		"Snippets"
+	],
+	"keywords": [
+		"remote development",
+		"remote",
+		"ssh"
+	],
+	"activationEvents": [
+		"onLanguage:ssh_config"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"languages": [
+			{
+				"id": "ssh_config",
+				"aliases": [
+					"SSH Config",
+					"ssh_config"
+				],
+				"filenamePatterns": [
+					"**/.ssh/config",
+					"/etc/ssh/ssh_config"
+				],
+				"filenames": [
+					"ssh.config"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "ssh_config",
+				"scopeName": "source.config.ssh",
+				"path": "./syntaxes/ssh_config.tmLanguage.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"compile": "webpack --mode none",
+		"watch": "webpack --mode none --watch",
+		"package": "vsce package --yarn",
+		"lint": "tslint -p ."
+	},
+	"devDependencies": {
+		"@types/node": "^10.12.26",
+		"@types/webpack": "^4.4.27",
+		"copy-webpack-plugin": "^5.0.2",
+		"ts-loader": "^5.3.3",
+		"tslint": "^5.15.0",
+		"tslint-webpack-plugin": "^2.0.4",
+		"typescript": "^3.4.2",
+		"vsce": "^1.59.0",
+		"vscode": "^1.1.33",
+		"vscode-nls-dev": "^3.2.6",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0"
+	},
+	"__metadata": {
+		"id": "bfeaf631-bcff-4908-93ed-fda4ef9a0c5c",
+		"publisherId": "ac9410a2-0d75-40ec-90de-b59bb705801d",
+		"publisherDisplayName": "Microsoft"
+	}
+}

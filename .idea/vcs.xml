@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.dotfiles" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/.dotfiles" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/.nvm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/.ohmyzsh" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/homebrew" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/sdkman-cli" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/sdkman-gui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.nvm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.oh-my-zsh" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Dev" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/ComputerScience/GIS/OpenLayers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/ComputerScience/GIS/Parcels/shapefile-js" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/ComputerScience/GIS/Parcels/shp2geojson.js" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/ComputerScience/OS/LDP2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/GoogleDrive/Debian/archvsync" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/GoogleDrive/FrontendMasters/CSS-Workshop" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documents/GoogleDrive/FrontendMasters/workshop-vs-code-can-do-that" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Caches/Homebrew/ccache--git" vcs="Git" />
+  </component>
+</project>

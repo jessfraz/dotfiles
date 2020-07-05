@@ -1,0 +1,199 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"definitions": {
+		"configurations": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"name"
+				],
+				"properties": {
+					"name": {
+						"description": "構成識別子です。Mac、Linux、Win32 は、それらのプラットフォームで自動選択される構成の特別な識別子ですが、どの識別子でも使用できます。",
+						"type": "string"
+					},
+					"compilerPath": {
+						"description": "より正確な IntelliSense を有効にするために使用されているコンパイラの完全なパスです (例: /usr/bin/gcc)。",
+						"type": "string"
+					},
+					"compilerArgs": {
+						"description": "たとえば -nostdinc++、-m32 など、使用されているインクルードや定義を変更するコンパイラ引数です。",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"cStandard": {
+						"description": "IntelliSense に使用する C 言語標準のバージョンです。注意: GNU 標準は、set コンパイラをクエリして GNU 定義の取得するためにのみ使用されるため、IntelliSense は同等の C 標準バージョンをエミュレートします。",
+						"type": "string",
+						"enum": [
+							"c89",
+							"c99",
+							"c11",
+							"c18",
+							"gnu89",
+							"gnu99",
+							"gnu11",
+							"gnu18",
+							"${default}"
+						]
+					},
+					"cppStandard": {
+						"description": "IntelliSense に使用する C++ 言語標準のバージョンです。注意: GNU 標準は、set コンパイラをクエリして GNU 定義を取得するためにのみ使用されるため、IntelliSense は同等の C++ 標準バージョンをエミュレートします。",
+						"type": "string",
+						"enum": [
+							"c++98",
+							"c++03",
+							"c++11",
+							"c++14",
+							"c++17",
+							"c++20",
+							"gnu++98",
+							"gnu++03",
+							"gnu++11",
+							"gnu++14",
+							"gnu++17",
+							"gnu++20",
+							"${default}"
+						]
+					},
+					"compileCommands": {
+						"description": "ワークスペースの compile_commands.json ファイルへの完全なパスです。",
+						"type": "string"
+					},
+					"includePath": {
+						"description": "インクルードされたヘッダーを検索する際に Intellisense エンジンが使用するパスの一覧です。これらのパスでの検索は再帰的ではありません。",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"macFrameworkPath": {
+						"description": "Mac フレームワークからインクルードされたヘッダーを検索する際に Intellisense エンジンが使用するパスの一覧です。Mac 構成でのみサポートされます。",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"windowsSdkVersion": {
+						"description": "Windows で使用する Windows SDK インクルード パスのバージョン (例: '10.0.17134.0')。",
+						"type": "string",
+						"pattern": "^\\d{2}\\.\\d{1}\\.\\d{5}\\.\\d{1}$|^8\\.1$"
+					},
+					"defines": {
+						"description": "ファイルを解析する際に IntelliSense エンジンが使用するプリプロセッサ定義の一覧です。必要に応じて、= を使用して値を設定します (例: VERSION=1)。",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"intelliSenseMode": {
+						"description": "MSVC、gcc、Clang のアーキテクチャ固有のバリアントにマップするために使用する IntelliSense モードです。値が設定されていない場合または ${default} に設定されている場合、拡張機能はそのプラットフォームの既定値を選択します。Windows の既定値は msvc-x64、Linux の既定値は gcc-x64、macOS の既定値は clang-x64 です。",
+						"type": "string",
+						"enum": [
+							"clang-x86",
+							"clang-x64",
+							"clang-arm",
+							"clang-arm64",
+							"gcc-x86",
+							"gcc-x64",
+							"gcc-arm",
+							"gcc-arm64",
+							"msvc-x86",
+							"msvc-x64",
+							"msvc-arm",
+							"msvc-arm64",
+							"${default}"
+						]
+					},
+					"forcedInclude": {
+						"description": "翻訳単位のインクルード ファイルの前に含める必要があるファイルの一覧。",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"configurationProvider": {
+						"description": "ソース ファイルの IntelliSense 構成情報を提供できる VS Code 拡張機能の ID です。",
+						"type": "string"
+					},
+					"browse": {
+						"type": "object",
+						"properties": {
+							"limitSymbolsToIncludedHeaders": {
+								"description": "ヘッダーとして直接的または間接的にインクルードされたファイルのみを処理する場合は true、指定したインクルード パスにあるすべてのファイルを処理する場合は false です。",
+								"type": [
+									"boolean",
+									"string"
+								]
+							},
+							"databaseFilename": {
+								"description": "生成されるシンボル データベースへのパスです。相対パスを指定した場合、ワークスペースの既定のストレージの場所に対する相対パスになります。",
+								"type": "string"
+							},
+							"path": {
+								"description": "インクルードされたヘッダーを検索する際にタグ パーサーが使用するパスの一覧です。既定では、これらのパスでの検索は再帰的です。非再帰的な検索を示すには、'*' を指定します。たとえば、'/usr/include' を指定するとすべてのサブディレクトリが検索されますが、'/usr/include/*' を指定すると検索されません。",
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							}
+						},
+						"additionalProperties": false
+					}
+				},
+				"additionalProperties": false
+			}
+		},
+		"env": {
+			"type": "object",
+			"description": "${変数} 構文または ${env:変数} 構文を使用して、このファイルのどこからでも再利用できるカスタム変数です。",
+			"patternProperties": {
+				"(?!^workspaceFolder$)(?!^workspaceRoot$)(?!^workspaceFolderBasename$)(?!^default$)(^.+$)": {
+					"oneOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					]
+				}
+			},
+			"additionalProperties": false
+		},
+		"version": {
+			"type": "integer",
+			"description": "構成ファイルのバージョンです。このプロパティは、拡張機能によって管理されています。変更しないでください。"
+		},
+		"enableConfigurationSquiggles": {
+			"type": "boolean",
+			"default": true,
+			"description": "拡張機能が、c_cpp_properties.json で検出されたエラーを報告するかどうかを制御します。"
+		}
+	},
+	"properties": {
+		"configurations": {
+			"$ref": "#/definitions/configurations"
+		},
+		"env": {
+			"$ref": "#/definitions/env"
+		},
+		"version": {
+			"$ref": "#/definitions/version"
+		},
+		"enableConfigurationSquiggles": {
+			"$ref": "#/definitions/enableConfigurationSquiggles"
+		}
+	},
+	"required": [
+		"configurations",
+		"version"
+	],
+	"additionalProperties": false
+}

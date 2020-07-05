@@ -1,0 +1,38 @@
+{
+    "references": {
+        "NS1\\C": [
+            "./namespaces2.php"
+        ],
+        "NS1": [
+            "./namespaces2.php"
+        ],
+        "NS1\\I": [
+            "./namespaces2.php"
+        ],
+        "NS1\\T": [
+            "./namespaces2.php"
+        ]
+    },
+    "definitions": {
+        "MyNamespace1": {
+            "fqn": "MyNamespace1",
+            "extends": [],
+            "isMember": false,
+            "roamed": false,
+            "isStatic": false,
+            "canBeInstantiated": false,
+            "symbolInformation": {
+                "name": "MyNamespace1",
+                "kind": 3,
+                "location": {
+                    "uri": "./namespaces2.php"
+                },
+                "containerName": ""
+            },
+            "type": null,
+            "declarationLine": "namespace MyNamespace1;",
+            "documentation": null,
+            "signatureInformation": null
+        }
+    }
+}
