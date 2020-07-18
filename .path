@@ -15,6 +15,9 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 # add bcc tools path
 export PATH="/usr/share/bcc/tools:${PATH}"
 
+# add gnubin for mac
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:${PATH}"
+
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
 
