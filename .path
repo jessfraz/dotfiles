@@ -18,6 +18,9 @@ export PATH="/usr/share/bcc/tools:${PATH}"
 # add gnubin for mac
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:${PATH}"
 
+# add gnu getopt
+export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
+
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
 
