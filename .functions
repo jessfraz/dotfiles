@@ -283,6 +283,7 @@ repo() {
 
 	# Remove cruft from branchname
 	branch=${git_where#refs\/heads\/}
+	branch=${branch#remotes\/origin\/}
 
 	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
 	url="$base_url/$tree/$branch$relative_path"
