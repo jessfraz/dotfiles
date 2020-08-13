@@ -188,4 +188,7 @@
 	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
 
 [commit]
-	gpgsign = true
+	gpgsign = false
+[user]
+	name = Andy Swanner
+	email = andy_swanner@optum.com

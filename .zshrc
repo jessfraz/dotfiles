@@ -102,3 +102,5 @@ export CLI_REPO=~/Development/drew-angular-cli
 alias registry="docker run -d -p 5000:5000 --restart=always --name registry -v ~/registry:/var/lib/registry registry:2"
 alias nodepackages="npm -g install corona-cli expo-cli mdb-cli npm npm-check typescript yarn @angular/cli@latest eslint gatsby gatsby-cli npm-check react react-dom typescript webpack next.js"
 alias verdaccio="docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio"
+alias nocors=""/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp"
+alias listrepos=find . -maxdepth 1 -mindepth 1 -type d -exec sh -c '(echo {} && cd {} && git remote -v && echo)' \;
