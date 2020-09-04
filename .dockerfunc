@@ -715,18 +715,22 @@ osquery(){
 		--logger_tls_period=10
 }
 pandoc(){
-	local file=${*: -1}
-	local lfile
-	lfile=$(readlink -m "$(pwd)/${file}")
-	local rfile
-	rfile=$(readlink -m "/$(basename "$file")")
-	local args=${*:1:${#@}-1}
+	if [[ -n "$(which pandoc)" ]]; then
+		"$(which pandoc)" "$@"
+	else
+		local file=${*: -1}
+		local lfile
+		lfile=$(readlink -m "$(pwd)/${file}")
+		local rfile
+		rfile=$(readlink -m "/$(basename "$file")")
+		local args=${*:1:${#@}-1}
 
-	docker run --rm \
-		-v "${lfile}:${rfile}" \
-		-v /tmp:/tmp \
-		--name pandoc \
-		${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+		docker run --rm \
+			-v "${lfile}:${rfile}" \
+			-v /tmp:/tmp \
+			--name pandoc \
+			${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+	fi
 }
 pivman(){
 	del_stopped pivman
