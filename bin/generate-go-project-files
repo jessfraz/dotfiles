@@ -127,7 +127,16 @@ readme(){
 	if [[ -f "$readme_file" ]]; then
 		# Check if the travis line exists
 		old_line='[![Travis CI](https://'
-		new_line='![make-all](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20all/badge\.svg)'
+		new_line='[![make-all](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20all/badge\.svg)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/actions?query=workflow%3A%22make+all%22)'
+		n=$(grep -nF "$old_line" "$readme_file" | cut -f1 -d: || true)
+		if [[ "$n" != "" ]]; then
+			# Replace that line with the new line.
+			sed -i "${n}"'s#.*#'"${new_line}"'#' "$readme_file"
+		fi
+
+		# Check if the old make all exists
+		old_line='![make-all](https://'
+		new_line='[![make-all](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20all/badge\.svg)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/actions?query=workflow%3A%22make+all%22)'
 		n=$(grep -nF "$old_line" "$readme_file" | cut -f1 -d: || true)
 		if [[ "$n" != "" ]]; then
 			# Replace that line with the new line.
@@ -135,9 +144,9 @@ readme(){
 		fi
 
 		# Add the make image badge if it's not already there.
-		new_line='![make-image](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20image/badge\.svg)'
+		new_line='[![make-image](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20image/badge\.svg)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/actions?query=workflow%3A%22make+image%22)'
 		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
-			# Add the new line after the Travis CI badge line.
+			# Add the new line after the make all badge line.
 			match_line='.*\[make-all\]*.'
 			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
 		fi
