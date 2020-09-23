@@ -1,0 +1,31 @@
+<application>
+  <component name="RecentProjectsManager">
+    <option name="recentPaths">
+      <list>
+        <option value="$USER_HOME$/Development/optumcare-template-authoring-ui" />
+      </list>
+    </option>
+    <option name="openPaths">
+      <list>
+        <option value="$USER_HOME$/Development/optumcare-template-authoring-ui" />
+      </list>
+    </option>
+    <option name="lastPath" value="$USER_HOME$/Development/optumcare-template-authoring-ui" />
+    <option name="pid" value="" />
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/Development/optumcare-template-authoring-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1600892097060" />
+              <option name="buildTimestamp" value="1553665133965" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</application>

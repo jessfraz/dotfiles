@@ -10,3 +10,6 @@
 [submodule "homebrew"]
 	path = homebrew
 	url = https://github.com/Homebrew/homebrew.git
+[submodule ".ohmyzsh"]
+	path = .ohmyzsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git

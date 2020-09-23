@@ -1,0 +1,5 @@
+<application>
+  <component name="aws">
+    <option name="promptedForTelemetry" value="true" />
+  </component>
+</application>

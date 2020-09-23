@@ -1,0 +1,7 @@
+<application>
+  <component name="DimensionService">
+    <location key="WELCOME_SCREEN.-5520.0.1920.1200" x="-4847" y="528" />
+    <location key="com.intellij.ide.util.TipDialog.-5520.0.1920.1200" x="-4880" y="411" />
+    <location key="com.intellij.ide.util.TipDialog.0.0.3584.2240@192dpi" x="1152" y="808" />
+  </component>
+</application>
