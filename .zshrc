@@ -100,7 +100,11 @@ export CLI_REPO=~/Development/drew-angular-cli
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias registry="docker run -d -p 5000:5000 --restart=always --name registry -v ~/registry:/var/lib/registry registry:2"
-alias nodepackages="npm -g install corona-cli expo-cli mdb-cli npm npm-check typescript yarn @angular/cli@latest eslint gatsby gatsby-cli npm-check react react-dom typescript webpack next.js"
+alias nodepackages="npm -g install corona-cli expo-cli mdb-cli npm npm-check typescript yarn @angular/cli@latest eslint gatsby gatsby-cli npm-check react react-dom typescript webpack next.js karma mocha karma-jasmine karma-chrome-launcher karma-jasmine-html-reporter karma-coverage-istanbul-reporter @angular-devkit/build-angular karma-spec-reporter"
 alias verdaccio="docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio"
 alias nocors='"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp'
 alias listrepos="find . -maxdepth 1 -mindepth 1 -type d -exec sh -c '(echo {} && cd {} && git remote -v && echo)' \;"
+alias optumrepo="npm config set registry https://repo1.uhc.com/artifactory/api/npm/npm-virtual/"
+alias ngtest="ng test --browsers=Chrome --karma-config ~/Karma/aswanner-karma.conf.js"
+
+

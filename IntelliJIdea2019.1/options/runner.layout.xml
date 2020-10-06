@@ -1,0 +1,73 @@
+<application>
+  <component name="RunnerLayoutSettings">
+    <runner id="Debug">
+      <ViewImpl>
+        <option name="ID" value="FrameContent" />
+        <option name="minimizedInGrid" value="false" />
+        <option name="placeInGrid" value="left" />
+        <option name="tabIndex" value="0" />
+        <option name="window" value="0" />
+      </ViewImpl>
+      <ViewImpl>
+        <option name="ID" value="VariablesContent" />
+        <option name="minimizedInGrid" value="false" />
+        <option name="placeInGrid" value="center" />
+        <option name="tabIndex" value="0" />
+        <option name="window" value="0" />
+      </ViewImpl>
+      <ViewImpl>
+        <option name="ID" value="ConsoleContent" />
+        <option name="minimizedInGrid" value="false" />
+        <option name="placeInGrid" value="bottom" />
+        <option name="tabIndex" value="1" />
+        <option name="window" value="0" />
+      </ViewImpl>
+      <ViewImpl>
+        <option name="ID" value="SCRIPTS_CONTENT" />
+        <option name="minimizedInGrid" value="false" />
+        <option name="placeInGrid" value="bottom" />
+        <option name="tabIndex" value="2" />
+        <option name="window" value="0" />
+      </ViewImpl>
+      <ViewImpl>
+        <option name="ID" value="js.language.debugger.console" />
+        <option name="minimizedInGrid" value="false" />
+        <option name="placeInGrid" value="bottom" />
+        <option name="tabIndex" value="3" />
+        <option name="window" value="0" />
+      </ViewImpl>
+      <TabImpl>
+        <option name="displayName" value="Debugger" />
+        <option name="leftProportion" value="0.19895288" />
+      </TabImpl>
+      <TabImpl>
+        <option name="bottomProportion" value="0.0" />
+        <option name="defaultIndex" value="1" />
+        <option name="index" value="1" />
+      </TabImpl>
+      <TabImpl>
+        <option name="defaultIndex" value="2" />
+        <option name="index" value="2" />
+      </TabImpl>
+      <TabImpl>
+        <option name="bottomProportion" value="0.0" />
+        <option name="defaultIndex" value="3" />
+        <option name="index" value="3" />
+      </TabImpl>
+      <General />
+    </runner>
+    <runner id="JavaRunner">
+      <ViewImpl>
+        <option name="ID" value="ConsoleContent" />
+        <option name="minimizedInGrid" value="false" />
+        <option name="placeInGrid" value="bottom" />
+        <option name="tabIndex" value="0" />
+        <option name="window" value="0" />
+      </ViewImpl>
+      <TabImpl>
+        <option name="bottomProportion" value="0.0" />
+      </TabImpl>
+      <General />
+    </runner>
+  </component>
+</application>

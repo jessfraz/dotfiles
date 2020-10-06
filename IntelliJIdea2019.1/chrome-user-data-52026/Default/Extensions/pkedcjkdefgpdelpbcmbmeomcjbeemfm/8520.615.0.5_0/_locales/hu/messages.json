@@ -1,0 +1,506 @@
+{
+   "1018984561488520517": {
+      "message": "Lefagy"
+   },
+   "1213957982723875920": {
+      "message": "Az alábbiak közül melyik jellemzi legjobban hálózatát?"
+   },
+   "128276876460319075": {
+      "message": "Eszközfelfedezés"
+   },
+   "1428448869078126731": {
+      "message": "Videó folyamatossága"
+   },
+   "1522140683318860351": {
+      "message": "Sikertelen kapcsolódás. Kérjük, próbálja újra."
+   },
+   "1550904064710828958": {
+      "message": "Folyamatos"
+   },
+   "1636686747687494376": {
+      "message": "Tökéletes"
+   },
+   "1802762746589457177": {
+      "message": "Hangerő"
+   },
+   "1850397500312020388": {
+      "message": "Látja a Chromecastot a $START_LINK$Google Home alkalmazásban$END_LINK$? $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "END_SPAN": {
+            "content": "$2"
+         },
+         "START_LINK": {
+            "content": "$3"
+         },
+         "START_SPAN": {
+            "content": "$4"
+         }
+      }
+   },
+   "1850397500312020388_ph": {
+      "message": "\u003C/a>\u003C/span>\u003Ca href=\"https://support.google.com/chromecast/answer/2998456\" target=\"_blank\">\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "2145752429973207616": {
+      "message": "További megjegyzések: $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "2145752429973207616_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "2159130950882492111": {
+      "message": "Mégse"
+   },
+   "2194670894476780934": {
+      "message": "Nem alkalmazható"
+   },
+   "2297080986956220930": {
+      "message": "{PARTICIPANTS,plural,offset:1 =0{Hangout-beszélgetés}=1{Hangout-beszélgetés vele: {ORGANIZER}}=2{Hangout-beszélgetés vele: {ORGANIZER} és 1 további felhasználóval}other{Hangout-beszélgetés vele: {ORGANIZER} és # további felhasználóval}}"
+   },
+   "244647017322945605": {
+      "message": "Jó – DVD"
+   },
+   "2575016469622936324": {
+      "message": "Asztalvetítési/lapvetítési minőség"
+   },
+   "2807800733729323332": {
+      "message": "Igen"
+   },
+   "2810417817914017289": {
+      "message": "Lejátszás"
+   },
+   "3219866268410307919": {
+      "message": "Visszajelzés küldése…"
+   },
+   "3239956785410157548": {
+      "message": "Válasz"
+   },
+   "3326722026796849289": {
+      "message": "Egyéb"
+   },
+   "3413021810593924462": {
+      "message": "Szünet"
+   },
+   "3542042671420335679": {
+      "message": "Nem"
+   },
+   "3567591856726172993": {
+      "message": "Rendben"
+   },
+   "4094392217219068632": {
+      "message": "E-mail-cím (nem kötelező):"
+   },
+   "4097220110929447276": {
+      "message": "A fent kiválasztott adatok mellett a rendszer elküldi a Chrome és az operációs rendszer verziószámát, a Cast beállításait, a tükrözési teljesítmény statisztikáit és a kommunikációs csatorna diagnosztikai naplóit. Ez a visszajelzés a problémák megállapítására és a funkció fejlesztésére szolgál. Minden szándékosan vagy véletlenül elküldött személyes információt az adatvédelmi irányelveinknek megfelelően kezelünk. A visszajelzés elküldésével elfogadja, hogy a Google felhasználhatja az Ön által küldött visszajelzéseket a Google-termékek és -szolgáltatások fejlesztése érdekében."
+   },
+   "4148300086676792937": {
+      "message": "Elveti a visszajelzést?"
+   },
+   "4163185390680253103": {
+      "message": "Programhiba vagy hiba"
+   },
+   "4246483347873264186": {
+      "message": "Az átküldési kérelem megtagadva. Kérjük, várjon egy keveset, mielőtt ismét próbálkozna."
+   },
+   "4528089202128275824": {
+      "message": "Az átküldés nem sikerült. Próbálja újra."
+   },
+   "4575332923598659024": {
+      "message": "A Hangout-beszélgetés nevét nem sikerült feloldani. Kérjük, ellenőrizze a nevet és próbálja újra."
+   },
+   "4592127349908255218": {
+      "message": "Érthetetlen"
+   },
+   "4756056595565370923": {
+      "message": "A visszajelzés elküldése nem sikerült. Újrapróbálkozás…"
+   },
+   "492097680647953484": {
+      "message": "Funkció igénylése"
+   },
+   "5014364904504073524": {
+      "message": "Tökéletes"
+   },
+   "5028289843569700466": {
+      "message": "Az Ön visszajelzése fontos számunkra a Google Cast fejlesztéséhez. Az átküldéssel kapcsolatos problémák megoldásához tekintse meg a $START_LINK$súgót$END_LINK$.",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "START_LINK": {
+            "content": "$2"
+         }
+      }
+   },
+   "5028289843569700466_ph": {
+      "message": "\u003C/a>\u003Ca href=\"https://support.google.com/chromecast/troubleshooter/2995236\">"
+   },
+   "5363086287710390513": {
+      "message": "Elfogadható"
+   },
+   "5375576275991472719": {
+      "message": "Remek – HD"
+   },
+   "5385436389563925676": {
+      "message": "A számítógép és a Chromecast ugyanazon a Wi-Fi hálózaton van"
+   },
+   "5440055726839070415": {
+      "message": "Milyen visszajelzést kíván küldeni?"
+   },
+   "545449835455981095": {
+      "message": "A rendszerhangok átküldése nem támogatott ezen az eszközön."
+   },
+   "5465034684300203467": {
+      "message": "Milyen tartalmat/URL-t küldött át?"
+   },
+   "5485620192329479690": {
+      "message": "Hibakeresési naplók küldése (javasolt)"
+   },
+   "5699813974548050528": {
+      "message": "Elfogadható – FM"
+   },
+   "5723583529370342957": {
+      "message": "Időnként akadozik"
+   },
+   "5910595154486533449": {
+      "message": "Gyenge"
+   },
+   "5991427458288444010": {
+      "message": "Az átküldési kérelmére nem érkezett válasz."
+   },
+   "6063910461797960050": {
+      "message": "A Hangouts használatára a Google adatvédelmi irányelvei vonatkoznak."
+   },
+   "6086448804586867636": {
+      "message": "* Kötelező"
+   },
+   "642051245326856511": {
+      "message": "Kérjük, írja be ide visszajelzését: $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "642051245326856511_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "6585975561839203683": {
+      "message": "Nem próbáltam"
+   },
+   "6614468912728530636": {
+      "message": "Nézhetetlen"
+   },
+   "6963873398546068901": {
+      "message": "Figyelem! A részletes naplózás engedélyezve van: az alábbi naplók URL-eket vagy egyéb bizalmas adatokat tartalmazhatnak. Kérjük, ellenőrizze az információkat, és győződjön meg róla, hogy nem okoz kellemetlenséget az elküldésük."
+   },
+   "6997602168024654529": {
+      "message": "Nem vagyok biztos benne"
+   },
+   "7156560800952850585": {
+      "message": "Mondja el, mi történik a Google Casttal."
+   },
+   "715869212995214079": {
+      "message": "$START_LINK$Hibakeresési naplók$END_LINK$ küldése (javasolt)",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "START_LINK": {
+            "content": "$2"
+         }
+      }
+   },
+   "715869212995214079_ph": {
+      "message": "\u003C/a>\u003Ca href=\"\">"
+   },
+   "7603034707785674700": {
+      "message": "Némítás"
+   },
+   "7735695102441495789": {
+      "message": "Nem volt elég résztvevő a Hangout-beszélgetésben, hogy aktív maradjon."
+   },
+   "7824803162979416790": {
+      "message": "A számítógép és a Chromecast különböző Wi-Fi hálózatokon van (pl. 2,4 GHz és 5 GHz)"
+   },
+   "7876724262035435114": {
+      "message": "Átküldési és eszköznaplók"
+   },
+   "8009014317872238527": {
+      "message": "Némítás feloldása"
+   },
+   "8083429352755760987": {
+      "message": "Hangminőség"
+   },
+   "8205999658352447129": {
+      "message": "Döcögős"
+   },
+   "8330636888136075045": {
+      "message": "Tükrözés minőségével kapcsolatos részletek $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "8330636888136075045_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "843316808366399491": {
+      "message": "Gyenge"
+   },
+   "845494741086179740": {
+      "message": "A számítógép vezetékes, míg a Chromecast Wi-Fi hálózaton van"
+   },
+   "8515148417333877999": {
+      "message": "Jó"
+   },
+   "8530815930928232626": {
+      "message": "Videóminőség"
+   },
+   "8636962961150071298": {
+      "message": "Ugrás"
+   },
+   "8706273405040403641": {
+      "message": "Köszönjük visszajelzését."
+   },
+   "9059560719840598868": {
+      "message": "Visszajelzés küldése"
+   },
+   "9120942669794506861": {
+      "message": "Rendelkezik telepített speciális VPN, proxy, tűzfal vagy NAS szoftverrel?"
+   },
+   "9211708838274008657": {
+      "message": "A visszajelzés elküldése nem sikerült. Kérjük, próbálkozzon később."
+   },
+   "MEDIA_ROUTER_ADDITIONAL_COMMENTS": {
+      "message": "2145752429973207616"
+   },
+   "MEDIA_ROUTER_AUDIO_QUALITY": {
+      "message": "8083429352755760987"
+   },
+   "MEDIA_ROUTER_CANCEL_BUTTON": {
+      "message": "2159130950882492111"
+   },
+   "MEDIA_ROUTER_CONTENT_QUESTION": {
+      "message": "5465034684300203467"
+   },
+   "MEDIA_ROUTER_DID_NOT_TRY": {
+      "message": "6585975561839203683"
+   },
+   "MEDIA_ROUTER_FEEDBACK_EMAIL_FIELD": {
+      "message": "4094392217219068632"
+   },
+   "MEDIA_ROUTER_FEEDBACK_FORM_DESCRIPTION": {
+      "message": "5028289843569700466"
+   },
+   "MEDIA_ROUTER_FEEDBACK_HEADER": {
+      "message": "7156560800952850585"
+   },
+   "MEDIA_ROUTER_FEEDBACK_PROMPT": {
+      "message": "642051245326856511"
+   },
+   "MEDIA_ROUTER_FEEDBACK_REQUIRED": {
+      "message": "6086448804586867636"
+   },
+   "MEDIA_ROUTER_FEEDBACK_TYPE_QUESTION": {
+      "message": "5440055726839070415"
+   },
+   "MEDIA_ROUTER_MIRRORING_QUALITY_SUBHEADING": {
+      "message": "8330636888136075045"
+   },
+   "MEDIA_ROUTER_NETWORK_DIFFERENT_WIFI": {
+      "message": "7824803162979416790"
+   },
+   "MEDIA_ROUTER_NETWORK_QUESTION": {
+      "message": "1213957982723875920"
+   },
+   "MEDIA_ROUTER_NETWORK_SAME_WIFI": {
+      "message": "5385436389563925676"
+   },
+   "MEDIA_ROUTER_NETWORK_WIRED_PC": {
+      "message": "845494741086179740"
+   },
+   "MEDIA_ROUTER_NO": {
+      "message": "3542042671420335679"
+   },
+   "MEDIA_ROUTER_PRIVACY_DATA_USAGE": {
+      "message": "4097220110929447276"
+   },
+   "MEDIA_ROUTER_SEND_BUTTON": {
+      "message": "9059560719840598868"
+   },
+   "MEDIA_ROUTER_SEND_LOGS": {
+      "message": "715869212995214079"
+   },
+   "MEDIA_ROUTER_SETUP_VISIBILITY_QUESTION": {
+      "message": "1850397500312020388"
+   },
+   "MEDIA_ROUTER_SOFTWARE_QUESTION": {
+      "message": "9120942669794506861"
+   },
+   "MEDIA_ROUTER_UNKNOWN": {
+      "message": "6997602168024654529"
+   },
+   "MEDIA_ROUTER_VIDEO_QUALITY": {
+      "message": "8530815930928232626"
+   },
+   "MEDIA_ROUTER_VIDEO_SMOOTHNESS": {
+      "message": "1428448869078126731"
+   },
+   "MEDIA_ROUTER_YES": {
+      "message": "2807800733729323332"
+   },
+   "MSG_FAILED_TO_CAST": {
+      "message": "4528089202128275824"
+   },
+   "MSG_KNOCK_DENIED": {
+      "message": "4246483347873264186"
+   },
+   "MSG_KNOCK_TIMEOUT": {
+      "message": "5991427458288444010"
+   },
+   "MSG_MR_CONNECT_FAILED": {
+      "message": "1522140683318860351"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_ACCEPTABLE": {
+      "message": "5699813974548050528"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_GOOD": {
+      "message": "8515148417333877999"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_PERFECT": {
+      "message": "1636686747687494376"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_POOR": {
+      "message": "843316808366399491"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_UNINTELLIGIBLE": {
+      "message": "4592127349908255218"
+   },
+   "MSG_MR_FEEDBACK_DISCARD_CONFIRMATION": {
+      "message": "4148300086676792937"
+   },
+   "MSG_MR_FEEDBACK_FINE_LOGS_WARNING": {
+      "message": "6963873398546068901"
+   },
+   "MSG_MR_FEEDBACK_LOGS_HEADER": {
+      "message": "7876724262035435114"
+   },
+   "MSG_MR_FEEDBACK_NA": {
+      "message": "2194670894476780934"
+   },
+   "MSG_MR_FEEDBACK_OK": {
+      "message": "3567591856726172993"
+   },
+   "MSG_MR_FEEDBACK_RESENDING": {
+      "message": "4756056595565370923"
+   },
+   "MSG_MR_FEEDBACK_SENDING": {
+      "message": "3219866268410307919"
+   },
+   "MSG_MR_FEEDBACK_SEND_FAIL": {
+      "message": "9211708838274008657"
+   },
+   "MSG_MR_FEEDBACK_SEND_LOGS": {
+      "message": "5485620192329479690"
+   },
+   "MSG_MR_FEEDBACK_SEND_SUCCESS": {
+      "message": "8706273405040403641"
+   },
+   "MSG_MR_FEEDBACK_TYPE_BUG_OR_ERROR": {
+      "message": "4163185390680253103"
+   },
+   "MSG_MR_FEEDBACK_TYPE_DISCOVERY": {
+      "message": "128276876460319075"
+   },
+   "MSG_MR_FEEDBACK_TYPE_FEATURE_REQUEST": {
+      "message": "492097680647953484"
+   },
+   "MSG_MR_FEEDBACK_TYPE_OTHER": {
+      "message": "3326722026796849289"
+   },
+   "MSG_MR_FEEDBACK_TYPE_PROJECTION_QUALITY": {
+      "message": "2575016469622936324"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_ACCEPTABLE": {
+      "message": "5363086287710390513"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_FREEZES": {
+      "message": "1018984561488520517"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_GOOD": {
+      "message": "244647017322945605"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_GREAT": {
+      "message": "5375576275991472719"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_JERKY": {
+      "message": "8205999658352447129"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_PERFECT": {
+      "message": "5014364904504073524"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_POOR": {
+      "message": "5910595154486533449"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_SMOOTH": {
+      "message": "1550904064710828958"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_STUTTER": {
+      "message": "5723583529370342957"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_UNWATCHABLE": {
+      "message": "6614468912728530636"
+   },
+   "MSG_MR_FEEDBACK_YOUR_ANSWER": {
+      "message": "3239956785410157548"
+   },
+   "MSG_MR_HANGOUT_INACTIVE": {
+      "message": "7735695102441495789"
+   },
+   "MSG_MR_HANGOUT_INVALID": {
+      "message": "4575332923598659024"
+   },
+   "MSG_MR_HANGOUT_PRIVACY": {
+      "message": "6063910461797960050"
+   },
+   "MSG_MR_HANGOUT_TITLE_": {
+      "message": "2297080986956220930"
+   },
+   "MSG_MR_MIRROR_NO_AUDIO_CAPTURED": {
+      "message": "545449835455981095"
+   },
+   "MSG_MUTE": {
+      "message": "7603034707785674700"
+   },
+   "MSG_PAUSE": {
+      "message": "3413021810593924462"
+   },
+   "MSG_PLAY": {
+      "message": "2810417817914017289"
+   },
+   "MSG_SEEK": {
+      "message": "8636962961150071298"
+   },
+   "MSG_UNMUTE": {
+      "message": "8009014317872238527"
+   },
+   "MSG_VOLUME": {
+      "message": "1802762746589457177"
+   }
+}

@@ -2,4 +2,14 @@
   <component name="aws">
     <option name="promptedForTelemetry" value="true" />
   </component>
+  <component name="notices">
+    <option name="value">
+      <list>
+        <NoticeState>
+          <option name="id" value="JetBrainsMinimumVersion_192" />
+          <option name="noticeSuppressedValue" value="2019.1" />
+        </NoticeState>
+      </list>
+    </option>
+  </component>
 </application>
