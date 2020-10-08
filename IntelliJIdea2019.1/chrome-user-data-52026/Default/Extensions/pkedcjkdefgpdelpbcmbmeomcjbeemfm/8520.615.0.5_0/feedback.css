@@ -1,0 +1,205 @@
+:root {
+  --paper-blue-500: rgb(33, 150, 243);
+  --paper-blue-500-dark: rgba(33, 150, 243, 0.87);
+  --paper-blue-500-light: rgba(33, 150, 243, 0.26);
+};
+
+body {
+  font-size: 12px;
+  height: inherit;
+}
+
+#description,
+#required-legend {
+  margin-top: 22px;
+}
+
+#description,
+#form-buttons,
+#required-legend,
+#title {
+  padding: 0 17px;
+}
+
+.informative {
+  font-size: 13px;
+  line-height: 13px;
+}
+
+#feedback-confirmation {
+  width: initial;
+}
+
+#feedback-fine-log-warning {
+  color: rgb(219, 68, 55);
+  margin: 10px 0;
+}
+
+#feedback-type-toggle,
+.question {
+  padding: 16px 17px;
+}
+
+#form {
+  -webkit-padding-end: 24px;
+  -webkit-padding-start: 24px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+  margin: -100px auto 48px auto;
+  padding: 34px 17px;
+  width: 720px;
+  z-index: 1;
+}
+
+#form-buttons {
+  flex-direction: row;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 34px;
+}
+
+#header {
+  margin-bottom: 22px;
+}
+
+#header-banner {
+  background-color: var(--paper-blue-500);
+  height: 278px;
+}
+
+.md-button.md-raised {
+  box-shadow: none !important;
+}
+
+.md-button.md-raised[disabled] {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+md-checkbox.md-checked .md-icon {
+  background-color: var(--paper-blue-500);
+}
+
+md-dialog {
+  width: 80%;
+}
+
+md-dialog-content {
+  padding: 20px;
+}
+
+md-input-container {
+  margin-top: 18px;
+}
+
+md-input-container label {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+md-input-container .md-input,
+md-radio-button {
+  font-size: 16px;
+}
+
+md-radio-button .md-ink-ripple,
+md-radio-button.md-checked .md-ink-ripple {
+  color: var(--paper-blue-500-dark);
+}
+
+md-radio-button .md-off,
+md-radio-button .md-on {
+  border-color: rgba(0, 0, 0, 0.37);
+  background-color: white;
+}
+
+md-radio-button.md-checked .md-off {
+  border-color: var(--paper-blue-500);
+}
+
+md-radio-button.md-checked .md-on {
+  background-color: var(--paper-blue-500);
+}
+
+md-radio-group {
+  padding: 8px 0 24px 0;
+}
+
+md-radio-group .md-ink-ripple {
+  color: var(--paper-blue-500-light);
+}
+
+pre {
+  border: 1px solid rgb(191, 191, 191);
+  font-size: 9.75px;
+  margin: 24px 0;
+  max-height: 240px;
+  min-height: 120px;
+  overflow: scroll;
+  width: 100%;
+}
+
+.required-message {
+  color: rgb(211, 47, 47);
+}
+
+.send-logs {
+  font-size: 15px;
+}
+
+#send-feedback-text,
+.subheading {
+  color: black;
+  font-size: 20px;
+  line-height: 135%;
+  margin-bottom: 10px;
+}
+
+.table {
+  display: table;
+}
+
+.table-cell {
+  display: table-cell;
+  height: 2.5em;
+  min-width: 215px;
+  padding: .25em;
+  vertical-align: middle;
+  width: 215px;
+}
+
+.table-cell.subheading {
+  -webkit-padding-start: 4px;
+  font-size: 16px;
+  min-width: 200px !important;
+  overflow-x: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+#table-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-row.even {
+  background-color: rgb(250, 250, 250);
+}
+
+.table-row.odd {
+  background-color: rgb(255, 255, 255);
+}
+
+#title {
+  font-size: 32px;
+  line-height: 135%;
+}
+
+#mr-version {
+  text-align: right;
+  font-size: 0.8em;
+}

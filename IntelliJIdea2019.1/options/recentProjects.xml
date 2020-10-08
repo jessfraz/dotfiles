@@ -1,0 +1,132 @@
+<application>
+  <component name="RecentProjectsManager">
+    <option name="recentPaths">
+      <list>
+        <option value="$USER_HOME$/Development/optumcare-medicalmgmt-ui" />
+        <option value="$USER_HOME$/Development/optumcare-medicalmgmt-functions" />
+      </list>
+    </option>
+    <option name="openPaths">
+      <list>
+        <option value="$USER_HOME$/Development/optumcare-medicalmgmt-ui" />
+      </list>
+    </option>
+    <option name="lastPath" value="$USER_HOME$/Development/optumcare-medicalmgmt-ui" />
+    <option name="pid" value="" />
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/Development/optumcare-medicalmgmt-functions">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601674516373" />
+              <option name="buildTimestamp" value="1553665131224" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/optumcare-medicalmgmt-guidelines-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601566228942" />
+              <option name="buildTimestamp" value="1553665137815" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/optumcare-medicalmgmt-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601942741034" />
+              <option name="buildTimestamp" value="1553665117505" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/optumcare-template-authoring-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601565765260" />
+              <option name="buildTimestamp" value="1553665137815" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/optumcare-user-management-api">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601479977403" />
+              <option name="buildTimestamp" value="1553665127991" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/root-spa-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601472537951" />
+              <option name="buildTimestamp" value="1553665127991" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/template-authoring-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601496908957" />
+              <option name="buildTimestamp" value="1553665119058" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/um-rules-authoring-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601416108889" />
+              <option name="buildTimestamp" value="1553665136222" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/user-management-api">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601563863528" />
+              <option name="buildTimestamp" value="1553665135782" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Development/user-management-ui">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="IU-191.6183.87" />
+              <option name="productionCode" value="IU" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1601558797160" />
+              <option name="buildTimestamp" value="1553665135782" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="lastProjectLocation" value="$USER_HOME$/Development" />
+  </component>
+</application>

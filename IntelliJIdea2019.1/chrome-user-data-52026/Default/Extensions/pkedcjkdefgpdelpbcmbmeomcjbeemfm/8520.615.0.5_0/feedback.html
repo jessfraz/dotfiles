@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html ng-app="feedbackApp" ng-controller="FeedbackCtrl"
+    ng-csp xmlns="http://www.w3.org/1999/xhtml" lang="top.language">
+<head>
+  <title>
+    Chrome Media Router feedback
+  </title>
+  <link rel="stylesheet" type="text/css" href="feedback.css">
+  <link rel="stylesheet" type="text/css" href="material_css_min.css">
+  <script src="angular.js"></script>
+  <script type="text/javascript" src="common.js"></script>
+  <script type="text/javascript" src="feedback_script.js"></script>
+</head>
+<body>
+  <div id="header-banner"></div>
+  <div>
+    <div id="form">
+      <div id="header">
+        <div id="title">
+          <angular-message key="MEDIA_ROUTER_FEEDBACK_HEADER"
+              desc="Header of the Media Router feedback page.">
+            Tell us what's happening with Google Cast.
+          </angular-message>
+        </div>
+        <div id="description" class="informative">
+          <angular-message key="MEDIA_ROUTER_FEEDBACK_FORM_DESCRIPTION"
+              desc="Text to describe the feedback form.">
+            Your feedback helps us to improve Google Cast and is appreciated.
+            For help troubleshooting issues with cast, please refer to the
+            <a href="https://support.google.com/chromecast/troubleshooter/2995236">
+            help center</a>.
+          </angular-message>
+        </div>
+        <div id="required-legend" class="informative required-message">
+          <angular-message key="MEDIA_ROUTER_FEEDBACK_REQUIRED"
+              desc="Text in a legend to indicate required field.">
+            * Required
+          </angular-message>
+        </div>
+      </div>
+      <div id="feedback-type-toggle">
+        <div class="subheading">
+          <angular-message key="MEDIA_ROUTER_FEEDBACK_TYPE_QUESTION"
+              desc="Text for the feedback type question.">
+            What kind of feedback are you providing?
+          </angular-message>
+        </div>
+        <md-radio-group ng-model="top.feedbackType">
+          <md-radio-button ng-repeat="type in feedbackTypes"
+              value="{{type.value}}">
+            {{type.desc}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <div ng-switch="feedbackType">
+        <div ng-switch-default>
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_FEEDBACK_PROMPT"
+                  desc="Text for the feedback input box in the feedback form.">
+                Please enter your feedback here:
+                <span class="required-message"
+                    ng-show="!top.sufficientFeedback">*</span>
+              </angular-message>
+            </span>
+            <md-input-container class="md-block">
+              <label></label>
+              <textarea ng-model="top.feedbackDescription" rows="8" cols="60"
+                  placeholder="{{top.yourAnswerText}}"></textarea>
+            </md-input-container>
+          </div>
+        </div>
+        <div ng-switch-when="MirroringQuality" id="mirroring-quality">
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_MIRRORING_QUALITY_SUBHEADING"
+                  desc="Text for audio quality question.">
+                Mirroring Quality Details
+                <span class="required-message"
+                    ng-show="!top.sufficientFeedback">*</span>
+              </angular-message>
+            </span>
+            <div id="table-container">
+              <div class="table">
+                <div class="table-row odd">
+                  <span class="table-cell subheading">
+                    <angular-message key="MEDIA_ROUTER_VIDEO_SMOOTHNESS"
+                        desc="Text for video smoothness question.">
+                      Video Smoothness
+                    </angular-message>
+                  </span>
+                  <md-radio-group ng-model="top.videoSmoothness">
+                    <md-radio-button ng-repeat="r in videoSmoothnessRatings"
+                        value="{{r.id}} ({{r.desc}})" id="vsr-{{r.id}}"
+                        class="table-cell">
+                      {{r.text}}
+                    </md-radio-button>
+                  </md-radio-group>
+                </div>
+                <div class="table-row even">
+                  <span class="table-cell subheading">
+                    <angular-message key="MEDIA_ROUTER_VIDEO_QUALITY"
+                        desc="Text for video quality question.">
+                      Video Quality
+                    </angular-message>
+                  </span>
+                  <md-radio-group ng-model="top.videoQuality">
+                    <md-radio-button ng-repeat="r in videoQualityRatings"
+                        value="{{r.id}} ({{r.desc}})" id="vqr-{{r.id}}"
+                        class="table-cell">
+                      {{r.text}}
+                    </md-radio-button>
+                  </md-radio-group>
+                </div>
+                <div class="table-row odd">
+                  <span class="table-cell subheading">
+                    <angular-message key="MEDIA_ROUTER_AUDIO_QUALITY"
+                        desc="Text for audio quality question.">
+                      Audio Quality
+                    </angular-message>
+                  </span>
+                  <md-radio-group ng-model="top.audioQuality">
+                    <md-radio-button ng-repeat="r in audioQualityRatings"
+                        value="{{r.id}} ({{r.desc}})" id="aqr-{{r.id}}"
+                        class="table-cell">
+                      {{r.text}}
+                    </md-radio-button>
+                  </md-radio-group>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_CONTENT_QUESTION"
+                  desc="Text for the question about content being cast.">
+                What content/URL were you casting?
+              </angular-message>
+            </span>
+            <md-input-container class="md-block">
+              <label></label>
+              <input ng-model="top.projectedContentUrl"
+                  placeholder="{{top.yourAnswerText}}" />
+            </md-input-container>
+          </div>
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_ADDITIONAL_COMMENTS"
+                  desc="Text for field in feedback form for other comments.">
+                Additional comments:
+                <span class="required-message"
+                    ng-show="!top.sufficientFeedback">*</span>
+              </angular-message>
+            </span>
+            <md-input-container class="md-block">
+              <label></label>
+              <input type="text" ng-model="top.comments"
+                  placeholder="{{top.yourAnswerText}}" />
+            </md-input-container>
+          </div>
+        </div>
+        <div ng-switch-when="Discovery">
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_SETUP_VISIBILITY_QUESTION"
+                  desc="Text for the question about device visibility through
+                      setup flow">
+                Are you able to see your Chromecast in the
+                <a href="https://support.google.com/chromecast/answer/2998456" target="_blank">
+                  Google Home app</a>?
+                <span class="required-message"
+                    ng-show="!top.sufficientFeedback">*</span>
+              </angular-message>
+            </span>
+            <md-radio-group ng-model="top.visibleInSetup" layout="column">
+              <md-radio-button value="Yes">
+                <!-- <angular-message> doesn't get localized when it's directly
+                  inside a MD element, so we wrap it in a <span>. -->
+                <span>
+                  <angular-message key="MEDIA_ROUTER_YES"
+                      desc="Label for yes option.">
+                    Yes
+                  </angular-message>
+                </span>
+              </md-radio-button>
+              <md-radio-button value="No">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_NO"
+                      desc="Label for no option.">
+                    No
+                  </angular-message>
+                </span>
+              </md-radio-button>
+              <md-radio-button value="Unknown">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_DID_NOT_TRY"
+                      desc="Label for 'did not try' option.">
+                    Did not try
+                  </angular-message>
+                </span>
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_SOFTWARE_QUESTION"
+                  desc="Text for the question about installed software.">
+                Do you have any special VPN, proxy, firewall, or NAS software
+                installed?
+              </angular-message>
+            </span>
+            <md-radio-group ng-model="top.hasNetworkSoftware" layout="column">
+              <md-radio-button value="Yes">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_YES"
+                      desc="Label for yes option.">
+                    Yes
+                  </angular-message>
+                </span>
+              </md-radio-button>
+              <md-radio-button value="No">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_NO"
+                      desc="Label for no option.">
+                    No
+                  </angular-message>
+                </span>
+              </md-radio-button>
+              <md-radio-button value="Unknown">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_UNKNOWN"
+                      desc="Label for not sure option.">
+                    Not sure
+                  </angular-message>
+                </span>
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_NETWORK_QUESTION"
+                  desc="Text for the question describing the network.">
+                Which of the following best describes your network?
+              </angular-message>
+            </span>
+            <md-radio-group ng-model="top.networkDescription" layout="column">
+              <md-radio-button value="SameWifi">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_NETWORK_SAME_WIFI"
+                      desc="Option for describing the network with PC and
+                      chromecast on the same Wi-Fi network.">
+                    PC and Chromecast on the same Wi-Fi network
+                  </angular-message>
+                </span>
+              </md-radio-button>
+              <md-radio-button value="DifferentWifi">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_NETWORK_DIFFERENT_WIFI"
+                      desc="Option for describing the network with PC and
+                      chromecast on different Wi-Fi networks.">
+                    PC and Chromecast on different Wi-Fi networks (e.g. 2.4GHz
+                    vs. 5GHz)
+                  </angular-message>
+                </span>
+              </md-radio-button>
+              <md-radio-button value="WiredPC">
+                <span>
+                  <angular-message key="MEDIA_ROUTER_NETWORK_WIRED_PC"
+                      desc="Option for describing the network with a wired PC.">
+                    PC is wired and Chromecast is on Wi-Fi
+                  </angular-message>
+                </span>
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <div class="question">
+            <span class="subheading">
+              <angular-message key="MEDIA_ROUTER_ADDITIONAL_COMMENTS"
+                  desc="Text for field in feedback form for other comments.">
+                Additional comments:
+                <span class="required-message"
+                    ng-show="!top.sufficientFeedback">*</span>
+              </angular-message>
+            </span>
+            <md-input-container class="md-block">
+              <label></label>
+              <input type="text" ng-model="top.comments"
+                  placeholder="{{top.yourAnswerText}}" />
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="subheading">
+          <angular-message key="MEDIA_ROUTER_FEEDBACK_EMAIL_FIELD"
+              desc="Text for the email field in the feedback form.">
+            Email (optional):
+          </angular-message>
+        </span>
+        <md-input-container class="md-block">
+          <label></label>
+          <input type="email" ng-model="top.userEmail"
+              placeholder="{{top.yourAnswerText}}" />
+        </md-input-container>
+        <md-checkbox type="checkbox" ng-model="top.attachLogs"
+            ng-change="attachLogsClick()"
+            aria-label="Send debug logs (recommended)">
+        </md-checkbox>
+        <!-- We put the click event handler on this element rather than the
+             anchor element because attributes inside <angular-message> get
+             sanitized/removed in the i18n process. -->
+        <span class="send-logs" ng-click="viewLogs()">
+          <angular-message key="MEDIA_ROUTER_SEND_LOGS"
+              desc="Text for the send logs checkbox option.">
+            Send <a href="">debug logs</a> (recommended)
+          </angular-message>
+        </span>
+        <p class="informative">
+          <angular-message key="MEDIA_ROUTER_PRIVACY_DATA_USAGE"
+              desc="Text with details about data usage of details submitted in
+                  the feedback page.">
+            Your Chrome version, operating system version, Cast settings,
+            mirroring performance stats, and communication channel diagnostic
+            logs will be submitted in addition to any information you choose to
+            include above. This feedback is used to diagnose problems and help
+            improve the feature. Any personal information you submit, whether
+            explicitly or incidentally, will be protected in accordance with our
+            privacy policies. By submitting this feedback, you agree that Google
+            may use feedback that you provide to improve any Google product or
+            service.
+          </angular-message>
+        </p>
+      </div>
+      <div id="form-buttons">
+        <md-button id="cancel" class="md-raised" ng-click="cancel()">
+          <span>
+            <angular-message key="MEDIA_ROUTER_CANCEL_BUTTON"
+                desc="Text for the cancel button.">
+              Cancel
+            </angular-message>
+          </span>
+        </md-button>
+        <md-button id="submit" class="md-raised md-primary"
+            ng-click="sendFeedback()" ng-disabled="!sufficientFeedback">
+          <span>
+            <angular-message key="MEDIA_ROUTER_SEND_BUTTON"
+                desc="Text for the send feedback button.">
+              Send Feedback
+            </angular-message>
+          </span>
+        </md-button>
+      </div>
+      <!-- This is purely for the convenience of internal users. -->
+      <p id="mr-version">v{{top.mrVersion}}</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<application>
+  <component name="GeneralSettings">
+    <option name="confirmOpenNewProject2" value="0" />
+  </component>
+  <component name="Registry">
+    <entry key="git.explicit.commit.renames.prohibit.multiple.calls" value="false" />
+  </component>
+</application>

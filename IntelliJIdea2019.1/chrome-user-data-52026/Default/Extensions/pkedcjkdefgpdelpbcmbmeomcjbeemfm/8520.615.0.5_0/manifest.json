@@ -1,0 +1,24 @@
+{
+   "background": {
+      "persistent": false,
+      "scripts": [ "common.js", "mirroring_common.js", "background_script.js" ]
+   },
+   "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' https://apis.google.com https://feedback.googleusercontent.com https://www.google.com https://www.gstatic.com; child-src https://accounts.google.com https://content.googleapis.com https://www.google.com; connect-src 'self' http://*:* https://*:*; font-src https://fonts.gstatic.com; object-src 'self';",
+   "default_locale": "en",
+   "description": "Provider for discovery and services for mirroring of Chrome Media Router",
+   "externally_connectable": {
+      "ids": [ "idmofbkcelhplfjnmmdolenpigiiiecc", "ggedfkijiiammpnbdadhllnehapomdge", "njjegkblellcjnakomndbaloifhcoccg" ]
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNTWJoPZ9bT32yKxuuVa9LSEYobjPoXCLX3dgsZ9djDrWKNikTECjdRe3/AFXb+v8jkmmtYQPnOgSYn06J/QodDlCIG6l470+gkOoobUM7fOs1AVOse23qYUV4jbuRW3+YZlCvaWCFeczCNbGIUgKEi5B2fyQazy60AL1sLW3utQIDAQAB",
+   "manifest_version": 2,
+   "minimum_chrome_version": "37",
+   "name": "Chrome Media Router",
+   "oauth2": {
+      "client_id": "919648714761-55j965o0km033psv3i9qls5mo3qtdrb0.apps.googleusercontent.com",
+      "scopes": [ "https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/clouddevices", "https://www.googleapis.com/auth/hangouts", "https://www.googleapis.com/auth/hangouts.readonly", "https://www.googleapis.com/auth/meetings", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/cast-edu-messaging", "https://www.googleapis.com/auth/plus.peopleapi.readwrite" ]
+   },
+   "permissions": [ "alarms", "cast", "declarativeWebRequest", "desktopCapture", "gcm", "http://*/*", "identity", "identity.email", "management", "mdns", "mediaRouterPrivate", "metricsPrivate", "networkingPrivate", "processes", "storage", "system.cpu", "settingsPrivate", "tabCapture", "tabs", "webview", "https://hangouts.google.com/*", "https://*.google.com/cast/chromecast/home/gsse" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "8520.615.0.5",
+   "web_accessible_resources": [ "cast_sender.js" ]
+}
