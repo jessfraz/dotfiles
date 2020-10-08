@@ -1,0 +1,506 @@
+{
+   "1018984561488520517": {
+      "message": "Congela"
+   },
+   "1213957982723875920": {
+      "message": "Qual das seguintes alternativas melhor descreve sua rede?"
+   },
+   "128276876460319075": {
+      "message": "Detecção de dispositivos"
+   },
+   "1428448869078126731": {
+      "message": "Suavidade da reprodução do vídeo"
+   },
+   "1522140683318860351": {
+      "message": "Falha na conexão. Tente novamente."
+   },
+   "1550904064710828958": {
+      "message": "Suave"
+   },
+   "1636686747687494376": {
+      "message": "Perfeita"
+   },
+   "1802762746589457177": {
+      "message": "Volume"
+   },
+   "1850397500312020388": {
+      "message": "É possível encontrar seu Chromecast no $START_LINK$app Google Home$END_LINK$? $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "END_SPAN": {
+            "content": "$2"
+         },
+         "START_LINK": {
+            "content": "$3"
+         },
+         "START_SPAN": {
+            "content": "$4"
+         }
+      }
+   },
+   "1850397500312020388_ph": {
+      "message": "\u003C/a>\u003C/span>\u003Ca href=\"https://support.google.com/chromecast/answer/2998456\" target=\"_blank\">\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "2145752429973207616": {
+      "message": "Comentários adicionais: $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "2145752429973207616_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "2159130950882492111": {
+      "message": "Cancelar"
+   },
+   "2194670894476780934": {
+      "message": "N/D"
+   },
+   "2297080986956220930": {
+      "message": "{PARTICIPANTS,plural,offset:1 =0{Hangout}=1{Hangout com {ORGANIZER}}=2{Hangout com {ORGANIZER} e 1 outro participante}one{Hangout with {ORGANIZER} and # others}other{Hangout com {ORGANIZER} e outros # participantes}}"
+   },
+   "244647017322945605": {
+      "message": "Boa (DVD)"
+   },
+   "2575016469622936324": {
+      "message": "Qualidade da projeção de guias/área de trabalho"
+   },
+   "2807800733729323332": {
+      "message": "Sim"
+   },
+   "2810417817914017289": {
+      "message": "Reproduzir"
+   },
+   "3219866268410307919": {
+      "message": "Enviando comentário…"
+   },
+   "3239956785410157548": {
+      "message": "Sua resposta"
+   },
+   "3326722026796849289": {
+      "message": "Outros"
+   },
+   "3413021810593924462": {
+      "message": "Pausar"
+   },
+   "3542042671420335679": {
+      "message": "Não"
+   },
+   "3567591856726172993": {
+      "message": "Ok"
+   },
+   "4094392217219068632": {
+      "message": "E-mail (opcional):"
+   },
+   "4097220110929447276": {
+      "message": "As versões do Google Chrome e do sistema operacional, as configurações do Google Cast, as estatísticas de desempenho do espelhamento e os registros de diagnóstico do canal de comunicação serão enviados juntamente com as informações que você escolher incluir acima. Esses comentários serão usados para diagnosticar problemas e ajudar a melhorar o recurso. Todas as informações pessoais enviadas explícita ou acidentalmente serão protegidas de acordo com nossas políticas de privacidade. Ao enviar os comentários, você concorda que o Google poderá usá-los para melhorar todos os produtos ou serviços do Google."
+   },
+   "4148300086676792937": {
+      "message": "Quer descartar o comentário?"
+   },
+   "4163185390680253103": {
+      "message": "Bug ou erro"
+   },
+   "4246483347873264186": {
+      "message": "A solicitação de transmissão foi negada. Aguarde e tente novamente."
+   },
+   "4528089202128275824": {
+      "message": "Falha ao transmitir. Tente novamente."
+   },
+   "4575332923598659024": {
+      "message": "Não foi possível resolver o nome do Hangout. Verifique o nome e tente novamente."
+   },
+   "4592127349908255218": {
+      "message": "Ininteligível"
+   },
+   "4756056595565370923": {
+      "message": "Falha ao enviar o comentário. Tentando novamente…"
+   },
+   "492097680647953484": {
+      "message": "Solicitação de recurso"
+   },
+   "5014364904504073524": {
+      "message": "Perfeita"
+   },
+   "5028289843569700466": {
+      "message": "Seus comentários são importantes e ajudam a melhorar o Google Cast. Para resolver problemas com o Google Cast, consulte a $START_LINK$Central de Ajuda$END_LINK$.",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "START_LINK": {
+            "content": "$2"
+         }
+      }
+   },
+   "5028289843569700466_ph": {
+      "message": "\u003C/a>\u003Ca href=\"https://support.google.com/chromecast/troubleshooter/2995236\">"
+   },
+   "5363086287710390513": {
+      "message": "Aceitável"
+   },
+   "5375576275991472719": {
+      "message": "Ótima (alta definição)"
+   },
+   "5385436389563925676": {
+      "message": "PC e Chromecast na mesma rede Wi-Fi"
+   },
+   "5440055726839070415": {
+      "message": "Que tipo de comentário você quer enviar?"
+   },
+   "545449835455981095": {
+      "message": "O recurso de transmissão de áudio do sistema não é compatível com este dispositivo."
+   },
+   "5465034684300203467": {
+      "message": "Qual era o conteúdo/URL em transmissão?"
+   },
+   "5485620192329479690": {
+      "message": "Enviar registros de depuração (recomendado)"
+   },
+   "5699813974548050528": {
+      "message": "Aceitável (FM)"
+   },
+   "5723583529370342957": {
+      "message": "Tem falhas intermitentes"
+   },
+   "5910595154486533449": {
+      "message": "Insatisfatória"
+   },
+   "5991427458288444010": {
+      "message": "A solicitação de transmissão não foi respondida."
+   },
+   "6063910461797960050": {
+      "message": "O uso do Hangouts é regido pela Política de Privacidade do Google."
+   },
+   "6086448804586867636": {
+      "message": "* Obrigatório"
+   },
+   "642051245326856511": {
+      "message": "Insira seu comentário aqui: $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "642051245326856511_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "6585975561839203683": {
+      "message": "Não tentei"
+   },
+   "6614468912728530636": {
+      "message": "Não é possível assistir o vídeo"
+   },
+   "6963873398546068901": {
+      "message": "Aviso: o registro detalhado está ativado. Os registros abaixo podem incluir URLs ou outras informações confidenciais. Revise-os e verifique se você está de acordo com o envio dessas informações."
+   },
+   "6997602168024654529": {
+      "message": "Não tenho certeza"
+   },
+   "7156560800952850585": {
+      "message": "Conte o que está acontecendo com o Google Cast."
+   },
+   "715869212995214079": {
+      "message": "Enviar $START_LINK$registros de depuração$END_LINK$ (recomendado)",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "START_LINK": {
+            "content": "$2"
+         }
+      }
+   },
+   "715869212995214079_ph": {
+      "message": "\u003C/a>\u003Ca href=\"\">"
+   },
+   "7603034707785674700": {
+      "message": "Desativar som"
+   },
+   "7735695102441495789": {
+      "message": "Não havia participantes suficientes para manter o Hangout ativo."
+   },
+   "7824803162979416790": {
+      "message": "PC e Chromecast em diferentes redes Wi-Fi (por exemplo, 2,4 GHz versus 5 GHz)"
+   },
+   "7876724262035435114": {
+      "message": "Registros de transmissão e dispositivos"
+   },
+   "8009014317872238527": {
+      "message": "Ativar som"
+   },
+   "8083429352755760987": {
+      "message": "Qualidade do áudio"
+   },
+   "8205999658352447129": {
+      "message": "Oscilante"
+   },
+   "8330636888136075045": {
+      "message": "Detalhes da qualidade do espelhamento $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "8330636888136075045_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "843316808366399491": {
+      "message": "Insatisfatória"
+   },
+   "845494741086179740": {
+      "message": "O PC está conectado a uma rede com fio e o Chromecast está no Wi-Fi"
+   },
+   "8515148417333877999": {
+      "message": "Boa"
+   },
+   "8530815930928232626": {
+      "message": "Qualidade do vídeo"
+   },
+   "8636962961150071298": {
+      "message": "Procurar"
+   },
+   "8706273405040403641": {
+      "message": "Agradecemos seu comentário."
+   },
+   "9059560719840598868": {
+      "message": "Enviar feedback"
+   },
+   "9120942669794506861": {
+      "message": "Você tem alguma VPN especial ou algum proxy, firewall ou software NAS instalado?"
+   },
+   "9211708838274008657": {
+      "message": "Não foi possível enviar o comentário. Tente novamente mais tarde."
+   },
+   "MEDIA_ROUTER_ADDITIONAL_COMMENTS": {
+      "message": "2145752429973207616"
+   },
+   "MEDIA_ROUTER_AUDIO_QUALITY": {
+      "message": "8083429352755760987"
+   },
+   "MEDIA_ROUTER_CANCEL_BUTTON": {
+      "message": "2159130950882492111"
+   },
+   "MEDIA_ROUTER_CONTENT_QUESTION": {
+      "message": "5465034684300203467"
+   },
+   "MEDIA_ROUTER_DID_NOT_TRY": {
+      "message": "6585975561839203683"
+   },
+   "MEDIA_ROUTER_FEEDBACK_EMAIL_FIELD": {
+      "message": "4094392217219068632"
+   },
+   "MEDIA_ROUTER_FEEDBACK_FORM_DESCRIPTION": {
+      "message": "5028289843569700466"
+   },
+   "MEDIA_ROUTER_FEEDBACK_HEADER": {
+      "message": "7156560800952850585"
+   },
+   "MEDIA_ROUTER_FEEDBACK_PROMPT": {
+      "message": "642051245326856511"
+   },
+   "MEDIA_ROUTER_FEEDBACK_REQUIRED": {
+      "message": "6086448804586867636"
+   },
+   "MEDIA_ROUTER_FEEDBACK_TYPE_QUESTION": {
+      "message": "5440055726839070415"
+   },
+   "MEDIA_ROUTER_MIRRORING_QUALITY_SUBHEADING": {
+      "message": "8330636888136075045"
+   },
+   "MEDIA_ROUTER_NETWORK_DIFFERENT_WIFI": {
+      "message": "7824803162979416790"
+   },
+   "MEDIA_ROUTER_NETWORK_QUESTION": {
+      "message": "1213957982723875920"
+   },
+   "MEDIA_ROUTER_NETWORK_SAME_WIFI": {
+      "message": "5385436389563925676"
+   },
+   "MEDIA_ROUTER_NETWORK_WIRED_PC": {
+      "message": "845494741086179740"
+   },
+   "MEDIA_ROUTER_NO": {
+      "message": "3542042671420335679"
+   },
+   "MEDIA_ROUTER_PRIVACY_DATA_USAGE": {
+      "message": "4097220110929447276"
+   },
+   "MEDIA_ROUTER_SEND_BUTTON": {
+      "message": "9059560719840598868"
+   },
+   "MEDIA_ROUTER_SEND_LOGS": {
+      "message": "715869212995214079"
+   },
+   "MEDIA_ROUTER_SETUP_VISIBILITY_QUESTION": {
+      "message": "1850397500312020388"
+   },
+   "MEDIA_ROUTER_SOFTWARE_QUESTION": {
+      "message": "9120942669794506861"
+   },
+   "MEDIA_ROUTER_UNKNOWN": {
+      "message": "6997602168024654529"
+   },
+   "MEDIA_ROUTER_VIDEO_QUALITY": {
+      "message": "8530815930928232626"
+   },
+   "MEDIA_ROUTER_VIDEO_SMOOTHNESS": {
+      "message": "1428448869078126731"
+   },
+   "MEDIA_ROUTER_YES": {
+      "message": "2807800733729323332"
+   },
+   "MSG_FAILED_TO_CAST": {
+      "message": "4528089202128275824"
+   },
+   "MSG_KNOCK_DENIED": {
+      "message": "4246483347873264186"
+   },
+   "MSG_KNOCK_TIMEOUT": {
+      "message": "5991427458288444010"
+   },
+   "MSG_MR_CONNECT_FAILED": {
+      "message": "1522140683318860351"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_ACCEPTABLE": {
+      "message": "5699813974548050528"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_GOOD": {
+      "message": "8515148417333877999"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_PERFECT": {
+      "message": "1636686747687494376"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_POOR": {
+      "message": "843316808366399491"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_UNINTELLIGIBLE": {
+      "message": "4592127349908255218"
+   },
+   "MSG_MR_FEEDBACK_DISCARD_CONFIRMATION": {
+      "message": "4148300086676792937"
+   },
+   "MSG_MR_FEEDBACK_FINE_LOGS_WARNING": {
+      "message": "6963873398546068901"
+   },
+   "MSG_MR_FEEDBACK_LOGS_HEADER": {
+      "message": "7876724262035435114"
+   },
+   "MSG_MR_FEEDBACK_NA": {
+      "message": "2194670894476780934"
+   },
+   "MSG_MR_FEEDBACK_OK": {
+      "message": "3567591856726172993"
+   },
+   "MSG_MR_FEEDBACK_RESENDING": {
+      "message": "4756056595565370923"
+   },
+   "MSG_MR_FEEDBACK_SENDING": {
+      "message": "3219866268410307919"
+   },
+   "MSG_MR_FEEDBACK_SEND_FAIL": {
+      "message": "9211708838274008657"
+   },
+   "MSG_MR_FEEDBACK_SEND_LOGS": {
+      "message": "5485620192329479690"
+   },
+   "MSG_MR_FEEDBACK_SEND_SUCCESS": {
+      "message": "8706273405040403641"
+   },
+   "MSG_MR_FEEDBACK_TYPE_BUG_OR_ERROR": {
+      "message": "4163185390680253103"
+   },
+   "MSG_MR_FEEDBACK_TYPE_DISCOVERY": {
+      "message": "128276876460319075"
+   },
+   "MSG_MR_FEEDBACK_TYPE_FEATURE_REQUEST": {
+      "message": "492097680647953484"
+   },
+   "MSG_MR_FEEDBACK_TYPE_OTHER": {
+      "message": "3326722026796849289"
+   },
+   "MSG_MR_FEEDBACK_TYPE_PROJECTION_QUALITY": {
+      "message": "2575016469622936324"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_ACCEPTABLE": {
+      "message": "5363086287710390513"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_FREEZES": {
+      "message": "1018984561488520517"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_GOOD": {
+      "message": "244647017322945605"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_GREAT": {
+      "message": "5375576275991472719"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_JERKY": {
+      "message": "8205999658352447129"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_PERFECT": {
+      "message": "5014364904504073524"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_POOR": {
+      "message": "5910595154486533449"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_SMOOTH": {
+      "message": "1550904064710828958"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_STUTTER": {
+      "message": "5723583529370342957"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_UNWATCHABLE": {
+      "message": "6614468912728530636"
+   },
+   "MSG_MR_FEEDBACK_YOUR_ANSWER": {
+      "message": "3239956785410157548"
+   },
+   "MSG_MR_HANGOUT_INACTIVE": {
+      "message": "7735695102441495789"
+   },
+   "MSG_MR_HANGOUT_INVALID": {
+      "message": "4575332923598659024"
+   },
+   "MSG_MR_HANGOUT_PRIVACY": {
+      "message": "6063910461797960050"
+   },
+   "MSG_MR_HANGOUT_TITLE_": {
+      "message": "2297080986956220930"
+   },
+   "MSG_MR_MIRROR_NO_AUDIO_CAPTURED": {
+      "message": "545449835455981095"
+   },
+   "MSG_MUTE": {
+      "message": "7603034707785674700"
+   },
+   "MSG_PAUSE": {
+      "message": "3413021810593924462"
+   },
+   "MSG_PLAY": {
+      "message": "2810417817914017289"
+   },
+   "MSG_SEEK": {
+      "message": "8636962961150071298"
+   },
+   "MSG_UNMUTE": {
+      "message": "8009014317872238527"
+   },
+   "MSG_VOLUME": {
+      "message": "1802762746589457177"
+   }
+}

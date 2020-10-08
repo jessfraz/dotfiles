@@ -1,0 +1,15 @@
+'healthPlanChildCheckboxChanged' does not exist on type 'NotesTemplateAddComponent'.
+'healthPlanList' does not exist on type 'NotesTemplateAddComponent'.
+'lobChildCheckboxChanged' does not exist on type 'NotesTemplateAddComponent'.
+'lobList' does not exist on type 'NotesTemplateAddComponent'.
+'noteTypeChildCheckboxChanged' does not exist on type 'NotesTemplateAddComponent'.
+'noteTypeList' does not exist on type 'NotesTemplateAddComponent'.
+'selectedHealthPlanValue' does not exist on type 'NotesTemplateAddComponent'.
+'selectedLOBValue' does not exist on type 'NotesTemplateAddComponent'.
+'selectedNoteTypeValue' does not exist on type 'NotesTemplateAddComponent'.
+'showHealthPlanChild' does not exist on type 'NotesTemplateAddComponent'.
+'showHealthPlanParent' does not exist on type 'NotesTemplateAddComponent'.
+'showLOBChild' does not exist on type 'NotesTemplateAddComponent'.
+'showLOBParent' does not exist on type 'NotesTemplateAddComponent'.
+'showNoteTypeChild' does not exist on type 'NotesTemplateAddComponent'.
+'showNoteTypeParent' does not exist on type 'NotesTemplateAddComponent'.

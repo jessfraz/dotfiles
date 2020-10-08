@@ -1,0 +1,506 @@
+{
+   "1018984561488520517": {
+      "message": "Inasita kucheza"
+   },
+   "1213957982723875920": {
+      "message": "Ni gani kati ya zifuatazo inaelezea mtandao wako vizuri?"
+   },
+   "128276876460319075": {
+      "message": "Kupata Kifaa"
+   },
+   "1428448869078126731": {
+      "message": "Ulaini wa Kutiririsha Video"
+   },
+   "1522140683318860351": {
+      "message": "Imeshindwa kuunganisha. Tafadhali jaribu tena."
+   },
+   "1550904064710828958": {
+      "message": "Laini"
+   },
+   "1636686747687494376": {
+      "message": "Bora"
+   },
+   "1802762746589457177": {
+      "message": "Sauti"
+   },
+   "1850397500312020388": {
+      "message": "Je, unaweza kuona Chromecast yako katika $START_LINK$ programu ya Google Home$END_LINK$? $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "END_SPAN": {
+            "content": "$2"
+         },
+         "START_LINK": {
+            "content": "$3"
+         },
+         "START_SPAN": {
+            "content": "$4"
+         }
+      }
+   },
+   "1850397500312020388_ph": {
+      "message": "\u003C/a>\u003C/span>\u003Ca href=\"https://support.google.com/chromecast/answer/2998456\" target=\"_blank\">\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "2145752429973207616": {
+      "message": "Maoni ya ziada: $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "2145752429973207616_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "2159130950882492111": {
+      "message": "Ghairi"
+   },
+   "2194670894476780934": {
+      "message": "Haitumiki"
+   },
+   "2297080986956220930": {
+      "message": "{PARTICIPANTS,plural,offset:1 =0{Hangout}=1{Hangout na {ORGANIZER}}=2{Hangout na {ORGANIZER} na mwingine 1}other{Hangout na {ORGANIZER} na wengine #}}"
+   },
+   "244647017322945605": {
+      "message": "DVD - Nzuri"
+   },
+   "2575016469622936324": {
+      "message": "Ubora wa Makadirio ya Kichupo/Eneo-kazi"
+   },
+   "2807800733729323332": {
+      "message": "Ndiyo"
+   },
+   "2810417817914017289": {
+      "message": "Cheza"
+   },
+   "3219866268410307919": {
+      "message": "Inatuma maoni..."
+   },
+   "3239956785410157548": {
+      "message": "Jibu lako"
+   },
+   "3326722026796849289": {
+      "message": "Nyingine"
+   },
+   "3413021810593924462": {
+      "message": "Sitisha"
+   },
+   "3542042671420335679": {
+      "message": "La"
+   },
+   "3567591856726172993": {
+      "message": "Sawa"
+   },
+   "4094392217219068632": {
+      "message": "Barua pepe (si lazima):"
+   },
+   "4097220110929447276": {
+      "message": "Toleo lako la Chrome, toleo la mfumo wa uendeshaji, mipangilio ya Google Cast, takwimu za uakisi wa utendaji, na kumbukumbu za uchunguzi wa vituo vya mawasiliano zitawasilishwa ikiwa ni pamoja na maelezo yoyote utakayochagua kujumuisha hapo juu. Maoni haya hutumika kuchunguza matatizo na kuboresha kipengele. Maelezo yoyote ya kibinafsi unayowasilisha, kwa kukusudia au kwa bahati mbaya, yatalindwa kwa mujibu wa sera zetu za faragha. Kwa kuwasilisha maoni haya, unakubali kuwa Google inaweza kutumia maoni unayotoa kuboresha bidhaa au huduma yoyote ya Google."
+   },
+   "4148300086676792937": {
+      "message": "Ungependa kutupa maoni?"
+   },
+   "4163185390680253103": {
+      "message": "Hitilafu"
+   },
+   "4246483347873264186": {
+      "message": "Ombi lako la kuwasilisha limekataliwa. Tafadhali subiri kabla ya kujaribu tena."
+   },
+   "4528089202128275824": {
+      "message": "Imeshindwa kutuma. Tafadhali jaribu tena."
+   },
+   "4575332923598659024": {
+      "message": "Jina la Hangout halijatatuliwa. Tafadhali angalia jina na ujaribu tena."
+   },
+   "4592127349908255218": {
+      "message": "Inakanganya"
+   },
+   "4756056595565370923": {
+      "message": "Imeshindwa kutuma maoni. Inajaribu upya..."
+   },
+   "492097680647953484": {
+      "message": "Ombi la Kipengele"
+   },
+   "5014364904504073524": {
+      "message": "Bora"
+   },
+   "5028289843569700466": {
+      "message": "Maoni yako hutusaidia kuimarisha Google Cast na ni muhimu kwetu. Kwa usaidizi wa kutatua matatizo ya kutuma, tafadhali rejelea $START_LINK$ kituo cha usaidizi$END_LINK$.",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "START_LINK": {
+            "content": "$2"
+         }
+      }
+   },
+   "5028289843569700466_ph": {
+      "message": "\u003C/a>\u003Ca href=\"https://support.google.com/chromecast/troubleshooter/2995236\">"
+   },
+   "5363086287710390513": {
+      "message": "Inakubalika"
+   },
+   "5375576275991472719": {
+      "message": "HD - Bora"
+   },
+   "5385436389563925676": {
+      "message": "Kompyuta na Chromecast kwenye mtandao mmoja wa Wi-Fi"
+   },
+   "5440055726839070415": {
+      "message": "Je, unatoa maoni ya aina gani?"
+   },
+   "545449835455981095": {
+      "message": "Huduma ya kutuma sauti ya mfumo haitumiki kwenye kifaa hiki."
+   },
+   "5465034684300203467": {
+      "message": "Ulikuwa ukituma maudhui/URL gani?"
+   },
+   "5485620192329479690": {
+      "message": "Tuma kumbukumbu za hitilafu (inapendekezwa)"
+   },
+   "5699813974548050528": {
+      "message": "Inakubalika - FM"
+   },
+   "5723583529370342957": {
+      "message": "Kigugumizi hapa na pale"
+   },
+   "5910595154486533449": {
+      "message": "Mbaya"
+   },
+   "5991427458288444010": {
+      "message": "Ombi lako la kuwasilisha halijajibiwa."
+   },
+   "6063910461797960050": {
+      "message": "Matumizi ya Hangouts yanaongozwa na Sera ya Faragha ya Google."
+   },
+   "6086448804586867636": {
+      "message": "* Lazima ijazwe"
+   },
+   "642051245326856511": {
+      "message": "Tafadhali weka maoni yako hapa: $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "642051245326856511_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "6585975561839203683": {
+      "message": "Sikujaribu"
+   },
+   "6614468912728530636": {
+      "message": "Haitazamiki"
+   },
+   "6963873398546068901": {
+      "message": "Onyo - Kipengele cha uwekaji kumbukumbu za kina kimewashwa; kumbukumbu zilizo hapa chini zinaweza kujumuisha URL au maelezo mengine nyeti. Tafadhali kagua na uhakikishe kuwa umeridhia kuwasilisha maelezo haya."
+   },
+   "6997602168024654529": {
+      "message": "Sina uhakika"
+   },
+   "7156560800952850585": {
+      "message": "Tuambie kinachotokea kwenye Google Cast."
+   },
+   "715869212995214079": {
+      "message": "Tuma $START_LINK$kumbukumbu za hitilafu$END_LINK$ (inapendekezwa)",
+      "placeholders": {
+         "END_LINK": {
+            "content": "$1"
+         },
+         "START_LINK": {
+            "content": "$2"
+         }
+      }
+   },
+   "715869212995214079_ph": {
+      "message": "\u003C/a>\u003Ca href=\"\">"
+   },
+   "7603034707785674700": {
+      "message": "Zima sauti"
+   },
+   "7735695102441495789": {
+      "message": "Hakukuwa na idadi ya kutosha ya washiriki katika Hangout ili iendelee kutumika."
+   },
+   "7824803162979416790": {
+      "message": "Kompyuta na Chromecast ziko kwenye mitandao tofauti ya Wi-Fi (k.m. GHZ 2.4 dhidi ya. GHza 5)"
+   },
+   "7876724262035435114": {
+      "message": "Kumbukumbu za Google Cast na Kifaa"
+   },
+   "8009014317872238527": {
+      "message": "Rejesha sauti"
+   },
+   "8083429352755760987": {
+      "message": "Ubora wa Sauti"
+   },
+   "8205999658352447129": {
+      "message": "Siyo thabiti"
+   },
+   "8330636888136075045": {
+      "message": "Kuakisi Maelezo ya Ubora $START_SPAN$*$END_SPAN$",
+      "placeholders": {
+         "END_SPAN": {
+            "content": "$1"
+         },
+         "START_SPAN": {
+            "content": "$2"
+         }
+      }
+   },
+   "8330636888136075045_ph": {
+      "message": "\u003C/span>\u003Cspan class=\"required-message\" ng-show=\"!top.sufficientFeedback\">"
+   },
+   "843316808366399491": {
+      "message": "Mbaya"
+   },
+   "845494741086179740": {
+      "message": "Kompyuta imeunganishwa kwa waya na Chromecast iko kwenye Wi-Fi"
+   },
+   "8515148417333877999": {
+      "message": "Nzuri"
+   },
+   "8530815930928232626": {
+      "message": "Ubora wa Video"
+   },
+   "8636962961150071298": {
+      "message": "Tafuta"
+   },
+   "8706273405040403641": {
+      "message": "Asante kwa kutuma maoni."
+   },
+   "9059560719840598868": {
+      "message": "Tuma Maoni"
+   },
+   "9120942669794506861": {
+      "message": "Je, una VPN, proksi, kinga mtandao yoyote maalum, au programu ya NAS iliyosakinishwa?"
+   },
+   "9211708838274008657": {
+      "message": "Imeshindwa kutuma maoni. Tafadhali jaribu tena baadaye."
+   },
+   "MEDIA_ROUTER_ADDITIONAL_COMMENTS": {
+      "message": "2145752429973207616"
+   },
+   "MEDIA_ROUTER_AUDIO_QUALITY": {
+      "message": "8083429352755760987"
+   },
+   "MEDIA_ROUTER_CANCEL_BUTTON": {
+      "message": "2159130950882492111"
+   },
+   "MEDIA_ROUTER_CONTENT_QUESTION": {
+      "message": "5465034684300203467"
+   },
+   "MEDIA_ROUTER_DID_NOT_TRY": {
+      "message": "6585975561839203683"
+   },
+   "MEDIA_ROUTER_FEEDBACK_EMAIL_FIELD": {
+      "message": "4094392217219068632"
+   },
+   "MEDIA_ROUTER_FEEDBACK_FORM_DESCRIPTION": {
+      "message": "5028289843569700466"
+   },
+   "MEDIA_ROUTER_FEEDBACK_HEADER": {
+      "message": "7156560800952850585"
+   },
+   "MEDIA_ROUTER_FEEDBACK_PROMPT": {
+      "message": "642051245326856511"
+   },
+   "MEDIA_ROUTER_FEEDBACK_REQUIRED": {
+      "message": "6086448804586867636"
+   },
+   "MEDIA_ROUTER_FEEDBACK_TYPE_QUESTION": {
+      "message": "5440055726839070415"
+   },
+   "MEDIA_ROUTER_MIRRORING_QUALITY_SUBHEADING": {
+      "message": "8330636888136075045"
+   },
+   "MEDIA_ROUTER_NETWORK_DIFFERENT_WIFI": {
+      "message": "7824803162979416790"
+   },
+   "MEDIA_ROUTER_NETWORK_QUESTION": {
+      "message": "1213957982723875920"
+   },
+   "MEDIA_ROUTER_NETWORK_SAME_WIFI": {
+      "message": "5385436389563925676"
+   },
+   "MEDIA_ROUTER_NETWORK_WIRED_PC": {
+      "message": "845494741086179740"
+   },
+   "MEDIA_ROUTER_NO": {
+      "message": "3542042671420335679"
+   },
+   "MEDIA_ROUTER_PRIVACY_DATA_USAGE": {
+      "message": "4097220110929447276"
+   },
+   "MEDIA_ROUTER_SEND_BUTTON": {
+      "message": "9059560719840598868"
+   },
+   "MEDIA_ROUTER_SEND_LOGS": {
+      "message": "715869212995214079"
+   },
+   "MEDIA_ROUTER_SETUP_VISIBILITY_QUESTION": {
+      "message": "1850397500312020388"
+   },
+   "MEDIA_ROUTER_SOFTWARE_QUESTION": {
+      "message": "9120942669794506861"
+   },
+   "MEDIA_ROUTER_UNKNOWN": {
+      "message": "6997602168024654529"
+   },
+   "MEDIA_ROUTER_VIDEO_QUALITY": {
+      "message": "8530815930928232626"
+   },
+   "MEDIA_ROUTER_VIDEO_SMOOTHNESS": {
+      "message": "1428448869078126731"
+   },
+   "MEDIA_ROUTER_YES": {
+      "message": "2807800733729323332"
+   },
+   "MSG_FAILED_TO_CAST": {
+      "message": "4528089202128275824"
+   },
+   "MSG_KNOCK_DENIED": {
+      "message": "4246483347873264186"
+   },
+   "MSG_KNOCK_TIMEOUT": {
+      "message": "5991427458288444010"
+   },
+   "MSG_MR_CONNECT_FAILED": {
+      "message": "1522140683318860351"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_ACCEPTABLE": {
+      "message": "5699813974548050528"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_GOOD": {
+      "message": "8515148417333877999"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_PERFECT": {
+      "message": "1636686747687494376"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_POOR": {
+      "message": "843316808366399491"
+   },
+   "MSG_MR_FEEDBACK_AUDIO_UNINTELLIGIBLE": {
+      "message": "4592127349908255218"
+   },
+   "MSG_MR_FEEDBACK_DISCARD_CONFIRMATION": {
+      "message": "4148300086676792937"
+   },
+   "MSG_MR_FEEDBACK_FINE_LOGS_WARNING": {
+      "message": "6963873398546068901"
+   },
+   "MSG_MR_FEEDBACK_LOGS_HEADER": {
+      "message": "7876724262035435114"
+   },
+   "MSG_MR_FEEDBACK_NA": {
+      "message": "2194670894476780934"
+   },
+   "MSG_MR_FEEDBACK_OK": {
+      "message": "3567591856726172993"
+   },
+   "MSG_MR_FEEDBACK_RESENDING": {
+      "message": "4756056595565370923"
+   },
+   "MSG_MR_FEEDBACK_SENDING": {
+      "message": "3219866268410307919"
+   },
+   "MSG_MR_FEEDBACK_SEND_FAIL": {
+      "message": "9211708838274008657"
+   },
+   "MSG_MR_FEEDBACK_SEND_LOGS": {
+      "message": "5485620192329479690"
+   },
+   "MSG_MR_FEEDBACK_SEND_SUCCESS": {
+      "message": "8706273405040403641"
+   },
+   "MSG_MR_FEEDBACK_TYPE_BUG_OR_ERROR": {
+      "message": "4163185390680253103"
+   },
+   "MSG_MR_FEEDBACK_TYPE_DISCOVERY": {
+      "message": "128276876460319075"
+   },
+   "MSG_MR_FEEDBACK_TYPE_FEATURE_REQUEST": {
+      "message": "492097680647953484"
+   },
+   "MSG_MR_FEEDBACK_TYPE_OTHER": {
+      "message": "3326722026796849289"
+   },
+   "MSG_MR_FEEDBACK_TYPE_PROJECTION_QUALITY": {
+      "message": "2575016469622936324"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_ACCEPTABLE": {
+      "message": "5363086287710390513"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_FREEZES": {
+      "message": "1018984561488520517"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_GOOD": {
+      "message": "244647017322945605"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_GREAT": {
+      "message": "5375576275991472719"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_JERKY": {
+      "message": "8205999658352447129"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_PERFECT": {
+      "message": "5014364904504073524"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_POOR": {
+      "message": "5910595154486533449"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_SMOOTH": {
+      "message": "1550904064710828958"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_STUTTER": {
+      "message": "5723583529370342957"
+   },
+   "MSG_MR_FEEDBACK_VIDEO_UNWATCHABLE": {
+      "message": "6614468912728530636"
+   },
+   "MSG_MR_FEEDBACK_YOUR_ANSWER": {
+      "message": "3239956785410157548"
+   },
+   "MSG_MR_HANGOUT_INACTIVE": {
+      "message": "7735695102441495789"
+   },
+   "MSG_MR_HANGOUT_INVALID": {
+      "message": "4575332923598659024"
+   },
+   "MSG_MR_HANGOUT_PRIVACY": {
+      "message": "6063910461797960050"
+   },
+   "MSG_MR_HANGOUT_TITLE_": {
+      "message": "2297080986956220930"
+   },
+   "MSG_MR_MIRROR_NO_AUDIO_CAPTURED": {
+      "message": "545449835455981095"
+   },
+   "MSG_MUTE": {
+      "message": "7603034707785674700"
+   },
+   "MSG_PAUSE": {
+      "message": "3413021810593924462"
+   },
+   "MSG_PLAY": {
+      "message": "2810417817914017289"
+   },
+   "MSG_SEEK": {
+      "message": "8636962961150071298"
+   },
+   "MSG_UNMUTE": {
+      "message": "8009014317872238527"
+   },
+   "MSG_VOLUME": {
+      "message": "1802762746589457177"
+   }
+}

@@ -69,7 +69,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git nvm)
+plugins=(git nvm gcloud)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -90,6 +90,8 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+export CLI_REPO=~/Development/drew-angular-cli
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -103,3 +105,12 @@ alias v8gen=/Users/drew/Development/v8/tools/dev/v8gen.py
 alias d8=/Users/drew/Development/v8/repo/out.gn/x64.optdebug/d8
 alias tick-processor=/Users/drew/Development/v8/repo/tools/mac-tick-processor
 export D8_PATH="/Users/drew/Development/v8/repo/out.gn/x64.optdebug"
+alias registry="docker run -d -p 5000:5000 --restart=always --name registry -v ~/registry:/var/lib/registry registry:2"
+alias nodepackages="npm -g install corona-cli expo-cli mdb-cli npm npm-check typescript yarn @angular/cli@latest eslint gatsby gatsby-cli npm-check react react-dom typescript webpack next.js karma mocha karma-jasmine karma-chrome-launcher karma-jasmine-html-reporter karma-coverage-istanbul-reporter @angular-devkit/build-angular karma-spec-reporter"
+alias verdaccio="docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio"
+alias nocors='"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp'
+alias listrepos="find . -maxdepth 1 -mindepth 1 -type d -exec sh -c '(echo {} && cd {} && git remote -v && echo)' \;"
+alias optumrepo="npm config set registry https://repo1.uhc.com/artifactory/api/npm/npm-virtual/"
+alias ngtest="ng test --browsers=Chrome --karma-config ~/Karma/aswanner-karma.conf.js"
+
+
