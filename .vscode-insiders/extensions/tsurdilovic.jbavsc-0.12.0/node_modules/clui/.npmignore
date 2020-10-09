@@ -1,2 +1,0 @@
-.DS_store
-node_modules

@@ -1,5 +1,0 @@
-version: '3.4'
-services:
-  vscode:
-    volumes:
-      - "${VSCODE_APP_ROOT}:${VSCODE_AGENT_FOLDER}/bin/dev:ro"

@@ -1,9 +1,0 @@
-{
-	"messages": [
-		"Custom configuration provider '{0}' registered"
-	],
-	"keys": [
-		"provider.registered"
-	],
-	"filePath": "src\\cppTools"
-}

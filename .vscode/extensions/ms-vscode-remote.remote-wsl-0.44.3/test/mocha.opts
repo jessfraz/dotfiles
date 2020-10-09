@@ -1,3 +1,0 @@
---ui tdd
---useColors true
-./dist/*.test.js

@@ -1,8 +1,0 @@
-{
-    "references": {
-        "A": [
-            "./scopedPropertyAccess4.php"
-        ]
-    },
-    "definitions": []
-}

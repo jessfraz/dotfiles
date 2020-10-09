@@ -1,3 +1,0 @@
-parameters:
-  level: 7
-  bootstrap: %currentWorkingDirectory%/vendor/autoload.php

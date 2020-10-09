@@ -1,7 +1,0 @@
-{
-  "extends": "../../tsconfig.test.base",
-  "compilerOptions": {
-    "esModuleInterop": true,
-  },
-  "include": ["**/__tests__/*", "**/__mocks__/*"]
-}

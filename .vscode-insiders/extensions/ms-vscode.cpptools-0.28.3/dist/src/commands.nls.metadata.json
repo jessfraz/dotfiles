@@ -1,9 +1,0 @@
-{
-	"messages": [
-		"This command is disabled because \"{0}\" is set to \"{1}\"."
-	],
-	"keys": [
-		"command.disabled"
-	],
-	"filePath": "src\\commands"
-}

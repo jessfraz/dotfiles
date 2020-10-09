@@ -1,3 +1,0 @@
-process.env["NOTES_TEMPLATE_AZURE_FUNCTION"]
--. . -..- - / . -. - .-. -.--
-process.env
