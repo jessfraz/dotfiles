@@ -471,9 +471,13 @@ lpass(){
 		${DOCKER_REPO_PREFIX}/lpass "$@"
 }
 lynx(){
-	docker run --rm -it \
-		--name lynx \
-		${DOCKER_REPO_PREFIX}/lynx "$@"
+	if [[ -n "$(which lynx)" ]]; then
+		"$(which lynx)" "$@"
+	else
+		docker run --rm -it \
+			--name lynx \
+			${DOCKER_REPO_PREFIX}/lynx "$@"
+	fi
 }
 masscan(){
 	docker run -it --rm \
