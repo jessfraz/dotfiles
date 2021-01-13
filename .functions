@@ -283,6 +283,7 @@ repo() {
 
 	# Remove cruft from branchname
 	branch=${git_where#refs\/heads\/}
+	branch=${branch#remotes\/origin\/}
 
 	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
 	url="$base_url/$tree/$branch$relative_path"
@@ -416,7 +417,7 @@ gogo(){
 
 golistdeps(){
 	(
-	if [[ ! -z "$1" ]]; then
+	if [[ -n "$1" ]]; then
 		gogo "$@"
 	fi
 
@@ -447,12 +448,6 @@ xname(){
 		-e "\${g; p}"
 }
 
-dell_monitor() {
-	xrandr --newmode "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
-	xrandr --addmode  DP1 "3840x2160_30.00"
-	xrandr --output eDP1 --auto --primary --output DP1 --mode 3840x2160_30.00 --above eDP1 --rate 30
-}
-
 govendorcheck() {
 	# shellcheck disable=SC2046
 	vendorcheck -u ./... | awk '{print $NF}' | sed -e "s#^github.com/jessfraz/$(basename $(pwd))/##"
@@ -460,10 +455,20 @@ govendorcheck() {
 
 restart_gpgagent(){
 	# Restart the gpg agent.
+	echo "Restarting gpg-agent and scdaemon..."
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
+
+	echo "Killing processes..."
 	# shellcheck disable=SC2046
-	kill -9 $(pidof scdaemon) >/dev/null 2>&1
-	# shellcheck disable=SC2046
-	kill -9 $(pidof gpg-agent) >/dev/null 2>&1
-	gpg-connect-agent /bye >/dev/null 2>&1
+	kill -9 $(pgrep scdaemon) $(pgrep gpg-agent) >/dev/null 2>&1
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
+
+	gpgconf --reload gpg-agent
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+
+	echo "Restarted gpg-agent and scdaemon..."
+}
+
+gitsetoriginnopush() {
+	git remote set-url --push origin no_push
 }

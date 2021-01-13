@@ -240,7 +240,7 @@ IP_NF_NAT NF_NAT NF_NAT_NEEDED
 POSIX_MQUEUE
 )
 check_flags "${flags[@]}"
-if [ "$kernelMajor" -lt 4 ] || ([ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -lt 8 ]); then
+if [ "$kernelMajor" -lt 4 ] || { [ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -lt 8 ];}; then
 	check_flags DEVPTS_MULTIPLE_INSTANCES
 fi
 
@@ -286,15 +286,15 @@ echo 'Optional Features for Containers:'
 	fi
 }
 
-if [ "$kernelMajor" -lt 4 ] || ([ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -le 5 ]); then
+if [ "$kernelMajor" -lt 4 ] || { [ "$kernelMajor" -eq 4 ] && [ "$kernelMinor" -le 5 ];}; then
 	check_flags MEMCG_KMEM
 fi
 
-if [ "$kernelMajor" -lt 3 ] || ([ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 18 ]); then
+if [ "$kernelMajor" -lt 3 ] || { [ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 18 ];}; then
 	check_flags RESOURCE_COUNTERS
 fi
 
-if [ "$kernelMajor" -lt 3 ] || ([ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 13 ]); then
+if [ "$kernelMajor" -lt 3 ] || { [ "$kernelMajor" -eq 3 ] && [ "$kernelMinor" -le 13 ];}; then
 	netprio=NETPRIO_CGROUP
 else
 	netprio=CGROUP_NET_PRIO
@@ -304,7 +304,7 @@ flags=(
 BLK_CGROUP BLK_DEV_THROTTLING IOSCHED_CFQ CFQ_GROUP_IOSCHED
 CGROUP_PERF
 CGROUP_HUGETLB
-NET_CLS_CGROUP $netprio
+NET_CLS_CGROUP "$netprio"
 CFS_BANDWIDTH FAIR_GROUP_SCHED RT_GROUP_SCHED
 IP_VS
 IP_VS_NFCT
@@ -415,7 +415,7 @@ echo
 echo 'Kernel Self Protection Project Settings:'
 flags=(
 BUG
-DEBUG_KERNEL STRICT_KERNEL_RWX
+DEBUG_KERNEL STRICT_KERNEL_RWX STRICT_MODULE_RWX
 DEBUG_WX
 CC_STACKPROTECTOR CC_STACKPROTECTOR_STRONG
 STRICT_DEVMEM IO_STRICT_DEVMEM
@@ -424,7 +424,7 @@ DEBUG_CREDENTIALS DEBUG_NOTIFIERS DEBUG_LIST DEBUG_SG BUG_ON_DATA_CORRUPTION SCH
 SECCOMP SECCOMP_FILTER
 SECURITY SECURITY_YAMA
 HARDENED_USERCOPY
-SLAB_FREELIST_RANDOM SLAB_HARDENED
+SLAB_FREELIST_RANDOM SLAB_FREELIST_HARDENED
 SLUB_DEBUG
 PAGE_POISONING PAGE_POISONING_NO_SANITY PAGE_POISONING_ZERO
 VMAP_STACK
@@ -562,6 +562,26 @@ echo 'Kernel Config in /proc/config.gz:'
 flags=(
 IKCONFIG
 IKCONFIG_PROC
+)
+check_flags "${flags[@]}"
+
+echo
+echo 'Crypto/Diffie-Hellman support (iwd):'
+flags=(
+KEY_DH_OPERATIONS
+CRYPTO_USER_API_SKCIPHER
+CRYPTO_USER_API_HASH
+CRYPTO_HMAC
+CRYPTO_CMAC
+CRYPTO_MD4
+CRYPTO_MD5
+CRYPTO_SHA256
+CRYPTO_SHA512
+CRYPTO_AES
+CRYPTO_ECB
+CRYPTO_ARC4
+CRYPTO_DES
+CRYPTO_CBC
 )
 check_flags "${flags[@]}"
 

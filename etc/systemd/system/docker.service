@@ -7,11 +7,12 @@ Requires=docker.socket
 [Service]
 Type=notify
 ExecStart=/usr/local/bin/dockerd -D \
-		  -s overlay \
+		  -s overlay2 \
 		  -H fd:// \
 		  --exec-opt=native.cgroupdriver=cgroupfs \
 		  --userland-proxy=true \
 		  --live-restore \
+		  --containerd /run/containerd/containerd.sock \
 		  --iptables=true
 ExecReload=/bin/kill -s HUP $MAINPID
 LimitNOFILE=1048576

@@ -3,27 +3,39 @@
 # generate-go-project-files
 # -----------
 # Generates a .travis.yml, .gitignore, LICENSE, README.md, Makefile,
-# Dockerfile, VERSION, and version/ files and directories.
+# Dockerfile, VERSION.txt, and version/ files and directories.
 #
 # Usage:
 #       generate-go-project-files
 #
-# :authors: Jess Frazelle, @jessfraz
+# :authors: Jess Frazelle, @${PROJECT_DIR}
 # :date: 1 January 2018
 # :version: 0.0.1
 ##############################################################################
 set -e
 set -o pipefail
 
-OWNER=${OWNER:-Jessica Frazelle}
+OWNER=${OWNER:-The Genuinetools Authors}
 
-BASE_PROJECT=${BASE_PROJECT:-jessfraz/pepper}
+BASE_PROJECT=${BASE_PROJECT:-genuinetools/pepper}
 BASE_PROJECT_NAME="$(basename "$BASE_PROJECT")"
+BASE_PROJECT_DIR="$(dirname "$BASE_PROJECT")"
 
 PROJECT_NAME="$(basename "$(pwd)")"
+PROJECT_DIR="$(basename "$(dirname "$(pwd)")")"
+PROJECT="${PROJECT_DIR}/${PROJECT_NAME}"
+
+if [[ "$PROJECT_DIR" == "jessfraz" ]]; then
+	OWNER="Jessica Frazelle"
+fi
 
 # Generate a file passed as an argument.
 generate_file(){
+	if [[ "$PROJECT" == "$BASE_PROJECT" ]]; then
+		# Skip getting the files in we are on the base project.
+		return
+	fi
+
 	file=$1
 
 	if [[ -z "$file" ]]; then
@@ -32,7 +44,11 @@ generate_file(){
 	fi
 
 	contents=$(curl -sSL "https://raw.githubusercontent.com/${BASE_PROJECT}/master/${file}")
-	contents=${contents//$BASE_PROJECT_NAME/$PROJECT_NAME}
+	if [[ "$file" != ".github/workflows/make-release.yml" ]]; then
+		contents=${contents//$BASE_PROJECT/$PROJECT}
+		contents=${contents//$BASE_PROJECT_NAME/$PROJECT_NAME}
+		contents=${contents//$BASE_PROJECT_DIR/$PROJECT_DIR}
+	fi
 
 	# If the file is in a directory, create the directory first.
 	# shellcheck disable=SC1001
@@ -40,6 +56,11 @@ generate_file(){
 		dir="$(dirname "$file")"
 		echo "Creating directory $dir"
 		mkdir -p "$dir"
+	fi
+
+	if [[ "$file" == ".goosarch" ]] && [[ -f ".goosarch" ]]; then
+		# Return early so we don't overwrite it.
+		return
 	fi
 
 	echo "Writing $file"
@@ -79,12 +100,18 @@ license(){
 	EOF
 }
 
-# Generate the VERSION file.
+# Generate the VERSION.txt file.
 version(){
-	version_file="VERSION"
+	version_file="VERSION.txt"
 
 	# Only generate the version file if it doesn't exist already.
 	if [[ ! -f "$version_file" ]]; then
+		# If the old version file exists then move it.
+		if [[ -f "VERSION" ]]; then
+			echo "Moving old VERSION file to $version_file"
+			mv "VERSION" "$version_file"
+			return
+		fi
 		echo "Writing $version_file"
 
 		echo "v0.0.0" > "$version_file"
@@ -94,28 +121,102 @@ version(){
 # Generate the README.md file,
 readme(){
 	readme_file="README.md"
-	version=$(cat VERSION)
 
-	# Only generate the readme file if it doesn't exist already.
-	if [[ ! -f "$readme_file" ]]; then
+	# Only generate the readme file if it doesn't exist already, otherwise try
+	# and update it.
+	if [[ -f "$readme_file" ]]; then
+		# Check if the travis line exists
+		old_line='[![Travis CI](https://'
+		new_line='[![make-all](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20all/badge\.svg)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/actions?query=workflow%3A%22make+all%22)'
+		n=$(grep -nF "$old_line" "$readme_file" | cut -f1 -d: || true)
+		if [[ "$n" != "" ]]; then
+			# Replace that line with the new line.
+			sed -i "${n}"'s#.*#'"${new_line}"'#' "$readme_file"
+		fi
+
+		# Check if the old make all exists
+		old_line='![make-all](https://'
+		new_line='[![make-all](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20all/badge\.svg)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/actions?query=workflow%3A%22make+all%22)'
+		n=$(grep -nF "$old_line" "$readme_file" | cut -f1 -d: || true)
+		if [[ "$n" != "" ]]; then
+			# Replace that line with the new line.
+			sed -i "${n}"'s#.*#'"${new_line}"'#' "$readme_file"
+		fi
+
+		# Add the make image badge if it's not already there.
+		new_line='[![make-image](https://github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/workflows/make%20image/badge\.svg)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/actions?query=workflow%3A%22make+image%22)'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the make all badge line.
+			match_line='.*\[make-all\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Add the godoc badge if it's not already there.
+		new_line='[![GoDoc](https://img\.shields\.io/badge/godoc-reference-5272B4\.svg?style=for-the-badge)](https://godoc\.org/github\.com/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the Travis CI badge line.
+			match_line='.*\[make-image\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Add the codacy badge if it's not already there.
+		new_line='[![Codacy](https://img.shields.io/codacy/grade/c2cbe5daa266419dbfbc2bfd23c5fff3.svg?style=for-the-badge)](https://app.codacy.com/app/'"${PROJECT_DIR}/${PROJECT_NAME}"')'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the GoDoc badge line.
+			match_line='.*\[Go Doc\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Add the releases badge if it's not already there.
+		new_line='[![Github All Releases](https://img.shields.io/github/downloads/'"${PROJECT_DIR}/${PROJECT_NAME}"'/total.svg?style=for-the-badge)](https://github.com/'"${PROJECT_DIR}/${PROJECT_NAME}"'/releases)'
+		if ! grep -Fq "${new_line:0:20}" "$readme_file"; then
+			# Add the new line after the Codacy badge line.
+			match_line='.*\[Codacy\]*.'
+			sed -i $'\_'"${match_line}"'_a '"${new_line}" "$readme_file"
+		fi
+
+		# Check if the installation instructions line exists
+		new_line='For installation instructions from binaries please visit the [Releases Page](https://github\.com/'"${PROJECT_DIR}"/"${PROJECT_NAME}"'/releases)\.'
+		if ! grep -Fq "${new_line:0:50}" "$readme_file"; then
+			# Add the new line after the "#### Binaries" line.
+			match_line="#### Binaries"
+			# shellcheck disable=SC1117
+			sed -i $'\_'"${match_line}"'_a '"\\\n${new_line}" "$readme_file"
+		fi
+	else
 		echo "Writing $readme_file"
 
 		cat <<-EOF > "$readme_file"
 		# $PROJECT_NAME
 
-		[![Travis CI](https://travis-ci.org/jessfraz/${PROJECT_NAME}.svg?branch=master)](https://travis-ci.org/jessfraz/${PROJECT_NAME})
+		![make all](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/workflows/make%20all/badge.svg)
+		![make image](https://github.com/oxidecomputer/${PROJECT_DIR}/${PROJECT_NAME}/make%20image/badge.svg)
+		[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/${PROJECT_DIR}/${PROJECT_NAME})
+		[![Github All Releases](https://img.shields.io/github/downloads/${PROJECT_DIR}/${PROJECT_NAME}/total.svg?style=for-the-badge)](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases)
 
 		{DESCRIPTION}
+
+		**Table of Contents**
+
+		<!-- START doctoc -->
+		<!-- END doctoc -->
 
 		## Installation
 
 		#### Binaries
 
-		- **darwin** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-darwin-amd64)
-		- **freebsd** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-freebsd-amd64)
-		- **linux** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-amd64) / [arm](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm) / [arm64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-linux-arm64)
-		- **solaris** [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-solaris-amd64)
-		- **windows** [386](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-386) / [amd64](https://github.com/jessfraz/${PROJECT_NAME}/releases/download/${version}/${PROJECT_NAME}-windows-amd64)
+		For installation instructions from binaries please visit the [Releases Page](https://github.com/${PROJECT_DIR}/${PROJECT_NAME}/releases).
+
+		#### Via Go
+
+		\`\`\`console
+		$ go get github.com/${PROJECT_DIR}/${PROJECT_NAME}
+		\`\`\`
+
+		## Usage
+
+		\`\`\`console
+		\`\`\`
 		EOF
 	fi
 }
@@ -123,7 +224,7 @@ readme(){
 main(){
 	echo "Generating project files for ${PROJECT_NAME}..."
 
-	files=( ".travis.yml" ".gitignore" "Makefile" "Dockerfile" "version/version.go" )
+	files=( ".gitignore" ".goosarch" "Makefile" "basic.mk" "Dockerfile" "version/version.go" ".github/workflows/make-all.yml" ".github/workflows/make-image.yml" ".github/workflows/make-release.yml" ".github/workflows/toc.yml" )
 	for file in "${files[@]}"; do
 		generate_file "$file"
 	done

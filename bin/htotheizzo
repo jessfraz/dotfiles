@@ -36,48 +36,17 @@ dcleanup(){
 }
 
 update_docker() {
-	local user_home="/home/${TARGET_USER}"
-	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
-
-	# set init
-	local init="systemd"
-	if [[ "$(/sbin/init --version)" =~ "upstart" ]]; then
-		init="upstart"
-	fi
+	echo
+	echo "Updating docker..."
+	echo
 
 	# stop docker
 	dcleanup || true
-	if [[ "$init" == "upstart" ]]; then
-		service docker stop || true
-	else
-		systemctl stop docker || true
-	fi
+	systemctl stop docker || true
 
-	if [[ -d "${docker_dir}" ]]; then
-		(
-		cd "${docker_dir}"
-
-		# Clean up bundles
-		rm -rf bundles
-
-		# Include contributed completions
-		mkdir -p /etc/bash_completion.d
-		curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
-
-		if [[ "$init" == "upstart" ]]; then
-			# Update the upstart file
-			curl -sSL -o /etc/init/docker.conf https://raw.githubusercontent.com/docker/docker/master/contrib/init/upstart/docker.conf
-		fi
-
-		# move vim syntax highlighting
-		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
-			mkdir -p "${user_home}/.vim/bundle/Dockerfile"
-		fi
-		# shellcheck disable=SC2216
-		yes | cp -r contrib/syntax/vim/* "${user_home}/.vim/bundle/Dockerfile/"
-		chown -R "${TARGET_USER}" "${user_home}/.vim/bundle/Dockerfile"
-		)
-	fi
+	# Include contributed completions
+	mkdir -p /etc/bash_completion.d
+	curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
 
 	# get the binary
 	local tmp_tar=/tmp/docker.tgz
@@ -89,23 +58,67 @@ update_docker() {
 	# docker_sha256=$(curl -sSL "${binary_uri}/docker-${docker_version}.tgz.sha256" | awk '{print $1}')
 	(
 	set -x
-	curl -fSL "${binary_uri}/docker-${docker_version}.tgz" -o "${tmp_tar}"
+	curl -fSL "${binary_uri}/docker-${docker_version}.tgz" -o "$tmp_tar"
 	# echo "${docker_sha256} ${tmp_tar}" | sha256sum -c -
-	tar -C /usr/local/bin --strip-components 1 -xzvf "${tmp_tar}"
+	tar -C /usr/local/bin --strip-components 1 -xzvf "$tmp_tar"
 	rm "${tmp_tar}"
+	# remove binaries we don't need
+	rm -f /usr/local/bin/docker-containerd*
 	docker -v
 	)
 	chmod +x /usr/local/bin/docker*
 
-	# start docker
-	if [[ "$init" == "upstart" ]]; then
-		service docker start
-	else
-		systemctl start docker
-	fi
+	# enable and start docker
+	systemctl daemon-reload
+	systemctl enable docker
+	systemctl start docker || true
 }
 
-update_linux() {
+update_containerd() {
+	echo
+	echo "Updating containerd..."
+	echo
+
+	local tmp_tar=/tmp/containerd.tar.gz
+	local containerd_version
+	containerd_version=$(curl -sSL "https://api.github.com/repos/containerd/containerd/releases" | jq --raw-output .[0].tag_name)
+	containerd_version=${containerd_version#v}
+	local binary_uri="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}.linux-amd64.tar.gz"
+	(
+	set -x
+	curl -fSL "$binary_uri" -o "$tmp_tar"
+	tar -C /usr/local/bin --strip-components 1 -xzvf "$tmp_tar"
+	rm "$tmp_tar"
+	containerd -v
+	)
+
+	# enable and start containerd
+	systemctl daemon-reload
+	systemctl enable containerd
+	systemctl start containerd
+}
+
+update_runc() {
+	echo
+	echo "Updating runc..."
+	echo
+
+	local runc_version
+	runc_version=$(curl -sSL "https://api.github.com/repos/opencontainers/runc/releases" | jq --raw-output .[0].tag_name)
+	runc_version=${runc_version#v}
+	local binary_uri="https://github.com/opencontainers/runc/releases/download/v${runc_version}/runc.amd64"
+	(
+	set -x
+	curl -fSL "$binary_uri" -o "/sbin/runc"
+	chmod +x /sbin/runc
+	runc -v
+	)
+}
+
+update_apt() {
+	echo
+	echo "Updating apt.."
+	echo
 	apt -y update
 	apt -y upgrade
 	apt -y autoremove
@@ -115,9 +128,46 @@ update_linux() {
 }
 
 update_kubectl() {
+	echo
+	echo "Updating kubectl..."
+	echo
 	KUBERNETES_VERSION=$(curl -sSL https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 	curl -sSL "https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl" > /usr/local/bin/kubectl
 	chmod +x /usr/local/bin/kubectl
+	echo "kuebctl $(kubectl version --client --short)"
+}
+
+update_rust() {
+	echo
+	echo "Updating rust..."
+	echo
+
+	command -v rustup >/dev/null 2>&1 || { echo >&2 "I require rust but it's not installed.  Aborting."; return; }
+
+	su -c "rustup update" "$TARGET_USER"
+	su -c "rustc --version" "$TARGET_USER"
+	su -c "rustup completions bash" > "/etc/bash_completion.d/rustup"
+}
+
+update_bios() {
+	echo
+	echo "Checking for BIOS updates..."
+	echo
+	fwupdmgr refresh --force
+	fwupdmgr get-updates
+	fwupdmgr update
+}
+
+update_firmware() {
+	echo
+	echo "Updating firmware..."
+	echo
+	update-firmware
+
+	echo
+	echo "Updating iwlwifi..."
+	echo
+	update-iwlwifi
 }
 
 update() {
@@ -135,9 +185,14 @@ update() {
 
 		# update
 		get_user;
-		update_linux;
+		update_apt;
 		update_docker;
+		update_containerd;
+		update_runc;
 		update_kubectl;
+		update_rust;
+		update_firmware;
+		update_bios;
 	else
 		echo "We don't have update functions for OS: ${OSTYPE}"
 		echo "Moving on..."
@@ -148,7 +203,7 @@ update() {
 
 main() {
 	local arg=$1
-	if [[ ! -z "$arg" ]]; then
+	if [[ -n "$arg" ]]; then
 		help
 	else
 		update

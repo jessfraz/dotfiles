@@ -1,3 +1,7 @@
+! vim: set ft=xdefaults:
+! Set $TERM variable
+URxvt.termName: rxvt-unicode
+
 !! drop in Solarized colorscheme for Xresources/Xdefaults
 
 !!SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
@@ -41,8 +45,8 @@
 URxvt*background:       [90]S_base04
 *foreground:            S_base00
 *depth:                 32
-*fading:                40
-*fadeColor:             S_base03
+!!*fading:                40
+!!*fadeColor:             S_base03
 *cursorColor:           S_base1
 *pointerColorBackground:S_base01
 *pointerColorForeground:S_base1
@@ -84,7 +88,8 @@ URxvt*background:       [90]S_base04
 *saveLines:             999999
 
 !-- Xft settings -- !
-Xft.dpi:        144
+! Setting dpi here messes up the xrandr and xorg settings.
+!Xft.dpi:        330
 Xft.rgba:       rgb
 Xft.autohint:   0
 Xft.lcdfilter:  lcddefault
@@ -93,8 +98,19 @@ Xft.hinting:    1
 Xft.antialias:  1
 
 ! -- Fonts -- !
-URxvt.font: xft:Inconsolata:pixelsize=27:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
-URxvt.boldFont: xft:Inconsolata:style=bold:pixelsize=27:antialias=true:hinting=full,xft:Symbola:pixelsize=19:antialias=true:hinting=full
+URxvt.font: xft:IBM Plex Mono:style=Regular:pixelsize=24:antialias=true:hinting=full,\
+            xft:Noto Color Emoji,\
+            xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.boldFont: xft:IBM Plex Mono:style=Bold:pixelsize=24:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.italicFont: xft:IBM Plex Mono:style=Italic:pixelsize=24:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.boldItalicFont: xft:IBM Plex Mono:style=Bold Italic:pixelsize=24:antialias=true:hinting=full,\
+                xft:Noto Color Emoji,\
+                xft:Symbola:pixelsize=24:antialias=true:hinting=full
+URxvt.letterSpace: 0
 
 !!*faceSize:              10
 *bellIsUrgent:          true

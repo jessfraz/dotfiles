@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# Set bash as our shell, idk why anyone would use something else ;)
+shell="$(which bash)";
+export SHELL="$shell";
+
 # Make vim the default editor
-export EDITOR=/usr/bin/nvim;
+export EDITOR=/usr/bin/vim;
 export TERMINAL="urxvt";
 
 # Larger bash history (allow 32³ entries; default is 500)
@@ -24,9 +28,9 @@ DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/user/$(id -u)/bus;
 export TODOTXT_DEFAULT_ACTION=ls
 
 # hidpi for gtk apps
-export GDK_SCALE=2
+export GDK_SCALE=1.5
 export GDK_DPI_SCALE=0.5
-export QT_DEVICE_PIXEL_RATIO=2
+export QT_DEVICE_PIXEL_RATIO=1.5
 
 # turn on go vendoring experiment
 export GO15VENDOREXPERIMENT=1
@@ -38,3 +42,6 @@ if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
 	GPG_TTY=$(tty)
 	export GPG_TTY
 fi
+
+# set xdg data dirs for dmenu to source
+export XDG_DATA_DIRS=/usr/share/

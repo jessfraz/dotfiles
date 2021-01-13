@@ -26,6 +26,10 @@ del_stopped(){
 		docker rm "$name"
 	fi
 }
+rmctr(){
+	# shellcheck disable=SC2068
+	docker rm -f $@ 2>/dev/null || true
+}
 relies_on(){
 	for container in "$@"; do
 		local state
@@ -104,7 +108,6 @@ az(){
 	docker run -it --rm \
 		-v "${HOME}/.azure:/root/.azure" \
 		--log-driver none \
-		--name azure \
 		${DOCKER_REPO_PREFIX}/azure-cli "$@"
 }
 bees(){
@@ -218,12 +221,39 @@ consul(){
 	hostess add consul "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' consul)"
 	browser-exec "http://consul:8500"
 }
+cura(){
+	del_stopped cura
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v "${HOME}/cura:/root/cura" \
+		-v "${HOME}/.cache/cura:/root/.cache/cura" \
+		-v "${HOME}/.config/cura:/root/.config/cura" \
+		-e QT_DEVICE_PIXEL_RATIO \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--device /dev/dri \
+		--name cura \
+		${DOCKER_REPO_PREFIX}/cura
+}
 dcos(){
 	docker run -it --rm \
 		-v "${HOME}/.dcos:/root/.dcos" \
 		-v "$(pwd):/root/apps" \
 		-w /root/apps \
 		${DOCKER_REPO_PREFIX}/dcos-cli "$@"
+}
+figma() {
+	del_stopped figma
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		--name figma \
+		${DOCKER_REPO_PREFIX}/figma-wine bash
 }
 firefox(){
 	del_stopped firefox
@@ -250,6 +280,12 @@ firefox(){
 	# exit current shell
 	exit 0
 }
+fleetctl(){
+	docker run --rm -it \
+		--entrypoint fleetctl \
+		-v "${HOME}/.fleet://.fleet" \
+		r.j3ss.co/fleet "$@"
+}
 gcalcli(){
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
@@ -263,7 +299,7 @@ dgcloud(){
 	docker run --rm -it \
 		-v "${HOME}/.gcloud:/root/.config/gcloud" \
 		-v "${HOME}/.ssh:/root/.ssh:ro" \
-		-v "$(which docker):/usr/bin/docker" \
+		-v "$(command -v docker):/usr/bin/docker" \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		--name gcloud \
 		${DOCKER_REPO_PREFIX}/gcloud "$@"
@@ -297,11 +333,22 @@ hollywood(){
 		${DOCKER_REPO_PREFIX}/hollywood
 }
 htop(){
+	if [[ -n "$(which htop)" ]]; then
+		"$(which htop)" "$@"
+	else
+		docker run --rm -it \
+			--pid host \
+			--net none \
+			--name htop \
+			${DOCKER_REPO_PREFIX}/htop
+	fi
+}
+htpasswd(){
 	docker run --rm -it \
-		--pid host \
 		--net none \
-		--name htop \
-		${DOCKER_REPO_PREFIX}/htop
+		--name htpasswd \
+		--log-driver none \
+		${DOCKER_REPO_PREFIX}/htpasswd "$@"
 }
 http(){
 	docker run -t --rm \
@@ -347,7 +394,8 @@ john(){
 kernel_builder(){
 	docker run --rm -it \
 		-v /usr/src:/usr/src \
-		--cpu-shares=512 \
+		-v /lib/modules:/lib/modules \
+		-v /boot:/boot \
 		--name kernel-builder \
 		${DOCKER_REPO_PREFIX}/kernel-builder
 }
@@ -363,6 +411,23 @@ keypassxc(){
 		--name keypassxc \
 		${DOCKER_REPO_PREFIX}/keepassxc
 }
+kicad(){
+	del_stopped kicad
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v "${HOME}/kicad:/root/kicad" \
+		-v "${HOME}/.cache/kicad:/root/.cache/kicad" \
+		-v "${HOME}/.config/kicad:/root/.config/kicad" \
+		-e QT_DEVICE_PIXEL_RATIO \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--device /dev/dri \
+		--name kicad \
+		${DOCKER_REPO_PREFIX}/kicad
+}
 kvm(){
 	del_stopped kvm
 	relies_on pulseaudio
@@ -371,10 +436,14 @@ kvm(){
 	modprobe kvm
 
 	docker run -d \
+		--tmpfs /var/run \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		-v /run/libvirt:/var/run/libvirt \
+		-v "${HOME}/kvm:/root/kvm" \
 		-e "DISPLAY=unix${DISPLAY}" \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		-e QT_DEVICE_PIXEL_RATIO \
 		--link pulseaudio:pulseaudio \
 		-e PULSE_SERVER=pulseaudio \
 		--group-add audio \
@@ -402,9 +471,13 @@ lpass(){
 		${DOCKER_REPO_PREFIX}/lpass "$@"
 }
 lynx(){
-	docker run --rm -it \
-		--name lynx \
-		${DOCKER_REPO_PREFIX}/lynx "$@"
+	if [[ -n "$(which lynx)" ]]; then
+		"$(which lynx)" "$@"
+	else
+		docker run --rm -it \
+			--name lynx \
+			${DOCKER_REPO_PREFIX}/lynx "$@"
+	fi
 }
 masscan(){
 	docker run -it --rm \
@@ -413,6 +486,16 @@ masscan(){
 		--cap-add NET_ADMIN \
 		--name masscan \
 		${DOCKER_REPO_PREFIX}/masscan "$@"
+}
+mc(){
+	cwd="$(pwd)"
+	name="$(basename "$cwd")"
+
+	docker run --rm -it \
+		--log-driver none \
+		-v "${cwd}:/home/mc/${name}" \
+		--workdir "/home/mc/${name}" \
+		${DOCKER_REPO_PREFIX}/mc "$@"
 }
 mpd(){
 	del_stopped mpd
@@ -536,6 +619,30 @@ notify_send(){
 	local args=${*:2}
 	docker exec -i notify_osd notify-send "$1" "${args}"
 }
+now(){
+	docker run -it --rm \
+		-v "${HOME}/.now:/root/.now" \
+		-v "$(pwd):/usr/src/repo:ro" \
+		--workdir /usr/src/repo \
+		--log-driver none \
+		${DOCKER_REPO_PREFIX}/now "$@"
+}
+openscad(){
+	del_stopped openscad
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		-v "${HOME}/openscad:/root/openscad" \
+		-v "${HOME}/.config/OpenSCAD:/root/.config/OpenSCAD" \
+		-e QT_DEVICE_PIXEL_RATIO \
+		-e GDK_SCALE \
+		-e GDK_DPI_SCALE \
+		--device /dev/dri \
+		--name openscad \
+		${DOCKER_REPO_PREFIX}/openscad
+}
 opensnitch(){
 	del_stopped opensnitchd
 	del_stopped opensnitch
@@ -578,19 +685,56 @@ opensnitch(){
 		--name opensnitch \
 		${DOCKER_REPO_PREFIX}/opensnitch
 }
-pandoc(){
-	local file=${*: -1}
-	local lfile
-	lfile=$(readlink -m "$(pwd)/${file}")
-	local rfile
-	rfile=$(readlink -m "/$(basename "$file")")
-	local args=${*:1:${#@}-1}
+osquery(){
+	rmctr osquery
 
-	docker run --rm \
-		-v "${lfile}:${rfile}" \
-		-v /tmp:/tmp \
-		--name pandoc \
-		${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+	docker run -d --restart always \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /etc/os-release:/etc/os-release:ro \
+		--net host \
+		--ipc host \
+		--pid host \
+		-e OSQUERY_ENROLL_SECRET \
+		--name osquery \
+		--privileged \
+		${DOCKER_REPO_PREFIX}/osquery \
+		--verbose \
+		--enroll_secret_env=OSQUERY_ENROLL_SECRET \
+		--docker_socket=/var/run/docker.sock \
+		--host_identifier=hostname \
+		--tls_hostname="${OSQUERY_DOMAIN}" \
+		--enroll_tls_endpoint=/api/v1/osquery/enroll \
+		--config_plugin=tls \
+		--config_tls_endpoint=/api/v1/osquery/config \
+		--config_tls_refresh=10 \
+		--disable_distributed=false \
+		--distributed_plugin=tls \
+		--distributed_interval=10 \
+		--distributed_tls_max_attempts=3 \
+		--distributed_tls_read_endpoint=/api/v1/osquery/distributed/read \
+		--distributed_tls_write_endpoint=/api/v1/osquery/distributed/write \
+		--logger_plugin=tls \
+		--logger_tls_endpoint=/api/v1/osquery/log \
+		--logger_tls_period=10
+}
+pandoc(){
+	if [[ -n "$(which pandoc)" ]]; then
+		"$(which pandoc)" "$@"
+	else
+		local file=${*: -1}
+		local lfile
+		lfile=$(readlink -m "$(pwd)/${file}")
+		local rfile
+		rfile=$(readlink -m "/$(basename "$file")")
+		local args=${*:1:${#@}-1}
+
+		docker run --rm \
+			-v "${lfile}:${rfile}" \
+			-v /tmp:/tmp \
+			--name pandoc \
+			${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+	fi
 }
 pivman(){
 	del_stopped pivman
@@ -813,6 +957,25 @@ ssh2john(){
 		--entrypoint ssh2john \
 		${DOCKER_REPO_PREFIX}/john "$@"
 }
+sshb0t(){
+	del_stopped sshb0t
+
+	if [[ ! -d "${HOME}/.ssh" ]]; then
+		mkdir -p "${HOME}/.ssh"
+	fi
+
+	if [[ ! -f "${HOME}/.ssh/authorized_keys" ]]; then
+		touch "${HOME}/.ssh/authorized_keys"
+	fi
+
+	GITHUB_USER=${GITHUB_USER:=jessfraz}
+
+	docker run --rm -it \
+		--name sshb0t \
+		-v "${HOME}/.ssh/authorized_keys:/root/.ssh/authorized_keys" \
+		r.j3ss.co/sshb0t \
+		--user "${GITHUB_USER}" --keyfile /root/.ssh/authorized_keys --once
+}
 steam(){
 	del_stopped steam
 	relies_on pulseaudio
@@ -856,6 +1019,21 @@ termboy(){
 		--device /dev/snd \
 		--name termboy \
 		${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
+}
+terraform(){
+	if [[ -n "$(which terraform)" ]]; then
+		"$(which terraform)" "$@"
+	else
+		docker run -it --rm \
+			-v "${HOME}:${HOME}:ro" \
+			-v "$(pwd):/usr/src/repo" \
+			-v /tmp:/tmp \
+			--workdir /usr/src/repo \
+			--log-driver none \
+			-e GOOGLE_APPLICATION_CREDENTIALS \
+			-e SSH_AUTH_SOCK \
+			${DOCKER_REPO_PREFIX}/terraform "$@"
+	fi
 }
 tor(){
 	del_stopped tor
@@ -955,6 +1133,17 @@ virsh(){
 		--net container:kvm \
 		${DOCKER_REPO_PREFIX}/libvirt-client "$@"
 }
+virtualbox(){
+	del_stopped virtualbox
+
+	docker run -d \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e "DISPLAY=unix${DISPLAY}" \
+		--privileged \
+		--name virtualbox \
+		${DOCKER_REPO_PREFIX}/virtualbox
+}
 virt_viewer(){
 	relies_on kvm
 
@@ -1011,14 +1200,45 @@ watchman(){
 		--name watchman \
 		${DOCKER_REPO_PREFIX}/watchman --foreground
 }
+weematrix(){
+	del_stopped weematrix
+
+	docker run --rm -it \
+		--user root \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
+		${DOCKER_REPO_PREFIX}/weechat-matrix \
+		chown -R user /home/user/.weechat
+
+	docker run --rm -it \
+		-v /etc/localtime:/etc/localtime:ro \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
+		-e "TERM=screen" \
+		--name weematrix \
+		${DOCKER_REPO_PREFIX}/weechat-matrix
+}
 weeslack(){
 	del_stopped weeslack
+
+	docker run --rm -it \
+		--user root \
+		-v "${HOME}/.weechat:/home/user/.weechat" \
+		${DOCKER_REPO_PREFIX}/wee-slack \
+		chown -R user /home/user/.weechat
 
 	docker run --rm -it \
 		-v /etc/localtime:/etc/localtime:ro \
 		-v "${HOME}/.weechat:/home/user/.weechat" \
 		--name weeslack \
 		${DOCKER_REPO_PREFIX}/wee-slack
+}
+wg(){
+	docker run -i --rm \
+		--log-driver none \
+		-v /tmp:/tmp \
+		--cap-add NET_ADMIN \
+		--net host \
+		--name wg \
+		${DOCKER_REPO_PREFIX}/wg "$@"
 }
 wireshark(){
 	del_stopped wireshark
@@ -1040,63 +1260,45 @@ wrk(){
 		${DOCKER_REPO_PREFIX}/wrk "$@"
 }
 ykman(){
-	del_stopped ykpersonalize
+	del_stopped ykman
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		--device /dev/usb \
-		--device /dev/bus/usb \
-		--name ykman \
-		${DOCKER_REPO_PREFIX}/ykman bash
+	if [[ -n "$(which ykman)" ]]; then
+		"$(which ykman)" "$@"
+	else
+		docker run --rm -it \
+			-v /etc/localtime:/etc/localtime:ro \
+			--device /dev/usb \
+			--device /dev/bus/usb \
+			--name ykman \
+			${DOCKER_REPO_PREFIX}/ykman bash
+	fi
 }
 ykpersonalize(){
 	del_stopped ykpersonalize
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		--device /dev/usb \
-		--device /dev/bus/usb \
-		--name ykpersonalize \
-		${DOCKER_REPO_PREFIX}/ykpersonalize bash
+	if [[ -n "$(which ykpersonalize)" ]]; then
+		"$(which ykpersonalize)" "$@"
+	else
+		docker run --rm -it \
+			-v /etc/localtime:/etc/localtime:ro \
+			--device /dev/usb \
+			--device /dev/bus/usb \
+			--name ykpersonalize \
+			${DOCKER_REPO_PREFIX}/ykpersonalize bash
+	fi
 }
 yubico_piv_tool(){
 	del_stopped yubico-piv-tool
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		--device /dev/usb \
-		--device /dev/bus/usb \
-		--name yubico-piv-tool \
-		${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
+	if [[ -n "$(which yubico-piv-tool)" ]]; then
+		"$(which yubico-piv-tool)" "$@"
+	else
+		docker run --rm -it \
+			-v /etc/localtime:/etc/localtime:ro \
+			--device /dev/usb \
+			--device /dev/bus/usb \
+			--name yubico-piv-tool \
+			${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
+	fi
 }
 alias yubico-piv-tool="yubico_piv_tool"
-
-
-###
-### Awesome sauce by @jpetazzo
-###
-if command -v "docker" &>/dev/null; then
-	command_not_found_handle () {
-		# Check if there is a container image with that name
-		if ! docker inspect --format '{{ .Author }}' "$1" >&/dev/null ; then
-			echo "$0: $1: command not found"
-			return
-		fi
-
-		# Check that it's really the name of the image, not a prefix
-		if docker inspect --format '{{ .Id }}' "$1" | grep -q "^$1" ; then
-			echo "$0: $1: command not found"
-			return
-		fi
-
-		docker run -ti -u "$(whoami)" -w "$HOME" \
-			"$(env | cut -d= -f1 | awk '{print "-e", $1}')" \
-			--device /dev/snd \
-			-v /etc/passwd:/etc/passwd:ro \
-			-v /etc/group:/etc/group:ro \
-			-v /etc/localtime:/etc/localtime:ro \
-			-v /home:/home \
-			-v /tmp/.X11-unix:/tmp/.X11-unix \
-			"${DOCKER_REPO_PREFIX}/${1}" "$@"
-	}
-fi

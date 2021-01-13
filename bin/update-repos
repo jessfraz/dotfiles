@@ -2,13 +2,52 @@
 set -e
 set -o pipefail
 
-while IFS= read -r -d '' dir; do
-	if [[ -d "${dir}/.git" ]]; then
-		base=$(basename "$dir")
-		echo "updating repo for ${base}..."
-		(
-		cd "$dir"
-		git pull
-		)
-	fi
-done < <(find "${HOME}" -maxdepth 1 -type d ! -path "${HOME}" -print0)
+mapfile -t dirs < <(find "${HOME}" -maxdepth 2 -type d -name ".git" ! -path "${HOME}")
+
+for dir in "${dirs[@]}"; do
+	dir=$(dirname "$dir")
+	base=$(basename "$dir")
+
+	echo "Updating repo for ${base}..."
+	echo
+	(
+	cd "$dir"
+	git pull
+
+	case "$base" in
+		".vim")
+			echo
+			echo "Running 'make update' in .vim repo..."
+			make update
+			git status
+			;;
+		"dotfiles")
+			echo
+			echo "Running 'make' in dotfiles repo..."
+			make
+			;;
+		"configs")
+			echo
+			echo "Running 'make dotfiles update' in configs repo..."
+			make dotfiles update
+			git status
+			;;
+		"jenkins-dsl")
+			echo
+			echo "Running 'make' in jenkins-dsl repo..."
+			make
+			git status
+			;;
+		"j3ssb0t")
+			echo
+			echo "Running 'make archive model' in j3ssb0t repo..."
+			make archive model
+			git status
+			;;
+	esac
+
+	echo
+	echo "Successfully updated ${base}!"
+	echo
+	)
+done
