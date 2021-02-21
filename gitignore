@@ -4,6 +4,9 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+xcuserdata
+Pods
+keyrace-mac.xcworkspace/
 
 # Icon must end with two \r
 Icon
