@@ -595,9 +595,13 @@ nginx(){
 	sudo hostess add jess 127.0.0.1
 }
 nmap(){
-	docker run --rm -it \
-		--net host \
-		${DOCKER_REPO_PREFIX}/nmap "$@"
+	if [[ -n "$(which nmap)" ]]; then
+		"$(which nmap)" "$@"
+	else
+		docker run --rm -it \
+			--net host \
+			${DOCKER_REPO_PREFIX}/nmap "$@"
+	fi
 }
 notify_osd(){
 	del_stopped notify_osd
