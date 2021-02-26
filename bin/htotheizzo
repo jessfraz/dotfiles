@@ -50,7 +50,7 @@ update_docker() {
 
 	# get the binary
 	local tmp_tar=/tmp/docker.tgz
-	local binary_uri="https://download.docker.com/linux/static/edge/x86_64"
+	local binary_uri="https://download.docker.com/linux/static/test/x86_64"
 	local docker_version
 	docker_version=$(curl -sSL "https://api.github.com/repos/docker/docker-ce/releases/latest" | jq --raw-output .tag_name)
 	docker_version=${docker_version#v}
@@ -83,7 +83,7 @@ update_containerd() {
 	local containerd_version
 	containerd_version=$(curl -sSL "https://api.github.com/repos/containerd/containerd/releases" | jq --raw-output .[0].tag_name)
 	containerd_version=${containerd_version#v}
-	local binary_uri="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}.linux-amd64.tar.gz"
+	local binary_uri="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}-linux-amd64.tar.gz"
 	(
 	set -x
 	curl -fSL "$binary_uri" -o "$tmp_tar"
