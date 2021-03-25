@@ -4,12 +4,14 @@
     <mapping directory="$PROJECT_DIR$/.dotfiles" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.dotfiles/.dotfiles" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.dotfiles/.nvm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.dotfiles/.oh-my-zsh" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.dotfiles/.ohmyzsh" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.dotfiles/homebrew" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.dotfiles/sdkman-cli" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.dotfiles/sdkman-gui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.nvm" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.oh-my-zsh" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.ohmyzsh" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Dev" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Documents/ComputerScience/GIS/OpenLayers" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Documents/ComputerScience/GIS/Parcels/shapefile-js" vcs="Git" />
@@ -19,5 +21,21 @@
     <mapping directory="$PROJECT_DIR$/Documents/GoogleDrive/FrontendMasters/CSS-Workshop" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Documents/GoogleDrive/FrontendMasters/workshop-vs-code-can-do-that" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Library/Caches/Homebrew/ccache--git" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos-docker" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos/common/backward-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos/common/xrootd-ssi-protobuf-interface" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos/namespace/ns_quarkdb/qclient" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos/namespace/ns_quarkdb/qclient/src/fmt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/ISO/CentOS/EOS-Setup/eos/unit_tests/googletest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/Algorithims/Week8/CourseProject/mp4parser" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/Capstone/EmployeePortalWeb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/SimulationAnalysis/Week10/Traffic" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/SimulationAnalysis/Week11/Traffic" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/SoftwareEngineering/Week10/ReservationSystem" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/SoftwareEngineering/Week9/Television" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/kevinelliot/0726211d17020a6abc1f" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Library/Mobile Documents/com~apple~CloudDocs/Archives/Rasmussen/Drew-CourseWork/kevinelliot/3135044" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/NorthMetroLawnAndLandscape" vcs="Git" />
   </component>
 </project>

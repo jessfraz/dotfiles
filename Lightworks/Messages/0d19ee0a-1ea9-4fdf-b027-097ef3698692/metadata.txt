@@ -1,0 +1,5 @@
+{"Title" : "New QScan 2021 - Professional video quality-checking for all","Description" : "<p>QScan adds effortless QC to your workflow. QScan’s easy-use interface and award-winning engine take the legwork out of file analysis.</p>\\
+<p></p>\\
+<p>Free version includes ready-made templates for YouTube and Vimeo!</p>\\
+<p></p>\\
+<p><a href=\"https://www.lwks.com/index.php?option=com_content&amp;view=article&amp;id=318&amp;Itemid=278&amp;utm_source=application&amp;utm_medium=banner&amp;utm_campaign=qscan_2021_release\">Find out more!</a></p>","Image" : "/Users/drew/Lightworks/Messages/0d19ee0a-1ea9-4fdf-b027-097ef3698692/qscan_2021_els_441x433.png","UID" : "0d19ee0a-1ea9-4fdf-b027-097ef3698692","Expiry" : "2021-03-22T23:59:59+00:00","Presentation" : "daily","Build" : "Lightworks2020.1.1 (124942) - Sep 18 2020"}

@@ -1,0 +1,6 @@
+apiVersion: v1alpha1
+disableFeedback: false
+kind: Preferences
+repositories:
+- name: library
+  url: https://docker-application-template.s3.amazonaws.com/production/v0.1.8/library.yaml

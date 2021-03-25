@@ -1,0 +1,15 @@
+{
+  Version 14.6.0.1
+  History602 Added stereoscopic effects
+  History601 Track groups can be stereoscopic
+  History600 Added moveable wipes
+  History504 Add compression-format
+  History503 Add inter-project-invarient shot length
+  History502 Add source format details
+  History501 Change MediumRollIdents/frame-origins/pulldown
+  History401 Fusion/Combustion effects are stored differently
+  History400 Logs are saved in a more efficient format
+  History310 Track sound levels are now saved in edits
+  EditRevision:int 602
+  CosmeticVersion Lightworks2020.1.1 (124942) - Sep 18 2020
+}
