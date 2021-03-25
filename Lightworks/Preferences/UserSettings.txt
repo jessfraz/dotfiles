@@ -1,0 +1,33 @@
+[Configuration]
+Normal Exit=true
+network lobby name=
+
+[Configuration\KeyAssignments]
+Version=3
+
+[EditorPreferences]
+AvailableIO=System Sound
+Behaviour : Audio Mixer=false
+Behaviour : Clip sound=false
+Behaviour : Cue Panel=false
+Behaviour : Easy Audio Mute=true
+Behaviour : Recording=false
+Behaviour : Sizable tracks=false
+Behaviour : Timeline ppms=true
+Behaviour : TrimView all tracks=true
+Default font name=Tahoma
+DragDropASAP=true
+Gallery : Link tiles=true
+HardwareIODevice=System Sound
+Lightworks window WH=(1280,741)
+Lightworks window XY=(0,23)
+Lightworks window maximised=true
+Lightworks window titlebar=1
+Search : Bins in racks=false
+Stripview : Slide black=33554464
+Stripview : Unjoin=32
+UI : Hinted 38=true
+UI : Wallpaper=/Applications/Lightworks.app/Contents/MacOS/../Resources/Images/bg-1280x800.png
+UI : Window Arrangement=1
+UI : Window colour=1711391
+
