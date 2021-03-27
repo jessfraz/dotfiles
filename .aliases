@@ -155,3 +155,6 @@ alias prikey="more ~/.ssh/id_ed25519 | xclip -selection clipboard | echo '=> Pri
 
 # Blender
 alias blender='/Applications/Blender.app/Contents/MacOS/Blender'
+
+# CAD exchanger
+alias cad_exchanger='/Applications/CAD\ Exchanger.app/Contents/MacOS/ExchangerConv'
