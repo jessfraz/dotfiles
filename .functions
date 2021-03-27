@@ -476,7 +476,7 @@ gitsetoriginnopush() {
 get_cad_exchanger_token() {
 	resp=$(curl -XPOST -sSL -H "Authorization: Basic $CAD_EXCHANGER_REQUEST_TOKEN" \
         -H "Content-Type: application/json" \
-        -d '{"grant_type":"client_credentials","scope":"data:read data:write data:create data:share viewer:read"}' \
+        -d '{"grant_type":"client_credentials","scope":"data:read data:write data:create data:convert data:share viewer:read"}' \
 		https://cloud.cadexchanger.com/api/v1/oauth2/token)
 	echo "$resp" | jq --raw-output '.access_token'
 }
@@ -502,4 +502,32 @@ upload_cad_folder_contents() {
         	https://cloud.cadexchanger.com/api/v1/files
 		set +x
 	done
+}
+
+convert_rack_file_to_collada() {
+	token=$(get_cad_exchanger_token)
+	# Get the file we want.
+	resp=$(curl -sSL -H "Authorization: Bearer ${token}" \
+		"https://cloud.cadexchanger.com/api/v1/files?name[startsWith]=OXC0000040")
+	# TODO: get the right file in the right dir.
+	rack_file=$(echo "$resp" | jq --raw-output '.files[0].id')
+
+	# Get the status of the file.
+	echo "File status:"
+	resp=$(curl -sSL -H "Authorization: Bearer ${token}" \
+		"https://cloud.cadexchanger.com/api/v1/files/${rack_file}")
+	revision_id=$(echo "$resp" | jq --raw-output '.file.activeRevision')
+	echo "$resp" | jq .
+
+	# Get the status of the revison.
+	echo "Revision status:"
+	curl -sSL -H "Authorization: Bearer ${token}" \
+        "https://cloud.cadexchanger.com/api/v1/filerevisions/${revision_id}" | jq .
+
+	# Convert the file to COLLADA.
+	echo "Conversion response:"
+	curl -sSL -XPOST -H "Authorization: Bearer ${token}" \
+        -H "Content-Type: application/json" \
+        -d '{"format": "collada", "extension": "dae"}' \
+        "https://cloud.cadexchanger.com/api/v1/files/${rack_file}/convert" | jq .
 }
