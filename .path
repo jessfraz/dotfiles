@@ -51,3 +51,9 @@ export PATH="${PATH}:${HOME}/depot_tools"
 # Add bash completion for Chromium depot_tools
 # shellcheck source=/dev/null
 if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then . "${HOME}/depot_tools/git_cl_completion.sh"; fi
+
+# Homebrew
+export PATH="/opt/homebrew/bin:${PATH}"
+export LIBRARY_PATH="/opt/homebrew/lib:${LIBRARY_PATH}"
+
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"

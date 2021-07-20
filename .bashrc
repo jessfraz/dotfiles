@@ -101,6 +101,15 @@ if [[ -d /etc/bash_completion.d/ ]]; then
 	done
 fi
 
+# We do this before the following so that all the paths work.
+for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file
+
 # Start the gpg-agent if not already running
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
 	gpg-connect-agent /bye >/dev/null 2>&1
@@ -155,11 +164,4 @@ if [[ -f "${HOME}/.travis/travis.sh" ]]; then
 	source "${HOME}/.travis/travis.sh"
 fi
 
-for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
-done
-unset file
 
