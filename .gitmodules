@@ -10,3 +10,6 @@
 [submodule "homebrew"]
 	path = homebrew
 	url = https://github.com/Homebrew/homebrew.git
+[submodule "mc"]
+	path = mc
+	url = https://github.com/MidnightCommander/mc.git

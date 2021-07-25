@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<setup:Project
-    xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
-    name="user.project"
-    label="&lt;User>">
-  <description>A container project for local user projects that are virtual members of the Github.com project catalog</description>
-</setup:Project>

@@ -1,8 +1,0 @@
-eclipse.preferences.version=1
-repositories/http\:__download.eclipse.org_oomph_products_repository/enabled=true
-repositories/http\:__download.eclipse.org_oomph_products_repository/isSystem=false
-repositories/http\:__download.eclipse.org_oomph_products_repository/name=Eclipse Installer Build 4674
-repositories/http\:__download.eclipse.org_oomph_products_repository/suffix=content.xml.xz
-repositories/http\:__download.eclipse.org_oomph_products_repository/type=org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository
-repositories/http\:__download.eclipse.org_oomph_products_repository/uri=http\://download.eclipse.org/oomph/products/repository
-repositories/http\:__download.eclipse.org_oomph_products_repository/version=1.0.0
