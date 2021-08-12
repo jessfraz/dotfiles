@@ -16,7 +16,7 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 export PATH="/usr/share/bcc/tools:${PATH}"
 
 # add gnubin for mac
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:${PATH}"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:${PATH}"
 
 # add gnu getopt
 export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
