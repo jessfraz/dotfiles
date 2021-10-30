@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Use neovim for GitHub Copilot.
+alias vim="nvim"
+
 # Check for various OS openers. Quit as soon as we find one that works.
 for opener in browser-exec xdg-open cmd.exe cygstart "start" open; do
 	if command -v $opener >/dev/null 2>&1; then
