@@ -22,7 +22,7 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-sed/lib
 export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
 
 # add mysql
-export PATH="/usr/local/opt/mysql-client/bin:${PATH}"
+export PATH="/opt/homebrew/opt/mysql-client/bin:${PATH}"
 
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
