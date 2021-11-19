@@ -55,6 +55,27 @@ if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then . "${HOME}/depot_tool
 # Homebrew
 export PATH="/opt/homebrew/bin:${PATH}"
 export LIBRARY_PATH="/opt/homebrew/lib:${LIBRARY_PATH}"
+export LDFLAGS="${LDFLAGS} -L/opt/homebrew/lib"
+export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/include"
 
 # shellcheck source=/dev/null
 if [ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]; then . "/opt/homebrew/etc/profile.d/bash_completion.sh"; fi
+
+# OpenSSL
+export PATH="/opt/homebrew/opt/openssl/bin:${PATH}"
+export LDFLAGS="${LDFLAGS} -L/opt/homebrew/opt/openssl/lib"
+export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/opt/openssl/include"
+export OPENSSL_ROOT_DIR="/opt/homebrew/opt/openssl"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}"
+
+# MySQL
+export MYSQL_INCLUDE_DIR="/opt/homebrew/opt/mysql-client/include/mysql"
+
+# LLVM
+export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
+
+# Boost
+export BOOST_INCLUDE_DIR="/opt/homebrew/include"
+
+# CXXFLAGS
+CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
