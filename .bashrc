@@ -158,6 +158,11 @@ if hash kubectl 2>/dev/null; then
 	source <(kubectl completion bash)
 fi
 
+# get the gh completions
+if hash gh 2>/dev/null; then
+	eval "$(gh completion -s bash)"
+fi
+
 # source travis bash completion
 if [[ -f "${HOME}/.travis/travis.sh" ]]; then
 	# shellcheck source=/dev/null
