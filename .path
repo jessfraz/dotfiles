@@ -54,6 +54,7 @@ if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then . "${HOME}/depot_tool
 
 # Homebrew
 export PATH="/opt/homebrew/bin:${PATH}"
+export PATH="/opt/homebrew/sbin:${PATH}"
 export LIBRARY_PATH="/opt/homebrew/lib:${LIBRARY_PATH}"
 export LDFLAGS="${LDFLAGS} -L/opt/homebrew/lib"
 export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/include"
