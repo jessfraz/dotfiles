@@ -191,35 +191,39 @@ chrome(){
 
 }
 consul(){
-	del_stopped consul
+	if [[ -n "$(which consul)" ]]; then
+		"$(which consul)" "$@"
+	else
+		del_stopped consul
 
-	# check if we passed args and if consul is running
-	local state
-	state=$(docker inspect --format "{{.State.Running}}" consul 2>/dev/null)
-	if [[ "$state" == "true" ]] && [[ "$*" != "" ]]; then
-		docker exec -it consul consul "$@"
-		return 0
+		# check if we passed args and if consul is running
+		local state
+		state=$(docker inspect --format "{{.State.Running}}" consul 2>/dev/null)
+		if [[ "$state" == "true" ]] && [[ "$*" != "" ]]; then
+			docker exec -it consul consul "$@"
+			return 0
+		fi
+
+		docker run -d \
+			--restart always \
+			-v "${HOME}/.consul:/etc/consul.d" \
+			-v /var/run/docker.sock:/var/run/docker.sock \
+			--net host \
+			-e GOMAXPROCS=2 \
+			--name consul \
+			${DOCKER_REPO_PREFIX}/consul agent \
+			-bootstrap-expect 1 \
+			-config-dir /etc/consul.d \
+			-data-dir /data \
+			-encrypt "$(docker run --rm ${DOCKER_REPO_PREFIX}/consul keygen)" \
+			-ui-dir /usr/src/consul \
+			-server \
+			-dc neverland \
+			-bind 0.0.0.0
+
+		hostess add consul "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' consul)"
+		browser-exec "http://consul:8500"
 	fi
-
-	docker run -d \
-		--restart always \
-		-v "${HOME}/.consul:/etc/consul.d" \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		--net host \
-		-e GOMAXPROCS=2 \
-		--name consul \
-		${DOCKER_REPO_PREFIX}/consul agent \
-		-bootstrap-expect 1 \
-		-config-dir /etc/consul.d \
-		-data-dir /data \
-		-encrypt "$(docker run --rm ${DOCKER_REPO_PREFIX}/consul keygen)" \
-		-ui-dir /usr/src/consul \
-		-server \
-		-dc neverland \
-		-bind 0.0.0.0
-
-	hostess add consul "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' consul)"
-	browser-exec "http://consul:8500"
 }
 cura(){
 	del_stopped cura
