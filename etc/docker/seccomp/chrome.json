@@ -92,6 +92,11 @@
             "args": null
         },
         {
+            "name": "clone3",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
             "name": "close",
             "action": "SCMP_ACT_ALLOW",
             "args": null
@@ -188,6 +193,11 @@
         },
         {
             "name": "faccessat",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
+            "name": "faccessat2",
             "action": "SCMP_ACT_ALLOW",
             "args": null
         },
@@ -1333,6 +1343,11 @@
         },
         {
             "name": "statfs",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
+            "name": "statx",
             "action": "SCMP_ACT_ALLOW",
             "args": null
         },
