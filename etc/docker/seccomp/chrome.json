@@ -592,6 +592,11 @@
             "args": null
         },
         {
+            "name": "kcmp",
+            "action": "SCMP_ACT_ALLOW",
+            "args": null
+        },
+        {
             "name": "kill",
             "action": "SCMP_ACT_ALLOW",
             "args": null
