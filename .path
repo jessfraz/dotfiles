@@ -80,3 +80,6 @@ export BOOST_INCLUDE_DIR="/opt/homebrew/include"
 
 # CXXFLAGS
 CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
+
+# opam configuration
+test -r "${HOME}/.opam/opam-init/init.sh" && . "${HOME}/.opam/opam-init/init.sh" > /dev/null 2> /dev/null || true
