@@ -53,14 +53,6 @@ else
 fi
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-	xterm*|rxvt*)
-		PS1="\\[\\e]0;${debian_chroot:+($debian_chroot)}\\u@\\h: \\w\\a\\]$PS1"
-		;;
-	*)
-		;;
-esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -75,32 +67,6 @@ if [ -x /usr/bin/dircolors ]; then
 	alias egrep='egrep --color=auto'
 fi
 
-# Add an "alert" alias for long running commands.  Use like so:
-#	sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-	if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-		# shellcheck source=/dev/null
-		. /usr/share/bash-completion/bash_completion
-	elif [[ -f /etc/bash_completion ]]; then
-		# shellcheck source=/dev/null
-		. /etc/bash_completion
-	elif [[ -f /usr/local/etc/bash_completion ]]; then
-		# shellcheck source=/dev/null
-		. /usr/local/etc/bash_completion
-	fi
-fi
-if [[ -d /etc/bash_completion.d/ ]]; then
-	for file in /etc/bash_completion.d/* ; do
-		# shellcheck source=/dev/null
-		source "$file"
-	done
-fi
-
 # We do this before the following so that all the paths work.
 for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
@@ -109,27 +75,6 @@ for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
 	fi
 done
 unset file
-
-# Start the gpg-agent if not already running
-if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-	gpg-connect-agent /bye >/dev/null 2>&1
-fi
-gpg-connect-agent updatestartuptty /bye >/dev/null
-# use a tty for gpg
-# solves error: "gpg: signing failed: Inappropriate ioctl for device"
-GPG_TTY=$(tty)
-export GPG_TTY
-# Set SSH to use gpg-agent
-unset SSH_AGENT_PID
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-	if [[ -z "$SSH_AUTH_SOCK" ]] || [[ "$SSH_AUTH_SOCK" == *"apple.launchd"* ]]; then
-		SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-		export SSH_AUTH_SOCK
-	fi
-fi
-
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob
 
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend
@@ -162,16 +107,3 @@ fi
 if hash gh 2>/dev/null; then
 	eval "$(gh completion -s bash)"
 fi
-
-# get the kittycad completions
-if hash kittycad 2>/dev/null; then
-	eval "$(kittycad completion -s bash)"
-fi
-
-# source travis bash completion
-if [[ -f "${HOME}/.travis/travis.sh" ]]; then
-	# shellcheck source=/dev/null
-	source "${HOME}/.travis/travis.sh"
-fi
-
-
