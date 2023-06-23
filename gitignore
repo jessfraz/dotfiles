@@ -164,3 +164,6 @@ _testmain.go
 
 # linux kernel debs
 linux-*.deb
+
+.yarnrc.yml
+.yarn/

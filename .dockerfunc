@@ -79,9 +79,13 @@ nginx_config(){
 # Container Aliases
 #
 apt_file(){
-	docker run --rm -it \
-		--name apt-file \
-		${DOCKER_REPO_PREFIX}/apt-file
+	if [[ -n "$(which apt-file)" ]]; then
+		"$(which apt-file)" "$@"
+	else
+		docker run --rm -it \
+			--name apt-file \
+			${DOCKER_REPO_PREFIX}/apt-file
+	fi
 }
 alias apt-file="apt_file"
 audacity(){

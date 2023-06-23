@@ -18,6 +18,9 @@ export PATH="/usr/share/bcc/tools:${PATH}"
 # add gnubin for mac
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:${PATH}"
 
+# add scdaemon
+export PATH="/usr/lib/gnupg:${PATH}"
+
 # add gnu getopt
 export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
 
