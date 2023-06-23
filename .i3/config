@@ -12,7 +12,7 @@ set $lockcmd i3lock
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Monospace 5
+font pango:Monospace 12
 
 # HiDPI for sway
 # output eDP-1 scale 1
@@ -217,7 +217,7 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 5
+	font pango:monospace 16
 	status_command $barcmd --config ~/.i3/status.conf
 }
 

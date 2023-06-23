@@ -468,7 +468,7 @@ install_wmapps() {
 		pulseaudio-module-bluetooth \
 		pulsemixer \
 		rofi \
-		rxvt-unicode-256color \
+		rxvt-unicode \
 		scrot \
 		usbmuxd \
 		xclip \
