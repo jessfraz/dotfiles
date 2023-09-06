@@ -4,6 +4,9 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+xcuserdata
+Pods
+keyrace-mac.xcworkspace/
 
 # Icon must end with two \r
 Icon
@@ -61,7 +64,6 @@ tags
 # Object files
 *.o
 *.ko
-*.obj
 *.elf
 
 # Precompiled Headers
@@ -162,3 +164,6 @@ _testmain.go
 
 # linux kernel debs
 linux-*.deb
+
+.yarnrc.yml
+.yarn/

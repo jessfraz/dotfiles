@@ -6,7 +6,13 @@
 #  under the terms of the GNU Lesser General Public License as published by
 #  the Free Software Foundation; either version 2.1 of the License, or
 #  (at your option) any later version.
+#
+# FROM: https://github.com/systemd/systemd/blob/master/network/99-default.link
+
+[Match]
+OriginalName=*
 
 [Link]
-NamePolicy=kernel database onboard slot path
+NamePolicy=keep kernel database onboard slot path
+AlternativeNamesPolicy=database onboard slot path
 MACAddressPolicy=persistent

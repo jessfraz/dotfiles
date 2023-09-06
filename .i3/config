@@ -12,7 +12,7 @@ set $lockcmd i3lock
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Monospace 4
+font pango:Monospace 8
 
 # HiDPI for sway
 # output eDP-1 scale 1
@@ -35,6 +35,9 @@ font pango:Monospace 4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+floating_minimum_size 150 x 150
+floating_maximum_size 2500 x 1500
+
 # start a terminal
 bindsym $mod+Return exec $term
 
@@ -50,6 +53,7 @@ for_window [class="^Spotify Premium$"] border none
 
 # skype, steam, wine: float Gimp
 for_window [class="Code"] floating enable
+for_window [class="Com.system76.FirmwareManager"] floating enable
 for_window [class="Firefox"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="google-chrome"] floating enable
@@ -59,6 +63,7 @@ for_window [class="Kicad"] floating enable
 for_window [class="Logic"] floating enable
 for_window [class="Neoman"] floating enable
 for_window [class="NES"] floating enable
+for_window [class="Nvidia-settings"] floating enable
 for_window [class="OpenSCAD"] floating enable
 for_window [class="Pidgin"] floating enable
 for_window [class="Portal"] floating enable
@@ -214,7 +219,7 @@ bindsym $mod+r mode "resize"
 
 # i3status bar config
 bar {
-	font pango:monospace 4
+	font pango:monospace 10
 	status_command $barcmd --config ~/.i3/status.conf
 }
 

@@ -34,6 +34,7 @@ update_iwlwifi(){
 	cp iwlwifi-7265*.ucode /lib/firmware
 	cp iwlwifi-800*.ucode /lib/firmware
 	cp iwlwifi-8265*.ucode /lib/firmware
+	cp iwlwifi-Qu-c0*.ucode /lib/firmware
 
 	# cleanup
 	rm -rf "$tdir"

@@ -153,7 +153,7 @@ if test "$IS_WEST" ; then
 
 	# If the hour is one digit, prepend a zero.
 	if [ "${#HOUR}" -eq "1" ]; then
-		HOUR=$(printf "%02d" $HOUR)
+		HOUR=$(printf "%02d" "$HOUR")
 	fi
 
 	# If it is tomorrow in UTC, make sure we increment the day.

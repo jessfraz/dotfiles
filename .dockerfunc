@@ -79,9 +79,13 @@ nginx_config(){
 # Container Aliases
 #
 apt_file(){
-	docker run --rm -it \
-		--name apt-file \
-		${DOCKER_REPO_PREFIX}/apt-file
+	if [[ -n "$(which apt-file)" ]]; then
+		"$(which apt-file)" "$@"
+	else
+		docker run --rm -it \
+			--name apt-file \
+			${DOCKER_REPO_PREFIX}/apt-file
+	fi
 }
 alias apt-file="apt_file"
 audacity(){
@@ -191,35 +195,39 @@ chrome(){
 
 }
 consul(){
-	del_stopped consul
+	if [[ -n "$(which consul)" ]]; then
+		"$(which consul)" "$@"
+	else
+		del_stopped consul
 
-	# check if we passed args and if consul is running
-	local state
-	state=$(docker inspect --format "{{.State.Running}}" consul 2>/dev/null)
-	if [[ "$state" == "true" ]] && [[ "$*" != "" ]]; then
-		docker exec -it consul consul "$@"
-		return 0
+		# check if we passed args and if consul is running
+		local state
+		state=$(docker inspect --format "{{.State.Running}}" consul 2>/dev/null)
+		if [[ "$state" == "true" ]] && [[ "$*" != "" ]]; then
+			docker exec -it consul consul "$@"
+			return 0
+		fi
+
+		docker run -d \
+			--restart always \
+			-v "${HOME}/.consul:/etc/consul.d" \
+			-v /var/run/docker.sock:/var/run/docker.sock \
+			--net host \
+			-e GOMAXPROCS=2 \
+			--name consul \
+			${DOCKER_REPO_PREFIX}/consul agent \
+			-bootstrap-expect 1 \
+			-config-dir /etc/consul.d \
+			-data-dir /data \
+			-encrypt "$(docker run --rm ${DOCKER_REPO_PREFIX}/consul keygen)" \
+			-ui-dir /usr/src/consul \
+			-server \
+			-dc neverland \
+			-bind 0.0.0.0
+
+		hostess add consul "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' consul)"
+		browser-exec "http://consul:8500"
 	fi
-
-	docker run -d \
-		--restart always \
-		-v "${HOME}/.consul:/etc/consul.d" \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		--net host \
-		-e GOMAXPROCS=2 \
-		--name consul \
-		${DOCKER_REPO_PREFIX}/consul agent \
-		-bootstrap-expect 1 \
-		-config-dir /etc/consul.d \
-		-data-dir /data \
-		-encrypt "$(docker run --rm ${DOCKER_REPO_PREFIX}/consul keygen)" \
-		-ui-dir /usr/src/consul \
-		-server \
-		-dc neverland \
-		-bind 0.0.0.0
-
-	hostess add consul "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' consul)"
-	browser-exec "http://consul:8500"
 }
 cura(){
 	del_stopped cura
@@ -333,11 +341,15 @@ hollywood(){
 		${DOCKER_REPO_PREFIX}/hollywood
 }
 htop(){
-	docker run --rm -it \
-		--pid host \
-		--net none \
-		--name htop \
-		${DOCKER_REPO_PREFIX}/htop
+	if [[ -n "$(which htop)" ]]; then
+		"$(which htop)" "$@"
+	else
+		docker run --rm -it \
+			--pid host \
+			--net none \
+			--name htop \
+			${DOCKER_REPO_PREFIX}/htop
+	fi
 }
 htpasswd(){
 	docker run --rm -it \
@@ -467,9 +479,13 @@ lpass(){
 		${DOCKER_REPO_PREFIX}/lpass "$@"
 }
 lynx(){
-	docker run --rm -it \
-		--name lynx \
-		${DOCKER_REPO_PREFIX}/lynx "$@"
+	if [[ -n "$(which lynx)" ]]; then
+		"$(which lynx)" "$@"
+	else
+		docker run --rm -it \
+			--name lynx \
+			${DOCKER_REPO_PREFIX}/lynx "$@"
+	fi
 }
 masscan(){
 	docker run -it --rm \
@@ -587,9 +603,13 @@ nginx(){
 	sudo hostess add jess 127.0.0.1
 }
 nmap(){
-	docker run --rm -it \
-		--net host \
-		${DOCKER_REPO_PREFIX}/nmap "$@"
+	if [[ -n "$(which nmap)" ]]; then
+		"$(which nmap)" "$@"
+	else
+		docker run --rm -it \
+			--net host \
+			${DOCKER_REPO_PREFIX}/nmap "$@"
+	fi
 }
 notify_osd(){
 	del_stopped notify_osd
@@ -711,18 +731,22 @@ osquery(){
 		--logger_tls_period=10
 }
 pandoc(){
-	local file=${*: -1}
-	local lfile
-	lfile=$(readlink -m "$(pwd)/${file}")
-	local rfile
-	rfile=$(readlink -m "/$(basename "$file")")
-	local args=${*:1:${#@}-1}
+	if [[ -n "$(which pandoc)" ]]; then
+		"$(which pandoc)" "$@"
+	else
+		local file=${*: -1}
+		local lfile
+		lfile=$(readlink -m "$(pwd)/${file}")
+		local rfile
+		rfile=$(readlink -m "/$(basename "$file")")
+		local args=${*:1:${#@}-1}
 
-	docker run --rm \
-		-v "${lfile}:${rfile}" \
-		-v /tmp:/tmp \
-		--name pandoc \
-		${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+		docker run --rm \
+			-v "${lfile}:${rfile}" \
+			-v /tmp:/tmp \
+			--name pandoc \
+			${DOCKER_REPO_PREFIX}/pandoc "${args}" "${rfile}"
+	fi
 }
 pivman(){
 	del_stopped pivman
@@ -1009,15 +1033,19 @@ termboy(){
 		${DOCKER_REPO_PREFIX}/nes "/games/${game}.rom"
 }
 terraform(){
-	docker run -it --rm \
-		-v "${HOME}:${HOME}:ro" \
-		-v "$(pwd):/usr/src/repo" \
-		-v /tmp:/tmp \
-		--workdir /usr/src/repo \
-		--log-driver none \
-		-e GOOGLE_APPLICATION_CREDENTIALS \
-		-e SSH_AUTH_SOCK \
-		${DOCKER_REPO_PREFIX}/terraform "$@"
+	if [[ -n "$(which terraform)" ]]; then
+		"$(which terraform)" "$@"
+	else
+		docker run -it --rm \
+			-v "${HOME}:${HOME}:ro" \
+			-v "$(pwd):/usr/src/repo" \
+			-v /tmp:/tmp \
+			--workdir /usr/src/repo \
+			--log-driver none \
+			-e GOOGLE_APPLICATION_CREDENTIALS \
+			-e SSH_AUTH_SOCK \
+			${DOCKER_REPO_PREFIX}/terraform "$@"
+	fi
 }
 tor(){
 	del_stopped tor
@@ -1244,33 +1272,45 @@ wrk(){
 		${DOCKER_REPO_PREFIX}/wrk "$@"
 }
 ykman(){
-	del_stopped ykpersonalize
+	del_stopped ykman
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		--device /dev/usb \
-		--device /dev/bus/usb \
-		--name ykman \
-		${DOCKER_REPO_PREFIX}/ykman bash
+	if [[ -n "$(which ykman)" ]]; then
+		"$(which ykman)" "$@"
+	else
+		docker run --rm -it \
+			-v /etc/localtime:/etc/localtime:ro \
+			--device /dev/usb \
+			--device /dev/bus/usb \
+			--name ykman \
+			${DOCKER_REPO_PREFIX}/ykman bash
+	fi
 }
 ykpersonalize(){
 	del_stopped ykpersonalize
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		--device /dev/usb \
-		--device /dev/bus/usb \
-		--name ykpersonalize \
-		${DOCKER_REPO_PREFIX}/ykpersonalize bash
+	if [[ -n "$(which ykpersonalize)" ]]; then
+		"$(which ykpersonalize)" "$@"
+	else
+		docker run --rm -it \
+			-v /etc/localtime:/etc/localtime:ro \
+			--device /dev/usb \
+			--device /dev/bus/usb \
+			--name ykpersonalize \
+			${DOCKER_REPO_PREFIX}/ykpersonalize bash
+	fi
 }
 yubico_piv_tool(){
 	del_stopped yubico-piv-tool
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		--device /dev/usb \
-		--device /dev/bus/usb \
-		--name yubico-piv-tool \
-		${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
+	if [[ -n "$(which yubico-piv-tool)" ]]; then
+		"$(which yubico-piv-tool)" "$@"
+	else
+		docker run --rm -it \
+			-v /etc/localtime:/etc/localtime:ro \
+			--device /dev/usb \
+			--device /dev/bus/usb \
+			--name yubico-piv-tool \
+			${DOCKER_REPO_PREFIX}/yubico-piv-tool bash
+	fi
 }
 alias yubico-piv-tool="yubico_piv_tool"

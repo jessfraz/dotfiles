@@ -283,6 +283,7 @@ repo() {
 
 	# Remove cruft from branchname
 	branch=${git_where#refs\/heads\/}
+	branch=${branch#remotes\/origin\/}
 
 	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
 	url="$base_url/$tree/$branch$relative_path"
@@ -454,14 +455,92 @@ govendorcheck() {
 
 restart_gpgagent(){
 	# Restart the gpg agent.
+	echo "Restarting gpg-agent and scdaemon..."
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
+
+	echo "Killing processes..."
 	# shellcheck disable=SC2046
-	kill -9 $(pidof scdaemon) >/dev/null 2>&1
-	# shellcheck disable=SC2046
-	kill -9 $(pidof gpg-agent) >/dev/null 2>&1
-	gpg-connect-agent /bye >/dev/null 2>&1
+	kill -9 $(pgrep scdaemon) $(pgrep gpg-agent) >/dev/null 2>&1
+	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
+
+	gpgconf --reload gpg-agent
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+
+	echo "Restarted gpg-agent and scdaemon..."
 }
 
 gitsetoriginnopush() {
 	git remote set-url --push origin no_push
+}
+
+get_cad_exchanger_token() {
+	resp=$(curl -XPOST -sSL -H "Authorization: Basic $CAD_EXCHANGER_REQUEST_TOKEN" \
+        -H "Content-Type: application/json" \
+        -d '{"grant_type":"client_credentials","scope":"data:read data:write data:create data:convert data:share viewer:read"}' \
+		https://cloud.cadexchanger.com/api/v1/oauth2/token)
+	echo "$resp" | jq --raw-output '.access_token'
+}
+
+cad_upload_folder_contents() {
+	token=$(get_cad_exchanger_token)
+	# Run this inside the folder with all the files.
+	dir_name="rack-$(date '+%Y-%m-%d')"
+	# Create the folder
+	resp=$(curl -sSL -XPOST -H "Authorization: Bearer ${token}" \
+        -H "Content-Type: application/json" \
+        -d '{"folder": {"name":"'"${dir_name}"'", "parentFolder":"'"${CAD_EXCHANGER_PARENT_FOLDER}"'"}}' \
+		https://cloud.cadexchanger.com/api/v1/folders)
+	folder_id=$(echo "$resp" | jq --raw-output '.folder.id')
+
+	for file in *.{SLDPRT,SLDASM}; do
+		# Upload the file to the folder
+		echo "Uploading $file..."
+		set -x
+		curl -sSL -XPOST -H "Authorization: Bearer ${token}" \
+        	-F "parentFolder=${folder_id}" \
+        	-F "data=@${file}" \
+        	https://cloud.cadexchanger.com/api/v1/files
+		set +x
+	done
+}
+
+cad_convert_rack_files_to_collada() {
+	token=$(get_cad_exchanger_token)
+	# Get the file we want.
+	resp=$(curl -sSL -H "Authorization: Bearer ${token}" \
+		"https://cloud.cadexchanger.com/api/v1/files?name[startsWith]=OXC0000040")
+	rack_files=$(echo "$resp" | jq --raw-output '.files[] | @base64')
+
+	# Iterate over the files.
+	for row in $rack_files; do
+    	_jq() {
+     		echo "${row}" | base64 --decode | jq -r "${1}"
+    	}
+
+   		file_id=$(_jq '.id')
+   		file_name=$(_jq '.name')
+		if [[ "$file_name" == *SLDASM ]]; then
+			echo ""
+			echo "Converting file $file_name to collada..."
+
+			# Get the status of the file.
+			echo "File status:"
+			resp=$(curl -sSL -H "Authorization: Bearer ${token}" \
+				"https://cloud.cadexchanger.com/api/v1/files/${file_id}")
+			revision_id=$(echo "$resp" | jq --raw-output '.file.activeRevision')
+			echo "$resp" | jq .
+
+			# Get the status of the revison.
+			echo "Revision status:"
+			curl -sSL -H "Authorization: Bearer ${token}" \
+				"https://cloud.cadexchanger.com/api/v1/filerevisions/${revision_id}" | jq .
+
+			# Convert the file to COLLADA.
+			echo "Conversion response:"
+			curl -sSL -XPOST -H "Authorization: Bearer ${token}" \
+				-H "Content-Type: application/json" \
+				-d '{"format": "collada", "extension": "dae"}' \
+				"https://cloud.cadexchanger.com/api/v1/files/${file_id}/convert" | jq .
+		fi
+	done
 }

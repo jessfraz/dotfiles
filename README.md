@@ -1,6 +1,6 @@
 # dotfiles
 
-[![Travis CI](https://img.shields.io/travis/jessfraz/dotfiles.svg?style=for-the-badge)](https://travis-ci.org/jessfraz/dotfiles)
+[![make test](https://github.com/jessfraz/dotfiles/workflows/make%20test/badge.svg)](https://github.com/jessfraz/dotfiles/actions?query=workflow%3A%22make+test%22+branch%3Amaster)
 
 **Table of Contents**
 

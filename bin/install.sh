@@ -75,17 +75,8 @@ setup_sources() {
 	setup_sources_min;
 
 	cat <<-EOF > /etc/apt/sources.list
-	deb http://httpredir.debian.org/debian buster main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster main contrib non-free
-
-	deb http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-
-	deb http://security.debian.org/ buster/updates main contrib non-free
-	deb-src http://security.debian.org/ buster/updates main contrib non-free
-
-	deb http://httpredir.debian.org/debian experimental main contrib non-free
-	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+	deb http://httpredir.debian.org/debian sid main contrib non-free
+	deb-src http://httpredir.debian.org/debian/ sid main contrib non-free
 	EOF
 
 	# yubico
@@ -94,20 +85,9 @@ setup_sources() {
 	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
 	EOF
 
-	# tlp: Advanced Linux Power Management
-	cat <<-EOF > /etc/apt/sources.list.d/tlp.list
-	# tlp: Advanced Linux Power Management
-	# http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
-	deb http://repo.linrunner.de/debian sid main
-	EOF
-
-	# Create an environment variable for the correct distribution
-	CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-	export CLOUD_SDK_REPO
-
 	# Add the Cloud SDK distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
-	deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
+	deb https://packages.cloud.google.com/apt cloud-sdk main
 	EOF
 
 	# Import the Google Cloud Platform public key
@@ -123,9 +103,6 @@ setup_sources() {
 
 	# add the yubico ppa gpg key
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 3653E21064B19D134466702E43D5C49532CBA1A9
-
-	# add the tlp apt-repo gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6B283E95745A6D903009F7CA641EED65CD4E8809
 }
 
 base_min() {
@@ -175,9 +152,9 @@ base_min() {
 		zip \
 		--no-install-recommends
 
-	apt autoremove
-	apt autoclean
-	apt clean
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
 
 	install_scripts
 }
@@ -203,7 +180,9 @@ base() {
 		libimobiledevice6 \
 		libltdl-dev \
 		libpam-systemd \
+		libpcsclite-dev \
 		libseccomp-dev \
+		pcscd \
 		pinentry-curses \
 		scdaemon \
 		systemd \
@@ -211,9 +190,9 @@ base() {
 
 	setup_sudo
 
-	apt autoremove
-	apt autoclean
-	apt clean
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
 }
 
 # install and configure dropbear
@@ -225,9 +204,9 @@ install_dropbear() {
 		dropbear-initramfs \
 		--no-install-recommends
 
-	apt autoremove
-	apt autoclean
-	apt clean
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
 
 	# change the default port and settings
 	echo 'DROPBEAR_OPTIONS="-p 4748 -s -j -k -I 60"' >> /etc/dropbear-initramfs/config
@@ -283,12 +262,22 @@ setup_sudo() {
 	# that way things are removed on reboot
 	# i like things clean but you may not want this
 	mkdir -p "/home/$TARGET_USER/Downloads"
-	echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=5G\\t0\\t0" >> /etc/fstab
+	echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=50G\\t0\\t0" >> /etc/fstab
 }
 
 # install rust
+
 install_rust() {
 	curl https://sh.rustup.rs -sSf | sh
+
+	# Install rust-src for rust analyzer
+	rustup component add rust-src
+	# Install rust-analyzer
+	curl -sSL "https://github.com/rust-analyzer/rust-analyzer/releases/download/2020-04-20/rust-analyzer-linux" -o "${HOME}/.cargo/bin/rust-analyzer"
+	chmod +x "${HOME}/.cargo/bin/rust-analyzer"
+
+	# Install clippy
+	rustup component add clippy
 }
 
 # install/update golang from source
@@ -326,7 +315,7 @@ install_golang() {
 	set +e
 	go get golang.org/x/lint/golint
 	go get golang.org/x/tools/cmd/cover
-	go get golang.org/x/tools/cmd/gopls
+	go get golang.org/x/tools/gopls
 	go get golang.org/x/review/git-codereview
 	go get golang.org/x/tools/cmd/goimports
 	go get golang.org/x/tools/cmd/gorename
@@ -466,11 +455,12 @@ install_scripts() {
 
 # install stuff for i3 window manager
 install_wmapps() {
-	apt update || true
-	apt install -y \
+	sudo apt update || true
+	sudo apt install -y \
 		bluez \
 		bluez-firmware \
 		feh \
+		google-chrome-stable \
 		i3 \
 		i3lock \
 		i3status \
@@ -478,7 +468,7 @@ install_wmapps() {
 		pulseaudio-module-bluetooth \
 		pulsemixer \
 		rofi \
-		rxvt-unicode-256color \
+		rxvt-unicode \
 		scrot \
 		usbmuxd \
 		xclip \
@@ -490,19 +480,6 @@ install_wmapps() {
 	systemctl --user enable pulseaudio.service
 	systemctl --user enable pulseaudio.socket
 	systemctl --user start pulseaudio.service
-
-	# update clickpad settings
-	mkdir -p /etc/X11/xorg.conf.d/
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf.d/50-synaptics-clickpad.conf > /etc/X11/xorg.conf.d/50-synaptics-clickpad.conf
-
-	# add xorg conf
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/X11/xorg.conf > /etc/X11/xorg.conf
-
-	# get correct sound cards on boot
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/modprobe.d/intel.conf > /etc/modprobe.d/intel.conf
-
-	# pretty fonts
-	curl -sSL https://raw.githubusercontent.com/jessfraz/dotfiles/master/etc/fonts/local.conf > /etc/fonts/local.conf
 
 	echo "Fonts file setup successfully now run:"
 	echo "	dpkg-reconfigure fontconfig-config"
@@ -543,6 +520,29 @@ get_dotfiles() {
 }
 
 install_vim() {
+	# Install node, needed for coc.vim
+	curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+	# FROM: https://github.com/nodesource/distributions/blob/master/README.md
+	# Replace with the branch of Node.js or io.js you want to install: node_6.x,
+	# node_8.x, etc...
+	VERSION=node_14.x
+	# The below command will set this correctly, but if lsb_release isn't available, you can set it manually:
+	# - For Debian distributions: jessie, sid, etc...
+	# - For Ubuntu distributions: xenial, bionic, etc...
+	# - For Debian or Ubuntu derived distributions your best option is to use
+	# the codename corresponding to the upstream release your distribution is
+	# based off. This is an advanced scenario and unsupported if your
+	# distribution is not listed as supported per earlier in this README.
+	DISTRO="$(lsb_release -s -c)"
+	echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+	echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+
+	sudo apt update || true
+	sudo apt install -y \
+		nodejs \
+		--no-install-recommends
+
 	# create subshell
 	(
 	cd "$HOME"
@@ -624,8 +624,6 @@ main() {
 
 		install_graphics "$2"
 	elif [[ $cmd == "wm" ]]; then
-		check_is_sudo
-
 		install_wmapps
 	elif [[ $cmd == "dotfiles" ]]; then
 		get_user

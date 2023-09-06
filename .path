@@ -4,7 +4,7 @@
 export GOPATH="${HOME}/.go"
 
 # update path
-export PATH=/usr/local/bin:${PATH}:/sbin
+export PATH=/usr/local/bin:${PATH}:/sbin:/usr/local/sbin
 
 # add go path
 export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
@@ -15,16 +15,30 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 # add bcc tools path
 export PATH="/usr/share/bcc/tools:${PATH}"
 
+# add gnubin for mac
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:${PATH}"
+
+# add scdaemon
+export PATH="/usr/lib/gnupg:${PATH}"
+
+# add gnu getopt
+export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
+
+# add mysql
+export PATH="/opt/homebrew/opt/mysql-client/bin:${PATH}"
+
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
 
 # The next line updates PATH for the Google Cloud SDK.
 # shellcheck source=/dev/null
-if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/google-cloud-sdk/path.bash.inc"; fi
+if [ -f "${HOME}/.google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/.google-cloud-sdk/path.bash.inc"; fi
 
 # The next line enables shell command completion for gcloud.
 # shellcheck source=/dev/null
-if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
+if [ -f "${HOME}/.google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/.google-cloud-sdk/completion.bash.inc"; fi
+
+export PATH="${HOME}/.google-cloud-sdk/bin:${PATH}"
 
 # update path for gnu coreutils, make & find on darwin
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
@@ -40,3 +54,35 @@ export PATH="${PATH}:${HOME}/depot_tools"
 # Add bash completion for Chromium depot_tools
 # shellcheck source=/dev/null
 if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then . "${HOME}/depot_tools/git_cl_completion.sh"; fi
+
+# Homebrew
+export PATH="/opt/homebrew/bin:${PATH}"
+export PATH="/opt/homebrew/sbin:${PATH}"
+export LIBRARY_PATH="/opt/homebrew/lib:${LIBRARY_PATH}"
+export LDFLAGS="${LDFLAGS} -L/opt/homebrew/lib"
+export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/include"
+
+# shellcheck source=/dev/null
+if [ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]; then . "/opt/homebrew/etc/profile.d/bash_completion.sh"; fi
+
+# OpenSSL
+export PATH="/opt/homebrew/opt/openssl/bin:${PATH}"
+export LDFLAGS="${LDFLAGS} -L/opt/homebrew/opt/openssl/lib"
+export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/opt/openssl/include"
+export OPENSSL_ROOT_DIR="/opt/homebrew/opt/openssl"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}"
+
+# MySQL
+export MYSQL_INCLUDE_DIR="/opt/homebrew/opt/mysql-client/include/mysql"
+
+# LLVM
+export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
+
+# Boost
+export BOOST_INCLUDE_DIR="/opt/homebrew/include"
+
+# CXXFLAGS
+CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
+
+# opam configuration
+test -r "${HOME}/.opam/opam-init/init.sh" && . "${HOME}/.opam/opam-init/init.sh" > /dev/null 2> /dev/null || true

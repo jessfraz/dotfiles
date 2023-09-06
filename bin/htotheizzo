@@ -40,9 +40,6 @@ update_docker() {
 	echo "Updating docker..."
 	echo
 
-	local user_home="/home/${TARGET_USER}"
-	local docker_dir="${user_home}/.go/src/github.com/docker/docker"
-
 	# stop docker
 	dcleanup || true
 	systemctl stop docker || true
@@ -51,27 +48,9 @@ update_docker() {
 	mkdir -p /etc/bash_completion.d
 	curl -sSL -o /etc/bash_completion.d/docker https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker
 
-	if [[ -d "${docker_dir}" ]]; then
-		(
-		cd "${docker_dir}"
-
-		# Clean up bundles
-		rm -rf bundles
-
-
-		# move vim syntax highlighting
-		if [[ ! -d "${user_home}/.vim/bundle/Dockerfile" ]]; then
-			mkdir -p "${user_home}/.vim/bundle/Dockerfile"
-		fi
-		# shellcheck disable=SC2216
-		yes | cp -r contrib/syntax/vim/* "${user_home}/.vim/bundle/Dockerfile/"
-		chown -R "${TARGET_USER}" "${user_home}/.vim/bundle/Dockerfile"
-		)
-	fi
-
 	# get the binary
 	local tmp_tar=/tmp/docker.tgz
-	local binary_uri="https://download.docker.com/linux/static/edge/x86_64"
+	local binary_uri="https://download.docker.com/linux/static/test/x86_64"
 	local docker_version
 	docker_version=$(curl -sSL "https://api.github.com/repos/docker/docker-ce/releases/latest" | jq --raw-output .tag_name)
 	docker_version=${docker_version#v}
@@ -104,7 +83,7 @@ update_containerd() {
 	local containerd_version
 	containerd_version=$(curl -sSL "https://api.github.com/repos/containerd/containerd/releases" | jq --raw-output .[0].tag_name)
 	containerd_version=${containerd_version#v}
-	local binary_uri="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}.linux-amd64.tar.gz"
+	local binary_uri="https://github.com/containerd/containerd/releases/download/v${containerd_version}/containerd-${containerd_version}-linux-amd64.tar.gz"
 	(
 	set -x
 	curl -fSL "$binary_uri" -o "$tmp_tar"

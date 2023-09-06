@@ -30,12 +30,13 @@ update_firmware(){
 
 	# copy the firmware
 	cd linux-firmware
-	mkdir -p /lib/firmware/{intel,i915,qca,ath10k}
+	mkdir -p /lib/firmware/{intel,i915,qca,ath10k,rtl_nic}
 	cp intel/*.sfi /lib/firmware/intel/
 	cp intel/*.ddc /lib/firmware/intel/
 	cp i915/*.bin /lib/firmware/i915/
 	cp qca/*.bin /lib/firmware/qca/
 	cp -r ath10k/* /lib/firmware/ath10k/
+	cp -r rtl_nic/* /lib/firmware/rtl_nic/
 
 	# cleanup
 	rm -rf "$tdir"

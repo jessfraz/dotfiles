@@ -101,6 +101,15 @@ if [[ -d /etc/bash_completion.d/ ]]; then
 	done
 fi
 
+# We do this before the following so that all the paths work.
+for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file
+
 # Start the gpg-agent if not already running
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
 	gpg-connect-agent /bye >/dev/null 2>&1
@@ -118,8 +127,6 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 		export SSH_AUTH_SOCK
 	fi
 fi
-# add alias for ssh to update the tty
-alias ssh="gpg-connect-agent updatestartuptty /bye >/dev/null; ssh"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -151,17 +158,20 @@ if hash kubectl 2>/dev/null; then
 	source <(kubectl completion bash)
 fi
 
+# get the gh completions
+if hash gh 2>/dev/null; then
+	eval "$(gh completion -s bash)"
+fi
+
+# get the kittycad completions
+if hash kittycad 2>/dev/null; then
+	eval "$(kittycad completion -s bash)"
+fi
+
 # source travis bash completion
 if [[ -f "${HOME}/.travis/travis.sh" ]]; then
 	# shellcheck source=/dev/null
 	source "${HOME}/.travis/travis.sh"
 fi
 
-for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
-done
-unset file
 

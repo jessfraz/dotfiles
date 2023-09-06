@@ -1,0 +1,81 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+# Inspired by: https://github.com/codingtony/udev-monitor-hotplug
+
+# Get the devices.
+DEVICES=$(find /sys/class/drm/*/status)
+
+# Get the display.
+displaynum=$(find /tmp/.X11-unix/ -type s | sed s#/tmp/.X11-unix/X##)
+export DISPLAY=":${displaynum}.0"
+
+# From:
+# 	https://wiki.archlinux.org/index.php/Acpid#Laptop_Monitor_Power_Off
+xauth=$(ps -C Xorg -f --no-header | sed -n 's/.*-auth //; s/ -[^ ].*//; p')
+export XAUTHORITY="$xauth"
+
+# Iterate over the devices.
+while read -r line; do
+	dir=$(dirname "$line");
+	status=$(cat "$line");
+	# shellcheck disable=SC1001
+	dev=$(echo "$dir" | cut -d\- -f 2-);
+
+	if [[ "$dev" = "HDMI"* ]]; then
+		# Remove the "-X-" part from "HDMI-X-n".
+		dev=HDMI${dev#HDMI-?-}
+	else
+		dev=$(echo "$dev" | tr -d '-')
+	fi
+
+	if [[ "connected" == "$status" ]]; then
+		echo "$dev is connected."
+		# Create the variable.
+		# shellcheck disable=SC2140
+		declare "$dev"="yes"
+	fi
+done <<< "$DEVICES"
+
+home_monitors() {
+	xrandr --output eDP1 --off \
+		--output DP2-2 --mode 3840x2160 --rate 60 --rotate normal --pos 0x900 \
+		--output DP1-2 --mode 3840x2160 --rate 60 --rotate left --pos 3840x0
+}
+
+work_monitor() {
+	xrandr --output eDP1 --primary --mode 3840x2400 --rate 60 \
+		--output DP3 --mode 5120x1440 --rate 60 --above eDP1
+}
+
+# shellcheck disable=SC2154
+if [[ -n "$HDMI1" ]] && [[ -n "$VGA1" ]]; then
+	echo "HDMI1 and VGA1 are plugged in"
+	# Do something.
+elif [[ -n "$HDMI1" ]] && [[ -z "$VGA1" ]]; then
+	echo "HDMI1 is plugged in, but not VGA1"
+	# Do something.
+elif [[ -z "$HDMI1" ]] && [[ -n "$VGA1" ]]; then
+	echo "VGA1 is plugged in, but not HDMI1"
+	# Do something.
+elif [[ -n "$eDP1" ]] && [[ -n "$DP4" ]] && [[ -n "$DP6" ]]; then
+	echo "DP1-2 and DP2-2 is plugged in"
+
+	home_monitors;
+elif [[ -n "$eDP1" ]] && [[ -n "$DP3" ]]; then
+	echo "DP3 is plugged in"
+
+	work_monitor;
+elif [[ -n "$eDP1" ]]; then
+	# This check obviously needs to be last.
+	echo "Only the internal display was found."
+
+	# Reset xrandr.
+	xrandr --output eDP1 --primary --auto
+else
+	echo "No external monitors are plugged in"
+
+	# Reset xrandr.
+	xrandr --auto
+fi

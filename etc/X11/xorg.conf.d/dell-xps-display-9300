@@ -1,0 +1,12 @@
+# Dell XPS 13 (9300) Monitor
+Section "Monitor"
+    Identifier	"eDP1"
+    DisplaySize	288.6 180.4 # In millimeters (3840x2400 330 dpi)
+    # Modeline calculated from:
+    #   cvt 3840 2400 60
+    # 3864x2400 59.96 Hz (CVT) hsync: 149.06 kHz; pclk: 797.75 MHz
+    # Modeline "3864x2400_60.00"  797.75  3864 4184 4608 5352  2400 2403 2413 2486 -hsync +vsync
+    Option "PreferredMode" "3840x2400"
+
+    Option "Below" "DP2-2"
+EndSection
