@@ -16,6 +16,9 @@ dcleanup(){
 	local images
 	mapfile -t images < <(docker images --filter dangling=true -q 2>/dev/null)
 	docker rmi "${images[@]}" 2>/dev/null
+	mapfile -t images < <(docker images -q 2>/dev/null)
+	docker rmi "${images[@]}" 2>/dev/null
+	docker system prune -f
 }
 del_stopped(){
 	local name=$1
