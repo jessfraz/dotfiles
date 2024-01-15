@@ -168,6 +168,12 @@ if hash kittycad 2>/dev/null; then
 	eval "$(kittycad completion -s bash)"
 fi
 
+# get the rustup completions
+if hash rustup 2>/dev/null; then
+	eval "$(rustup completions bash)"
+fi
+
+
 # source travis bash completion
 if [[ -f "${HOME}/.travis/travis.sh" ]]; then
 	# shellcheck source=/dev/null
