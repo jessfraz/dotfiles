@@ -105,11 +105,15 @@ audacity(){
 		${DOCKER_REPO_PREFIX}/audacity
 }
 aws(){
-	docker run -it --rm \
-		-v "${HOME}/.aws:/root/.aws" \
-		--log-driver none \
-		--name aws \
-		${DOCKER_REPO_PREFIX}/awscli "$@"
+	if [[ -n "$(which aws)" ]]; then
+		"$(which aws)" "$@"
+	else
+		docker run -it --rm \
+			-v "${HOME}/.aws:/root/.aws" \
+			--log-driver none \
+			--name aws \
+			${DOCKER_REPO_PREFIX}/awscli "$@"
+	fi
 }
 az(){
 	docker run -it --rm \
@@ -1109,9 +1113,13 @@ torproxy(){
 	hostess add torproxy "$(docker inspect --format '{{.NetworkSettings.Networks.bridge.IPAddress}}' torproxy)"
 }
 traceroute(){
-	docker run --rm -it \
-		--net host \
-		${DOCKER_REPO_PREFIX}/traceroute "$@"
+	if [[ -n "$(which traceroute)" ]]; then
+		"$(which traceroute)" "$@"
+	else
+		docker run --rm -it \
+			--net host \
+			${DOCKER_REPO_PREFIX}/traceroute "$@"
+	fi
 }
 transmission(){
 	del_stopped transmission
