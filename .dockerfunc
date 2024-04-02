@@ -1,5 +1,6 @@
 #!/bin/bash
-# Bash wrappers for docker run commands
+# Bash wrappers for docker run commands.
+# Dockerfiles under: https://github.com/jessfraz/dockerfiles
 
 export DOCKER_REPO_PREFIX=jess
 
