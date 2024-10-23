@@ -388,7 +388,7 @@ irssi() {
 	docker run --rm -it \
 		--user root \
 		-v "${HOME}/.irssi:/home/user/.irssi" \
-		${DOCKER_REPO_PREFIX}/irssi \
+		irssi \
 		chown -R user /home/user/.irssi
 
 	docker run --rm -it \
@@ -396,7 +396,7 @@ irssi() {
 		-v "${HOME}/.irssi:/home/user/.irssi" \
 		--read-only \
 		--name irssi \
-		${DOCKER_REPO_PREFIX}/irssi
+		irssi
 }
 john(){
 	local file
