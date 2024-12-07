@@ -181,3 +181,4 @@ if [[ -f "${HOME}/.travis/travis.sh" ]]; then
 fi
 
 
+. "$HOME/.cargo/env"
