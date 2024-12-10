@@ -6,7 +6,8 @@ all: bin usr dotfiles etc ## Installs the bin and etc directory files and the do
 .PHONY: bin
 bin: ## Installs the bin directory files.
 	# add aliases for things in bin
-	for file in $(shell find $(CURDIR)/bin -type f -not -name "*-backlight" -not -name ".*.swp"); do \
+	$(eval find-ignore := *-backlight .*.swp)
+	for file in $(shell find $(CURDIR)/bin -type f $(call findn't,$(find-ignore))); do \
 		f=$$(basename $$file); \
 		sudo ln -sf $$file /usr/local/bin/$$f; \
 	done
@@ -14,7 +15,8 @@ bin: ## Installs the bin directory files.
 .PHONY: dotfiles
 dotfiles: ## Installs the dotfiles.
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".git" -not -name ".config" -not -name ".github" -not -name ".*.swp" -not -name ".gnupg"); do \
+	$(eval find-ignore := .gitignore .git .config .github .*.swp .gnupg)
+	for file in $(shell find $(CURDIR) -name ".*" $(call findn't,$(find-ignore))); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
@@ -48,7 +50,8 @@ LAPTOP_XORG_FILE=/etc/X11/xorg.conf.d/10-dell-xps-display.conf
 .PHONY: etc
 etc: ## Installs the etc directory files.
 	sudo mkdir -p /etc/docker/seccomp
-	for file in $(shell find $(CURDIR)/etc -type f -not -name ".*.swp"); do \
+	$(eval find-ignore := .*.swp)
+	for file in $(shell find $(CURDIR)/etc -type f $(call findn't,$(find-ignore))); do \
 		f=$$(echo $$file | sed -e 's|$(CURDIR)||'); \
 		sudo mkdir -p $$(dirname $$f); \
 		sudo ln -f $$file $$f; \
@@ -67,7 +70,8 @@ etc: ## Installs the etc directory files.
 
 .PHONY: usr
 usr: ## Installs the usr directory files.
-	for file in $(shell find $(CURDIR)/usr -type f -not -name ".*.swp"); do \
+	$(eval find-ignore := .*.swp)
+	for file in $(shell find $(CURDIR)/usr -type f $(call findn't,$(find-ignore))); do \
 		f=$$(echo $$file | sed -e 's|$(CURDIR)||'); \
 		sudo mkdir -p $$(dirname $$f); \
 		sudo ln -f $$file $$f; \
@@ -95,3 +99,9 @@ shellcheck: ## Runs the shellcheck tests on the scripts.
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+# $(call findn't,$(list of patterns to not `find`))
+# returns '-not -name "pattern"' for each pattern in find-not patterns
+define findn't
+$(foreach i,$(1),-not -name "$i")
+endef
