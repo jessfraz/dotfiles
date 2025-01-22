@@ -56,7 +56,7 @@ export LDFLAGS="${LDFLAGS} -L/opt/homebrew/lib"
 export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/include"
 
 # shellcheck source=/dev/null
-if [ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]; then . "/opt/homebrew/etc/profile.d/bash_completion.sh"; fi
+if [ -f "/opt/homebrew/etc/profile.d/bash_completion.sh" ]; then . "/opt/homebrew/etc/profile.d/bash_completion.sh"; fi
 
 # OpenSSL
 export PATH="/opt/homebrew/opt/openssl/bin:${PATH}"
@@ -73,8 +73,8 @@ export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
 # CXXFLAGS
 CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
 
-. "$HOME/.cargo/env"
-export RUST_SYSROOT="$(rustc --print sysroot)"
+# Rust
+RUST_SYSROOT="$(rustc --print sysroot)"
 export RUST_SRC_PATH="${RUST_SYSROOT}/lib/rustlib/src/rust/src"
 export DYLD_LIBRARY_PATH="${RUST_SYSROOT}/lib:$DYLD_LIBRARY_PATH"
 

@@ -96,16 +96,30 @@ if ! shopt -oq posix; then
 fi
 if [[ -d /etc/bash_completion.d/ ]]; then
 	for file in /etc/bash_completion.d/* ; do
-		# shellcheck source=/dev/null
-		source "$file"
+		if [[ -n $BASHRC_BENCH ]]; then
+			TIMEFORMAT="$file: %R"
+			# shellcheck source=/dev/null
+			time source "$file"
+			unset TIMEFORMAT
+		else
+			# shellcheck source=/dev/null
+			source "$file"
+		fi
 	done
 fi
 
 # We do this before the following so that all the paths work.
 for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
+		if [[ -n $BASHRC_BENCH ]]; then
+			TIMEFORMAT="$file: %R"
+			# shellcheck source=/dev/null
+			time source "$file"
+			unset TIMEFORMAT
+		else
+			# shellcheck source=/dev/null
+			source "$file"
+		fi
 	fi
 done
 unset file
