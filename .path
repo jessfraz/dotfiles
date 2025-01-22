@@ -48,13 +48,6 @@ export MANPATH=/usr/local/opt/make/libexec/gnuman:${MANPATH}
 export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
 
-# update path for Chromium depot_tools
-export PATH="${PATH}:${HOME}/depot_tools"
-
-# Add bash completion for Chromium depot_tools
-# shellcheck source=/dev/null
-if [ -f "${HOME}/depot_tools/git_cl_completion.sh" ]; then . "${HOME}/depot_tools/git_cl_completion.sh"; fi
-
 # Homebrew
 export PATH="/opt/homebrew/bin:${PATH}"
 export PATH="/opt/homebrew/sbin:${PATH}"
@@ -72,24 +65,13 @@ export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/opt/openssl/include"
 export OPENSSL_ROOT_DIR="/opt/homebrew/opt/openssl"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}"
 
-# MySQL
 export MYSQL_INCLUDE_DIR="/opt/homebrew/opt/mysql-client/include/mysql"
 
 # LLVM
 export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
 
-# Boost
-export BOOST_INCLUDE_DIR="/opt/homebrew/include"
-
 # CXXFLAGS
 CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
-
-# opam configuration
-test -r "${HOME}/.opam/opam-init/init.sh" && . "${HOME}/.opam/opam-init/init.sh" > /dev/null 2> /dev/null || true
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
 
 . "$HOME/.cargo/env"
 export RUST_SYSROOT="$(rustc --print sysroot)"
