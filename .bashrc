@@ -124,7 +124,7 @@ fi
 unset hbfile
 
 # We do this before the following so that all the paths work.
-for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
+for file in ~/.{aliases,functions,path,dockerfunc,extra,exports,bash_prompt}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		if [[ -n $BASHRC_BENCH ]]; then
 			TIMEFORMAT="$file: %R"
