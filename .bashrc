@@ -163,21 +163,13 @@ if hash gh 2>/dev/null; then
 	eval "$(gh completion -s bash)"
 fi
 
-# get the kittycad completions
-if hash kittycad 2>/dev/null; then
-	eval "$(kittycad completion -s bash)"
+# get the zoo completions
+if hash zoo 2>/dev/null; then
+	eval "$(zoo completion -s bash)"
 fi
 
 # get the rustup completions
 if hash rustup 2>/dev/null; then
 	eval "$(rustup completions bash)"
 fi
-
-
-# source travis bash completion
-if [[ -f "${HOME}/.travis/travis.sh" ]]; then
-	# shellcheck source=/dev/null
-	source "${HOME}/.travis/travis.sh"
-fi
-
 
