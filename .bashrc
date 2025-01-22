@@ -94,6 +94,7 @@ if ! shopt -oq posix; then
 		. /usr/local/etc/bash_completion
 	fi
 fi
+
 if [[ -d /etc/bash_completion.d/ ]]; then
 	for file in /etc/bash_completion.d/* ; do
 		if [[ -n $BASHRC_BENCH ]]; then
@@ -107,6 +108,20 @@ if [[ -d /etc/bash_completion.d/ ]]; then
 		fi
 	done
 fi
+
+hbfile="/opt/homebrew/etc/profile.d/bash_completion.sh"
+if [[ -f "$hbfile" ]]; then
+	if [[ -n $BASHRC_BENCH ]]; then
+		TIMEFORMAT="$hbfile: %R"
+		# shellcheck source=/dev/null
+		time . "$hbfile"
+		unset TIMEFORMAT
+	else
+		# shellcheck source=/dev/null
+		. "$hbfile"
+	fi
+fi
+unset hbfile
 
 # We do this before the following so that all the paths work.
 for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
