@@ -109,7 +109,7 @@ if [[ -d /etc/bash_completion.d/ ]]; then
 	done
 fi
 
-hbfile="/opt/homebrew/etc/profile.d/bash_completion.sh"
+hbfile="${HOME}/.nix-profile/etc/profile.d/bash_completion.sh"
 if [[ -f "$hbfile" ]]; then
 	if [[ -n $BASHRC_BENCH ]]; then
 		TIMEFORMAT="$hbfile: %R"

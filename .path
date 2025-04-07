@@ -15,17 +15,11 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 # add bcc tools path
 export PATH="/usr/share/bcc/tools:${PATH}"
 
-# add gnubin for mac
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:${PATH}"
-
 # add scdaemon
 export PATH="/usr/lib/gnupg:${PATH}"
 
 # add gnu getopt
 export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
-
-# add mysql
-export PATH="/opt/homebrew/opt/mysql-client/bin:${PATH}"
 
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
@@ -47,25 +41,6 @@ export PATH=/usr/local/opt/make/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/make/libexec/gnuman:${MANPATH}
 export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
-
-# Homebrew
-export PATH="/opt/homebrew/bin:${PATH}"
-export PATH="/opt/homebrew/sbin:${PATH}"
-export LIBRARY_PATH="/opt/homebrew/lib:${LIBRARY_PATH}"
-export LDFLAGS="${LDFLAGS} -L/opt/homebrew/lib"
-export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/include"
-
-# OpenSSL
-export PATH="/opt/homebrew/opt/openssl/bin:${PATH}"
-export LDFLAGS="${LDFLAGS} -L/opt/homebrew/opt/openssl/lib"
-export CPPFLAGS="${CPPFLAGS} -I/opt/homebrew/opt/openssl/include"
-export OPENSSL_ROOT_DIR="/opt/homebrew/opt/openssl"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}"
-
-export MYSQL_INCLUDE_DIR="/opt/homebrew/opt/mysql-client/include/mysql"
-
-# LLVM
-export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
 
 # CXXFLAGS
 CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
