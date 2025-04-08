@@ -51,4 +51,4 @@ export RUST_SRC_PATH="${RUST_SYSROOT}/lib/rustlib/src/rust/src"
 export DYLD_LIBRARY_PATH="${RUST_SYSROOT}/lib:$DYLD_LIBRARY_PATH"
 
 # Add nix to our path.
-export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
+export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/system/sw/bin:/nix/var/nix/profiles/default/bin:${PATH}"
