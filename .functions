@@ -546,3 +546,8 @@ cad_convert_rack_files_to_collada() {
 		fi
 	done
 }
+
+uv_venv() {
+	uv venv
+	source .venv/bin/activate
+}
