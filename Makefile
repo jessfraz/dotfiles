@@ -22,7 +22,6 @@ dotfiles: ## Installs the dotfiles.
 	git update-index --skip-worktree $(CURDIR)/.gitconfig;
 	mkdir -p $(HOME)/.config;
 	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
-	ln -snf $(CURDIR)/.config/starship.toml $(HOME)/.config/starship.toml;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
 	if [ -f /usr/local/bin/pinentry ]; then \
