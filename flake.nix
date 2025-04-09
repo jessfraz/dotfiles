@@ -36,21 +36,35 @@
       home.packages = with pkgs; [
       ];
 
-      home.file = {
-        ".aliases".source = ./.aliases;
-        ".bash_prompt".source = ./.bash_prompt;
-        ".dockerfunc".source = ./.dockerfunc;
-        ".exports".source = ./.exports;
-        ".functions".source = ./.functions;
-        "gitignore".source = ./.gitignore;
-        ".inputrc".source = ./.inputrc;
-        ".irssi".source = mkIfExists ./.irssi;
-        ".nixbash".source = ./.nixbash;
-        ".path".source = ./.path;
-      };
+      home.file = let
+        baseFiles = {
+          ".aliases".source = ./.aliases;
+          ".bash_prompt".source = ./.bash_prompt;
+          ".dockerfunc".source = ./.dockerfunc;
+          ".exports".source = ./.exports;
+          ".functions".source = ./.functions;
+          "gitignore".source = ./.gitignore;
+          ".inputrc".source = ./.inputrc;
+          ".irssi".source = mkIfExists ./.irssi;
+          ".nixbash".source = ./.nixbash;
+          ".path".source = ./.path;
+        };
+
+        linuxOnlyFiles = {
+          ".config/fontconfig".source = mkIfExists ./.config/fontconfig;
+          ".i3".source = mkIfExists ./.i3;
+          ".urxvt".source = mkIfExists ./.urxvt;
+          ".Xdefaults".source = ./.Xdefaults;
+          ".Xprofile".source = ./.Xprofile;
+          ".Xresources".source = ./.Xresources;
+          ".xsessionrc".source = ./.xsessionrc;
+        };
+      in
+        if pkgs.stdenv.isLinux
+        then baseFiles // linuxOnlyFiles
+        else baseFiles;
     };
 
-    # Optional: Provide buildable homeConfigurations for testing
     homeConfigurations = forAllSystems (
       system:
         home-manager.lib.homeManagerConfiguration {
