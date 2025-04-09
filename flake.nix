@@ -51,7 +51,6 @@
         };
 
         linuxOnlyFiles = {
-          ".config/fontconfig".source = mkIfExists ./.config/fontconfig;
           ".i3".source = mkIfExists ./.i3;
           ".urxvt".source = mkIfExists ./.urxvt;
           ".Xdefaults".source = ./.Xdefaults;
