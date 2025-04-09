@@ -463,8 +463,10 @@ restart_gpgagent(){
 	kill -9 $(pgrep scdaemon) $(pgrep gpg-agent) >/dev/null 2>&1
 	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
 
-	gpgconf --reload gpg-agent
-	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+	export GPG_TTY=$(tty)
+	export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+	gpgconf --launch gpg-agent
+	gpg-connect-agent updatestartuptty /bye > /dev/null
 
 	echo "Restarted gpg-agent and scdaemon..."
 }
