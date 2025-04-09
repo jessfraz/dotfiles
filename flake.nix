@@ -42,6 +42,7 @@
         ".dockerfunc".source = ./.dockerfunc;
         ".exports".source = ./.exports;
         ".functions".source = ./.functions;
+        "gitignore".source = ./.gitignore;
         ".inputrc".source = ./.inputrc;
         ".irssi".source = mkIfExists ./.irssi;
         ".nixbash".source = ./.nixbash;
