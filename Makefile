@@ -18,12 +18,6 @@ dotfiles: ## Installs the dotfiles.
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
-	gpg --list-keys || true;
-	mkdir -p $(HOME)/.gnupg
-	for file in $(shell find $(CURDIR)/.gnupg); do \
-		f=$$(basename $$file); \
-		ln -sfn $$file $(HOME)/.gnupg/$$f; \
-	done; \
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	git update-index --skip-worktree $(CURDIR)/.gitconfig;
 	mkdir -p $(HOME)/.config;
