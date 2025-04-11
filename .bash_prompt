@@ -2,6 +2,7 @@
 function set_win_title(){
 	echo -ne "\033]0; ${PWD} \007"
 }
+# shellcheck disable=SC2034
 starship_precmd_user_func="set_win_title"
 STARSHIP_CONFIG="${HOME}/.config/starship.toml"
 export STARSHIP_CONFIG
