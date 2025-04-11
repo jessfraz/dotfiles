@@ -66,7 +66,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # We do this before the following so that all the paths work.
-for file in ~/.{aliases,functions,path,dockerfunc,exports,bash_prompt}; do
+for file in ~/.{aliases,functions,dockerfunc,exports,bash_prompt}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		if [[ -n $BASHRC_BENCH ]]; then
 			TIMEFORMAT="$file: %R"
