@@ -89,17 +89,6 @@ unset file
 	grep -v "[?*]" | cut -d " " -f2 | \
 	tr ' ' '\n')" scp sftp ssh
 
-# source kubectl bash completion
-if hash kubectl 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(kubectl completion bash)
-fi
-
-# get the gh completions
-if hash gh 2>/dev/null; then
-	eval "$(gh completion -s bash)"
-fi
-
 # get the zoo completions
 if hash zoo 2>/dev/null; then
 	eval "$(zoo completion -s bash)"
