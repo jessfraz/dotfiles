@@ -463,8 +463,10 @@ restart_gpgagent(){
 	kill -9 $(pgrep scdaemon) $(pgrep gpg-agent) >/dev/null 2>&1
 	echo -e "\tgpg-agent: $(pgrep gpg-agent) | scdaemon: $(pgrep scdaemon)"
 
-	export GPG_TTY=$(tty)
-	export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+	GPG_TTY=$(tty)
+	export GPG_TTY
+	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+	export SSH_AUTH_SOCK
 	gpgconf --launch gpg-agent
 	gpg-connect-agent updatestartuptty /bye > /dev/null
 
@@ -549,5 +551,6 @@ cad_convert_rack_files_to_collada() {
 
 uv_venv() {
 	uv venv
+	# shellcheck source=/dev/null
 	source .venv/bin/activate
 }
