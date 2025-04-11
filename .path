@@ -24,16 +24,6 @@ export PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
 
-export PATH="${HOME}/.google-cloud-sdk/bin:${PATH}"
-
-# The next line updates PATH for the Google Cloud SDK.
-# shellcheck source=/dev/null
-if [ -f "${HOME}/.google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/.google-cloud-sdk/path.bash.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-# shellcheck source=/dev/null
-if [ -f "${HOME}/.google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/.google-cloud-sdk/completion.bash.inc"; fi
-
 # update path for gnu coreutils, make & find on darwin
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
@@ -41,14 +31,6 @@ export PATH=/usr/local/opt/make/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/make/libexec/gnuman:${MANPATH}
 export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
-
-# CXXFLAGS
-CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -Wno-deprecated-declarations -Wno-deprecated -framework CoreFoundation"
-
-# Rust
-RUST_SYSROOT="$(rustc --print sysroot)"
-export RUST_SRC_PATH="${RUST_SYSROOT}/lib/rustlib/src/rust/src"
-export DYLD_LIBRARY_PATH="${RUST_SYSROOT}/lib:$DYLD_LIBRARY_PATH"
 
 # Add nix to our path.
 export PATH="/run/wrappers/bin:${HOME}/.nix-profile/bin:/etc/profiles/per-user/${USER}/bin:/nix/var/nix/profiles/system/sw/bin:/nix/var/nix/profiles/default/bin:${PATH}"
