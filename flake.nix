@@ -47,7 +47,6 @@
           ".inputrc".source = ./.inputrc;
           ".irssi".source = mkIfExists ./.irssi;
           ".nixbash".source = ./.nixbash;
-          ".path".source = ./.path;
         };
 
         linuxOnlyFiles = {
