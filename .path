@@ -1,18 +1,4 @@
 #!/bin/sh
 
-export GOPATH="${HOME}/.go"
-
-# update path
-export PATH=/usr/local/bin:${PATH}:/sbin:/usr/local/sbin
-
-# add go path
-export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
-
-# add rust path
-export PATH="${HOME}/.cargo/bin:${PATH}"
-
 # update cdpath
 export CDPATH=${CDPATH}:${GOPATH}/src/github.com:${GOPATH}/src/golang.org:${GOPATH}/src
-
-# Add nix to our path.
-export PATH="/run/wrappers/bin:${HOME}/.nix-profile/bin:/etc/profiles/per-user/${USER}/bin:/nix/var/nix/profiles/system/sw/bin:/nix/var/nix/profiles/default/bin:${PATH}"
