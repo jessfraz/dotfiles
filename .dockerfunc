@@ -382,21 +382,24 @@ imagemin(){
 		${DOCKER_REPO_PREFIX}/imagemin sh -c "imagemin /root/Pictures/${image} > /root/Pictures/${filename}_min.${extension}"
 }
 irssi() {
-	del_stopped irssi
-	# relies_on notify_osd
+	if [[ -n "$(which irssi)" ]]; then
+		"$(which irssi)" "$@"
+	else
+        del_stopped irssi
 
-	docker run --rm -it \
-		--user root \
-		-v "${HOME}/.irssi:/home/user/.irssi" \
-		irssi \
-		chown -R user /home/user/.irssi
+        docker run --rm -it \
+            --user root \
+            -v "${HOME}/.irssi:/home/user/.irssi" \
+            irssi \
+            chown -R user /home/user/.irssi
 
-	docker run --rm -it \
-		-v /etc/localtime:/etc/localtime:ro \
-		-v "${HOME}/.irssi:/home/user/.irssi" \
-		--read-only \
-		--name irssi \
-		irssi
+        docker run --rm -it \
+            -v /etc/localtime:/etc/localtime:ro \
+            -v "${HOME}/.irssi:/home/user/.irssi" \
+            --read-only \
+            --name irssi \
+            irssi
+    fi
 }
 john(){
 	local file
