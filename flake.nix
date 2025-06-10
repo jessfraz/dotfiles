@@ -34,6 +34,7 @@
         else pkgs.emptyFile;
     in {
       home.packages = with pkgs; [
+        irssi
       ];
 
       home.file = let
