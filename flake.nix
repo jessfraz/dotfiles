@@ -2,19 +2,17 @@
   description = "Home Manager module for jessfraz's dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     self,
     nixpkgs,
-    unstable,
     home-manager,
     ...
   }: let
