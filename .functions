@@ -27,6 +27,24 @@ mkd() {
 	cd "$@" || exit
 }
 
+# Cleanup all caches and shit
+cleanup() {
+    echo "Cleaning up target directories…"
+    find ~/zoo -depth -type d \( -name '.venv' -o -name 'node_modules' -o -name 'target' \) -print
+    find ~/zoo -depth -type d \( -name '.venv' -o -name 'node_modules' -o -name 'target' \) -print0 | xargs -0 rm -rf
+    echo "Cleaning up uv cache…"
+    uv cache clean
+    echo "Cleaning up npm cache…"
+    npm cache clean --force
+    echo "Cleaning up yarn cache…"
+    yarn cache clean --all
+    yarn cache clean
+    echo "Cleaning up go cache…"
+    go clean -cache -modcache
+    echo "Garbage collection for nix..."
+    nix store gc
+}
+
 # Make a temporary directory and enter it
 tmpd() {
 	local dir
