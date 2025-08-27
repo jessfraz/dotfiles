@@ -14,3 +14,6 @@ approval_policy = "on-request"
 # Allow the command being run inside the sandbox to make outbound network
 # requests. Disabled by default.
 network_access = true
+
+[shell_environment_policy]
+inherit = "all"
