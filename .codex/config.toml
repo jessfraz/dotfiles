@@ -7,14 +7,15 @@ show_raw_agent_reasoning = true
 web_search = true
 
 sandbox_mode = "workspace-write"
-approval_policy = "on-request"
+approval_policy = "on-request"   # The model decides when to escalate the approval
 
 # Extra settings that only apply when `sandbox = "workspace-write"`.
 [sandbox_workspace_write]
 # Allow the command being run inside the sandbox to make outbound network
 # requests. Disabled by default.
+# Stop getting prompted when your tests running want to access the internet or when its trying to curl outside documentation.
 network_access = true
 
 [shell_environment_policy]
-inherit = "all"
-ignore_default_excludes = true
+inherit = "all"                # This is the default value. Inherit all environment variables.
+ignore_default_excludes = true # Do not ignore any environment variables by default, allows it to see shit like tokens, which if you are running tests and it needs variables you will want.
