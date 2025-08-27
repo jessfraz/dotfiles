@@ -15,6 +15,17 @@ approval_policy = "on-request"   # The model decides when to escalate the approv
 # requests. Disabled by default.
 # Stop getting prompted when your tests running want to access the internet or when its trying to curl outside documentation.
 network_access = true
+# Permanently allow writes to global caches:
+writable_roots = [
+  "/Users/jessfraz/.cache",
+  "/Users/jessfraz/.cache/pip",
+  "/Users/jessfraz/.cache/uv",
+  "/Users/jessfraz/.cargo",
+  "/Users/jessfraz/.rustup",
+  "/Users/jessfraz/.yarn",
+  "/Users/jessfraz/.npm",
+  "/Users/jessfraz/.local/share/pnpm", # pnpm store lives here by default
+]
 
 [shell_environment_policy]
 inherit = "all"                # This is the default value. Inherit all environment variables.
