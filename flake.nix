@@ -39,7 +39,7 @@
         baseFiles = {
           ".aliases".source = ./.aliases;
           ".bash_prompt".source = ./.bash_prompt;
-          ".codex/config.toml".source = ./codex/config.toml;
+          ".codex/config.toml".source = ./.codex/config.toml;
           ".dockerfunc".source = ./.dockerfunc;
           ".exports".source = ./.exports;
           ".functions".source = ./.functions;
