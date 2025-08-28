@@ -1,6 +1,7 @@
-{ pkgs, config }:
-
-let
+{
+  pkgs,
+  config,
+}: let
   tomlFormat = pkgs.formats.toml {};
   homeDir = config.home.homeDirectory;
   isDarwin = pkgs.stdenv.isDarwin;
@@ -18,7 +19,7 @@ let
 
   codexConfigAttrs =
     (pkgs.lib.optionalAttrs isDarwin {
-      notify = [ "python3" "${homeDir}/.codex/notify.py" ];
+      notify = ["python3" "${homeDir}/.codex/notify.py"];
     })
     // {
       model_reasoning_effort = "high";
@@ -35,13 +36,11 @@ let
         writable_roots = writableRoots;
       };
       shell_environment_policy = {
-        inherit = "all";
+        "inherit" = "all";
         ignore_default_excludes = true;
       };
     };
-in
-{
+in {
   file = tomlFormat.generate "codex-config.toml" codexConfigAttrs;
   attrs = codexConfigAttrs;
 }
-
