@@ -2,6 +2,7 @@ model_reasoning_effort = "high"
 model_reasoning_summary = "detailed"
 file_opener = "none"
 show_raw_agent_reasoning = true
+notify = ["python3", "/Users/jessfraz/.codex/notify.py"]
 
 [tools]
 web_search = true
