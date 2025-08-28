@@ -33,6 +33,8 @@
     in {
       home.packages = with pkgs; [
         irssi
+      ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+        terminal-notifier
       ];
 
       home.file = let
@@ -40,6 +42,7 @@
           ".aliases".source = ./.aliases;
           ".bash_prompt".source = ./.bash_prompt;
           ".codex/config.toml".source = ./.codex/config.toml;
+          ".codex/notify.py".source = ./.codex/notify.py;
           ".dockerfunc".source = ./.dockerfunc;
           ".exports".source = ./.exports;
           ".functions".source = ./.functions;
