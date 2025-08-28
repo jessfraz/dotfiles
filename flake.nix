@@ -25,11 +25,54 @@
         })
         supportedSystems);
   in {
-    homeManagerModules.default = {pkgs, ...}: let
+    homeManagerModules.default = {pkgs, config, ...}: let
       mkIfExists = path:
         if builtins.pathExists path
         then path
         else pkgs.emptyFile;
+      homeDir = config.home.homeDirectory;
+      isDarwin = pkgs.stdenv.isDarwin;
+      writableRoots = [
+        "${homeDir}/.cache"
+        "${homeDir}/.cache/pip"
+        "${homeDir}/.cache/uv"
+        "${homeDir}/.cargo"
+        "${homeDir}/.rustup"
+        "${homeDir}/.yarn"
+        "${homeDir}/.npm"
+        "${homeDir}/.local/share/pnpm"
+      ];
+      writableRootsToml = builtins.concatStringsSep ",\n  " (map (p: "\"${p}\"") writableRoots);
+      codexConfig = ''
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed"
+file_opener = "none"
+show_raw_agent_reasoning = true
+${if isDarwin then ''
+notify = ["python3", "${homeDir}/.codex/notify.py"]
+'' else ""}
+
+[tools]
+web_search = true
+
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"   # The model decides when to escalate the approval
+
+# Extra settings that only apply when `sandbox = "workspace-write"`.
+[sandbox_workspace_write]
+# Allow the command being run inside the sandbox to make outbound network
+# requests. Disabled by default.
+# Stop getting prompted when your tests running want to access the internet or when its trying to curl outside documentation.
+network_access = true
+# Permanently allow writes to global caches:
+writable_roots = [
+  ${writableRootsToml}
+]
+
+[shell_environment_policy]
+inherit = "all"                # This is the default value. Inherit all environment variables.
+ignore_default_excludes = true # Do not ignore any environment variables by default, allows it to see shit like tokens, which if you are running tests and it needs variables you will want.
+'';
     in {
       home.packages = with pkgs; [
         irssi
@@ -41,7 +84,7 @@
         baseFiles = {
           ".aliases".source = ./.aliases;
           ".bash_prompt".source = ./.bash_prompt;
-          ".codex/config.toml".source = ./.codex/config.toml;
+          ".codex/config.toml".text = codexConfig;
           ".codex/notify.py".source = ./.codex/notify.py;
           ".dockerfunc".source = ./.dockerfunc;
           ".exports".source = ./.exports;
