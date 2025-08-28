@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import shutil
 import subprocess
 import sys
 
@@ -15,35 +16,37 @@ def main() -> int:
     except json.JSONDecodeError:
         return 1
 
-    match notification_type := notification.get("type"):
-        case "agent-turn-complete":
-            assistant_message = notification.get("last-assistant-message")
-            if assistant_message:
-                title = f"Codex: {assistant_message}"
-            else:
-                title = "Codex: Turn Complete!"
-            input_messages = notification.get("input_messages", [])
-            message = " ".join(input_messages)
-            title += message
-        case _:
-            print(f"not sending a push notification for: {notification_type}")
-            return 0
+    notification_type = notification.get("type")
+    if notification_type != "agent-turn-complete":
+        return 0
+
+    assistant_message = notification.get("last-assistant-message")
+    title = f"Codex: {assistant_message}" if assistant_message else "Codex: Turn Complete!"
+    input_messages = notification.get("input_messages", [])
+    message = " ".join(input_messages).strip()
+
+    tn = shutil.which("terminal-notifier")
+    if not tn:
+        return 0
 
     args = [
-        "terminal-notifier",
+        tn,
         "-title",
         title,
         "-message",
         message,
         "-group",
         "codex",
-        "-ignoreDnD",
+        "-sender",
+        "com.mitchellh.ghostty",
         "-activate",
         "com.mitchellh.ghostty",
     ]
 
-    subprocess.check_output(args)
-
+    try:
+        subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
     return 0
 
 
