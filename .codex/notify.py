@@ -4,31 +4,19 @@ import json
 import shutil
 import subprocess
 import sys
+from typing import Optional
 
 
-def main() -> int:
-    if len(sys.argv) != 2:
-        print("Usage: notify.py <NOTIFICATION_JSON>")
-        return 1
+def notify(title: str, message: str) -> None:
+    """Send a notification using terminal-notifier only.
 
-    try:
-        notification = json.loads(sys.argv[1])
-    except json.JSONDecodeError:
-        return 1
-
-    notification_type = notification.get("type")
-    if notification_type != "agent-turn-complete":
-        return 0
-
-    assistant_message = notification.get("last-assistant-message")
-    title = f"Codex: {assistant_message}" if assistant_message else "Codex: Turn Complete!"
-    input_messages = notification.get("input_messages", [])
-    message = " ".join(input_messages).strip()
-
+    Minimal, non-blocking and predictable: runs
+      terminal-notifier -title <title> -message <message> -group codex
+    and ignores failures.
+    """
     tn = shutil.which("terminal-notifier")
     if not tn:
-        return 0
-
+        return
     args = [
         tn,
         "-title",
@@ -37,16 +25,44 @@ def main() -> int:
         message,
         "-group",
         "codex",
-        "-sender",
-        "com.mitchellh.ghostty",
         "-activate",
         "com.mitchellh.ghostty",
     ]
-
     try:
-        subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=3)
     except Exception:
         pass
+
+
+def main() -> int:
+
+    raw: Optional[str] = None
+    if len(sys.argv) == 2:
+        raw = sys.argv[1]
+    else:
+        # Fallback: try reading JSON from stdin if piped
+        if not sys.stdin.isatty():
+            raw = sys.stdin.read().strip() or None
+
+    if not raw:
+        print("Usage: notify.py <NOTIFICATION_JSON>")
+        return 1
+
+    try:
+        notification = json.loads(raw)
+    except json.JSONDecodeError:
+        # Don’t crash the agent pipeline on local format issues
+        return 1
+
+    if notification.get("type") != "agent-turn-complete":
+        return 0
+
+    assistant_message: Optional[str] = notification.get("last-assistant-message")
+    title = f"Codex: {assistant_message}" if assistant_message else "Codex: Turn Complete!"
+    input_messages = notification.get("input_messages", [])
+    message = " ".join(input_messages).strip()
+
+    notify(title, message)
     return 0
 
 
