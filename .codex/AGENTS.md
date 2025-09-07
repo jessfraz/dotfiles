@@ -9,3 +9,4 @@
 - Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
 - Leave each repo better than how you found it. If something is giving a code smell, fix it for the next person.
 - Test `EVERYTHING`. Our goal here is that any code we write, a new person coming into the repo cannot break, since there is a test that asserts the user facing behavior we want.
+- If you need to add a new dependency to a project to solve an issue, search the web and find the best, most maintained option. Something most other folks use with the best exposed API. We don't want to be in a situation where we are using an unmaintained dependency, that no one else relies on.
