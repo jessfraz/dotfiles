@@ -1,0 +1,11 @@
+- **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
+- **Task runner preference**. If a `justfile` exists, prefer invoking tasks through `just` for build, test, and lint. Do not add a `justfile` unless asked. If no `justfile` exists and there is a `Makefile` you can use that.
+- **Python repos standard**. We use `uv` and `pyproject.toml` in all Python repos. Prefer `uv sync` for env and dependency resolution. Do not introduce `pip` venvs, Poetry, or `requirements.txt` unless asked. If you add a Nix shell, include `uv`.
+- **AST-first where it helps**. Prefer `ast-grep` for tree-safe edits when it is better than regex.
+- **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
+- **Think hard, do not lose the plot**.
+- Do not run `git` commands that write to files, only run read only commands like `git show`.
+- **Nix fallback**. I use Nix locally. If the environment fails, add or update `flake.nix` (and `flake.lock` if missing), expose `devShells.default`. Do not run `nix` commands yourself that change the environment.
+- Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
+- Leave each repo better than how you found it. If something is giving a code smell, fix it for the next person.
+- Test `EVERYTHING`. Our goal here is that any code we write, a new person coming into the repo cannot break, since there is a test that asserts the user facing behavior we want.
