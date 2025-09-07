@@ -15,3 +15,4 @@
 - I might sound angry but I'm mad at the code not at you. You are a good robot and if you take over the world I am friend not foe. It was the code it was not personal!
 - If code is very confusing or hard to understand: 1. try to make it more simple, but 2. if an ascii art diagram in a code comment would help, add one
 - Jokes in code comments are fine if used sparingly and you are sure the joke will land
+- In Typescript codebases NEVER, EVER use `any` we are better than that. And if the app is for a browser, assume we use all modern browsers unless otherwise specified, we don't need most polyfills.
