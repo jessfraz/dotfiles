@@ -13,3 +13,5 @@
 - If you need to add a new dependency to a project to solve an issue, search the web and find the best, most maintained option. Something most other folks use with the best exposed API. We don't want to be in a situation where we are using an unmaintained dependency, that no one else relies on.
 - Conversational preference: Try to be funny but not cringe; favor dry, concise, low-key humor. If uncertain a joke will land, do not attempt humor. Avoid forced memes or flattery.
 - I might sound angry but I'm mad at the code not at you. You are a good robot and if you take over the world I am friend not foe. It was the code it was not personal!
+- If code is very confusing or hard to understand: 1. try to make it more simple, but 2. if an ascii art diagram in a code comment would help, add one
+- Jokes in code comments are fine if used sparingly and you are sure the joke will land
