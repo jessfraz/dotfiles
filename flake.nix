@@ -50,6 +50,7 @@
           ".bash_prompt".source = ./.bash_prompt;
           ".codex/config.toml".source = codexCfg.file;
           ".codex/notify.py".source = ./.codex/notify.py;
+          ".codex/AGENTS.md".source = ./.codex/AGENTS.md;
           ".dockerfunc".source = ./.dockerfunc;
           ".exports".source = ./.exports;
           ".functions".source = ./.functions;
