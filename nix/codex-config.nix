@@ -23,7 +23,7 @@
     })
     // {
       model_reasoning_effort = "high";
-      model_reasoning_summary = "detailed";
+      model_reasoning_summary = "auto";
       file_opener = "none";
       show_raw_agent_reasoning = true;
       tools = {
