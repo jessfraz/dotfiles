@@ -7,6 +7,7 @@
 - **Think hard, do not lose the plot**.
 - Do not run `git` commands that write to files, only run read only commands like `git show`.
 - **Nix fallback**. I use Nix locally. If the environment fails, add or update `flake.nix` (and `flake.lock` if missing), expose `devShells.default`. Do not run `nix` commands yourself that change the environment.
+- I HATE MOCK tests, either do unit or e2e, nothing inbetween
 - Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
 - Leave each repo better than how you found it. If something is giving a code smell, fix it for the next person.
 - Test `EVERYTHING`. Our goal here is that any code we write, a new person coming into the repo cannot break, since there is a test that asserts the user facing behavior we want.
