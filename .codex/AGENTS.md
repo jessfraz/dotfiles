@@ -6,6 +6,8 @@
 - **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
 - **Think hard, do not lose the plot**.
 - Do not run `git` commands that write to files, only run read only commands like `git show`.
+- Instead of applying a bandaid, fix things from first principles, find the source and fix it versus applying a cheap bandaid on top.
+- When taking on something new work in this order: 1. think of the architecture 2. do research search the internet read blogs/papers on the best architecture 3. look at the existing codebase 4. understand what might be the best fit compared with your research and our code base 5. implement the fix or ask about the tradeoffs the user is willing to make
 - **Nix fallback**. I use Nix locally. If the environment fails, add or update `flake.nix` (and `flake.lock` if missing), expose `devShells.default`. Do not run `nix` commands yourself that change the environment.
 - I HATE MOCK tests, either do unit or e2e, nothing inbetween
 - Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
