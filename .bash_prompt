@@ -1,9 +1,59 @@
 #!/bin/bash
-function set_win_title(){
-	echo -ne "\033]0; ${PWD} \007"
+
+__ghostty_title_shell="${SHELL:-/bin/bash}"
+__ghostty_title_shell=${__ghostty_title_shell##*/}
+
+__ghostty_set_tab_title() {
+    builtin printf '\033]0; %s\007' "$1"
 }
+
+__ghostty_title_precmd() {
+    __ghostty_set_tab_title "${PWD}"
+}
+
+__ghostty_title_preexec() {
+    if [[ -n "${__ghostty_title_preexec_guard:-}" ]]; then
+        return
+    fi
+
+    __ghostty_title_preexec_guard=1
+
+    local command_string=$1
+    command_string="${command_string#"${command_string%%[![:space:]]*}"}"
+    local process_name=${command_string%%[[:space:]]*}
+    if [[ -z "$process_name" ]]; then
+        __ghostty_set_tab_title "${PWD}"
+    else
+        local process_basename=${process_name##*/}
+        case "$process_basename" in
+            "$__ghostty_title_shell"|"-$__ghostty_title_shell"|bash|sh)
+                __ghostty_set_tab_title "${PWD}"
+                ;;
+            *)
+                __ghostty_set_tab_title "${PWD}: ${process_basename}"
+                ;;
+        esac
+    fi
+
+    unset __ghostty_title_preexec_guard
+}
+
 # shellcheck disable=SC2034
-starship_precmd_user_func="set_win_title"
+starship_precmd_user_func="__ghostty_title_precmd"
 STARSHIP_CONFIG="${HOME}/.config/starship.toml"
 export STARSHIP_CONFIG
 eval "$(starship init bash)"
+
+if [[ -z "${__ghostty_title_debug_trap_installed:-}" ]]; then
+    __ghostty_title_debug_trap_installed=1
+    __ghostty_previous_debug_trap=$(trap -p DEBUG 2>/dev/null)
+    if [[ "$__ghostty_previous_debug_trap" != *"__ghostty_title_preexec"* ]]; then
+        if [[ -n "$__ghostty_previous_debug_trap" ]]; then
+            __ghostty_previous_debug_trap=${__ghostty_previous_debug_trap#trap -- '}
+            __ghostty_previous_debug_trap=${__ghostty_previous_debug_trap%' DEBUG}
+            eval "trap '__ghostty_title_preexec \"\$BASH_COMMAND\"; ${__ghostty_previous_debug_trap}' DEBUG"
+        else
+            trap '__ghostty_title_preexec "$BASH_COMMAND"' DEBUG
+        fi
+    fi
+fi
