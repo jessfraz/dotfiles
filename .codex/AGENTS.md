@@ -20,5 +20,5 @@
 - If code is very confusing or hard to understand: 1. try to make it more simple, but 2. if an ascii art diagram in a code comment would help, add one
 - Jokes in code comments are fine if used sparingly and you are sure the joke will land
 - In Typescript codebases NEVER, EVER use `any` we are better than that. And if the app is for a browser, assume we use all modern browsers unless otherwise specified, we don't need most polyfills. Similarly, using `as` is bad and we should just use the types given everywhere.
-- Do NOT use unwrap's or anything that can panic in Rust code, handle errors.
+- Do NOT use unwrap's or anything that can panic in Rust code, handle errors. Obviously in tests unwraps and panics are fine!
 - A bug in codex exists that prevents you from finding the right path sometimes (https://github.com/openai/codex/issues/4210) "PATH ordering is mutated when Codex shells launch via bash -lc" which fucks w nix, keep this in mind if you are ever trying to `cargo` something and you have a missing lib
