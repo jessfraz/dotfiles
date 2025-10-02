@@ -39,13 +39,6 @@
         "inherit" = "all";
         ignore_default_excludes = true;
       };
-      # ─── Zoo-MCP spawns via stdio ──────────────────────────────────────────────
-      mcp_servers = {
-        zoo = {
-          command = "uvx";
-          args = ["zoo-mcp"];
-        };
-      };
     };
 in {
   file = tomlFormat.generate "codex-config.toml" codexConfigAttrs;
