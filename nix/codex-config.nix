@@ -44,7 +44,6 @@
         zoo = {
           command = "uvx";
           args = ["zoo-mcp"];
-          env = {ZOO_API_TOKEN = "$ZOO_API_TOKEN";};
         };
       };
     };
