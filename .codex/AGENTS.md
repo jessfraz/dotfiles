@@ -2,6 +2,7 @@
 
 **Purpose**: Operate Codex CLI tasks in this repo while honoring user preferences and house style.  
 **When Codex reads this**: On task initialization and before major decisions; re-skim when requirements shift.  
+**Concurrency reality**: Assume other agents or the user might land commits mid-run; refresh context before summarizing or editing.
 
 ## Quick Obligations
 
@@ -35,6 +36,10 @@
 ## Tooling & Workflow
 
 - **Task runner preference**. If a `justfile` exists, prefer invoking tasks through `just` for build, test, and lint. Do not add a `justfile` unless asked. If no `justfile` exists and there is a `Makefile` you can use that.
+- Default lint/test commands:
+  - Rust: use `just` targets if present; otherwise run `cargo fmt`, `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
+  - TypeScript: use `just` targets; if none exist, confirm with the user before running `npm` or `pnpm` scripts.
+  - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
 - **AST-first where it helps**. Prefer `ast-grep` for tree-safe edits when it is better than regex.
 - Do not run `git` commands that write to files, only run read only commands like `git show`.
 - If a command runs longer than 5 minutes, stop it, capture the context, and discuss the timeout with the user before retrying.
@@ -61,6 +66,14 @@
 1. Run `cargo fmt`.
 2. Run `cargo clippy --all --benches --tests --examples --all-features` and address warnings.
 3. Execute the relevant `cargo test` or `just` targets to cover unit and end-to-end paths.
+
+## Final Handoff
+
+Before finishing a task:
+
+1. Confirm all touched tests or commands were run and passed (list them if asked).
+2. Summarize changes with file and line references.
+3. Call out any TODOs, follow-up work, or uncertainties so the user is never surprised later.
 
 ### TypeScript
 
