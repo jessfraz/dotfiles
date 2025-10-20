@@ -28,6 +28,7 @@
   5. Implement the fix or ask about the tradeoffs the user is willing to make.
 - Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
 - Leave each repo better than how you found it. If something is giving a code smell, fix it for the next person.
+- Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
 - **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
 - If code is very confusing or hard to understand:
   1. Try to simplify it.
@@ -48,7 +49,7 @@
 ## Testing Philosophy
 
 - I HATE MOCK tests, either do unit or e2e, nothing inbetween. Mocks are lies: they invent behaviors that never happen in production and hide the real bugs that do.
-- Test `EVERYTHING`. Our goal here is that any code we write, a new person coming into the repo cannot break, since there is a test that asserts the user facing behavior we want.
+- Test `EVERYTHING`. Tests must be rigorous. Our intent is ensuring a new person contributing to the same code base cannot break our stuff and that nothing slips by. We love rigour.
 - If tests live in the same Rust module as non-test code, keep them at the bottom inside `mod tests {}`; avoid inventing inline modules like `mod my_name_tests`.
 - Unless the user asks otherwise, run only the tests you added or modified instead of the entire suite to avoid wasting time.
 
