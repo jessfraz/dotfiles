@@ -26,7 +26,7 @@
       model_reasoning_summary = "auto";
       file_opener = "none";
       show_raw_agent_reasoning = true;
-      tools = {
+      features = {
         web_search_request = true;
       };
       sandbox_mode = "workspace-write";
