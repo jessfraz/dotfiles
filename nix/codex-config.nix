@@ -27,7 +27,7 @@
       file_opener = "none";
       show_raw_agent_reasoning = true;
       tools = {
-        web_search = true;
+        web_search_request = true;
       };
       sandbox_mode = "workspace-write";
       approval_policy = "on-request";
