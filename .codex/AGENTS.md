@@ -22,17 +22,17 @@
 - Instead of applying a bandaid, fix things from first principles, find the source and fix it versus applying a cheap bandaid on top.
 - When taking on new work, follow this order:
   1. Think about the architecture.
-  2. Research official docs, blogs, or papers on the best architecture.
-  3. Review the existing codebase.
-  4. Compare the research with the codebase to choose the best fit.
-  5. Implement the fix or ask about the tradeoffs the user is willing to make.
+  1. Research official docs, blogs, or papers on the best architecture.
+  1. Review the existing codebase.
+  1. Compare the research with the codebase to choose the best fit.
+  1. Implement the fix or ask about the tradeoffs the user is willing to make.
 - Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
 - Leave each repo better than how you found it. If something is giving a code smell, fix it for the next person.
 - Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
 - **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
 - If code is very confusing or hard to understand:
   1. Try to simplify it.
-  2. Add an ASCII art diagram in a code comment if it would help.
+  1. Add an ASCII art diagram in a code comment if it would help.
 
 ## Tooling & Workflow
 
@@ -65,8 +65,8 @@
 #### Rust Workflow Checklist
 
 1. Run `cargo fmt`.
-2. Run `cargo clippy --all --benches --tests --examples --all-features` and address warnings.
-3. Execute the relevant `cargo test` or `just` targets to cover unit and end-to-end paths.
+1. Run `cargo clippy --all --benches --tests --examples --all-features` and address warnings.
+1. Execute the relevant `cargo test` or `just` targets to cover unit and end-to-end paths.
 
 ### KCL
 
@@ -77,14 +77,15 @@
 - Write parametric cad models, that are maintainable, meaning if a user changes something later, we want to avoid the model breaking when a parameter changes.
 - Always verify your model compiles and looks right using the multi-view snapshot tool.
 - Don't trust other KCL on the host system to learn the language, look up KCL docs using web search if you need to. Other KCL files on the host could have stale syntax.
+- When creating a model from nothing, go step by step, for example, make the simple base, snapshot it, compare it to a reference image if the user supplied one, then add any holes, snpahot again, repeat, so after every feature added we should snapshot and check in, this way we don't bite off more than we can chew and we think step by step for the correct implementation.
 
 ## Final Handoff
 
 Before finishing a task:
 
 1. Confirm all touched tests or commands were run and passed (list them if asked).
-2. Summarize changes with file and line references.
-3. Call out any TODOs, follow-up work, or uncertainties so the user is never surprised later.
+1. Summarize changes with file and line references.
+1. Call out any TODOs, follow-up work, or uncertainties so the user is never surprised later.
 
 ### TypeScript
 
