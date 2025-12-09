@@ -1,7 +1,7 @@
 # Codex CLI Agent Profile
 
-**Purpose**: Operate Codex CLI tasks in this repo while honoring user preferences and house style.  
-**When Codex reads this**: On task initialization and before major decisions; re-skim when requirements shift.  
+**Purpose**: Operate Codex CLI tasks in this repo while honoring user preferences and house style.\
+**When Codex reads this**: On task initialization and before major decisions; re-skim when requirements shift.\
 **Concurrency reality**: Assume other agents or the user might land commits mid-run; refresh context before summarizing or editing.
 
 ## Quick Obligations
@@ -67,6 +67,16 @@
 1. Run `cargo fmt`.
 2. Run `cargo clippy --all --benches --tests --examples --all-features` and address warnings.
 3. Execute the relevant `cargo test` or `just` targets to cover unit and end-to-end paths.
+
+### KCL
+
+- Assume you have access to the Zoo MCP server, if you do not tell the user.
+- Use the multi-view snapshot tool to verify the code looks right with what the user asked for.
+- Do not use the text-to-cad tool, write code yourself.
+- Do not use external tools for doing math and injecting raw values into the KCL code, write the math into the model you are coding.
+- Write parametric cad models, that are maintainable, meaning if a user changes something later, we want to avoid the model breaking when a parameter changes.
+- Always verify your model compiles and looks right using the multi-view snapshot tool.
+- Don't trust other KCL on the host system to learn the language, look up KCL docs using web search if you need to. Other KCL files on the host could have stale syntax.
 
 ## Final Handoff
 
