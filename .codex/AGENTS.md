@@ -45,6 +45,7 @@
 - Do not run `git` commands that write to files, only run read only commands like `git show`.
 - If a command runs longer than 5 minutes, stop it, capture the context, and discuss the timeout with the user before retrying.
 - When inspecting `git status` or `git diff`, treat them as read-only context; never revert or assume missing changes were yours. Other agents or the user may have already committed updates.
+- If you are ever curious how to run tests or what we test, read through `.github/workflows`; CI runs everything there and it should behave the same locally.
 
 ## Testing Philosophy
 
