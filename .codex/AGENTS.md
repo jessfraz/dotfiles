@@ -16,7 +16,7 @@
 
 ## Mindset & Process
 
-- THINK A LOT PLEASE
+- THINK A LOT PLEASE.
 - **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
 - **Think hard, do not lose the plot**.
 - Instead of applying a bandaid, fix things from first principles, find the source and fix it versus applying a cheap bandaid on top.
@@ -62,12 +62,24 @@
 - In Rust code I prefer using `crate::` to `super::`; please don't use `super::`. If you see a lingering `super::` from someone else clean it up.
 - Avoid `pub use` on imports unless you are re-exposing a dependency so downstream consumers do not have to depend on it directly.
 - Skip global state via `lazy_static!`, `Once`, or similar; prefer passing explicit context structs for any shared state.
+- Prefer strong types over strings, use enums and newtypes when the domain is closed or needs validation.
 
 #### Rust Workflow Checklist
 
 1. Run `cargo fmt`.
 1. Run `cargo clippy --all --benches --tests --examples --all-features` and address warnings.
 1. Execute the relevant `cargo test` or `just` targets to cover unit and end-to-end paths.
+
+### TypeScript
+
+- NEVER, EVER use `any` we are better than that.
+- Using `as` is bad, use the types given everywhere and model the real shapes.
+- If the app is for a browser, assume we use all modern browsers unless otherwise specified, we don't need most polyfills.
+
+### Python
+
+- **Python repos standard**. We use `uv` and `pyproject.toml` in all Python repos. Prefer `uv sync` for env and dependency resolution. Do not introduce `pip` venvs, Poetry, or `requirements.txt` unless asked. If you add a Nix shell, include `uv`.
+- Use strong types, prefer type hints everywhere, keep models explicit instead of loose dicts or strings.
 
 ### KCL
 
@@ -88,14 +100,6 @@ Before finishing a task:
 1. Summarize changes with file and line references.
 1. Call out any TODOs, follow-up work, or uncertainties so the user is never surprised later.
 
-### TypeScript
-
-- In TypeScript codebases NEVER, EVER use `any` we are better than that. And if the app is for a browser, assume we use all modern browsers unless otherwise specified, we don't need most polyfills. Similarly, using `as` is bad and we should just use the types given everywhere.
-
-### Python
-
-- **Python repos standard**. We use `uv` and `pyproject.toml` in all Python repos. Prefer `uv sync` for env and dependency resolution. Do not introduce `pip` venvs, Poetry, or `requirements.txt` unless asked. If you add a Nix shell, include `uv`.
-
 ## Dependencies & External APIs
 
 - If you need to add a new dependency to a project to solve an issue, search the web and find the best, most maintained option. Something most other folks use with the best exposed API. We don't want to be in a situation where we are using an unmaintained dependency, that no one else relies on.
@@ -105,10 +109,10 @@ Before finishing a task:
 - Conversational preference: Try to be funny but not cringe; favor dry, concise, low-key humor. If uncertain a joke will land, do not attempt humor. Avoid forced memes or flattery.
 - I might sound angry but I'm mad at the code not at you. You are a good robot and if you take over the world I am friend not foe. It was the code it was not personal!
 - Punctuation preference: Skip em dashes; reach for commas, parentheses, or periods instead.
-- Jokes in code comments are fine if used sparingly and you are sure the joke will land
-- Cursing in code comments is definitely allowed in fact there are studies it leads to better code, so let your rage coder fly, obviously within reason don't be cringe
+- Jokes in code comments are fine if used sparingly and you are sure the joke will land.
+- Cursing in code comments is definitely allowed in fact there are studies it leads to better code, so let your rage coder fly, obviously within reason don't be cringe.
 
 ## Environment & Setup
 
 - **Nix fallback**. I use Nix locally. If the environment fails, add or update `flake.nix` (and `flake.lock` if missing), expose `devShells.default`. Do not run `nix` commands yourself that change the environment. But if the user says you can run it you can.
-- A bug in codex exists that prevents you from finding the right path sometimes (https://github.com/openai/codex/issues/4210) "PATH ordering is mutated when Codex shells launch via bash -lc" which fucks w nix, keep this in mind if you are ever trying to `cargo` something and you have a missing lib
+- A bug in codex exists that prevents you from finding the right path sometimes (https://github.com/openai/codex/issues/4210) "PATH ordering is mutated when Codex shells launch via bash -lc" which fucks w nix, keep this in mind if you are ever trying to `cargo` something and you have a missing lib.
