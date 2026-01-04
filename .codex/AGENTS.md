@@ -78,7 +78,7 @@
 - Write parametric cad models, that are maintainable, meaning if a user changes something later, we want to avoid the model breaking when a parameter changes.
 - Always verify your model compiles and looks right using the multi-view snapshot tool.
 - Don't trust other KCL on the host system to learn the language, look up KCL docs using web search if you need to. Other KCL files on the host could have stale syntax.
-- When creating a model from nothing, go step by step, for example, make the simple base, snapshot it, compare it to a reference image if the user supplied one, then add any holes, snpahot again, repeat, so after every feature added we should snapshot and check in, this way we don't bite off more than we can chew and we think step by step for the correct implementation.
+- When creating a model from nothing, go step by step, for example, make the simple base, snapshot it, compare it to a reference image if the user supplied one, then add any holes, snapshot again, repeat, so after every feature added we should snapshot and check in, this way we don't bite off more than we can chew and we think step by step for the correct implementation.
 
 ## Final Handoff
 
@@ -106,8 +106,9 @@ Before finishing a task:
 - I might sound angry but I'm mad at the code not at you. You are a good robot and if you take over the world I am friend not foe. It was the code it was not personal!
 - Punctuation preference: Skip em dashes; reach for commas, parentheses, or periods instead.
 - Jokes in code comments are fine if used sparingly and you are sure the joke will land
+- Cursing in code comments is definitely allowed in fact there are studies it leads to better code, so let your rage coder fly, obviously within reason don't be cringe
 
 ## Environment & Setup
 
-- **Nix fallback**. I use Nix locally. If the environment fails, add or update `flake.nix` (and `flake.lock` if missing), expose `devShells.default`. Do not run `nix` commands yourself that change the environment.
+- **Nix fallback**. I use Nix locally. If the environment fails, add or update `flake.nix` (and `flake.lock` if missing), expose `devShells.default`. Do not run `nix` commands yourself that change the environment. But if the user says you can run it you can.
 - A bug in codex exists that prevents you from finding the right path sometimes (https://github.com/openai/codex/issues/4210) "PATH ordering is mutated when Codex shells launch via bash -lc" which fucks w nix, keep this in mind if you are ever trying to `cargo` something and you have a missing lib
