@@ -1,10 +1,23 @@
 #!/usr/bin/env python3
 
 import json
+import os
 import shutil
 import subprocess
 import sys
 from typing import Optional
+
+
+def should_use_terminal_notifier() -> bool:
+    if os.environ.get("CODEX_NOTIFY_FORCE_TERMINAL_NOTIFIER") == "1":
+        return True
+    if os.environ.get("TERM_PROGRAM") == "ghostty":
+        return False
+    if os.environ.get("__CFBundleIdentifier") == "com.mitchellh.ghostty":
+        return False
+    if os.environ.get("TERM") == "xterm-ghostty":
+        return False
+    return True
 
 
 def notify(title: str, message: str) -> None:
@@ -14,6 +27,8 @@ def notify(title: str, message: str) -> None:
       terminal-notifier -title <title> -message <message> -group codex
     and ignores failures.
     """
+    if not should_use_terminal_notifier():
+        return
     tn = shutil.which("terminal-notifier")
     if not tn:
         return
