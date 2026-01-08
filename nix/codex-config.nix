@@ -29,6 +29,13 @@
       features = {
         web_search_request = true;
       };
+      mcp_servers = {
+        github = {
+          command = "github-mcp-server";
+          args = ["stdio"];
+          env_vars = ["GITHUB_TOKEN"];
+        };
+      };
       sandbox_mode = "workspace-write";
       approval_policy = "on-request";
       sandbox_workspace_write = {
