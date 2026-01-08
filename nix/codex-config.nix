@@ -33,6 +33,10 @@
         github = {
           command = "github-mcp-server";
           args = ["stdio"];
+          env = {
+            GITHUB_TOOLSETS =
+              "context,actions,code_security,dependabot,discussions,gists,git,issues,labels,notifications,orgs,projects,pull_requests,repos,secret_protection,security_advisories,stargazers,users";
+          };
           env_vars = ["GITHUB_TOKEN"];
         };
       };
