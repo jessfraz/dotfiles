@@ -41,6 +41,7 @@
         zoo = {
           command = "uvx";
           args = ["zoo-mcp"];
+          enabled = false;
           env_vars = ["ZOO_API_TOKEN"];
           startup_timeout_sec = 60;
         };
