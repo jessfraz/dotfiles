@@ -34,10 +34,15 @@
           command = "github-mcp-server";
           args = ["stdio"];
           env = {
-            GITHUB_TOOLSETS =
-              "context,actions,code_security,dependabot,discussions,gists,git,issues,labels,notifications,orgs,projects,pull_requests,repos,secret_protection,security_advisories,stargazers,users";
+            GITHUB_TOOLSETS = "context,actions,code_security,dependabot,discussions,gists,git,issues,labels,notifications,orgs,projects,pull_requests,repos,secret_protection,security_advisories,stargazers,users";
           };
           env_vars = ["GITHUB_PERSONAL_ACCESS_TOKEN"];
+        };
+        zoo = {
+          command = "uvx";
+          args = ["zoo-mcp"];
+          env_vars = ["ZOO_API_TOKEN"];
+          startup_timeout_sec = 60;
         };
       };
       sandbox_mode = "workspace-write";
