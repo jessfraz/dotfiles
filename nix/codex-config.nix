@@ -26,9 +26,7 @@
       model_reasoning_summary = "auto";
       file_opener = "none";
       show_raw_agent_reasoning = true;
-      features = {
-        web_search_request = true;
-      };
+      web_search = "live";
       mcp_servers = {
         github = {
           command = "github-mcp-server";
