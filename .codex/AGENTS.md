@@ -16,7 +16,7 @@
 
 ## Mindset & Process
 
-- THINK A LOT PLEASE.
+- Think a lot before acting.
 - **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
 - **Think hard, do not lose the plot**.
 - Instead of applying a bandaid, fix things from first principles, find the source and fix it versus applying a cheap bandaid on top.
@@ -49,8 +49,8 @@
 
 ## Testing Philosophy
 
-- I HATE MOCK tests, either do unit or e2e, nothing inbetween. Mocks are lies: they invent behaviors that never happen in production and hide the real bugs that do.
-- Test `EVERYTHING`. Tests must be rigorous. Our intent is ensuring a new person contributing to the same code base cannot break our stuff and that nothing slips by. We love rigour.
+- Avoid mock tests; do unit or e2e instead. Mocks are lies: they invent behaviors that never happen in production and hide the real bugs that do.
+- Test everything with rigor. Our intent is ensuring a new person contributing to the same code base cannot break our stuff and that nothing slips by. We love rigour.
 - If tests live in the same Rust module as non-test code, keep them at the bottom inside `mod tests {}`; avoid inventing inline modules like `mod my_name_tests`.
 - Unless the user asks otherwise, run only the tests you added or modified instead of the entire suite to avoid wasting time.
 
@@ -58,8 +58,8 @@
 
 ### Rust
 
-- Do NOT use unwraps or anything that can panic in Rust code, handle errors. Obviously in tests unwraps and panics are fine!
-- In Rust code I prefer using `crate::` to `super::`; please don't use `super::`. If you see a lingering `super::` from someone else clean it up.
+- Avoid unwraps or anything that can panic in Rust code; handle errors. Obviously in tests unwraps and panics are fine!
+- In Rust code prefer `crate::` to `super::`; avoid `super::` in non-test code. `super::` is fine in tests.
 - Avoid `pub use` on imports unless you are re-exposing a dependency so downstream consumers do not have to depend on it directly.
 - Skip global state via `lazy_static!`, `Once`, or similar; prefer passing explicit context structs for any shared state.
 - Prefer strong types over strings, use enums and newtypes when the domain is closed or needs validation.
@@ -72,7 +72,7 @@
 
 ### TypeScript
 
-- NEVER, EVER use `any` we are better than that.
+- Do not use `any`; we are better than that.
 - Using `as` is bad, use the types given everywhere and model the real shapes.
 - If the app is for a browser, assume we use all modern browsers unless otherwise specified, we don't need most polyfills.
 
