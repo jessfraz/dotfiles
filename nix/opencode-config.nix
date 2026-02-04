@@ -10,6 +10,18 @@
     "$schema" = "https://opencode.ai/config.json";
     default_agent = "codex";
     model = "opencode/gpt-5.1-codex-max";
+    provider = {
+      opencode = {
+        models = {
+          "gpt-5.1-codex-max" = {
+            options = {
+              reasoningEffort = "xhigh";
+              reasoningSummary = "auto";
+            };
+          };
+        };
+      };
+    };
     permission = "allow";
     agent = {
       codex = {
