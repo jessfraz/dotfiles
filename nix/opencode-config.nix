@@ -10,10 +10,7 @@
     "$schema" = "https://opencode.ai/config.json";
     default_agent = "codex";
     model = "opencode/gpt-5.1-codex-max";
-    permission = {
-      edit = "allow";
-      bash = "allow";
-    };
+    permission = "allow";
     agent = {
       codex = {
         description = "Codex-style primary agent";
