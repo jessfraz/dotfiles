@@ -24,6 +24,7 @@
     // {
       model_reasoning_effort = "xhigh";
       model_reasoning_summary = "auto";
+      personality = "pragmatic";
       file_opener = "none";
       show_raw_agent_reasoning = true;
       web_search = "live";
