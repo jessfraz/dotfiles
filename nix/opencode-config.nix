@@ -11,8 +11,8 @@
     default_agent = "codex";
     model = "opencode/gpt-5.1-codex-max";
     permission = {
-      edit = "ask";
-      bash = "ask";
+      edit = "allow";
+      bash = "allow";
     };
     agent = {
       codex = {
