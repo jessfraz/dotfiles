@@ -35,7 +35,6 @@
         then path
         else pkgs.emptyFile;
       codexCfg = import ./nix/codex-config.nix {inherit pkgs config;};
-      opencodeCfg = import ./nix/opencode-config.nix {inherit pkgs config;};
     in {
       home.packages = with pkgs;
         [
@@ -53,8 +52,6 @@
           ".codex/config.toml".source = codexCfg.file;
           ".codex/notify.py".source = ./.codex/notify.py;
           ".codex/AGENTS.md".source = ./.codex/AGENTS.md;
-          ".config/opencode/opencode.json".source = opencodeCfg.file;
-          ".config/opencode/AGENTS.md".source = ./.codex/AGENTS.md;
           ".dockerfunc".source = ./.dockerfunc;
           ".exports".source = ./.exports;
           ".functions".source = ./.functions;
