@@ -28,6 +28,7 @@
     homeManagerModules.default = {
       pkgs,
       config,
+      lib,
       ...
     }: let
       mkIfExists = path:
@@ -35,6 +36,8 @@
         then path
         else pkgs.emptyFile;
       codexCfg = import ./nix/codex-config.nix {inherit pkgs config;};
+      codexDir = "${config.home.homeDirectory}/.codex";
+      codexConfigPath = "${codexDir}/config.toml";
     in {
       home.packages = with pkgs;
         [
@@ -49,7 +52,6 @@
         baseFiles = {
           ".aliases".source = ./.aliases;
           ".bash_prompt".source = ./.bash_prompt;
-          ".codex/config.toml".source = codexCfg.file;
           ".codex/notify.py".source = ./.codex/notify.py;
           ".codex/AGENTS.md".source = ./.codex/AGENTS.md;
           ".dockerfunc".source = ./.dockerfunc;
@@ -73,6 +75,11 @@
         if pkgs.stdenv.isLinux
         then baseFiles // linuxOnlyFiles
         else baseFiles;
+      home.activation.codexConfigWritable = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p ${codexDir}
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -f ${codexConfigPath}
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/install -m 0644 ${codexCfg.file} ${codexConfigPath}
+      '';
     };
 
     homeConfigurations = forAllSystems (
