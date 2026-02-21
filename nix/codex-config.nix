@@ -22,6 +22,7 @@
       notify = ["python3" "${homeDir}/.codex/notify.py"];
     })
     // {
+      model = "gpt-5.3-codex";
       model_reasoning_effort = "xhigh";
       model_reasoning_summary = "auto";
       personality = "none";
