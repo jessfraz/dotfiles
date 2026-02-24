@@ -29,6 +29,9 @@
       file_opener = "none";
       show_raw_agent_reasoning = true;
       web_search = "live";
+      features = {
+        multi_agent = true;
+      };
       mcp_servers = {
         github = {
           command = "github-mcp-server";
