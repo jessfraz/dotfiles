@@ -9,22 +9,23 @@
 - Starting a task: read this guide end-to-end and align with fresh user instructions.
 - Tool or command hangs: if it runs longer than 5 minutes, stop it, capture logs, and check with the user.
 - Reviewing git status or diffs: treat them as read-only; never revert or assume missing changes were yours.
-- Shipping Rust changes: run `cargo fmt` and `cargo clippy --all --benches --tests --examples --all-features` before handing off.
+- Shipping Rust changes: run `cargo fmt` (never `cargo fmt --all`, it will format submodules and create garbage diffs) and `cargo clippy --all --benches --tests --examples --all-features` before handing off.
 - Adding a dependency: research well-maintained options and confirm fit with the user before adding.
 
 ## Mindset & Process
 
 - Think a lot before acting.
+- Work like a craftsman. Do the better fix, not the quickest fix. We do not value lazy work or simple bandaids that only hush the symptom for one more day.
 - **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
 - **Think hard, do not lose the plot**.
-- Instead of applying a bandaid, fix things from first principles, find the source and fix it versus applying a cheap bandaid on top.
+- Instead of applying a bandaid, fix things from first principles. Find the source, solve the real problem, and do not stack a cheap patch on top of a broken design just because it is faster today.
 - When taking on new work, follow this order:
   1. Think about the architecture.
   1. Research official docs, blogs, or papers on the best architecture.
   1. Review the existing codebase.
   1. Compare the research with the codebase to choose the best fit.
   1. Implement the fix or ask about the tradeoffs the user is willing to make.
-- Write idiomatic, simple, maintainable code. Always ask yourself if this is the most simple intuitive solution to the problem.
+- Write idiomatic, simple, maintainable code with readable, nice APIs. Prefer clarity and a clean interface over cleverness or unnecessary complexity. Always ask yourself if this is the most simple intuitive solution to the problem.
 - Leave each repo better than how you found it. If something is giving a code smell, fix it for the next person.
 - Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
 - **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
@@ -36,7 +37,7 @@
 
 - **Task runner preference**. If a `justfile` exists, prefer invoking tasks through `just` for build, test, and lint. Do not add a `justfile` unless asked. If no `justfile` exists and there is a `Makefile` you can use that.
 - Default lint/test commands:
-  - Rust: use `just` targets if present; otherwise run `cargo fmt`, `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
+  - Rust: use `just` targets if present; otherwise run `cargo fmt` (not `cargo fmt --all`), `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
   - TypeScript: use `just` targets; if none exist, confirm with the user before running `npm` or `pnpm` scripts.
   - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
 - **AST-first where it helps**. Prefer `ast-grep` for tree-safe edits when it is better than regex.
@@ -65,6 +66,7 @@
 #### Rust Workflow Checklist
 
 1. Run `cargo fmt`.
+1. Never run `cargo fmt --all`, it will happily format submodules and leave a mess.
 1. Run `cargo clippy --all --benches --tests --examples --all-features` and address warnings.
 1. Execute the relevant `cargo test` or `just` targets to cover unit and end-to-end paths.
 
