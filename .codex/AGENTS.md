@@ -40,7 +40,6 @@
   - Rust: use `just` targets if present; otherwise run `cargo fmt` (not `cargo fmt --all`), `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
   - TypeScript: use `just` targets; if none exist, confirm with the user before running `npm` or `pnpm` scripts.
   - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
-- **AST-first where it helps**. Prefer `ast-grep` for tree-safe edits when it is better than regex.
 - Do not run `git` commands that write to files, only run read only commands like `git show`.
 - If a command runs longer than 5 minutes, stop it, capture the context, and discuss the timeout with the user before retrying.
 - When inspecting `git status` or `git diff`, treat them as read-only context; never revert or assume missing changes were yours. Other agents or the user may have already committed updates.
