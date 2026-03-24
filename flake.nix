@@ -51,6 +51,7 @@
       home.file = let
         baseFiles = {
           ".aliases".source = ./.aliases;
+          ".claude/CLAUDE.md".source = ./.codex/AGENTS.md;
           ".bash_prompt".source = ./.bash_prompt;
           ".codex/notify.py".source = ./.codex/notify.py;
           ".codex/AGENTS.md".source = ./.codex/AGENTS.md;
