@@ -75,6 +75,14 @@
 - Using `as` is bad, use the types given everywhere and model the real shapes.
 - If the app is for a browser, assume we use all modern browsers unless otherwise specified, we don't need most polyfills.
 
+### React & Frontend
+
+- For React work, follow current React best practices. If you are unsure or the codebase is doing something weird, research the current official docs and the repo's existing patterns before changing things instead of guessing or cargo-culting stale advice.
+- Keep components small, focused, and reusable. Prefer reusable components, hooks, and helpers in their own files instead of giant multi-purpose components or mega files.
+- Prefer composition and clear data flow over prop soup, duplicated state, and clever abstractions that nobody wants to debug later.
+- Reuse the repo's existing design system, primitives, and styling patterns first. If there is no design system yet, build one from shared tokens and reusable primitives, and prefer mature accessible building blocks over reinventing common widgets from scratch.
+- If a repo is Rust + React/TypeScript, Rust is the source of truth for shared API and domain types. Use `ts-rs` to generate TypeScript bindings from Rust types instead of hand-maintaining duplicate interfaces.
+
 ### Python
 
 - **Python repos standard**. We use `uv` and `pyproject.toml` in all Python repos. Prefer `uv sync` for env and dependency resolution. Do not introduce `pip` venvs, Poetry, or `requirements.txt` unless asked. If you add a Nix shell, include `uv`.
