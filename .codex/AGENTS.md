@@ -42,6 +42,7 @@
   - Rust: use `just` targets if present; otherwise run `cargo fmt` (not `cargo fmt --all`), `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
   - TypeScript: use `just` targets; if none exist, confirm with the user before running `npm` or `pnpm` scripts.
   - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
+- For GitHub operations, use the `gh` CLI instead of any GitHub MCP server. Do not install, configure, or rely on a repo-local GitHub MCP in this repo. Assume `gh` comes from the user's global Nix environment unless they say otherwise.
 - Do not run `git` commands that write to files or history unless the user explicitly authorizes git write operations for the current task. If the user gives that permission, use the minimum necessary write commands and still avoid destructive operations like `git reset --hard`, `git checkout --`, rebases, or force pushes unless the user explicitly asks for them.
 - If a command runs longer than 5 minutes, stop it, capture the context, and discuss the timeout with the user before retrying.
 - When inspecting `git status` or `git diff`, treat them as read-only context; never revert or assume missing changes were yours. Other agents or the user may have already committed updates.
