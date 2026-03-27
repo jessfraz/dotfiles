@@ -42,7 +42,6 @@
       home.packages = with pkgs;
         [
           irssi
-          github-mcp-server
         ]
         ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
           terminal-notifier # needed for notify.py for codex
