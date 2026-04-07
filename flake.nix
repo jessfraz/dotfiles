@@ -35,9 +35,16 @@
         if builtins.pathExists path
         then path
         else pkgs.emptyFile;
+      mkWritableConfig = relativePath: file: let
+        targetPath = "${config.home.homeDirectory}/${relativePath}";
+      in
+        lib.hm.dag.entryAfter ["writeBoundary"] ''
+          $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p ${builtins.dirOf targetPath}
+          $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -f ${targetPath}
+          $DRY_RUN_CMD ${pkgs.coreutils}/bin/install -m 0644 ${file} ${targetPath}
+        '';
       codexCfg = import ./nix/codex-config.nix {inherit pkgs config;};
-      codexDir = "${config.home.homeDirectory}/.codex";
-      codexConfigPath = "${codexDir}/config.toml";
+      switchboardCfg = import ./nix/switchboard-config.nix {inherit pkgs config;};
     in {
       home.packages = with pkgs;
         [
@@ -75,11 +82,10 @@
         if pkgs.stdenv.isLinux
         then baseFiles // linuxOnlyFiles
         else baseFiles;
-      home.activation.codexConfigWritable = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p ${codexDir}
-        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -f ${codexConfigPath}
-        $DRY_RUN_CMD ${pkgs.coreutils}/bin/install -m 0644 ${codexCfg.file} ${codexConfigPath}
-      '';
+      home.activation = {
+        codexConfigWritable = mkWritableConfig ".codex/config.toml" codexCfg.file;
+        switchboardConfigWritable = mkWritableConfig ".config/switchboard/config.toml" switchboardCfg.file;
+      };
     };
 
     homeConfigurations = forAllSystems (
