@@ -45,6 +45,20 @@
         item = "gws cli";
         field = "credential";
       };
+
+      schwab_personal_client_id = {
+        kind = "onepassword_item";
+        account = "my.1password.com";
+        item = "schwab cli";
+        field = "username";
+      };
+
+      schwab_personal_client_secret = {
+        kind = "onepassword_item";
+        account = "my.1password.com";
+        item = "schwab cli";
+        field = "credential";
+      };
     };
 
     auth = {
@@ -69,6 +83,14 @@
         account = "jess@zoo.dev";
         client_id = "google_work_client_id";
         client_secret = "google_work_client_secret";
+      };
+
+      schwab_personal = {
+        provider = "schwab";
+        kind = "schwab_cli";
+        account = "jessfraz";
+        client_id = "schwab_personal_client_id";
+        client_secret = "schwab_personal_client_secret";
       };
     };
 
@@ -101,6 +123,14 @@
         provider = "mychart";
         account = "UCLA Health";
         state_dir = stateDir "mychart-ucla";
+      };
+
+      schwab.personal = {
+        provider = "schwab";
+        account = "jessfraz";
+        auth = "schwab_personal";
+        default_read = true;
+        state_dir = stateDir "schwab-personal";
       };
     };
   };
