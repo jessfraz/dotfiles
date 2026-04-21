@@ -31,6 +31,20 @@
       web_search = "live";
       features = {
         multi_agent = true;
+        memories = true;
+        chronicle = true;
+      };
+      marketplaces = {
+        "openai-bundled" = {
+          last_updated = "2026-04-21T02:32:07Z";
+          source_type = "local";
+          source = "${homeDir}/.codex/.tmp/bundled-marketplaces/openai-bundled";
+        };
+      };
+      plugins = {
+        "computer-use@openai-bundled" = {
+          enabled = true;
+        };
       };
       mcp_servers = {
         zoo = {
