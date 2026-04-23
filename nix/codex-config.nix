@@ -22,7 +22,7 @@
       notify = ["python3" "${homeDir}/.codex/notify.py"];
     })
     // {
-      model = "gpt-5.4";
+      model = "gpt-5.5";
       model_reasoning_effort = "xhigh";
       model_reasoning_summary = "auto";
       personality = "none";
@@ -30,6 +30,7 @@
       show_raw_agent_reasoning = true;
       web_search = "live";
       features = {
+        fast_mode = true;
         multi_agent = true;
         memories = true;
         chronicle = true;
