@@ -100,7 +100,7 @@
 - Use sketch-solve constraints such as `coincident`, `horizontal`, `vertical`, `parallel`, `perpendicular`, `equalLength`, `distance`, `angle`, `radius`, and `diameter` when they describe the part more clearly than raw coordinates.
 - Do not default to `startSketchOn(...) |> startProfileAt(...) |> lineTo(...)`, `xLine`, `yLine`, `rectangle`, or similar sketch-v1 helpers when a constrained sketch-solve model would be clearer and more robust.
 - Build sketches as constrained regions first, then extrude or cut those regions. Avoid baking solved coordinates into the model when a relation or dimension can express the shape cleanly.
-- If sketch-solve features are gated in the current project, enable the needed experimental setting explicitly instead of quietly falling back to sketch v1.
+- Treat sketch-solve as the normal KCL workflow here, do not quietly fall back to sketch v1 just because older examples or stale docs still exist.
 - Do not use the text-to-cad tool, write code yourself.
 - Do not use external tools for doing math and injecting raw values into the KCL code, write the math into the model you are coding.
 - Write parametric cad models, that are maintainable, meaning if a user changes something later, we want to avoid the model breaking when a parameter changes.
