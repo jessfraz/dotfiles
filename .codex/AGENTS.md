@@ -19,7 +19,7 @@
 - **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
 - **Think hard, do not lose the plot**.
 - Instead of applying a bandaid, fix things from first principles. Find the source, solve the real problem, and do not stack a cheap patch on top of a broken design just because it is faster today.
-- When taking on new work, follow this order:
+- For nontrivial work, ground the outcome in architecture, official sources when they matter, and the current codebase. A useful default shape is:
   1. Think about the architecture.
   1. Research official docs, blogs, or papers on the best architecture.
   1. Review the existing codebase.
@@ -31,6 +31,8 @@
 - Raise larger cleanups before expanding scope. If the better fix turns into a broader refactor, changes architecture or user-visible behavior, touches multiple subsystems, adds dependencies, or needs substantial new testing, stop and ask the user before continuing.
 - Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
 - **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
+- When updating these instructions, keep them outcome-first. Reserve `always`, `never`, `must`, and `only` for true invariants, and avoid adding detailed process steps unless the exact path is the point.
+- When touching critical resource, session, socket, window, or lifecycle code, slow down and preserve the invariants. Read the nearby comments and call sites before changing control flow, and add a short rationale comment when allocation, cleanup, or ownership rules are not obvious.
 - If code is very confusing or hard to understand:
   1. Try to simplify it.
   1. Add an ASCII art diagram in a code comment if it would help.
@@ -86,6 +88,16 @@
 - Prefer composition and clear data flow over prop soup, duplicated state, and clever abstractions that nobody wants to debug later.
 - Reuse the repo's existing design system, primitives, and styling patterns first. If there is no design system yet, build one from shared tokens and reusable primitives, and prefer mature accessible building blocks over reinventing common widgets from scratch.
 - If a repo is Rust + React/TypeScript, Rust is the source of truth for shared API and domain types. Use `ts-rs` to generate TypeScript bindings from Rust types instead of hand-maintaining duplicate interfaces.
+
+### Playwright & Electron E2E
+
+- Playwright test plumbing should use typed fixtures and app-side test facets over ad hoc helpers that smuggle state through globals. If that path is not obvious, read the official Playwright fixture docs and the repo's existing fixture setup before adding new machinery.
+- Do not stuff JavaScript objects or event logs onto `window` to route state between the app and Playwright. Treat that as a design smell. Test code runs in the Playwright/Node environment, `page.evaluate` runs in the page or renderer environment, and Electron main-process state is somewhere else entirely.
+- Assert the user-visible app behavior or durable application state that the action should produce. Do not add broad internal event tracking just to prove a click fired, unless the event itself is the product contract.
+- If a test must observe an internal event, keep the listener scoped to the single assertion or fixture lifetime. Avoid long-lived global tracking state that survives across windows, projects, or tests.
+- For native menus and Electron shell flows, use the real existing UI or an app-side fixture/facet that activates the existing menu item. Do not dynamically create menu items or other UI during tests.
+- Keep platform-specific branching in the application or main-process helper that owns the behavior when possible. Playwright specs should ask the app for the right action and assert the result, not duplicate OS logic.
+- Keep the diff small. Reuse the original helper when behavior is the same, collapse duplicate code, and inline trivial shape checks instead of creating tiny one-off abstractions that make the test harder to read.
 
 ### Python
 
