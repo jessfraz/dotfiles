@@ -67,6 +67,7 @@
 - Avoid `pub use` on imports unless you are re-exposing a dependency so downstream consumers do not have to depend on it directly.
 - Skip global state via `lazy_static!`, `Once`, or similar; prefer passing explicit context structs for any shared state.
 - Prefer strong types over strings, use enums and newtypes when the domain is closed or needs validation.
+- Do not use `serde_json::Value` indexing or `serde_json::json!` blobs to test or build shapes this codebase owns. Construct the real Rust type, serialize or deserialize through that type when needed, and assert typed fields or full typed equality so contract changes fail at compile time. Raw `Value` is only for genuinely dynamic JSON boundaries.
 
 #### Rust Workflow Checklist
 
