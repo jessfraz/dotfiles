@@ -41,8 +41,8 @@ cleanup() {
     yarn cache clean
     echo "Cleaning up go cache…"
     go clean -cache -modcache
-    echo "Garbage collection for nix..."
-    nix store gc
+    echo "Garbage collection for nix older than 7d..."
+    sudo nix-collect-garbage --delete-older-than 7d
 }
 
 # Make a temporary directory and enter it
