@@ -90,6 +90,17 @@
       desktop = {
         followUpQueueMode = "steer";
       };
+      projects = {
+        "${homeDir}/life" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/global-nix" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/dotfiles" = {
+          trust_level = "trusted";
+        };
+      };
     };
 in {
   file = tomlFormat.generate "codex-config.toml" codexConfigAttrs;
