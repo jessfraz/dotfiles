@@ -34,6 +34,7 @@
         multi_agent = true;
         memories = true;
         chronicle = true;
+        js_repl = false;
       };
       marketplaces = {
         "openai-bundled" = {
@@ -41,9 +42,29 @@
           source_type = "local";
           source = "${homeDir}/.codex/.tmp/bundled-marketplaces/openai-bundled";
         };
+        "openai-primary-runtime" = {
+          last_updated = "2026-06-15T01:10:55Z";
+          source_type = "local";
+          source = "${homeDir}/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime";
+        };
       };
       plugins = {
+        "browser@openai-bundled" = {
+          enabled = true;
+        };
         "computer-use@openai-bundled" = {
+          enabled = true;
+        };
+        "documents@openai-primary-runtime" = {
+          enabled = true;
+        };
+        "pdf@openai-primary-runtime" = {
+          enabled = true;
+        };
+        "spreadsheets@openai-primary-runtime" = {
+          enabled = true;
+        };
+        "presentations@openai-primary-runtime" = {
           enabled = true;
         };
       };
@@ -65,6 +86,9 @@
       shell_environment_policy = {
         "inherit" = "all";
         ignore_default_excludes = true;
+      };
+      desktop = {
+        followUpQueueMode = "steer";
       };
     };
 in {
