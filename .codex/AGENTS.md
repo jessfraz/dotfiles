@@ -55,6 +55,7 @@
 
 - Avoid mock tests; do unit or e2e instead. Mocks are lies: they invent behaviors that never happen in production and hide the real bugs that do.
 - Test everything with rigor. Our intent is ensuring a new person contributing to the same code base cannot break our stuff and that nothing slips by. We love rigour.
+- When adding a regression test for a bug, first run it without the fix and confirm it fails for the expected reason. Then restore the fix and confirm the test passes.
 - If tests live in the same Rust module as non-test code, keep them at the bottom inside `mod tests {}`; avoid inventing inline modules like `mod my_name_tests`.
 - Unless the user asks otherwise, run only the tests you added or modified instead of the entire suite to avoid wasting time.
 
