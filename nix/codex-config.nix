@@ -5,6 +5,11 @@
   tomlFormat = pkgs.formats.toml {};
   homeDir = config.home.homeDirectory;
   isDarwin = pkgs.stdenv.isDarwin;
+  unifiMcp = pkgs.writeShellApplication {
+    name = "unifi-mcp";
+    runtimeInputs = [pkgs.jq pkgs.uv];
+    text = builtins.readFile ../bin/unifi-mcp;
+  };
 
   writableRoots = [
     "${homeDir}/.cache"
@@ -47,6 +52,12 @@
           source_type = "local";
           source = "${homeDir}/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime";
         };
+        "unifi-plugins" = {
+          last_updated = "2026-07-29T18:35:31Z";
+          source_type = "git";
+          source = "https://github.com/sirkirby/unifi-mcp.git";
+          ref = "main";
+        };
       };
       plugins = {
         "browser@openai-bundled" = {
@@ -67,6 +78,15 @@
         "presentations@openai-primary-runtime" = {
           enabled = true;
         };
+        "unifi-network@unifi-plugins" = {
+          enabled = true;
+        };
+        "unifi-protect@unifi-plugins" = {
+          enabled = true;
+        };
+        "unifi-access@unifi-plugins" = {
+          enabled = true;
+        };
       };
       mcp_servers = {
         zoo = {
@@ -75,6 +95,27 @@
           enabled = false;
           env_vars = ["ZOO_API_TOKEN"];
           startup_timeout_sec = 60;
+        };
+        unifi-network = {
+          command = "${unifiMcp}/bin/unifi-mcp";
+          args = ["network"];
+          enabled = true;
+          env_vars = ["UNIFI_HOST" "UNIFI_NETWORK_HOST"];
+          startup_timeout_sec = 90;
+        };
+        unifi-protect = {
+          command = "${unifiMcp}/bin/unifi-mcp";
+          args = ["protect"];
+          enabled = true;
+          env_vars = ["UNIFI_HOST" "UNIFI_PROTECT_HOST"];
+          startup_timeout_sec = 90;
+        };
+        unifi-access = {
+          command = "${unifiMcp}/bin/unifi-mcp";
+          args = ["access"];
+          enabled = true;
+          env_vars = ["UNIFI_HOST" "UNIFI_ACCESS_HOST"];
+          startup_timeout_sec = 90;
         };
       };
       sandbox_mode = "workspace-write";

@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+	echo "usage: unifi-mcp <network|protect|access>" >&2
+	exit 2
+fi
+
+readonly product="$1"
+readonly account="my.1password.com"
+
+case "$product" in
+	network)
+		readonly package="unifi-network-mcp==0.24.1"
+		readonly api_key_field="home-api-key-network"
+		readonly prefix="UNIFI_NETWORK"
+		;;
+	protect)
+		readonly package="unifi-protect-mcp==0.7.2"
+		readonly api_key_field="home-api-key-protect"
+		readonly prefix="UNIFI_PROTECT"
+		;;
+	access)
+		readonly package="unifi-access-mcp==0.5.3"
+		readonly api_key_field="home-api-key-protect"
+		readonly prefix="UNIFI_ACCESS"
+		;;
+	*)
+		echo "unifi-mcp: unsupported product: $product" >&2
+		exit 2
+		;;
+esac
+
+readonly host_var="${prefix}_HOST"
+readonly username_var="${prefix}_USERNAME"
+readonly password_var="${prefix}_PASSWORD"
+readonly api_key_var="${prefix}_API_KEY"
+readonly controller_host="${!host_var:-${UNIFI_HOST:-}}"
+
+if [[ -z "$controller_host" ]]; then
+	echo "unifi-mcp: set $host_var or UNIFI_HOST to the local controller address" >&2
+	exit 1
+fi
+
+mcp_item_id=""
+while IFS= read -r item_id; do
+	candidate_username=$(op --account "$account" item get "$item_id" --fields username --reveal) || exit $?
+	if [[ "$candidate_username" == "mcp" ]]; then
+		mcp_item_id="$item_id"
+		break
+	fi
+done < <(
+	op --account "$account" item list --categories Login --format json |
+		jq -r '.[] | select(.title == "ui.com") | .id'
+)
+
+if [[ -z "$mcp_item_id" ]]; then
+	echo "unifi-mcp: could not find the ui.com login with username mcp" >&2
+	exit 1
+fi
+
+mcp_username=$(op --account "$account" item get "$mcp_item_id" --fields username --reveal) || exit $?
+mcp_password=$(op --account "$account" item get "$mcp_item_id" --fields password --reveal) || exit $?
+api_key=$(op --account "$account" item get "ubnt.com" --fields "$api_key_field" --reveal) || exit $?
+
+export UNIFI_HOST="$controller_host"
+export UNIFI_USERNAME="$mcp_username"
+export UNIFI_PASSWORD="$mcp_password"
+export UNIFI_API_KEY="$api_key"
+
+printf -v "$host_var" '%s' "$controller_host"
+printf -v "$username_var" '%s' "$mcp_username"
+printf -v "$password_var" '%s' "$mcp_password"
+printf -v "$api_key_var" '%s' "$api_key"
+export "${host_var?}" "${username_var?}" "${password_var?}" "${api_key_var?}"
+
+exec uvx --python-preference system "$package"
