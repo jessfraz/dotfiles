@@ -52,12 +52,6 @@
           source_type = "local";
           source = "${homeDir}/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime";
         };
-        "unifi-plugins" = {
-          last_updated = "2026-07-29T18:35:31Z";
-          source_type = "git";
-          source = "https://github.com/sirkirby/unifi-mcp.git";
-          ref = "main";
-        };
       };
       plugins = {
         "browser@openai-bundled" = {
@@ -76,15 +70,6 @@
           enabled = true;
         };
         "presentations@openai-primary-runtime" = {
-          enabled = true;
-        };
-        "unifi-network@unifi-plugins" = {
-          enabled = true;
-        };
-        "unifi-protect@unifi-plugins" = {
-          enabled = true;
-        };
-        "unifi-access@unifi-plugins" = {
           enabled = true;
         };
       };
