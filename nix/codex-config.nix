@@ -33,6 +33,7 @@
       personality = "none";
       file_opener = "none";
       show_raw_agent_reasoning = true;
+      suppress_unstable_features_warning = true;
       web_search = "live";
       features = {
         fast_mode = true;
@@ -85,21 +86,27 @@
           command = "${unifiMcp}/bin/unifi-mcp";
           args = ["network"];
           enabled = true;
-          env_vars = ["UNIFI_HOST" "UNIFI_NETWORK_HOST"];
+          env = {
+            UNIFI_NETWORK_HOST = "192.168.1.1";
+          };
           startup_timeout_sec = 90;
         };
         unifi-protect = {
           command = "${unifiMcp}/bin/unifi-mcp";
           args = ["protect"];
           enabled = true;
-          env_vars = ["UNIFI_HOST" "UNIFI_PROTECT_HOST"];
+          env = {
+            UNIFI_PROTECT_HOST = "192.168.1.140";
+          };
           startup_timeout_sec = 90;
         };
         unifi-access = {
           command = "${unifiMcp}/bin/unifi-mcp";
           args = ["access"];
           enabled = true;
-          env_vars = ["UNIFI_HOST" "UNIFI_ACCESS_HOST"];
+          env = {
+            UNIFI_ACCESS_HOST = "192.168.1.140";
+          };
           startup_timeout_sec = 90;
         };
       };
