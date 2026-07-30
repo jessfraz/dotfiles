@@ -49,6 +49,7 @@ alias dl="cd ~/Downloads"
 alias g="git"
 alias h="history"
 alias gc=". /usr/local/bin/gitdate && git commit -v "
+alias codex-unifi='codex --yolo -c mcp_servers.unifi-network.enabled=true -c mcp_servers.unifi-protect.enabled=true -c mcp_servers.unifi-access.enabled=true'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`

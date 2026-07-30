@@ -59,7 +59,7 @@
           enabled = true;
         };
         "computer-use@openai-bundled" = {
-          enabled = true;
+          enabled = false;
         };
         "documents@openai-primary-runtime" = {
           enabled = true;
@@ -85,7 +85,7 @@
         unifi-network = {
           command = "${unifiMcp}/bin/unifi-mcp";
           args = ["network"];
-          enabled = true;
+          enabled = false;
           env = {
             UNIFI_NETWORK_HOST = "192.168.1.1";
           };
@@ -94,7 +94,7 @@
         unifi-protect = {
           command = "${unifiMcp}/bin/unifi-mcp";
           args = ["protect"];
-          enabled = true;
+          enabled = false;
           env = {
             UNIFI_PROTECT_HOST = "192.168.1.140";
           };
@@ -103,7 +103,7 @@
         unifi-access = {
           command = "${unifiMcp}/bin/unifi-mcp";
           args = ["access"];
-          enabled = true;
+          enabled = false;
           env = {
             UNIFI_ACCESS_HOST = "192.168.1.140";
           };
