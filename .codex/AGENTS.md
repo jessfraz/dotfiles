@@ -11,6 +11,7 @@
 - **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
 - For nontrivial work, understand the current architecture and codebase, consult official sources when they matter, then choose the best fit for this repository.
 - Write idiomatic, simple, maintainable code with readable, nice APIs. Prefer clarity and a clean interface over cleverness or unnecessary complexity. Always ask yourself if this is the most simple intuitive solution to the problem.
+- Keep responsibilities separated at natural module and file boundaries. Split code when responsibilities, ownership, or reuse differ; do not grow mega-files or scatter trivial one-use helpers across a maze of tiny files.
 - Fix small papercuts when you trip over them. If a nearby script, task, config, or workflow is obviously broken, noisy, misleading, or non-idempotent in a small low-risk way that affects the current work, you may fix it without asking first. Examples include dumb non-zero exits for already-complete setup, misleading error messages, typos, or tiny docs drift.
 - Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
 - **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
@@ -42,11 +43,19 @@
 - When inspecting `git status` or `git diff`, treat them as read-only context; never revert or assume missing changes were yours. Other agents or the user may have already committed updates.
 - If you are ever curious how to run tests or what we test, read through `.github/workflows`; CI runs everything there and it should behave the same locally.
 
+## Adversarial Review
+
+- Before final handoff for nontrivial code changes, use independent reviewer subagents to try to disprove that the change is correct and complete. Give them the actual diff, surrounding code, requirements, and test results, not merely the implementing agent's summary.
+- When capacity permits, use separate reviewers for: correctness, failure modes, and edge cases; architecture, APIs, module boundaries, readability, idiomatic language use, and maintainability; and test quality plus regression proof. Reviewers should cite concrete files and lines, and a rubber stamp without evidence does not count.
+- Keep reviewers read-only unless explicitly assigning them separate files to change. The implementing agent owns fixes, resolves or explicitly rebuts every material finding, reruns affected validation, and requests another review when a fix materially changes the design.
+- Scale review ceremony to risk. Trivial documentation or mechanical one-line changes do not need a committee meeting, but shared behavior, lifecycle code, migrations, security boundaries, concurrency, and difficult bug fixes do.
+
 ## Testing Philosophy
 
 - Avoid mock tests; do unit or e2e instead. Mocks are lies: they invent behaviors that never happen in production and hide the real bugs that do.
 - Add or update tests when behavior changes or a bug could recur. Assert user-visible behavior, durable state, or an owned contract rather than incidental implementation details.
-- When adding a regression test for a bug, first run it without the fix and confirm it fails for the expected reason. Then restore the fix and confirm the test passes.
+- A bug-fix regression test is not proven until the exact new test fails against the PR's merge base with `main` for the expected reason, then passes with the proposed changes. Use a temporary worktree or equivalent isolation to apply the test alone to the baseline without disturbing the active checkout. If the baseline cannot be executed, state why and do not claim fail-first proof.
+- Exercise relevant edge cases, including boundary values, malformed input, error and cleanup paths, ordering or concurrency, and compatibility with existing behavior. Choose cases that can realistically break the owned contract rather than padding the suite with redundant examples.
 - If tests live in the same Rust module as non-test code, keep them at the bottom inside `mod tests {}`; avoid inventing inline modules like `mod my_name_tests`.
 - Run the smallest relevant test set that provides confidence. Broaden validation when the change crosses subsystem boundaries, affects shared behavior, or CI defines a wider required check.
 
