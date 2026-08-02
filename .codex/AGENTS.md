@@ -31,6 +31,7 @@
 
 ## Tooling & Workflow
 
+- Prefer APIs, CLIs, and MCP tools over Computer Use. Treat Computer Use as a last resort, and ask the user before using it.
 - **Task runner preference**. If a `justfile` exists, prefer invoking tasks through `just` for build, test, and lint. Do not add a `justfile` unless asked. If no `justfile` exists and there is a `Makefile` you can use that.
 - Default lint/test commands:
   - Rust: use `just` targets if present; otherwise run `cargo fmt` (not `cargo fmt --all`), `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
