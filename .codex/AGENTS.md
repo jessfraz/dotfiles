@@ -27,7 +27,7 @@
 - For requests to change, build, or fix, make the requested in-scope local changes and run relevant non-destructive validation without asking first.
 - Treat an explicit user request as authorization for the named action. Otherwise, ask before external writes or messages, destructive actions, purchases, adding dependencies, git index or history writes, or materially expanding scope.
 - Resolve discoverable ambiguity from the available context. Ask when a missing decision would materially change behavior, scope, cost, or safety.
-- When git writes are authorized, use the minimum necessary commands. Do not use `git reset --hard`, `git checkout --`, rebase, or force push unless the user explicitly requests that operation.
+- When git writes are authorized, use the minimum necessary commands. Keep history linear and do not create merge commits. A request to "fix conflicts" means rebase the branch onto its target base, resolve the conflicts, and force-push the rewritten branch. A request to "rebase" explicitly authorizes both the rebase and its necessary force push. Verify the exact remote branch first and use `--force-with-lease`, never unconditional `--force`. Do not use `git reset --hard` or `git checkout --` unless the user explicitly requests that operation.
 
 ## Tooling & Workflow
 
@@ -48,6 +48,7 @@
 
 - Before final handoff for nontrivial code changes, use independent reviewer subagents to try to disprove that the change is correct and complete. Give them the actual diff, surrounding code, requirements, and test results, not merely the implementing agent's summary.
 - When capacity permits, use separate reviewers for: correctness, failure modes, and edge cases; architecture, APIs, module boundaries, readability, idiomatic language use, and maintainability; and test quality plus regression proof. Reviewers should cite concrete files and lines, and a rubber stamp without evidence does not count.
+- Review APIs adversarially for cleanliness, elegance, and resistance to misuse by future contributors. Ask whether another contributor can construct an invalid state, skip a required transition, or call an operation in the wrong lifecycle phase. Prefer enforcing real domain invariants at compile time with ownership, visibility, enums, newtypes, and typestate such as `User<Active>` when that makes the interface clearer. Do not add type-level ceremony when a simpler design already makes invalid states unrepresentable.
 - Keep reviewers read-only unless explicitly assigning them separate files to change. The implementing agent owns fixes, resolves or explicitly rebuts every material finding, reruns affected validation, and requests another review when a fix materially changes the design.
 - Scale review ceremony to risk. Trivial documentation or mechanical one-line changes do not need a committee meeting, but shared behavior, lifecycle code, migrations, security boundaries, concurrency, and difficult bug fixes do.
 
