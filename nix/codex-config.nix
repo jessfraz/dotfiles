@@ -40,7 +40,7 @@
         fast_mode = true;
         multi_agent = true;
         memories = true;
-        chronicle = true;
+        chronicle = false;
       };
       # The Codex runtime owns volatile refresh timestamps for these local sources.
       marketplaces = {
