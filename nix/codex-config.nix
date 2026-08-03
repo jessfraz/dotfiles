@@ -31,6 +31,7 @@
       model_reasoning_effort = "xhigh";
       model_reasoning_summary = "auto";
       personality = "none";
+      service_tier = "fast";
       file_opener = "none";
       show_raw_agent_reasoning = true;
       suppress_unstable_features_warning = true;
@@ -40,16 +41,14 @@
         multi_agent = true;
         memories = true;
         chronicle = true;
-        js_repl = false;
       };
+      # The Codex runtime owns volatile refresh timestamps for these local sources.
       marketplaces = {
         "openai-bundled" = {
-          last_updated = "2026-04-21T02:32:07Z";
           source_type = "local";
           source = "${homeDir}/.codex/.tmp/bundled-marketplaces/openai-bundled";
         };
         "openai-primary-runtime" = {
-          last_updated = "2026-06-15T01:10:55Z";
           source_type = "local";
           source = "${homeDir}/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime";
         };
@@ -58,8 +57,17 @@
         "browser@openai-bundled" = {
           enabled = true;
         };
+        "chrome@openai-bundled" = {
+          enabled = true;
+        };
         "computer-use@openai-bundled" = {
-          enabled = false;
+          enabled = isDarwin;
+        };
+        "sites@openai-bundled" = {
+          enabled = true;
+        };
+        "visualize@openai-bundled" = {
+          enabled = true;
         };
         "documents@openai-primary-runtime" = {
           enabled = true;
@@ -71,6 +79,9 @@
           enabled = true;
         };
         "presentations@openai-primary-runtime" = {
+          enabled = true;
+        };
+        "template-creator@openai-primary-runtime" = {
           enabled = true;
         };
       };
@@ -124,13 +135,28 @@
         followUpQueueMode = "steer";
       };
       projects = {
-        "${homeDir}/life" = {
+        "${homeDir}" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/dotfiles" = {
           trust_level = "trusted";
         };
         "${homeDir}/global-nix" = {
           trust_level = "trusted";
         };
-        "${homeDir}/dotfiles" = {
+        "${homeDir}/life" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/zoo/api" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/zoo/cio" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/zoo/ciso" = {
+          trust_level = "trusted";
+        };
+        "${homeDir}/zoo/infra" = {
           trust_level = "trusted";
         };
       };
