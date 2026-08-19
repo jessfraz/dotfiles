@@ -4,7 +4,7 @@
 }: let
   tomlFormat = pkgs.formats.toml {};
   homeDir = config.home.homeDirectory;
-  isDarwin = pkgs.stdenv.isDarwin;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   unifiMcp = pkgs.writeShellApplication {
     name = "unifi-mcp";
     runtimeInputs = [pkgs.jq pkgs.uv];
