@@ -49,8 +49,8 @@ if [[ -z "${__ghostty_title_debug_trap_installed:-}" ]]; then
     __ghostty_previous_debug_trap=$(trap -p DEBUG 2>/dev/null)
     if [[ "$__ghostty_previous_debug_trap" != *"__ghostty_title_preexec"* ]]; then
         if [[ -n "$__ghostty_previous_debug_trap" ]]; then
-            __ghostty_previous_debug_trap=${__ghostty_previous_debug_trap#trap -- '}
-            __ghostty_previous_debug_trap=${__ghostty_previous_debug_trap%' DEBUG}
+            __ghostty_previous_debug_trap=${__ghostty_previous_debug_trap#"trap -- '"}
+            __ghostty_previous_debug_trap=${__ghostty_previous_debug_trap%"' DEBUG"}
             eval "trap '__ghostty_title_preexec \"\$BASH_COMMAND\"; ${__ghostty_previous_debug_trap}' DEBUG"
         else
             trap '__ghostty_title_preexec "$BASH_COMMAND"' DEBUG
