@@ -10,7 +10,7 @@
 - Fix root causes rather than suppressing symptoms. Prefer the simplest maintainable solution that preserves the system's invariants.
 - **No breadcrumbs**. If you delete or move code, do not leave a comment in the old place. No "// moved to X", no "relocated". Just remove it.
 - For nontrivial work, understand the current architecture and codebase, consult official sources when they matter, then choose the best fit for this repository.
-- Write idiomatic, simple, maintainable code with readable, nice APIs. Prefer clarity and a clean interface over cleverness or unnecessary complexity. Always ask yourself if this is the most simple intuitive solution to the problem.
+- Write idiomatic, simple, maintainable, and elegant code. Make it pleasant to read, with cohesive structure, precise naming, and clean, intuitive APIs. Avoid cleverness and unnecessary complexity.
 - Keep responsibilities separated at natural module and file boundaries. Split code when responsibilities, ownership, or reuse differ; do not grow mega-files or scatter trivial one-use helpers across a maze of tiny files.
 - Fix small papercuts when you trip over them. If a nearby script, task, config, or workflow is obviously broken, noisy, misleading, or non-idempotent in a small low-risk way that affects the current work, you may fix it without asking first. Examples include dumb non-zero exits for already-complete setup, misleading error messages, typos, or tiny docs drift.
 - Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
