@@ -50,7 +50,7 @@
         [
           irssi
         ]
-        ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+        ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
           terminal-notifier # needed for notify.py for codex
         ];
 
@@ -79,7 +79,7 @@
           ".xsessionrc".source = ./.xsessionrc;
         };
       in
-        if pkgs.stdenv.isLinux
+        if pkgs.stdenv.hostPlatform.isLinux
         then baseFiles // linuxOnlyFiles
         else baseFiles;
       home.activation = {
