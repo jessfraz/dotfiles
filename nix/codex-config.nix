@@ -24,7 +24,11 @@
 
   codexConfigAttrs =
     (pkgs.lib.optionalAttrs isDarwin {
-      notify = ["python3" "${homeDir}/.codex/notify.py"];
+      tui = {
+        notifications = ["agent-turn-complete"];
+        notification_condition = "unfocused";
+        notification_method = "auto";
+      };
     })
     // {
       model = "gpt-5.6-sol";
@@ -38,6 +42,7 @@
       web_search = "live";
       features = {
         fast_mode = true;
+        js_repl = false;
         multi_agent = true;
         memories = true;
         chronicle = false;
@@ -60,7 +65,13 @@
         "chrome@openai-bundled" = {
           enabled = true;
         };
+        "codex-app-tools@openai-bundled" = {
+          enabled = isDarwin;
+        };
         "computer-use@openai-bundled" = {
+          enabled = isDarwin;
+        };
+        "messages@openai-bundled" = {
           enabled = isDarwin;
         };
         "sites@openai-bundled" = {

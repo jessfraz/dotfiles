@@ -46,20 +46,15 @@
       codexCfg = import ./nix/codex-config.nix {inherit pkgs config;};
       switchboardCfg = import ./nix/switchboard-config.nix {inherit pkgs config;};
     in {
-      home.packages = with pkgs;
-        [
-          irssi
-        ]
-        ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
-          terminal-notifier # needed for notify.py for codex
-        ];
+      home.packages = with pkgs; [
+        irssi
+      ];
 
       home.file = let
         baseFiles = {
           ".aliases".source = ./.aliases;
           ".claude/CLAUDE.md".source = ./.codex/AGENTS.md;
           ".bash_prompt".source = ./.bash_prompt;
-          ".codex/notify.py".source = ./.codex/notify.py;
           ".codex/AGENTS.md".source = ./.codex/AGENTS.md;
           ".dockerfunc".source = ./.dockerfunc;
           ".exports".source = ./.exports;
