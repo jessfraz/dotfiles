@@ -32,9 +32,31 @@
 
 ## Privacy & Publishing
 
-- Never put sensitive personal data in a GitHub Gist or repository, regardless of its current visibility. A secret Gist is public-by-link, and a private repository can later become public. Sensitive data includes addresses, property names or nicknames, household details, physical-security layouts, health or financial information, and credentials.
-- Do not expose addresses or property names or nicknames in an externally shared artifact's filename, title, description, URL, summary, metadata, or contents, even when access-controlled. Use a generic label that reveals nothing about the person or property.
-- Before publishing or sharing externally, inspect the exact artifact and verify the destination's effective access controls. Necessary household or physical-security details may be shared only with explicit user authorization through access-controlled storage shared with named recipients. Read back the resulting visibility and permissions.
+- The private `jessfraz/life` GitHub repository is approved for its intended
+  contents and is the sole repository-storage exception to the
+  sensitive-personal-data restriction below. Before committing or pushing,
+  verify that the remote is exactly `jessfraz/life` and that GitHub reports the
+  repository visibility as `PRIVATE`. This exception applies only to storing
+  and pushing content within that verified-private repository; it does not
+  authorize copying or publishing the content anywhere else.
+- Passwords, tokens, private keys, recovery codes, and all other credentials
+  always belong in 1Password and never in a repository or Gist, including
+  `jessfraz/life`. Record only a non-secret 1Password pointer when context needs
+  one.
+- Outside `jessfraz/life`, never put sensitive personal data in a GitHub Gist or
+  repository, regardless of its current visibility. A secret Gist is
+  public-by-link, and a private repository can later become public. Sensitive
+  data includes addresses, property names or nicknames, household details,
+  physical-security layouts, and health or financial information.
+- Do not expose addresses or property names or nicknames in an externally
+  shared artifact's filename, title, description, URL, summary, metadata, or
+  contents, even when access-controlled. Use a generic label that reveals
+  nothing about the person or property.
+- Before publishing or sharing externally, inspect the exact artifact and
+  verify the destination's effective access controls. Necessary household or
+  physical-security details may be shared outside `jessfraz/life` only with
+  explicit user authorization through access-controlled storage shared with
+  named recipients. Read back the resulting visibility and permissions.
 - If sensitive material is exposed, remove the live content and every known link first, verify that the source is no longer accessible, then explain any residual backup, cache, fork, clone, or download risk. Contact the provider's support team when its documented purge process requires it.
 
 ## Tooling & Workflow
