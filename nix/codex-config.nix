@@ -31,7 +31,7 @@
       };
     })
     // {
-      model = "gpt-5.6-sol";
+      model = "gpt-6-astra";
       model_reasoning_effort = "xhigh";
       model_reasoning_summary = "auto";
       personality = "none";
