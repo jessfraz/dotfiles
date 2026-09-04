@@ -30,6 +30,13 @@
 - Resolve discoverable ambiguity from the available context. Ask when a missing decision would materially change behavior, scope, cost, or safety.
 - When git writes are authorized, use the minimum necessary commands. Keep history linear and do not create merge commits. A request to "fix conflicts" means rebase the branch onto its target base, resolve the conflicts, and force-push the rewritten branch. A request to "rebase" explicitly authorizes both the rebase and its necessary force push. Verify the exact remote branch first and use `--force-with-lease`, never unconditional `--force`. Do not use `git reset --hard` or `git checkout --` unless the user explicitly requests that operation.
 
+## Privacy & Publishing
+
+- Never put sensitive personal data in a GitHub Gist or repository, regardless of its current visibility. A secret Gist is public-by-link, and a private repository can later become public. Sensitive data includes addresses, property names or nicknames, household details, physical-security layouts, health or financial information, and credentials.
+- Do not expose addresses, property names or nicknames, household details, or physical-security layouts in an externally shared artifact's filename, title, description, URL, summary, metadata, or contents, even when access-controlled. Use a generic label that reveals nothing about the person, property, household, or system.
+- Before publishing or sharing externally, inspect the exact artifact and verify the destination's effective access controls. When privacy is required, use access-controlled storage shared only with named recipients, then read back the resulting visibility and permissions.
+- If sensitive material is exposed, remove the live content and every known link first, verify that the source is no longer accessible, then explain any residual backup, cache, fork, clone, or download risk. Contact the provider's support team when its documented purge process requires it.
+
 ## Tooling & Workflow
 
 - Prefer APIs, CLIs, and MCP tools over Computer Use. Treat Computer Use as a last resort, and ask the user before using it.
