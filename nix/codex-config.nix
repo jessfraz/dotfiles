@@ -97,6 +97,9 @@
         };
       };
       mcp_servers = {
+        copilot = {
+          url = "https://mcp.copilot.money/mcp";
+        };
         zoo = {
           command = "uvx";
           args = ["zoo-mcp"];
