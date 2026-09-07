@@ -88,14 +88,3 @@ unset file
 	-W "$(grep "^Host" ~/.ssh/config | \
 	grep -v "[?*]" | cut -d " " -f2 | \
 	tr ' ' '\n')" scp sftp ssh
-
-# get the zoo completions
-if hash zoo 2>/dev/null; then
-	eval "$(zoo completion -s bash)"
-fi
-
-# get the rustup completions
-if hash rustup 2>/dev/null; then
-	eval "$(rustup completions bash)"
-fi
-

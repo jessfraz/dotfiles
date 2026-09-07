@@ -16,7 +16,7 @@
     home-manager,
     ...
   }: let
-    supportedSystems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    supportedSystems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
     forAllSystems = f:
       builtins.listToAttrs (map (system: {
@@ -84,11 +84,33 @@
     };
 
     homeConfigurations = forAllSystems (
-      system:
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
         home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {inherit system;};
-          modules = [self.homeManagerModules.default];
+          inherit pkgs;
+          # Standalone fixtures exercise the module without applying host settings.
+          modules = [
+            self.homeManagerModules.default
+            {
+              home = {
+                username = "dotfiles-test";
+                homeDirectory =
+                  if pkgs.stdenv.hostPlatform.isDarwin
+                  then "/Users/dotfiles-test"
+                  else "/home/dotfiles-test";
+                stateVersion = "25.05";
+              };
+            }
+          ];
         }
     );
+
+    checks = forAllSystems (system:
+      import ./nix/checks.nix {
+        pkgs = nixpkgs.legacyPackages.${system};
+        homeConfiguration = self.homeConfigurations.${system};
+        exports = ./.exports;
+      });
   };
 }
