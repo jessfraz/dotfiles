@@ -11,16 +11,19 @@ concurrency:
   cancel-in-progress: true
 jobs:
   nix-flake-check:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
 
-      - name: nix flake check for all platforms
-        run: |
-          nix flake check --all-systems
+      - name: Evaluate all supported systems
+        if: matrix.os == 'ubuntu-24.04'
+        run: nix flake check --no-build --all-systems --no-update-lock-file
+
+      - name: Build native checks
+        run: nix flake check --no-update-lock-file

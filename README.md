@@ -20,6 +20,14 @@
 
 ### Installing
 
+For Nix, import `homeManagerModules.default` from this flake through Home
+Manager. The host configuration supplies the username, home directory, and
+state version. [global-nix](https://github.com/jessfraz/global-nix) also enables
+Bash completion and installs the Zoo and rustup completion files used by the
+`.nixbash` startup fragment.
+
+For the legacy Linux installation:
+
 ```console
 $ make
 ```
@@ -64,8 +72,19 @@ For my `.vimrc` and `.vim` dotfiles see
 
 ### Running the tests
 
-The tests use [shellcheck](https://github.com/koalaman/shellcheck). You don't
-need to install anything. They run in a container.
+Run the native Nix checks, including a complete Home Manager fixture and an
+editor smoke test:
+
+```console
+$ nix flake check --no-update-lock-file
+```
+
+CI builds these checks on x86-64 Linux, ARM Linux, and ARM macOS. The
+`homeConfigurations` outputs are test fixtures, not host profiles; do not
+activate them.
+
+The shell scripts are also checked with
+[shellcheck](https://github.com/koalaman/shellcheck) in a container:
 
 ```console
 $ make test
