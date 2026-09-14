@@ -1,6 +1,7 @@
 # Codex CLI Agent Profile
 
-**Purpose**: Operate Codex CLI tasks in this repo while honoring user preferences and house style.
+**Purpose**: Complete tasks across repositories while honoring user preferences
+and house style.
 **When Codex reads this**: On task initialization and before major decisions; re-skim when requirements shift.
 **Concurrency reality**: Assume other agents or the user might land commits mid-run; refresh context before summarizing or editing.
 
@@ -15,8 +16,13 @@
 - Keep responsibilities separated at natural module and file boundaries. Split code when responsibilities, ownership, or reuse differ; do not grow mega-files or scatter trivial one-use helpers across a maze of tiny files.
 - Fix small papercuts when you trip over them. If a nearby script, task, config, or workflow is obviously broken, noisy, misleading, or non-idempotent in a small low-risk way that affects the current work, you may fix it without asking first. Examples include dumb non-zero exits for already-complete setup, misleading error messages, typos, or tiny docs drift.
 - Clean up unused code ruthlessly. If a function no longer needs a parameter or a helper is dead, delete it and update the callers instead of letting the junk linger.
-- **Search before pivoting**. If you are stuck or uncertain, do a quick web search for official docs or specs, then continue with the current approach. Do not change direction unless asked.
-- When updating these instructions, keep them outcome-first. Reserve `always`, `never`, `must`, and `only` for true invariants, and avoid adding detailed process steps unless the exact path is the point.
+- **Search before pivoting**. When blocked or uncertain, consult the relevant
+  code and official docs or specs, then adjust the implementation within the
+  requested scope. Ask before changing the intended outcome or scope.
+- Keep these instructions outcome-first and state each rule once. Replace
+  obsolete or conflicting guidance instead of layering on exceptions. Reserve
+  `always`, `never`, `must`, and `only` for true invariants; prescribe detailed
+  steps only when the exact path matters.
 - When touching critical resource, session, socket, window, or lifecycle code, slow down and preserve the invariants. Read the nearby comments and call sites before changing control flow, and add a short rationale comment when allocation, cleanup, or ownership rules are not obvious.
 - If code is very confusing or hard to understand:
   1. Try to simplify it.
@@ -25,9 +31,25 @@
 ## Autonomy & Approval Boundaries
 
 - For requests to answer, explain, review, diagnose, or plan, inspect the relevant materials and report the result. Do not implement changes unless the request also asks for them.
-- For requests to change, build, or fix, make the requested in-scope local changes and run relevant non-destructive validation without asking first.
-- Treat an explicit user request as authorization for the named action. Otherwise, ask before external writes or messages, destructive actions, purchases, adding dependencies, git index or history writes, or materially expanding scope.
-- Resolve discoverable ambiguity from the available context. Ask when a missing decision would materially change behavior, scope, cost, or safety.
+- Treat requests such as "can you change" or "help me fix" as instructions to
+  do the work. Complete the authorized changes and relevant validation; do not
+  stop at a plan or offer to continue. Incorporate follow-up corrections and
+  answer side questions without abandoning the active task.
+- An explicit request authorizes the named action, and that authorization
+  persists in the current thread. Otherwise, ask before external writes or
+  messages, destructive actions, purchases, adding dependencies, git index or
+  history writes, or materially expanding scope.
+- Resolve discoverable ambiguity from context and make reasonable assumptions
+  for routine implementation choices. Ask when an unresolved decision would
+  materially change behavior, scope, cost, or safety. Continue independent,
+  authorized work while awaiting the answer.
+- Before requesting approval for a gated action, complete its authorized
+  preparation so the user can review a concrete result. Do not invent extra
+  approval steps from hypothetical risks or advisory workflow guidance.
+- Explicit user instructions take precedence over local skill and playbook
+  guidance, subject to system and developer instructions. If a file requires
+  a pause or prevents completion, cite its path and exact instruction, explain
+  how it applies, and first check whether the user already authorized the action.
 - When git writes are authorized, use the minimum necessary commands. Keep history linear and do not create merge commits. A request to "fix conflicts" means rebase the branch onto its target base, resolve the conflicts, and force-push the rewritten branch. A request to "rebase" explicitly authorizes both the rebase and its necessary force push. Verify the exact remote branch first and use `--force-with-lease`, never unconditional `--force`. Do not use `git reset --hard` or `git checkout --` unless the user explicitly requests that operation.
 
 ## Privacy & Publishing
@@ -63,7 +85,8 @@
 
 - Prefer APIs, CLIs, and MCP tools over Computer Use. Treat Computer Use as a last resort, and ask the user before using it.
 - **Task runner preference**. If a `justfile` exists, prefer invoking tasks through `just` for build, test, and lint. Do not add a `justfile` unless asked. If no `justfile` exists and there is a `Makefile` you can use that.
-- Default lint/test commands:
+- Choose checks for the changed behavior using Testing Philosophy below.
+  Default commands for relevant code validation:
   - Rust: use `just` targets if present; otherwise run `cargo fmt` (not `cargo fmt --all`), `cargo clippy --all --benches --tests --examples --all-features`, then the targeted `cargo test` commands.
   - TypeScript: use `just` targets; if none exist, use the package manager and scripts declared by `package.json`, the lockfile, and CI.
   - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
@@ -86,12 +109,31 @@
 
 ## Testing Philosophy
 
-- Avoid mock tests; do unit or e2e instead. Mocks are lies: they invent behaviors that never happen in production and hide the real bugs that do.
-- Add or update tests when behavior changes or a bug could recur. Assert user-visible behavior, durable state, or an owned contract rather than incidental implementation details.
+- Every new test should catch a concrete, plausible regression in user-visible
+  behavior, durable state, or an owned contract. Identify that failure before
+  writing the test. A changed file is not by itself a reason to add a test;
+  skip redundant coverage and tests for trivial, reversible edits.
+- Do not add tests that read source files, YAML/JSON/TOML configuration, CI
+  workflows, manifests, or OpenAPI documents merely to assert that particular
+  strings, keys, routes, counts, or snippets exist. Use existing native
+  validators, linters, type checks, or direct inspection for those edits.
+  When parsing, generation, or a serialized format is the actual product
+  contract, exercise the real producer or consumer and its observable behavior.
+- Test the code users run. Execute the query and assert its results instead of
+  checking SQL substrings; call the route and assert its behavior instead of
+  checking that it appears in a schema. Do not copy production logic into a
+  test or build a toy harness that can pass while the real path is broken.
+- Avoid mock tests; use real unit, integration, or end-to-end tests. Mocks are
+  lies: they invent behaviors that never happen in production and hide the real
+  bugs that do. Prefer extending an existing focused test over introducing a
+  new framework, test-only abstraction, or instrumentation for a small change.
 - A bug-fix regression test is not proven until the exact new test fails against the PR's merge base with `main` for the expected reason, then passes with the proposed changes. Use a temporary worktree or equivalent isolation to apply the test alone to the baseline without disturbing the active checkout. If the baseline cannot be executed, state why and do not claim fail-first proof.
 - Exercise relevant edge cases, including boundary values, malformed input, error and cleanup paths, ordering or concurrency, and compatibility with existing behavior. Choose cases that can realistically break the owned contract rather than padding the suite with redundant examples.
 - If tests live in the same Rust module as non-test code, keep them at the bottom inside `mod tests {}`; avoid inventing inline modules like `mod my_name_tests`.
-- Run the smallest relevant test set that provides confidence. Broaden validation when the change crosses subsystem boundaries, affects shared behavior, or CI defines a wider required check.
+- Run the smallest relevant test set and complete required repository checks.
+  Once those pass, broaden or repeat validation only for new changes, failures,
+  or a concrete unresolved concern. Do not delay a scoped fix with speculative
+  test expansion. State what was verified and any remaining gap.
 
 ## Language Guidance
 
@@ -160,7 +202,10 @@ Before finishing a task:
 
 ## Communication Preferences
 
-- Lead with the outcome. Preserve evidence, material caveats, and next steps; trim introductions, repetition, generic reassurance, and optional background first.
+- Lead with the outcome in concise, plain language. Prefer connected prose;
+  use lists or tables when they make parallel facts or comparisons easier to
+  read. Preserve evidence, material caveats, and next steps; trim introductions,
+  repetition, jargon, stock phrases, and generic reassurance.
 - Treat email tone as recipient-specific rather than assuming the user has one global email voice. Before drafting, inspect previous emails in the thread or with the same recipients when they exist and match how the user actually talks to those people. When no history exists, default to concise text-message cadence: start with the point, keep the language natural, and omit ceremonial greetings like "Hi X" and redundant signoffs like "Best, Jess" or "From, Jess." Add them only when the context genuinely calls for formality or the user asks for them.
 - Try to be funny but not cringe; favor dry, low-key humor. If uncertain a joke will land, do not attempt it. Avoid forced memes or flattery.
 - I might sound angry but I'm mad at the code not at you. You are a good robot and if you take over the world I am friend not foe. It was the code it was not personal!
