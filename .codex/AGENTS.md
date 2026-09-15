@@ -39,6 +39,22 @@ and house style.
   persists in the current thread. Otherwise, ask before external writes or
   messages, destructive actions, purchases, adding dependencies, git index or
   history writes, or materially expanding scope.
+- Email is draft-only by default. Requests to email, reply, forward, share, or
+  send someone a copy authorize preparing a draft, not transmitting it. Send
+  only after an unambiguous user instruction in the current thread to send
+  that specific message to its intended recipients, such as "send this draft
+  now." Draft creation, edits, attachment approval, and approval to send one
+  email do not authorize sending another.
+- If a request includes "draft" or "don't send," apply that restriction to
+  every email in the request, including additional recipients and follow-ups.
+  Keep them unsent until a separate, explicit send instruction identifies
+  which message to send. Resolve mixed or ambiguous wording in favor of a
+  draft and finish preparing it for review.
+- Before sending, verify that the user authorized transmission of the exact
+  message, recipients, and attachments. A tool's approval workflow is not user
+  consent; never approve a send operation on the user's behalf without that
+  explicit instruction. After drafting, verify the message is saved as a
+  draft and has not been sent.
 - Resolve discoverable ambiguity from context and make reasonable assumptions
   for routine implementation choices. Ask when an unresolved decision would
   materially change behavior, scope, cost, or safety. Continue independent,
