@@ -9,6 +9,20 @@
 
   switchboardConfigAttrs = {
     secret = {
+      phone_api_key = {
+        kind = "onepassword_item";
+        account = "my.1password.com";
+        item = "Phone CLI";
+        field = "api_key";
+      };
+
+      phone_api_secret = {
+        kind = "onepassword_item";
+        account = "my.1password.com";
+        item = "Phone CLI";
+        field = "api_secret";
+      };
+
       github_personal_token = {
         kind = "onepassword_item";
         account = "my.1password.com";
@@ -62,6 +76,14 @@
     };
 
     auth = {
+      phone_personal = {
+        provider = "phone";
+        kind = "phone_cli";
+        account = "personal";
+        api_key = "phone_api_key";
+        api_secret = "phone_api_secret";
+      };
+
       github_personal = {
         provider = "github";
         kind = "github_token";
@@ -95,6 +117,14 @@
     };
 
     namespace = {
+      phone.personal = {
+        provider = "phone";
+        account = "personal";
+        auth = "phone_personal";
+        default_read = false;
+        state_dir = "${homeDir}/.local/share/switchboard/namespaces/phone.personal";
+      };
+
       github.personal = {
         provider = "github";
         account = "jessfraz";
