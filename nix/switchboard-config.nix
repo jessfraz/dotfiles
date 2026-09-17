@@ -23,6 +23,13 @@
         field = "api_secret";
       };
 
+      phone_model_api_key = {
+        kind = "onepassword_item";
+        account = "my.1password.com";
+        item = "Phone CLI";
+        field = "model_api_key";
+      };
+
       github_personal_token = {
         kind = "onepassword_item";
         account = "my.1password.com";
@@ -82,6 +89,7 @@
         account = "personal";
         api_key = "phone_api_key";
         api_secret = "phone_api_secret";
+        model_api_key = "phone_model_api_key";
       };
 
       github_personal = {
