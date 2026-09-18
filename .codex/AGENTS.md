@@ -125,10 +125,13 @@ and house style.
   for independent reads, and `github.ci.status --commit SHA --wait 30` with its
   returned cursor for exact-commit CI updates. Inspect coverage before treating
   any bounded result as complete; use `--full` for unabridged presentation.
-- Use one unique `SWITCHBOARD_RUN_ID` per logical task or scheduled run, reused
-  across its commands. Resolve authorized authentication serially before
-  parallel reads; `switchboard auth check` currently supports Google and GitHub
-  identity checks.
+- Run ordinary Switchboard commands with its built-in cache, refresh, and
+  recovery defaults; do not add credential or biometric environment overrides.
+  `SWITCHBOARD_RUN_ID` is optional for automation that needs an explicit task
+  boundary shared across commands. Set `SWITCHBOARD_OP_BIN=/usr/bin/false` only
+  when the user explicitly requests cache-only access. Resolve authorized
+  authentication serially before parallel reads; `switchboard auth check`
+  currently supports Google and GitHub identity checks.
 - Preserve partial JSON and successful evidence even when a command exits
   nonzero. Inspect typed failures and coverage, and follow continuation cursors
   when complete results are required. Blocked or unknown coverage is not an
