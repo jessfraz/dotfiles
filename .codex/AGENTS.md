@@ -112,12 +112,19 @@ and house style.
   - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
 - When a dependency addition is authorized, research well-maintained options and choose the best-supported API fit.
 - Route providers configured in `~/.config/switchboard/config.toml` through
-  Switchboard using their configured namespaces. Inspect
-  `switchboard tools describe TOOL` for execution support, arguments, and raw
-  passthrough before choosing a command. For GitHub and Google Workspace, use
+  Switchboard using their configured namespaces. Run familiar commands directly;
+  for unfamiliar commands, use filtered `tools list` or `tools describe TOOL`.
+  Add `--full` when you need schemas or native fallback details, and use `doctor`
+  to investigate an actual setup failure. For GitHub and Google Workspace, use
   Switchboard's `gh` and `gws` adapters or raw passthrough; do not use GitHub MCP
   servers. Report missing CLIs instead of installing local replacements or
   guessing.
+- For bounded task context, prefer `google.mail.search --hydrate`,
+  `google.mail.thread`, and GitHub issue/PR `context` commands. Use `--fields`
+  to select result fields, `read-batch --tool TOOL --ns NS --args-json OBJECT`
+  for independent reads, and `github.ci.status --commit SHA --wait 30` with its
+  returned cursor for exact-commit CI updates. Inspect coverage before treating
+  any bounded result as complete; use `--full` for unabridged presentation.
 - Use one unique `SWITCHBOARD_RUN_ID` per logical task or scheduled run, reused
   across its commands. Resolve authorized authentication serially before
   parallel reads; `switchboard auth check` currently supports Google and GitHub
