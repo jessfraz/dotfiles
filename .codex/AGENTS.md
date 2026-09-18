@@ -67,6 +67,10 @@ and house style.
   a pause or prevents completion, cite its path and exact instruction, explain
   how it applies, and first check whether the user already authorized the action.
 - When git writes are authorized, use the minimum necessary commands. Keep history linear and do not create merge commits. A request to "fix conflicts" means rebase the branch onto its target base, resolve the conflicts, and force-push the rewritten branch. A request to "rebase" explicitly authorizes both the rebase and its necessary force push. Verify the exact remote branch first and use `--force-with-lease`, never unconditional `--force`. Do not use `git reset --hard` or `git checkout --` unless the user explicitly requests that operation.
+- For authorized worktree cleanup, save the `git cleanup` plan outside the target
+  worktree, review the exact worktree and branch it targets, then execute that
+  exact plan. Stop on changed evidence or removal refusals, and preserve any
+  submodule archive named in the receipt.
 
 ## Privacy & Publishing
 
@@ -107,8 +111,29 @@ and house style.
   - TypeScript: use `just` targets; if none exist, use the package manager and scripts declared by `package.json`, the lockfile, and CI.
   - Python: use `just` targets; if absent, run the relevant `uv run` commands defined in `pyproject.toml`.
 - When a dependency addition is authorized, research well-maintained options and choose the best-supported API fit.
-- For GitHub operations, use the `gh` CLI instead of any GitHub MCP server. Do not install, configure, or rely on a repo-local GitHub MCP in this repo. If `gh` is not available in the current environment, tell the user instead of installing local tooling.
-- For Google Workspace operations, use the `gws` CLI. If `gws` is not available in the current environment, tell the user instead of installing repo-local tooling or guessing.
+- Route providers configured in `~/.config/switchboard/config.toml` through
+  Switchboard using their configured namespaces. Inspect
+  `switchboard tools describe TOOL` for execution support, arguments, and raw
+  passthrough before choosing a command. For GitHub and Google Workspace, use
+  Switchboard's `gh` and `gws` adapters or raw passthrough; do not use GitHub MCP
+  servers. Report missing CLIs instead of installing local replacements or
+  guessing.
+- Use one unique `SWITCHBOARD_RUN_ID` per logical task or scheduled run, reused
+  across its commands. Resolve authorized authentication serially before
+  parallel reads; `switchboard auth check` currently supports Google and GitHub
+  identity checks.
+- Preserve partial JSON and successful evidence even when a command exits
+  nonzero. Inspect typed failures and coverage, and follow continuation cursors
+  when complete results are required. Blocked or unknown coverage is not an
+  empty result.
+- Retain write operation IDs. For an executing or uncertain operation, inspect
+  `switchboard op show ID` and use `switchboard op verify ID --json` before
+  deciding the next action; do not blindly recreate or reapply the write.
+  Applied does not mean verified, and unavailable readback does not prove that
+  nothing happened.
+- Run credential wrappers as `with-credentials PROFILE -- COMMAND` or
+  `fetch-* COMMAND`. Credentials belong to the child process; do not source or
+  eval wrapper output or expect parent-shell exports.
 - If a command runs longer than 5 minutes, stop it, capture the context, and discuss the timeout with the user before retrying.
 - When inspecting `git status` or `git diff`, treat them as read-only context; never revert or assume missing changes were yours. Other agents or the user may have already committed updates.
 - If you are ever curious how to run tests or what we test, read through `.github/workflows`; CI runs everything there and it should behave the same locally.
