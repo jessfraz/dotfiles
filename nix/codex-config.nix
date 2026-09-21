@@ -43,7 +43,8 @@
       features = {
         browser_use = false;
         browser_use_external = true;
-        computer_use = false;
+        # Messages needs this shared feature; the desktop-control plugin stays disabled.
+        computer_use = true;
         fast_mode = true;
         js_repl = false;
         multi_agent = true;
