@@ -41,6 +41,9 @@
       suppress_unstable_features_warning = true;
       web_search = "live";
       features = {
+        browser_use = false;
+        browser_use_external = true;
+        computer_use = false;
         fast_mode = true;
         js_repl = false;
         multi_agent = true;
@@ -60,7 +63,7 @@
       };
       plugins = {
         "browser@openai-bundled" = {
-          enabled = true;
+          enabled = false;
         };
         "chrome@openai-bundled" = {
           enabled = true;
@@ -69,7 +72,7 @@
           enabled = isDarwin;
         };
         "computer-use@openai-bundled" = {
-          enabled = isDarwin;
+          enabled = false;
         };
         "messages@openai-bundled" = {
           enabled = isDarwin;
