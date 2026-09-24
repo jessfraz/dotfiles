@@ -6,50 +6,30 @@
   homeDir = config.home.homeDirectory;
   configDir = "${homeDir}/.config";
   stateDir = name: "${configDir}/${name}";
+  credentialProfiles = {
+    personal = "6f2yinpr4l6tp3qctbinvb3cky";
+  };
+  credential = profile: item: field: {
+    kind = "onepassword_item";
+    account = "my.1password.com";
+    auth_profile = profile;
+    vault = credentialProfiles.${profile};
+    inherit item field;
+  };
 
   switchboardConfigAttrs = {
+    one_password.profiles =
+      builtins.mapAttrs (name: _: {
+        token_file = "${configDir}/agent-credentials/${name}.token";
+      })
+      credentialProfiles;
     secret = {
-      phone_api_key = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "Phone CLI";
-        field = "api_key";
-      };
-
-      phone_api_secret = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "Phone CLI";
-        field = "api_secret";
-      };
-
-      phone_model_api_key = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "Phone CLI";
-        field = "model_api_key";
-      };
-
-      github_personal_token = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "GitHub Personal Access Token";
-        field = "token";
-      };
-
-      schwab_personal_client_id = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "schwab cli";
-        field = "username";
-      };
-
-      schwab_personal_client_secret = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "schwab cli";
-        field = "credential";
-      };
+      phone_api_key = credential "personal" "3hyv46ywjea2rl5xbhg2xsyc5e" "api_key";
+      phone_api_secret = credential "personal" "3hyv46ywjea2rl5xbhg2xsyc5e" "api_secret";
+      phone_model_api_key = credential "personal" "3hyv46ywjea2rl5xbhg2xsyc5e" "model_api_key";
+      github_personal_token = credential "personal" "xpm367ibuwilt4ocp63ht5cppq" "token";
+      schwab_personal_client_id = credential "personal" "nyf64ypiujz6gqvrpgfj46wnbm" "username";
+      schwab_personal_client_secret = credential "personal" "nyf64ypiujz6gqvrpgfj46wnbm" "credential";
     };
 
     auth = {

@@ -65,9 +65,10 @@ investigation for every edit. Explicit user instructions take precedence over lo
 - Prefer bounded context: `google.mail.search --hydrate`, `google.mail.thread`, and GitHub issue/PR `context`. Select fields with `--fields`; batch independent
   reads with `read-batch --tool TOOL --ns NS --args-json OBJECT`. For exact-commit CI, use `github.ci.status --commit SHA --wait 30` and its continuation
   cursor.
-- Use Switchboard's normal cache, refresh, and recovery defaults. Do not add credential or biometric overrides; respect the user's existing preferences. Set
-  `SWITCHBOARD_OP_BIN=/usr/bin/false` only for explicitly requested cache-only access. `SWITCHBOARD_RUN_ID` is optional for a shared task boundary. Authenticate
-  serially before parallel reads.
+- Use provider sessions and supported refresh, then the configured scoped machine credential. 1Password service-account profiles must never fall back to
+  desktop approval, broader cached credentials, or another profile. Do not export bootstrap tokens into shells or provider tools. Scheduled and remote work
+  report required local recovery instead of opening an unseen prompt. Preserve bounded desktop recovery for unconfigured local interactive integrations.
+  Do not add biometric or cache-only overrides. `SWITCHBOARD_RUN_ID` is optional for a shared task boundary. Authenticate serially before parallel reads.
 - Keep partial JSON and successful evidence when commands fail. Inspect typed failures and coverage; follow cursors when completeness matters. Blocked or
   unknown coverage is not an empty result. Use `--full` when an unabridged result is needed.
 - Retain write-operation IDs. Inspect `switchboard op show ID` and `switchboard op verify ID --json` before retrying an executing or uncertain write. Applied is
