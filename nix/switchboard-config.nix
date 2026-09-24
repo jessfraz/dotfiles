@@ -37,36 +37,6 @@
         field = "token";
       };
 
-      google_personal_client_id = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "gws cli";
-        field = "username";
-      };
-
-      google_personal_client_secret = {
-        kind = "onepassword_item";
-        account = "my.1password.com";
-        item = "gws cli";
-        field = "credential";
-      };
-
-      google_work_client_id = {
-        kind = "onepassword_item";
-        account = "kittycadinc.1password.com";
-        vault = "Employee";
-        item = "gws cli";
-        field = "username";
-      };
-
-      google_work_client_secret = {
-        kind = "onepassword_item";
-        account = "kittycadinc.1password.com";
-        vault = "Employee";
-        item = "gws cli";
-        field = "credential";
-      };
-
       schwab_personal_client_id = {
         kind = "onepassword_item";
         account = "my.1password.com";
@@ -101,18 +71,14 @@
 
       google_personal = {
         provider = "google";
-        kind = "google_oauth";
+        kind = "google_cli";
         account = "me@jessfraz.com";
-        client_id = "google_personal_client_id";
-        client_secret = "google_personal_client_secret";
       };
 
       google_work = {
         provider = "google";
-        kind = "google_oauth";
+        kind = "google_cli";
         account = "jess@zoo.dev";
-        client_id = "google_work_client_id";
-        client_secret = "google_work_client_secret";
       };
 
       schwab_personal = {
