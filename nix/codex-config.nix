@@ -101,6 +101,9 @@
         };
       };
       mcp_servers = {
+        carta = {
+          url = "https://mcp.app.carta.com/mcp";
+        };
         copilot = {
           url = "https://mcp.copilot.money/mcp";
         };
