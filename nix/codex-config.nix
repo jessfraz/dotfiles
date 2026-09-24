@@ -37,6 +37,8 @@
       personality = "none";
       service_tier = "fast";
       file_opener = "none";
+      cli_auth_credentials_store = "file";
+      mcp_oauth_credentials_store = "file";
       show_raw_agent_reasoning = true;
       suppress_unstable_features_warning = true;
       web_search = "live";
