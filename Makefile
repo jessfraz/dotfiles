@@ -64,7 +64,11 @@ usr: ## Installs the usr directory files.
 	done
 
 .PHONY: test
-test: shellcheck ## Runs all the tests on the files in the repository.
+test: shellcheck cleanup-test ## Runs all the tests on the files in the repository.
+
+.PHONY: cleanup-test
+cleanup-test: ## Tests build-cache cleanup against real files and processes.
+	python3 -B -m unittest discover -s tests -p 'test_cleanup_build_caches.py'
 
 # if this session isn't interactive, then we don't want to allocate a
 # TTY, which would fail, but if it is interactive, we do want to attach
