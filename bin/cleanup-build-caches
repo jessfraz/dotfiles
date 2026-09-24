@@ -31,6 +31,10 @@ BUILDERS = {
     "just",
     "meson",
 }
+STORAGE_SCANNER = Path(
+    "/System/Library/PrivateFrameworks/StorageManagement.framework/PlugIns/StorageManagementService"
+)
+OpenFile = tuple[int, str, str, Path]
 
 
 @dataclass(frozen=True)
@@ -131,10 +135,51 @@ def discover(home: Path) -> tuple[list[Cache], int]:
     return sorted(caches.values(), key=lambda cache: str(cache.path)), skipped
 
 
+def parse_open_files(output: bytes) -> tuple[list[OpenFile], set[OpenFile]]:
+    files: list[OpenFile] = []
+    traversals: set[OpenFile] = set()
+    scanners: set[int] = set()
+    pid, command, descriptor, access, kind = 0, "", "", "", ""
+    for field in output.split(b"\0"):
+        field = field.lstrip(b"\n")
+        if not field:
+            continue
+        code, value = chr(field[0]), os.fsdecode(field[1:])
+        if code == "p":
+            pid = int(value)
+        elif code == "c":
+            command = value
+        elif code == "f":
+            descriptor, access, kind = value, "", ""
+        elif code == "a":
+            access = value
+        elif code == "t":
+            kind = value
+        elif code == "n" and value.startswith("/") and pid != os.getpid():
+            path = Path(value.removesuffix(" (deleted)"))
+            opened = (pid, command, descriptor, path)
+            files.append(opened)
+            if (
+                command == "StorageManagementService"
+                and descriptor == "txt"
+                and path == STORAGE_SCANNER
+            ):
+                scanners.add(pid)
+            if descriptor == "cwd" or (
+                descriptor.isdecimal() and access == "r" and kind == "DIR"
+            ):
+                traversals.add(opened)
+    # The macOS storage scanner chdirs while counting files. Its traversal is
+    # not a build user. Require its system executable, and keep writes, regular
+    # file reads, and executable mappings protected even for that process.
+    return files, {opened for opened in traversals if opened[0] in scanners}
+
+
 class OpenFiles:
     def __init__(self) -> None:
         self.checked = 0.0
-        self.files: list[tuple[int, str, str, Path]] = []
+        self.files: list[OpenFile] = []
+        self.scanner_traversals: set[OpenFile] = set()
         self.error: str | None = None
 
     def refresh(self) -> None:
@@ -153,7 +198,7 @@ class OpenFiles:
                     "-a",
                     "-u",
                     str(os.getuid()),
-                    "-F0pcfn",
+                    "-F0pcfatn",
                 ],
                 capture_output=True,
                 timeout=30,
@@ -165,29 +210,14 @@ class OpenFiles:
         if result.returncode not in (0, 1) or (result.returncode and not result.stdout):
             self.error = "could not inspect open files with lsof"
             raise OSError(self.error)
-        files: list[tuple[int, str, str, Path]] = []
-        pid, command, descriptor = 0, "", ""
-        for field in result.stdout.split(b"\0"):
-            field = field.lstrip(b"\n")
-            if not field:
-                continue
-            kind, value = chr(field[0]), os.fsdecode(field[1:])
-            if kind == "p":
-                pid = int(value)
-            elif kind == "c":
-                command = value
-            elif kind == "f":
-                descriptor = value
-            elif kind == "n" and value.startswith("/") and pid != os.getpid():
-                files.append(
-                    (pid, command, descriptor, Path(value.removesuffix(" (deleted)")))
-                )
-        self.files = files
+        self.files, self.scanner_traversals = parse_open_files(result.stdout)
         self.checked = time.monotonic()
 
     def busy(self, cache: Cache) -> str | None:
         self.refresh()
         for pid, command, descriptor, path in self.files:
+            if (pid, command, descriptor, path) in self.scanner_traversals:
+                continue
             if path == cache.path or cache.path in path.parents:
                 return f"in use by {command} (PID {pid})"
             builder = (

@@ -1,10 +1,12 @@
 """Exercise cleanup against disposable repositories and real open files."""
 
 import os
+import runpy
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -97,6 +99,66 @@ class CleanupTests(unittest.TestCase):
             self.assertIn("skipped 1", result.stdout)
         finally:
             process.communicate(timeout=10)
+
+    @unittest.skipUnless(
+        sys.platform == "darwin" and os.environ.get("CLEANUP_TEST_LIVE_SCANNER") == "1",
+        "opt-in live macOS storage scanner check",
+    )
+    def test_storage_management_scanner_traversal_does_not_block_cleanup(self) -> None:
+        module = runpy.run_path(str(SCRIPT))
+        opened = module["OpenFiles"]()
+        opened.refresh()
+        # Use one captured real process snapshot so a moving scanner does not
+        # turn this into a timing test. CI without this service uses the native
+        # transcript regression instead.
+        for pid, command, descriptor, path in opened.files:
+            if command != "StorageManagementService" or descriptor != "cwd":
+                continue
+            if any(
+                owner != pid and (other == path or path in other.parents)
+                for owner, _, _, other in opened.files
+            ):
+                continue
+            self.assertIsNone(opened.busy(module["Cache"](path)))
+            return
+        self.skipTest("no isolated StorageManagementService traversal is active")
+
+    def test_native_scanner_records_preserve_real_read_write_and_execution_use(
+        self,
+    ) -> None:
+        module = runpy.run_path(str(SCRIPT))
+        # Captured macOS lsof fields, with PID and scanned paths anonymized.
+        # Both a cwd and read-only directory descriptors occur during traversal.
+        transcript = (
+            b"p22828\0cStorageManagementService\0\n"
+            b"fcwd\0a \0tDIR\0n/fixture-cache/debug\0\n"
+            b"ftxt\0a \0tREG\0n/System/Library/PrivateFrameworks/StorageManagement.framework/PlugIns/StorageManagementService\0\n"
+            b"f3\0ar\0tDIR\0n/fixture-cache/debug\0\n"
+        )
+        cache = module["Cache"](Path("/fixture-cache"))
+        for extra, blocked in [
+            (b"", False),
+            (b"f4\0ar\0tREG\0n/fixture-cache/input\0\n", True),
+            (b"f4\0aw\0tDIR\0n/fixture-cache/debug\0\n", True),
+            (b"f4\0au\0tREG\0n/fixture-cache/output\0\n", True),
+            (b"ftxt\0a \0tREG\0n/fixture-cache/runtime\0\n", True),
+            (b"p12345\0cworker\0fcwd\0a \0tDIR\0n/fixture-cache/debug\0\n", True),
+        ]:
+            with self.subTest(extra=extra):
+                opened = module["OpenFiles"]()
+                opened.files, opened.scanner_traversals = module["parse_open_files"](
+                    transcript + extra
+                )
+                opened.checked = time.monotonic()
+                self.assertEqual(opened.busy(cache) is not None, blocked)
+        impostor = transcript.replace(
+            b"/System/Library/PrivateFrameworks/StorageManagement.framework/PlugIns/StorageManagementService",
+            b"/usr/local/bin/StorageManagementService",
+        )
+        opened = module["OpenFiles"]()
+        opened.files, opened.scanner_traversals = module["parse_open_files"](impostor)
+        opened.checked = time.monotonic()
+        self.assertIsNotNone(opened.busy(cache))
 
     def test_tracked_source_and_symlink_are_skipped_while_idle_cache_is_removed(
         self,

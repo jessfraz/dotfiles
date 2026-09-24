@@ -30,6 +30,9 @@ mkd() {
 # Cleanup all caches and shit
 cleanup() {
     cleanup-build-caches "$@" || return $?
+    if command -v cleanup-worktrees >/dev/null 2>&1; then
+        cleanup-worktrees "$@"
+    fi
     # A preview must not fall through into package or Nix garbage collection.
     if [ "$#" -ne 0 ]; then
         return 0
