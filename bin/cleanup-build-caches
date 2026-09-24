@@ -1,0 +1,314 @@
+#!/usr/bin/env python3
+"""Remove inactive generated build caches, preserving source and Git storage."""
+
+import argparse
+import os
+import shutil
+import stat
+import subprocess
+import time
+from dataclasses import dataclass
+from pathlib import Path
+
+CACHE_NAMES = {"target", "target-cache", "node_modules", ".venv"}
+CACHE_TAG = b"Signature: 8a477f597d28d172789f06886806bc55"
+BUILDERS = {
+    "cargo",
+    "rustc",
+    "rustdoc",
+    "sccache",
+    "node",
+    "npm",
+    "yarn",
+    "pnpm",
+    "uv",
+    "python",
+    "pytest",
+    "go",
+    "cmake",
+    "ninja",
+    "make",
+    "just",
+    "meson",
+}
+
+
+@dataclass(frozen=True)
+class Cache:
+    path: Path
+    repository: Path | None = None
+
+
+def cargo_cache(path: Path) -> bool:
+    try:
+        with (path / "CACHEDIR.TAG").open("rb") as tag:
+            tagged = tag.read(len(CACHE_TAG)) == CACHE_TAG
+        return tagged and (
+            (path / ".rustc_info.json").is_file()
+            or (path / "debug").is_dir()
+            or (path / "release").is_dir()
+        )
+    except OSError:
+        return False
+
+
+def generated(path: Path, *, preserved: bool = False) -> bool:
+    if path.name not in CACHE_NAMES:
+        return False
+    if preserved:
+        return True
+    if path.name in {"target", "target-cache"}:
+        return (path.parent / "Cargo.toml").is_file() or cargo_cache(path)
+    if path.name == "node_modules":
+        return (path.parent / "package.json").is_file()
+    return (path / "pyvenv.cfg").is_file()
+
+
+def report_skip(path: Path, reason: str) -> None:
+    print(f"SKIP {path}: {reason}", flush=True)
+
+
+def discover(home: Path) -> tuple[list[Cache], int]:
+    caches: dict[Path, Cache] = {}
+    skipped = 0
+
+    def skip(path: Path, reason: str) -> None:
+        nonlocal skipped
+        skipped += 1
+        report_skip(path, reason)
+
+    def walk(root: Path, *, preserved: bool = False, tagged: bool = False) -> None:
+        if root.is_symlink():
+            skip(root, "symlink root")
+            return
+        if not root.is_dir():
+            return
+        repositories: dict[Path, Path | None] = {root: None}
+        for current, directories, files in os.walk(
+            root, onerror=lambda error: skip(Path(error.filename), str(error))
+        ):
+            directory = Path(current)
+            repository = repositories.get(directory.parent)
+            if ".git" in directories or ".git" in files:
+                repository = directory
+            repositories[directory] = repository
+            for name in list(directories):
+                path = directory / name
+                if name == ".git" or name == "cleanup-submodules":
+                    directories.remove(name)
+                    continue
+                selected = (
+                    cargo_cache(path)
+                    if tagged
+                    else generated(path, preserved=preserved)
+                )
+                if selected:
+                    caches[path] = Cache(path, repository)
+                    directories.remove(name)
+                elif (
+                    path.is_symlink()
+                    or name.startswith(".")
+                    or (tagged and name in CACHE_NAMES)
+                ):
+                    directories.remove(name)
+
+    walk(home / "zoo")
+    walk(home / ".codex" / "worktrees")
+    # Other repositories live directly under home. Do not walk Documents,
+    # session logs, or the rest of the user's hidden application state.
+    for path in home.iterdir():
+        if (
+            not path.name.startswith(".")
+            and path.name != "zoo"
+            and (path / ".git").exists()
+        ):
+            walk(path)
+    walk(home / ".cache", tagged=True)
+    cleanup = home / ".codex" / "cleanup"
+    if cleanup.is_dir() and not cleanup.is_symlink():
+        for path in cleanup.glob("*/preserved-build-artifacts"):
+            walk(path, preserved=True)
+    return sorted(caches.values(), key=lambda cache: str(cache.path)), skipped
+
+
+class OpenFiles:
+    def __init__(self) -> None:
+        self.checked = 0.0
+        self.files: list[tuple[int, str, str, Path]] = []
+        self.error: str | None = None
+
+    def refresh(self) -> None:
+        if self.error is not None:
+            raise OSError(self.error)
+        if time.monotonic() - self.checked < 2:
+            return
+        try:
+            result = subprocess.run(
+                [
+                    "lsof",
+                    "-n",
+                    "-P",
+                    "+c",
+                    "0",
+                    "-a",
+                    "-u",
+                    str(os.getuid()),
+                    "-F0pcfn",
+                ],
+                capture_output=True,
+                timeout=30,
+                check=False,
+            )
+        except (OSError, subprocess.SubprocessError) as error:
+            self.error = f"could not inspect open files: {error}"
+            raise OSError(self.error) from error
+        if result.returncode not in (0, 1) or (result.returncode and not result.stdout):
+            self.error = "could not inspect open files with lsof"
+            raise OSError(self.error)
+        files: list[tuple[int, str, str, Path]] = []
+        pid, command, descriptor = 0, "", ""
+        for field in result.stdout.split(b"\0"):
+            field = field.lstrip(b"\n")
+            if not field:
+                continue
+            kind, value = chr(field[0]), os.fsdecode(field[1:])
+            if kind == "p":
+                pid = int(value)
+            elif kind == "c":
+                command = value
+            elif kind == "f":
+                descriptor = value
+            elif kind == "n" and value.startswith("/") and pid != os.getpid():
+                files.append(
+                    (pid, command, descriptor, Path(value.removesuffix(" (deleted)")))
+                )
+        self.files = files
+        self.checked = time.monotonic()
+
+    def busy(self, cache: Cache) -> str | None:
+        self.refresh()
+        for pid, command, descriptor, path in self.files:
+            if path == cache.path or cache.path in path.parents:
+                return f"in use by {command} (PID {pid})"
+            builder = (
+                command.lower().split(".", 1)[0].split("-", 1)[0].rstrip("0123456789")
+                in BUILDERS
+            )
+            if (
+                builder
+                and descriptor == "cwd"
+                and cache.repository is not None
+                and (path == cache.repository or cache.repository in path.parents)
+            ):
+                return f"builder {command} (PID {pid}) is using {cache.repository}"
+        return None
+
+
+def inspect(cache: Cache) -> tuple[int, tuple[int, int]]:
+    root = cache.path
+    if root.is_symlink():
+        raise OSError("symlink root")
+    if root.is_mount():
+        raise OSError("mounted filesystem root")
+    identity = root.stat()
+    if not stat.S_ISDIR(identity.st_mode):
+        raise OSError("not a directory")
+    if cache.repository is not None:
+        relative = str(root.relative_to(cache.repository))
+        env = {
+            key: value
+            for key, value in os.environ.items()
+            if not key.startswith("GIT_")
+        }
+        tracked = subprocess.run(
+            ["git", "-C", str(cache.repository), "ls-files", "-z", "--", relative],
+            env=env,
+            capture_output=True,
+            timeout=30,
+            check=True,
+        )
+        if tracked.stdout:
+            raise OSError("contains tracked source files")
+        ignored = subprocess.run(
+            ["git", "-C", str(cache.repository), "check-ignore", "-q", "--", relative],
+            env=env,
+            capture_output=True,
+            timeout=30,
+            check=False,
+        )
+        if ignored.returncode:
+            raise OSError("not ignored by its repository")
+    size = 0
+    hardlinks: set[tuple[int, int]] = set()
+
+    def fail(error: OSError) -> None:
+        raise error
+
+    for current, directories, files in os.walk(root, onerror=fail):
+        if ".git" in directories or ".git" in files:
+            raise OSError("contains nested Git source or storage")
+        if (
+            "HEAD" in files
+            and "objects" in directories
+            and ("refs" in directories or "packed-refs" in files)
+        ):
+            raise OSError("contains a bare Git repository")
+        for name in directories + files:
+            path = Path(current) / name
+            info = path.lstat()
+            if info.st_dev != identity.st_dev:
+                raise OSError(f"contains a mounted filesystem: {path}")
+            if stat.S_ISREG(info.st_mode) and info.st_nlink > 1:
+                inode = (info.st_dev, info.st_ino)
+                if inode in hardlinks:
+                    continue
+                hardlinks.add(inode)
+            size += info.st_blocks * 512
+    return size, (identity.st_dev, identity.st_ino)
+
+
+def human_size(size: int) -> str:
+    return f"{size / (1024**3):.2f} GiB"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Show caches without deleting anything"
+    )
+    args = parser.parse_args()
+    opened = OpenFiles()
+    caches, skipped = discover(Path.home().resolve())
+    removed, total = 0, 0
+    for cache in caches:
+        try:
+            reason = opened.busy(cache)
+            if reason:
+                raise OSError(reason)
+            size, identity = inspect(cache)
+            # Large caches can take time to inspect; refresh process activity
+            # before removal, and refuse a directory replaced during the scan.
+            reason = opened.busy(cache)
+            if reason:
+                raise OSError(reason)
+            current = cache.path.lstat()
+            if cache.path.is_symlink() or (current.st_dev, current.st_ino) != identity:
+                raise OSError("directory changed during inspection")
+            if not args.dry_run:
+                shutil.rmtree(cache.path)
+            removed += 1
+            total += size
+            verb = "WOULD REMOVE" if args.dry_run else "REMOVED"
+            print(f"{verb} {cache.path} ({human_size(size)})", flush=True)
+        except (OSError, subprocess.SubprocessError) as error:
+            skipped += 1
+            report_skip(cache.path, str(error))
+    verb = "Would remove" if args.dry_run else "Removed"
+    print(
+        f"{verb} {removed} build caches ({human_size(total)} allocated); skipped {skipped}."
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

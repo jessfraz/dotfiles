@@ -48,6 +48,11 @@
     in {
       home.packages = with pkgs; [
         irssi
+        (writeShellApplication {
+          name = "cleanup-build-caches";
+          runtimeInputs = [python3 lsof git];
+          text = ''exec python3 ${./bin/cleanup-build-caches} "$@"'';
+        })
       ];
 
       home.file = let

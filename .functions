@@ -29,9 +29,11 @@ mkd() {
 
 # Cleanup all caches and shit
 cleanup() {
-    echo "Cleaning up target directories…"
-    find ~/zoo -depth -type d \( -name '.venv' -o -name 'node_modules' -o -name 'target' \) -print
-    find ~/zoo -depth -type d \( -name '.venv' -o -name 'node_modules' -o -name 'target' \) -print0 | xargs -0 rm -rf
+    cleanup-build-caches "$@" || return $?
+    # A preview must not fall through into package or Nix garbage collection.
+    if [ "$#" -ne 0 ]; then
+        return 0
+    fi
     echo "Cleaning up uv cache…"
     uv cache clean
     echo "Cleaning up npm cache…"
