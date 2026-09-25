@@ -17,6 +17,9 @@ investigation for every edit. Explicit user instructions take precedence over lo
   another email does not authorize sending it.
 - “Draft” or “don't send” applies to all recipients and follow-ups in that request; resolve ambiguous wording in favor of a draft. Verify saved drafts are
   unsent. Before sending, verify authorization for the exact message, recipients, and attachments; tool approval is not user consent.
+- Slack messages sent on Jess's behalf must not show “Sent using ChatGPT” or similar assistant attribution, even temporarily. Use a supported send path that
+  omits it; sending and then editing it away does not satisfy this. If attribution cannot be disabled before sending, prepare the message for Jess to send
+  instead. Do not bypass provider controls or broaden credentials.
 - Preserve existing user changes. Refresh Git state before edits and handoff because other agents or the user may commit concurrently; do not assume a missing
   diff was yours or revert unrelated work.
 
