@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "bin" / "cleanup-build-caches"
+sys.path.insert(0, str(SCRIPT.parent))
 TAG = "Signature: 8a477f597d28d172789f06886806bc55\n"
 
 
@@ -75,6 +76,44 @@ class CleanupTests(unittest.TestCase):
         self.assertEqual((backup / "commit").read_text(), "unique Git object")
         self.assertTrue(runtime.exists())
         self.assertIn("Removed 5 build caches", result.stdout)
+
+    def test_next_builds_are_previewed_and_removed_without_unignored_or_tracked_files(
+        self,
+    ) -> None:
+        repo = self.home / "zoo/website"
+        repo.mkdir(parents=True)
+        subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        generated = []
+        for relative in ("app", "packages/docs"):
+            project = repo / relative
+            project.mkdir(parents=True)
+            (project / "package.json").write_text('{"name":"fixture"}\n')
+            (project / ".gitignore").write_text(".next/\n")
+            generated.append(self.cache(f"zoo/website/{relative}/.next", cargo=False))
+        unignored = repo / "unignored"
+        unignored.mkdir()
+        (unignored / "package.json").write_text('{"name":"source"}\n')
+        source = self.cache("zoo/website/unignored/.next", cargo=False)
+        tracked = repo / "tracked"
+        tracked.mkdir()
+        (tracked / "package.json").write_text('{"name":"source"}\n')
+        (tracked / ".gitignore").write_text(".next/\n")
+        tracked_cache = self.cache("zoo/website/tracked/.next", cargo=False)
+        subprocess.run(
+            ["git", "-C", str(repo), "add", "-f", "tracked/.next/artifact"], check=True
+        )
+        orphan = self.cache("zoo/website/no-project/.next", cargo=False)
+        preview = self.run_cleanup("--dry-run")
+        for cache in generated:
+            self.assertTrue(cache.exists(), preview.stdout)
+            self.assertIn(f"WOULD REMOVE {cache}", preview.stdout)
+        result = self.run_cleanup()
+        for cache in generated:
+            self.assertFalse(cache.exists(), result.stdout)
+        for cache in (source, tracked_cache, orphan):
+            self.assertTrue((cache / "artifact").is_file(), result.stdout)
+        self.assertIn("not ignored by its repository", result.stdout)
+        self.assertIn("contains tracked source files", result.stdout)
 
     def test_open_file_skips_busy_cache_and_continues_with_idle_cache(self) -> None:
         busy = self.cache(".cache/busy-target")

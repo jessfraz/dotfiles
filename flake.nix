@@ -51,7 +51,7 @@
         (writeShellApplication {
           name = "cleanup-build-caches";
           runtimeInputs = [python3 lsof git];
-          text = ''exec python3 ${./bin/cleanup-build-caches} "$@"'';
+          text = ''PYTHONPATH=${./bin} exec python3 ${./bin/cleanup-build-caches} "$@"'';
         })
       ];
 

@@ -10,8 +10,8 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-CACHE_NAMES = {"target", "target-cache", "node_modules", ".venv"}
-CACHE_TAG = b"Signature: 8a477f597d28d172789f06886806bc55"
+from build_cache_policy import CACHE_NAMES, cargo_cache, generated
+
 BUILDERS = {
     "cargo",
     "rustc",
@@ -41,31 +41,6 @@ OpenFile = tuple[int, str, str, Path]
 class Cache:
     path: Path
     repository: Path | None = None
-
-
-def cargo_cache(path: Path) -> bool:
-    try:
-        with (path / "CACHEDIR.TAG").open("rb") as tag:
-            tagged = tag.read(len(CACHE_TAG)) == CACHE_TAG
-        return tagged and (
-            (path / ".rustc_info.json").is_file()
-            or (path / "debug").is_dir()
-            or (path / "release").is_dir()
-        )
-    except OSError:
-        return False
-
-
-def generated(path: Path, *, preserved: bool = False) -> bool:
-    if path.name not in CACHE_NAMES:
-        return False
-    if preserved:
-        return True
-    if path.name in {"target", "target-cache"}:
-        return (path.parent / "Cargo.toml").is_file() or cargo_cache(path)
-    if path.name == "node_modules":
-        return (path.parent / "package.json").is_file()
-    return (path / "pyvenv.cfg").is_file()
 
 
 def report_skip(path: Path, reason: str) -> None:
