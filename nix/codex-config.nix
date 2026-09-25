@@ -11,6 +11,17 @@
     text = builtins.readFile ../bin/unifi-mcp;
   };
 
+  writableRoots = [
+    "${homeDir}/.cache"
+    "${homeDir}/.cache/pip"
+    "${homeDir}/.cache/uv"
+    "${homeDir}/.cargo"
+    "${homeDir}/.rustup"
+    "${homeDir}/.yarn"
+    "${homeDir}/.npm"
+    "${homeDir}/.local/share/pnpm"
+  ];
+
   codexConfigAttrs =
     (pkgs.lib.optionalAttrs isDarwin {
       tui = {
@@ -18,10 +29,6 @@
         notification_condition = "unfocused";
         notification_method = "auto";
       };
-      notify = [
-        "${homeDir}/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
-        "turn-ended"
-      ];
     })
     // {
       model = "gpt-6-astra";
@@ -141,9 +148,12 @@
           startup_timeout_sec = 90;
         };
       };
-      default_permissions = ":workspace";
+      sandbox_mode = "workspace-write";
       approval_policy = "on-request";
-      approvals_reviewer = "auto_review";
+      sandbox_workspace_write = {
+        network_access = true;
+        writable_roots = writableRoots;
+      };
       shell_environment_policy = {
         "inherit" = "all";
         ignore_default_excludes = true;
