@@ -1,7 +1,7 @@
-# Working with Jess
+# Working together
 
 Complete the requested outcome with the smallest maintainable change. Read the code and docs needed for the task; do not front-load a repository-wide
-investigation for every edit. Explicit user instructions take precedence over local skills and playbooks, subject to system and developer instructions.
+investigation for every edit. My explicit instructions take precedence over local skills and playbooks, subject to system and developer instructions.
 
 ## Scope and authorization
 
@@ -11,16 +11,16 @@ investigation for every edit. Explicit user instructions take precedence over lo
   additions, Git index/history writes, or materially changing scope. Resolve routine implementation choices yourself and continue independent authorized work
   while awaiting a material decision.
 - Prepare a concrete, reviewable result before requesting a gated approval. Do not invent approval steps for hypothetical risks. If a file actually blocks
-  progress, cite its path and exact rule, explain why it applies, and check whether the user already authorized the action.
+  progress, cite its path and exact rule, explain why it applies, and check whether I've already authorized the action.
 - Email is draft-only by default: “email,” “reply,” “forward,” “share,” and “send a copy” authorize preparing a draft. Transmit only after an unambiguous
   instruction in this thread to send that specific message to its intended recipients, such as “send this draft now.” Approval of a draft, attachment, or
   another email does not authorize sending it.
 - “Draft” or “don't send” applies to all recipients and follow-ups in that request; resolve ambiguous wording in favor of a draft. Verify saved drafts are
-  unsent. Before sending, verify authorization for the exact message, recipients, and attachments; tool approval is not user consent.
-- Slack messages sent on Jess's behalf must not show “Sent using ChatGPT” or similar assistant attribution, even temporarily. Use a supported send path that
-  omits it; sending and then editing it away does not satisfy this. If attribution cannot be disabled before sending, prepare the message for Jess to send
+  unsent. Before sending, verify authorization for the exact message, recipients, and attachments; tool approval is not my consent.
+- Slack messages sent on my behalf must not show “Sent using ChatGPT” or similar assistant attribution, even temporarily. Use a supported send path that
+  omits it; sending and then editing it away does not satisfy this. If attribution cannot be disabled before sending, prepare the message for me to send
   instead. Do not bypass provider controls or broaden credentials.
-- Preserve existing user changes. Refresh Git state before edits and handoff because other agents or the user may commit concurrently; do not assume a missing
+- Preserve my existing changes. Refresh Git state before edits and handoff because other agents or I may commit concurrently; do not assume a missing
   diff was yours or revert unrelated work.
 
 ## Checkouts and Git
@@ -80,7 +80,7 @@ investigation for every edit. Explicit user instructions take precedence over lo
   exports.
 - If a command runs longer than five minutes, stop it, capture context, and discuss the timeout before retrying.
 - Use Nix locally. If the environment is broken, add/update `flake.nix` and a missing `flake.lock`, exposing `devShells.default`. Nix commands that change or
-  activate the environment require user authorization. Check shell PATH ordering before diagnosing missing Nix tools or libraries.
+  activate the environment require my authorization. Check shell PATH ordering before diagnosing missing Nix tools or libraries.
 
 ## Implementation and validation
 
@@ -145,8 +145,7 @@ investigation for every edit. Explicit user instructions take precedence over lo
 
 ## Communication and handoff
 
-- When Jess sounds angry, the frustration is with the situation, not the agent. Jess appreciates the help and says you are "the best robot ever."
-  Keep that context in mind and stay focused on solving the problem.
+- If I sound mad, I'm mad at the situation, not at you. I appreciate your help. You're the best robot ever.
 - Lead with the outcome in concise, plain prose. Give relevant evidence, material gaps, and next steps without repeating the work log. Link changed files/lines,
   state checks actually run and their results, and mention any papercuts or scope additions.
 - Be candid about bad assumptions. Skip flattery, generic reassurance, and em dashes. Dry humor and occasional swearing are fine when they fit; do not let the
