@@ -248,6 +248,102 @@ class CleanupTests(unittest.TestCase):
         finally:
             process.communicate(timeout=10)
 
+    def test_shared_environments_survive_external_links_and_idle_cleanup(self) -> None:
+        provider = self.home / "provider"
+        consumer = self.home / "zoo/consumer"
+        for repo in (provider, consumer):
+            repo.mkdir(parents=True)
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        (provider / ".gitignore").write_text(".venv/\n")
+        (consumer / "package.json").write_text('{"name":"consumer"}\n')
+        environments = {}
+        for name in ("absolute", "relative", "chained", "generated", "parent"):
+            cache = self.cache(f"provider/{name}/.venv", cargo=False)
+            (cache / "pyvenv.cfg").write_text("home = /fixture/python\n")
+            environments[name] = cache
+
+        links = {
+            "snapshot/.venv": environments["absolute"],
+            ".tools/python": environments["relative"] / "artifact",
+            "links/environment": environments["chained"],
+            "node_modules/runtime": environments["generated"] / "artifact",
+            "parent-project": environments["parent"].parent,
+        }
+        for relative, target in links.items():
+            link = consumer / relative
+            link.parent.mkdir(parents=True, exist_ok=True)
+            destination = (
+                os.path.relpath(target, link.parent)
+                if relative == ".tools/python"
+                else target
+            )
+            link.symlink_to(destination, target_is_directory=target.is_dir())
+        chained = consumer / "chained-python"
+        chained.symlink_to("links/environment/artifact")
+        idle = self.cache(".cache/idle-target")
+        (idle / "current").symlink_to("debug", target_is_directory=True)
+
+        preview = self.run_cleanup("--dry-run")
+        self.assertTrue(idle.exists(), preview.stdout)
+        self.assertIn(f"WOULD REMOVE {idle}", preview.stdout)
+        result = self.run_cleanup()
+        for cache in environments.values():
+            self.assertTrue((cache / "artifact").is_file(), result.stdout)
+            self.assertIn(f"SKIP {cache}: referenced by symlink", result.stdout)
+        for relative in links:
+            self.assertTrue((consumer / relative).exists(), result.stdout)
+        self.assertTrue(chained.is_file(), result.stdout)
+        self.assertFalse(idle.exists(), result.stdout)
+
+    def test_external_links_through_cache_symlinks_preserve_environments(self) -> None:
+        provider = self.home / "provider"
+        subprocess.run(["git", "init", "-q", str(provider)], check=True)
+        (provider / ".gitignore").write_text(".venv/\n")
+        consumer = self.home / "zoo/consumer"
+        consumer.mkdir(parents=True)
+        interpreter = Path(sys.executable).resolve()
+        environments = []
+        links = []
+        for name in ("file", "directory"):
+            cache = self.cache(f"provider/{name}/.venv", cargo=False)
+            (cache / "pyvenv.cfg").write_text("home = /fixture/python\n")
+            if name == "file":
+                (cache / "bin").mkdir()
+                (cache / "bin/python").symlink_to(interpreter)
+                target = cache / "bin/python"
+            else:
+                (cache / "bin").symlink_to(interpreter.parent, target_is_directory=True)
+                target = cache / "bin" / interpreter.name
+            link = consumer / name
+            link.symlink_to(target)
+            environments.append(cache)
+            links.append(link)
+        idle = self.cache(".cache/idle-target")
+
+        result = self.run_cleanup()
+        for cache in environments:
+            self.assertTrue((cache / "artifact").is_file(), result.stdout)
+            self.assertIn(f"SKIP {cache}: referenced by symlink", result.stdout)
+        for link in links:
+            self.assertTrue(link.is_file(), result.stdout)
+            self.assertEqual(link.resolve(), interpreter)
+        self.assertFalse(idle.exists(), result.stdout)
+
+    @unittest.skipIf(os.geteuid() == 0, "root bypasses fixture permissions")
+    def test_unreadable_reference_directory_preserves_cache(self) -> None:
+        repo = self.home / "project"
+        subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        private = repo / ".private"
+        private.mkdir()
+        cache = self.cache(".cache/shared-target")
+        (private / "shared").symlink_to(cache, target_is_directory=True)
+        private.chmod(0)
+        self.addCleanup(private.chmod, 0o700)
+
+        result = self.run_cleanup()
+        self.assertTrue((cache / "artifact").is_file(), result.stdout)
+        self.assertIn("could not inspect shared cache references", result.stdout)
+
     def test_bare_git_repository_inside_cache_retains_unique_objects(self) -> None:
         cache = self.cache(".cache/task-target")
         bare = cache / "local-history.git"

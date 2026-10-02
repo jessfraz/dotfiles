@@ -2,6 +2,7 @@
 """Remove inactive generated build caches, preserving source and Git storage."""
 
 import argparse
+import errno
 import os
 import shutil
 import stat
@@ -43,11 +44,39 @@ class Cache:
     repository: Path | None = None
 
 
+@dataclass(frozen=True)
+class ScanRoot:
+    path: Path
+    preserved: bool = False
+    tagged: bool = False
+
+
+def cleanup_roots(home: Path) -> list[ScanRoot]:
+    roots = [ScanRoot(home / "zoo"), ScanRoot(home / ".codex" / "worktrees")]
+    # Other repositories live directly under home. Do not walk Documents,
+    # session logs, or the rest of the user's hidden application state.
+    roots.extend(
+        ScanRoot(path)
+        for path in home.iterdir()
+        if not path.name.startswith(".")
+        and path.name != "zoo"
+        and (path / ".git").exists()
+    )
+    roots.append(ScanRoot(home / ".cache", tagged=True))
+    cleanup = home / ".codex" / "cleanup"
+    if cleanup.is_dir() and not cleanup.is_symlink():
+        roots.extend(
+            ScanRoot(path, preserved=True)
+            for path in cleanup.glob("*/preserved-build-artifacts")
+        )
+    return roots
+
+
 def report_skip(path: Path, reason: str) -> None:
     print(f"SKIP {path}: {reason}", flush=True)
 
 
-def discover(home: Path) -> tuple[list[Cache], int]:
+def discover(roots: list[ScanRoot]) -> tuple[list[Cache], int]:
     caches: dict[Path, Cache] = {}
     skipped = 0
 
@@ -91,23 +120,80 @@ def discover(home: Path) -> tuple[list[Cache], int]:
                 ):
                     directories.remove(name)
 
-    walk(home / "zoo")
-    walk(home / ".codex" / "worktrees")
-    # Other repositories live directly under home. Do not walk Documents,
-    # session logs, or the rest of the user's hidden application state.
-    for path in home.iterdir():
-        if (
-            not path.name.startswith(".")
-            and path.name != "zoo"
-            and (path / ".git").exists()
-        ):
-            walk(path)
-    walk(home / ".cache", tagged=True)
-    cleanup = home / ".codex" / "cleanup"
-    if cleanup.is_dir() and not cleanup.is_symlink():
-        for path in cleanup.glob("*/preserved-build-artifacts"):
-            walk(path, preserved=True)
+    for root in roots:
+        walk(root.path, preserved=root.preserved, tagged=root.tagged)
     return sorted(caches.values(), key=lambda cache: str(cache.path)), skipped
+
+
+def referenced_caches(roots: list[ScanRoot], caches: list[Cache]) -> dict[Path, Path]:
+    paths = {cache.path for cache in caches if not cache.path.is_symlink()}
+    descendants: dict[Path, set[Path]] = {}
+    for path in paths:
+        for parent in (path, *path.parents):
+            descendants.setdefault(parent, set()).add(path)
+    references: dict[Path, Path] = {}
+
+    def record(link: Path) -> None:
+        def protect(target: Path, *, include_descendants: bool = False) -> None:
+            affected = paths.intersection((target, *target.parents))
+            if include_descendants:
+                affected |= descendants.get(target, set())
+            for cache in affected:
+                # Internal links disappear with their own cache and have no
+                # outside consumer. Another cache's links protect the target.
+                if not link.is_relative_to(cache):
+                    references.setdefault(cache, link)
+
+        # Resolve component by component: .venv/bin/python often resolves to an
+        # interpreter elsewhere, but consumers still need the intermediate .venv.
+        target = Path(link.anchor)
+        pending = list(reversed(link.parts[1:]))
+        followed = 0
+        while pending:
+            component = pending.pop()
+            if component == "..":
+                target = target.parent
+                continue
+            candidate = target / component
+            protect(candidate)
+            try:
+                destination = candidate.readlink()
+            except OSError as error:
+                if error.errno not in {errno.EINVAL, errno.ENOENT, errno.ENOTDIR}:
+                    raise
+                target = candidate
+                continue
+            followed += 1
+            if followed > 40:
+                # Cyclic or excessively deep links cannot provide usable access.
+                return
+            if destination.is_absolute():
+                target = Path(destination.anchor)
+                pending.extend(reversed(destination.parts[1:]))
+            else:
+                pending.extend(reversed(destination.parts))
+        protect(target, include_descendants=True)
+
+    if not paths:
+        return references
+    pending = []
+    for root in roots:
+        if root.path.is_symlink():
+            record(root.path)
+        elif root.path.is_dir():
+            pending.append(root.path)
+    while pending:
+        # References may live in hidden directories or generated output, so this
+        # scan cannot prune those locations like cache discovery does.
+        with os.scandir(pending.pop()) as entries:
+            for entry in entries:
+                if entry.name in {".git", "cleanup-submodules"}:
+                    continue
+                if entry.is_symlink():
+                    record(Path(entry.path))
+                elif entry.is_dir(follow_symlinks=False):
+                    pending.append(Path(entry.path))
+    return references
 
 
 def parse_open_files(output: bytes) -> tuple[list[OpenFile], set[OpenFile]]:
@@ -283,10 +369,21 @@ def main() -> int:
     )
     args = parser.parse_args()
     opened = OpenFiles()
-    caches, skipped = discover(Path.home().resolve())
+    roots = cleanup_roots(Path.home().resolve())
+    caches, skipped = discover(roots)
+    references: dict[Path, Path] = {}
+    reference_error = None
+    try:
+        references = referenced_caches(roots, caches)
+    except OSError as error:
+        reference_error = f"could not inspect shared cache references: {error}"
     removed, total = 0, 0
     for cache in caches:
         try:
+            if reference_error:
+                raise OSError(reference_error)
+            if cache.path in references:
+                raise OSError(f"referenced by symlink {references[cache.path]}")
             reason = opened.busy(cache)
             if reason:
                 raise OSError(reason)
