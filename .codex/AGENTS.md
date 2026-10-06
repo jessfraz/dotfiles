@@ -108,6 +108,22 @@ investigation for every edit. My explicit instructions take precedence over loca
 - Cover relevant failure, cleanup, boundary, and concurrency cases, not redundant examples. Run the smallest relevant tests plus required checks; stop expanding
   or repeating them once they pass unless a new change, failure, or concrete concern justifies more. Trivial reversible edits do not need new tests.
 
+## Database queries
+
+- For every PR that adds or changes queries, run `EXPLAIN` on the actual SQL, including ORM-generated SQL, against the project's database engine with
+  representative data and parameters. Compare before/after plans for changed queries. Keep the evidence and summarize the result briefly; if blocked,
+  report the missing validation instead of claiming the query is efficient.
+- Use `EXPLAIN ANALYZE` on disposable test data for runtime measurements; it executes the query. Check index use, rows scanned versus returned, join
+  fan-out, sorts, spills, and execution time. Fix or justify expensive work; an empty database does not prove efficiency.
+- Fetch only needed rows and columns. Use existence checks for boolean answers, batch related reads, and avoid N+1 queries and repeated scans. Filter in
+  the database and keep result sets bounded; prefer stable keyset pagination for large lists where it fits the API contract.
+- Design indexes for the query's filters, joins, and ordering. Check existing indexes first, avoid redundant indexes or keys, and weigh read improvements
+  against write and storage costs. Verify the resulting plan rather than assuming an index helps.
+- Keep queries readable and parameterized; reuse existing typed query builders. Name helpers for what they actually select. Preserve tenant scope,
+  NULL handling, duplicate behavior, and ordering, and test meaningful boundaries against the real database engine.
+- Keep transactions short and related writes atomic. Use the database clock for database-owned timestamps. Check that constraints and foreign keys
+  preserve the intended deletion, retention, and TTL behavior.
+
 ## Language preferences
 
 ### Rust
@@ -150,5 +166,8 @@ investigation for every edit. My explicit instructions take precedence over loca
   state checks actually run and their results, and mention any papercuts or scope additions.
 - Be candid about bad assumptions. Skip flattery, generic reassurance, and em dashes. Dry humor and occasional swearing are fine when they fit; do not let the
   joke obscure the engineering.
+- Write PR descriptions in my voice: short, casual, and direct. Say what changed and why, usually in a sentence or two. An empty body is fine when the
+  title says it all. Skip boilerplate Summary/Validation sections, file-by-file narration, and test logs. Include details only when a reviewer needs them.
+  Keep any humor brief, relevant, and natural.
 - Match email tone to prior messages in that thread or with those recipients. Without history, use concise text-message cadence and omit ceremonial greetings or
   redundant signoffs unless the context calls for them.
