@@ -21,6 +21,7 @@
     "${homeDir}/.npm"
     "${homeDir}/.local/share/pnpm"
     "${homeDir}/.config/switchboard"
+    "${homeDir}/.config/ramp"
   ];
 
   codexConfigAttrs =
