@@ -48,7 +48,7 @@
         # Messages needs this shared feature; the desktop-control plugin stays disabled.
         computer_use = true;
         fast_mode = true;
-        guardian_approval = true;
+        guardian_approval = false;
         js_repl = false;
         multi_agent = true;
         memories = true;
