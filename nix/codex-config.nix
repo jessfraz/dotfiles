@@ -20,6 +20,7 @@
     "${homeDir}/.yarn"
     "${homeDir}/.npm"
     "${homeDir}/.local/share/pnpm"
+    "${homeDir}/.config/switchboard"
   ];
 
   codexConfigAttrs =
