@@ -44,39 +44,6 @@ relies_on(){
 		fi
 	done
 }
-# creates an nginx config for a local route
-nginx_config(){
-	server=$1
-	route=$2
-
-	cat >"${HOME}/.nginx/conf.d/${server}.conf" <<-EOF
-	upstream ${server} { server ${route}; }
-	server {
-	server_name ${server};
-
-	location / {
-	proxy_pass  http://${server};
-	proxy_http_version 1.1;
-	proxy_set_header Upgrade \$http_upgrade;
-	proxy_set_header Connection "upgrade";
-	proxy_set_header Host \$http_host;
-	proxy_set_header X-Forwarded-Proto \$scheme;
-	proxy_set_header X-Forwarded-For \$remote_addr;
-	proxy_set_header X-Forwarded-Port \$server_port;
-	proxy_set_header X-Request-Start \$msec;
-}
-	}
-	EOF
-
-	# restart nginx
-	docker restart nginx
-
-	# add host to /etc/hosts
-	hostess add "$server" 127.0.0.1
-
-	# open browser
-	browser-exec "http://${server}"
-}
 
 #
 # Container Aliases
@@ -729,23 +696,6 @@ netcat(){
 		docker run --rm -it \
 			--net host \
 			${DOCKER_REPO_PREFIX}/netcat "$@"
-	fi
-}
-nginx(){
-	if [[ -n "$(which nginx)" ]]; then
-		"$(which nginx)" "$@"
-	else
-		del_stopped nginx
-
-		docker run -d \
-			--restart always \
-			-v "${HOME}/.nginx:/etc/nginx" \
-			--net host \
-			--name nginx \
-			nginx
-
-		# add domain to hosts & open nginx
-		sudo hostess add jess 127.0.0.1
 	fi
 }
 nmap(){

@@ -28,4 +28,3 @@ Session.vim
 .irssi/scripts/autorun/blocker.pl
 .irssi/startup
 .rainbow_oauth
-.nginx/conf.d/*
