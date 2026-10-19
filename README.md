@@ -1,6 +1,5 @@
 ## dotfiles
 
-[![Travis CI](https://travis-ci.org/kuzeko/dotfiles.svg?branch=master)](https://travis-ci.org/kuzeko/dotfiles)
 [![make test](https://github.com/kuzeko/dotfiles/actions/workflows/make-test.yml/badge.svg)](https://github.com/kuzeko/dotfiles/actions/workflows/make-test.yml)
 
 ### To install:

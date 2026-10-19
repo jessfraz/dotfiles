@@ -1,0 +1,38 @@
+name: make test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck file
+      - run: ./test.sh
+
+  install:
+    name: install (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS
+            os: macos-latest
+          - name: Ubuntu 24.04
+            os: ubuntu-24.04
+          - name: Debian 13
+            os: ubuntu-24.04
+            container: debian:13
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+    steps:
+      - name: Install what a Debian system has and the image lacks
+        if: matrix.container
+        run: apt-get update && apt-get install -y git make gnupg procps
+      - uses: actions/checkout@v5
+      - name: Trust the checkout, which another user owns inside the container
+        if: matrix.container
+        run: git config --system --add safe.directory "$GITHUB_WORKSPACE"
+      - run: ./test-install.sh
