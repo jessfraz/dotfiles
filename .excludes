@@ -1,6 +1,5 @@
 ##  .excludes
 ##  Files you decide to *NOT* install for reasons
-bin/install.sh
 bin/yubikey-ssh-setup
 bin/tor-exit-threat-score
 bin/keyboard-backlight
