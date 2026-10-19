@@ -10,7 +10,7 @@ else
 	PROFILE ?= server
 endif
 
-SERVER_SKIP := .config .dockerfunc .fonts .gtkrc .i3 .irssi .mpd.conf \
+SERVER_SKIP := .dockerfunc .fonts .gtkrc .i3 .irssi .mpd.conf \
 	.rainbow_config.json .urxvt .Xdefaults .Xprofile .Xresources .xsessionrc \
 	.gitconfig .bash_sessions_disable
 ifeq ($(PROFILE), server)
@@ -35,11 +35,12 @@ dotfiles: ## Installs the dotfiles.
 	# Clean any macOs DS_Store file first
 	find . -type f -name '*.DS_Store' -ls -delete
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".github" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".claude" -not -name ".temp" $(DOTFILES_SKIP)); do \
+	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".github" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".claude" -not -name ".temp" -not -name ".config" $(DOTFILES_SKIP)); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
 	gpg --list-keys || true;
+	mkdir -p -m 700 $(HOME)/.gnupg;
 	ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
 	ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
@@ -56,7 +57,11 @@ ifeq ($(PROFILE), server)
 	git config --file $(HOME)/.gitconfig user.useConfigOnly true
 	git config --file $(HOME)/.gitconfig commit.gpgsign false
 else
+	# Link entries into ~/.config one by one: it usually exists already, and
+	# linking the directory itself would make applications write into the
+	# repository.
 	mkdir -p $(HOME)/.config;
+	ln -snf $(CURDIR)/.config/fontconfig $(HOME)/.config/fontconfig;
 	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
@@ -94,12 +99,12 @@ keygen: ## Generates SSH key if this is not already present.
 
 .PHONY: requirements
 requirements: ## Checks for commands to be installed.
-	is_ubuntu=$$( grep -q "Ubuntu" /etc/*release &> /dev/null && cat /etc/*release | grep ^VERSION | tr -d 'VERSION="' | head -c 2); \
 	for cmd in 'mapfile' 'screen' 'htop' 'gpg-connect-agent' 'unzip' $(if $(filter desktop,$(PROFILE)),'docker' 'xclip'); do \
 		command -v $$cmd >/dev/null 2>&1 || { echo >&2 "$$cmd it's not installed."; } \
 	done
-	@## && [ $$cmd = docker ] && [ $$(echo $$is_ubuntu) -lt 17 ] && { echo "use the install_docker.md"; } ];\
-	ls $(HOME)/.ssh/id_* >/dev/null 2>&1 || echo "You need to setup SSH keys, use make keygen";
+ifeq ($(PROFILE), desktop)
+	@ls $(HOME)/.ssh/id_* >/dev/null 2>&1 || echo "You need to setup SSH keys, use make keygen";
+endif
 
 .PHONY: config
 config: ## Shows how to configure basic stuff
@@ -124,11 +129,17 @@ endif
 
 .PHONY: shellcheck
 shellcheck: ## Runs the shellcheck tests on the scripts.
-	docker run --rm -i $(DOCKER_FLAGS) \
-		--name df-shellcheck \
-		-v $(CURDIR):/usr/src:ro \
-		--workdir /usr/src \
-		r.j3ss.co/shellcheck ./test.sh
+	# test.sh needs shellcheck and file; without them, use the same Ubuntu
+	# packages CI uses.
+	if command -v shellcheck >/dev/null && command -v file >/dev/null; then \
+		./test.sh; \
+	else \
+		docker run --rm -i $(DOCKER_FLAGS) \
+			--name df-shellcheck \
+			-v $(CURDIR):/usr/src:ro \
+			--workdir /usr/src \
+			ubuntu:24.04 bash -c 'apt-get update -qq && apt-get install -y -qq shellcheck file >/dev/null && ./test.sh'; \
+	fi
 
 .PHONY: help
 help:
