@@ -26,13 +26,20 @@ if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/google-cloud
 # shellcheck source=/dev/null
 if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
 
-# update path for gnu coreutils, make & find on darwin
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
-export PATH=/usr/local/opt/make/libexec/gnubin:${PATH}
-export MANPATH=/usr/local/opt/make/libexec/gnuman:${MANPATH}
-export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
-export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
+# update path for gnu coreutils, make & find on darwin; Homebrew lives in
+# /opt/homebrew on Apple Silicon and /usr/local on Intel
+if [ "$(uname -s)" = Darwin ]; then
+	for brew_prefix in /opt/homebrew /usr/local; do
+		if [ -d "${brew_prefix}/opt" ]; then
+			for tool in coreutils make findutils; do
+				export PATH="${brew_prefix}/opt/${tool}/libexec/gnubin:${PATH}"
+				export MANPATH="${brew_prefix}/opt/${tool}/libexec/gnuman:${MANPATH}"
+			done
+			break
+		fi
+	done
+	unset brew_prefix tool
+fi
 
 # update path for Chromium depot_tools
 export PATH="${PATH}:${HOME}/depot_tools"

@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Linux specific aliases
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
+# Give Linux the macOS clipboard commands, without hiding the real ones
+if ! command -v pbcopy > /dev/null 2>&1; then
+	alias pbcopy='xclip -selection clipboard'
+	alias pbpaste='xclip -selection clipboard -o'
+fi
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -85,7 +87,7 @@ command -v md5sum > /dev/null || alias md5sum="md5"
 command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
 # Trim new lines and copy to clipboard
-alias c="tr -d '\\n' | xclip -selection clipboard"
+alias c="tr -d '\\n' | pbcopy"
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
@@ -116,7 +118,7 @@ alias afk="i3lock -c 000000"
 alias hosts='sudo vim /etc/hosts'
 
 # copy working directory
-alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'
+alias cwd='pwd | tr -d "\r\n" | pbcopy'
 
 # copy file interactive
 alias cp='cp -i'
