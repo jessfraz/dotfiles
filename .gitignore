@@ -28,3 +28,4 @@ Session.vim
 .irssi/scripts/autorun/blocker.pl
 .irssi/startup
 .rainbow_oauth
+__pycache__
