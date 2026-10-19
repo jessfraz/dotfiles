@@ -472,3 +472,17 @@ homeMonitorSetup() {
 		--output DP-2-2 --mode 3840x2160 --rate 60  --rotate normal --pos 0x900  \
 		--output DP-1-2 --mode 3840x2160 --rate 60  --rotate left --pos 3840x0
 }
+
+# Set the git author and committer for this shell session only. On an account
+# several people share, `git config --global user.*` would sign everyone's
+# commits with one name.
+# Usage: iam "Your Name" you@example.com
+iam() {
+	if [[ $# -ne 2 ]]; then
+		echo "usage: iam \"Your Name\" you@example.com" >&2
+		return 1
+	fi
+	export GIT_AUTHOR_NAME="$1" GIT_COMMITTER_NAME="$1"
+	export GIT_AUTHOR_EMAIL="$2" GIT_COMMITTER_EMAIL="$2"
+	echo "git identity for this session: $1 <$2>"
+}

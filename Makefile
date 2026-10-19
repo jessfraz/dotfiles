@@ -1,3 +1,22 @@
+SHELL := bash
+UNAME := $(shell uname -s)
+
+# A server gets the shell and git setup only: no X11, i3, fonts, or the
+# .dockerfunc wrappers, which shadow real commands such as htop and aws with
+# `docker run` of third-party images. Override with `make PROFILE=desktop`.
+ifeq ($(UNAME), Darwin)
+	PROFILE ?= desktop
+else
+	PROFILE ?= server
+endif
+
+SERVER_SKIP := .config .dockerfunc .fonts .gtkrc .i3 .irssi .mpd.conf \
+	.rainbow_config.json .urxvt .Xdefaults .Xprofile .Xresources .xsessionrc \
+	.gitconfig .bash_sessions_disable
+ifeq ($(PROFILE), server)
+	DOTFILES_SKIP := $(foreach f,$(SERVER_SKIP),-not -name "$(f)")
+endif
+
 .PHONY: all
 all: bin dotfiles requirements config ## Installs the bin directory files and the dotfiles but not etc because they are dangerous.
 
@@ -16,7 +35,7 @@ dotfiles: ## Installs the dotfiles.
 	# Clean any macOs DS_Store file first
 	find . -type f -name '*.DS_Store' -ls -delete
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".claude" -not -name ".temp"); do \
+	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".claude" -not -name ".temp" $(DOTFILES_SKIP)); do \
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
@@ -26,11 +45,22 @@ dotfiles: ## Installs the dotfiles.
 	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
 	ln -sfn $(CURDIR)/.gittemplates $(HOME)/.gittemplates;
 	git update-index --skip-worktree $(CURDIR)/.gitconfig;
+	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile;
+ifeq ($(PROFILE), server)
+	# The account is shared, so ~/.gitconfig is a real file that includes the
+	# repository's one: `git config --global` then never writes into the
+	# repository. Nobody's identity or signing key lives here; see
+	# docs/shared-server.md.
+	if [ -L $(HOME)/.gitconfig ]; then rm $(HOME)/.gitconfig; fi
+	git config --file $(HOME)/.gitconfig include.path $(CURDIR)/.gitconfig
+	git config --file $(HOME)/.gitconfig user.useConfigOnly true
+	git config --file $(HOME)/.gitconfig commit.gpgsign false
+else
 	mkdir -p $(HOME)/.config;
 	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
 	mkdir -p $(HOME)/.local/share;
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
-	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile;
+endif
 	if [ -f /usr/local/bin/pinentry ]; then \
 		sudo ln -snf /usr/bin/pinentry /usr/local/bin/pinentry; \
 	fi;
@@ -40,6 +70,7 @@ dotfiles: ## Installs the dotfiles.
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
+	@[ "$(UNAME)" = Linux ] || { echo "make etc is for Linux only" >&2; exit 1; }
 	sudo mkdir -p /etc/docker/seccomp
 	for file in $(shell find $(CURDIR)/etc -type f -not -name ".*.swp"); do \
 		f=$$(echo $$file | sed -e 's|$(CURDIR)||'); \
@@ -51,7 +82,7 @@ etc: ## Installs the etc directory files.
 
 	# https://github.com/systemd/systemd/issues/9450
 	if [ -f /run/systemd/resolve/stub-resolv.conf ]; then \
-		sudo ln -snf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf \
+		sudo ln -snf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf; \
 	fi
 
 .PHONY: keygen
@@ -64,7 +95,7 @@ keygen: ## Generates SSH key if this is not already present.
 .PHONY: requirements
 requirements: ## Checks for commands to be installed.
 	is_ubuntu=$$( grep -q "Ubuntu" /etc/*release &> /dev/null && cat /etc/*release | grep ^VERSION | tr -d 'VERSION="' | head -c 2); \
-	for cmd in 'mapfile' 'screen' 'htop' 'gpg-connect-agent' 'docker' 'xclip' 'unzip'; do \
+	for cmd in 'mapfile' 'screen' 'htop' 'gpg-connect-agent' 'unzip' $(if $(filter desktop,$(PROFILE)),'docker' 'xclip'); do \
 		command -v $$cmd >/dev/null 2>&1 || { echo >&2 "$$cmd it's not installed."; } \
 	done
 	@## && [ $$cmd = docker ] && [ $$(echo $$is_ubuntu) -lt 17 ] && { echo "use the install_docker.md"; } ];\
