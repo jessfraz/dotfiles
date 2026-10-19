@@ -283,6 +283,7 @@ repo() {
 
 	# Remove cruft from branchname
 	branch=${git_where#refs\/heads\/}
+	branch=${branch#remotes\/origin\/}
 
 	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
 	url="$base_url/$tree/$branch$relative_path"
@@ -453,11 +454,9 @@ govendorcheck() {
 }
 
 restart_gpgagent(){
-	# Restart the gpg agent.
-	# shellcheck disable=SC2046
-	kill -9 $(pidof scdaemon) >/dev/null 2>&1
-	# shellcheck disable=SC2046
-	kill -9 $(pidof gpg-agent) >/dev/null 2>&1
+	# Restart this user's gpg agent; pidof does not exist on macOS.
+	gpgconf --kill scdaemon
+	gpgconf --kill gpg-agent
 	gpg-connect-agent /bye >/dev/null 2>&1
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
