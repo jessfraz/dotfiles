@@ -109,17 +109,17 @@ generate_subkeys(){
 	echo "Generating subkeys..."
 
 	echo "Generating signing subkey..."
-	echo addkey$'\n'4$'\n'$SUBKEY_LENGTH$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
+	echo addkey$'\n'4$'\n'"$SUBKEY_LENGTH"$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --edit-key "$KEYID"
 
 	echo "Generating encryption subkey..."
-	echo addkey$'\n'6$'\n'$SUBKEY_LENGTH$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
+	echo addkey$'\n'6$'\n'"$SUBKEY_LENGTH"$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --edit-key "$KEYID"
 
 	echo "Generating authentication subkey..."
-	echo addkey$'\n'8$'\n'S$'\n'E$'\n'A$'\n'q$'\n'$SUBKEY_LENGTH$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
+	echo addkey$'\n'8$'\n'S$'\n'E$'\n'A$'\n'q$'\n'"$SUBKEY_LENGTH"$'\n'"$SUBKEY_EXPIRE"$'\n'save$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --edit-key "$KEYID"
 
@@ -148,7 +148,7 @@ move_keys_to_card(){
 update_cardinfo(){
 	# Edit the smart card name and info values.
 	echo "Updating card holder name..."
-	echo admin$'\n'name$'\n'$SURNAME$'\n'$GIVENNAME$'\n'quit$'\n' | \
+	echo admin$'\n'name$'\n'"$SURNAME"$'\n'"$GIVENNAME"$'\n'quit$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --card-edit
 
@@ -163,12 +163,12 @@ update_cardinfo(){
 		--command-fd 0 --card-edit
 
 	echo "Updating card public key url..."
-	echo admin$'\n'url$'\n'$PUBLIC_KEY_URL$'\n'quit$'\n' | \
+	echo admin$'\n'url$'\n'"$PUBLIC_KEY_URL"$'\n'quit$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --card-edit
 
 	echo "Updating card sex..."
-	echo admin$'\n'sex$'\n'$SEX$'\n'quit$'\n' | \
+	echo admin$'\n'sex$'\n'"$SEX"$'\n'quit$'\n' | \
 		gpg2 --expert --batch --display-charset utf-8 \
 		--command-fd 0 --card-edit
 }

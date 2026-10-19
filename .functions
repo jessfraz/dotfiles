@@ -264,13 +264,13 @@ repo() {
 	# Validate that this folder is a git folder
 	if ! git branch 2>/dev/null 1>&2 ; then
 		echo "Not a git repo!"
-		exit $?
+		return 1
 	fi
 
 	# Find current directory relative to .git parent
 	full_path=$(pwd)
 	git_base_path=$(cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
-	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
+	relative_path=${full_path#"$git_base_path"} # remove leading git_base_path from working directory
 
 	# If filename argument is present, append it
 	if [ "$1" ]; then
@@ -328,7 +328,7 @@ dbs() {
 		local t="session"
 	fi
 
-	dbus-send --$t --dest=org.freedesktop.DBus \
+	dbus-send --"$t" --dest=org.freedesktop.DBus \
 		--type=method_call	--print-reply \
 		/org/freedesktop/DBus org.freedesktop.DBus.ListNames
 }

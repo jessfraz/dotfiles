@@ -170,7 +170,7 @@ gh_toc_app() {
 			mkdir -p "$TMPDIR"
 		fi
 		local gh_tmp_md
-		gh_tmp_md=$(mktemp $TMPDIR/tmp.XXXXXX)
+		gh_tmp_md=$(mktemp "$TMPDIR"/tmp.XXXXXX)
 		while read -r input; do
 			echo "$input" >> "$gh_tmp_md"
 		done

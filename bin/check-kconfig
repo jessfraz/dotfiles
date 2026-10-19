@@ -45,7 +45,7 @@ fi
 
 kernelVersion="$(uname -r)"
 kernelMajor="${kernelVersion%%.*}"
-kernelMinor="${kernelVersion#$kernelMajor.}"
+kernelMinor="${kernelVersion#"$kernelMajor".}"
 kernelMinor="${kernelMinor%%.*}"
 
 is_set() {

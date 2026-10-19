@@ -69,7 +69,7 @@
 
 #TIMEOFFSET=-0400
 
-if [ "x$0" == 'x-bash' ] ; then
+if [ "$0" == '-bash' ] ; then
 	if test "$DEBUG" ; then printf "Detected that we were sourced.\\n"; fi
 elif test -n "${0#gitdate}" ; then
 	if test "$DEBUG" ; then printf "We weren't sourced.\\n"; fi
@@ -288,7 +288,7 @@ GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
 export GIT_COMMITTER_DATE
 
 ## only print what we exported if we were not sourced:
-if ! [ "x$0" = 'x-bash' ] ; then
+if ! [ "$0" = '-bash' ] ; then
 	if test -n "${0#gitdate}" ; then
 		if test "$DEBUG" ; then
 			printf "\\nPlease copy and run the following export commands:\\n\\n"
