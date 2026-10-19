@@ -103,6 +103,14 @@ fi
 # 	done
 # fi
 
+# Load the dotfiles before the following, so that it sees their PATH.
+for file in ~/.{functions,bash_prompt,aliases,path,dockerfunc,extra,exports}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file
 
 if hash gpg-connect-agent; then
 	# Start the gpg-agent if not already running
@@ -166,11 +174,4 @@ if [[ -f "${HOME}/.travis/travis.sh" ]]; then
 	source "${HOME}/.travis/travis.sh"
 fi
 
-for file in ~/.{functions,bash_prompt,aliases,path,dockerfunc,extra,exports}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
-done
-unset file
 
