@@ -30,14 +30,26 @@
         notifications = ["agent-turn-complete"];
         notification_condition = "unfocused";
         notification_method = "auto";
+        screen_reader_detection_done = true;
+        status_line = [
+          "model-with-reasoning"
+          "current-dir"
+          "thread-name"
+          "project-name"
+          "git-branch"
+          "pull-request-number"
+          "fast-mode"
+          "daybreak"
+        ];
+        status_line_use_colors = true;
+        model_availability_nux."gpt-6.1-sol" = 1;
       };
     })
     // {
-      model = "gpt-6-astra";
+      model = "gpt-6.1-sol";
       model_reasoning_effort = "xhigh";
       model_reasoning_summary = "auto";
       personality = "none";
-      service_tier = "fast";
       file_opener = "none";
       cli_auth_credentials_store = "file";
       mcp_oauth_credentials_store = "file";
