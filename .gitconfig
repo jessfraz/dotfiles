@@ -155,6 +155,14 @@
 [push]
 	# change to maching for machines with older versions of git 1.x.x
 	default = simple
+	autoSetupRemote = true
+
+[pull]
+	# Without this, git 2.33+ refuses a pull whose branches have diverged.
+	rebase = true
+
+[init]
+	defaultBranch = main
 
 [url "git@github.com:"]
 
