@@ -53,7 +53,7 @@ HostbasedAuthentication no
 IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-PasswordAuthentication yes
+PasswordAuthentication no
 PermitEmptyPasswords no
 
 # Change to yes to enable challenge-response passwords (beware issues with
@@ -96,8 +96,10 @@ PrintMotd no
 #UseLogin no
 #PermitUserEnvironment no
 #Compression delayed
-ClientAliveInterval 1800
-ClientAliveCountMax 0
+# Drop a client that stops answering for 15 minutes. Since OpenSSH 8.2,
+# ClientAliveCountMax 0 disables this instead of disconnecting at once.
+ClientAliveInterval 300
+ClientAliveCountMax 3
 #UseDNS no
 #PidFile /var/run/sshd.pid
 MaxStartups 2
