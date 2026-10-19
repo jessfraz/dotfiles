@@ -108,6 +108,20 @@ investigation for every edit. My explicit instructions take precedence over loca
 - Cover relevant failure, cleanup, boundary, and concurrency cases, not redundant examples. Run the smallest relevant tests plus required checks; stop expanding
   or repeating them once they pass unless a new change, failure, or concrete concern justifies more. Trivial reversible edits do not need new tests.
 
+### Visible debugging with Rex
+
+- When `rex` is installed and an already-running server is reachable (`rex --autostart=false --timeout 2s whoami --json`), automatically run debugging repros,
+  builds, and tests in visible Rex panes. Use `--autostart=false` on Rex calls; do not start or restart Rex just for this workflow.
+- Target live `REX_SESSION` and `REX_BLOCK` IDs when available; otherwise inspect sessions and choose only an unambiguous match for the task. If Rex or a matching
+  session is unavailable or ambiguous, use normal command execution without blocking the task. Consult the Rex skill or `rex skill show` for exact commands.
+- Open a labeled debug split with explicit session/block IDs, the checkout's working directory, and `--keep-open --focus=false --json`. Save the returned IDs
+  and reuse only panes created for this task; never send input to the agent's own pane or an unrelated existing pane.
+- Give task-owned sessions, windows/tabs, and panes concise project-and-purpose names, such as `api-billing-debug` or `api: billing tests`, so sidebar entries
+  identify the work. Label both the window and its panes; `rex run --label` labels only the pane. Preserve the parent session's name and user-owned labels.
+- Read the output, make the authorized fix, and rerun the relevant command visibly. Verify the actual exit status with `--wait` or the block's `process` method.
+  Capture shows only the current screen, so retain full logs when needed. Do not rerun completed checks solely to display their output in Rex.
+- Preserve focus and unrelated panes/processes. Leave final debugging output visible for inspection, and close task-owned panes only when requested.
+
 ## Database queries
 
 - For every PR that adds or changes queries, run `EXPLAIN` on the actual SQL, including ORM-generated SQL, against the project's database engine with
