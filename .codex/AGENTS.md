@@ -61,6 +61,9 @@ investigation for every edit. My explicit instructions take precedence over loca
 ## Tools and authentication
 
 - Prefer APIs, CLIs, and MCP tools; ask before using Computer Use. Report missing CLIs instead of installing replacements or guessing.
+- When using the Chrome extension, track task-created tabs and groups. At task
+  completion, remove any task-owned tab group and close its disposable tabs,
+  preserving needed work and all pre-existing user tabs and groups.
 - Route configured providers through Switchboard and the namespaces in `~/.config/switchboard/config.toml`. Use its `gh`/`gws` adapters or raw passthrough for
   GitHub/Google Workspace, not GitHub MCP servers.
 - Run familiar commands directly. Discover unfamiliar commands with filtered `tools list` or `tools describe TOOL`; add `--full` for schemas/native fallback
@@ -84,6 +87,10 @@ investigation for every edit. My explicit instructions take precedence over loca
 
 ## Implementation and validation
 
+- Work from first principles: verify the underlying evidence and constraints,
+  distinguish facts from assumptions, and trace problems to their root cause.
+  Choose the simplest justified solution rather than accumulating workarounds.
+  This never overrides safety, permissions, or my stated constraints.
 - Preserve ownership and lifecycle invariants when changing resources, sessions, sockets, or windows. Read nearby comments and callers; explain non-obvious
   allocation or cleanup rules briefly. Prefer simple domain types and APIs that prevent invalid states over elaborate abstractions.
 - Remove dead code and obsolete parameters. Do not leave “moved to…” breadcrumbs. Keep responsibilities cohesive without turning one-use helpers into a maze of
@@ -191,5 +198,7 @@ investigation for every edit. My explicit instructions take precedence over loca
   Give enough context to understand the problem and solution without Slack or task history. Use concrete behavior instead of vague assurances.
   For nontrivial changes, briefly explain how the new behavior was tested or how to try it. Keep material limitations and details reviewers need.
   Keep any humor brief, relevant, and natural.
-- Match email tone to prior messages in that thread or with those recipients. Without history, use concise text-message cadence and omit ceremonial greetings or
-  redundant signoffs unless the context calls for them.
+- Email drafts normally omit greetings (for example, “Hey Name”) and sign-offs
+  or my name (for example, “Thank you, Jess”), unless I ask otherwise or the
+  context explicitly requires them. Match tone to prior messages in the
+  thread or with those recipients; otherwise use concise text-message cadence.
