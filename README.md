@@ -70,6 +70,19 @@ For my `.vimrc` and `.vim` dotfiles see
 
 ## Contributing
 
+Switchboard keeps Google account identities in the private runtime file
+`~/.config/switchboard/accounts.toml`, with owner-only permissions:
+
+```toml
+[google]
+personal = "personal@example.invalid"
+work = "work@example.invalid"
+```
+
+Provision the real values locally before activation. Nix contains only their
+aliases; activation validates the resolved configuration before replacing the
+live file. Missing bindings or failed validation preserve the current config.
+
 ### Running the tests
 
 Run the native Nix checks, including a complete Home Manager fixture and an
@@ -88,4 +101,10 @@ The shell scripts are also checked with
 
 ```console
 $ make test
+```
+
+The account-binding tests use the installed Switchboard for native validation:
+
+```console
+$ python3 -B -m unittest discover -s tests -p 'test_switchboard_config.py'
 ```

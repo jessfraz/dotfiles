@@ -85,7 +85,12 @@
         else baseFiles;
       home.activation = {
         codexConfigWritable = mkWritableConfig ".codex/config.toml" codexCfg.file;
-        switchboardConfigWritable = mkWritableConfig ".config/switchboard/config.toml" switchboardCfg.file;
+        switchboardConfigWritable = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          $DRY_RUN_CMD ${pkgs.python3}/bin/python3 ${./bin/render-switchboard-config} \
+            --template ${switchboardCfg.file} \
+            --accounts ${lib.escapeShellArg switchboardCfg.accountsFile} \
+            --destination ${lib.escapeShellArg "${config.home.homeDirectory}/.config/switchboard/config.toml"}
+        '';
       };
     };
 

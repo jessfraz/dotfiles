@@ -52,13 +52,13 @@
       google_personal = {
         provider = "google";
         kind = "google_cli";
-        account = "private-google-personal-account";
+        account = "@google.personal@";
       };
 
       google_work = {
         provider = "google";
         kind = "google_cli";
-        account = "private-google-work-account";
+        account = "@google.work@";
       };
 
       schwab_personal = {
@@ -89,7 +89,7 @@
 
       google.work = {
         provider = "google";
-        account = "private-google-work-account";
+        account = "@google.work@";
         auth = "google_work";
         default_read = true;
         state_dir = stateDir "gws-work";
@@ -97,7 +97,7 @@
 
       google.personal = {
         provider = "google";
-        account = "private-google-personal-account";
+        account = "@google.personal@";
         auth = "google_personal";
         default_read = false;
         state_dir = stateDir "gws-personal";
@@ -120,5 +120,6 @@
   };
 in {
   file = tomlFormat.generate "switchboard-config.toml" switchboardConfigAttrs;
+  accountsFile = "${configDir}/switchboard/accounts.toml";
   attrs = switchboardConfigAttrs;
 }
