@@ -115,6 +115,62 @@ class CleanupTests(unittest.TestCase):
         self.assertIn("not ignored by its repository", result.stdout)
         self.assertIn("contains tracked source files", result.stdout)
 
+    def test_self_ignored_python_caches_are_previewed_and_removed(self) -> None:
+        repo = self.home / "project"
+        subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        caches = []
+        for relative in (
+            ".pytest_cache",
+            ".ruff_cache",
+            "packages/library/.ruff_cache",
+        ):
+            cache = self.cache(f"project/{relative}", cargo=False)
+            (cache.parent / "pyproject.toml").write_text('[project]\nname="fixture"\n')
+            (cache / ".gitignore").write_text("*\n")
+            nested = cache / "nested"
+            nested.mkdir()
+            (nested / "artifact with\na newline").write_text("generated output")
+            caches.append(cache)
+
+        preview = self.run_cleanup("--dry-run")
+        for cache in caches:
+            self.assertTrue(cache.exists(), preview.stdout)
+            self.assertIn(f"WOULD REMOVE {cache}", preview.stdout)
+
+        result = self.run_cleanup()
+        for cache in caches:
+            self.assertFalse(cache.exists(), result.stdout)
+            self.assertTrue((cache.parent / "pyproject.toml").is_file())
+
+    def test_self_ignored_caches_preserve_unignored_and_tracked_files(self) -> None:
+        repo = self.home / "project"
+        subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        caches = []
+        for name in ("unignored", "tracked"):
+            cache = self.cache(f"project/{name}/.ruff_cache", cargo=False)
+            (cache.parent / "pyproject.toml").write_text('[project]\nname="fixture"\n')
+            (cache / ".gitignore").write_text("*\n!keep.txt\n")
+            (cache / "keep.txt").write_text("preserve this file")
+            caches.append(cache)
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(repo),
+                "add",
+                "-f",
+                "tracked/.ruff_cache/keep.txt",
+            ],
+            check=True,
+        )
+
+        result = self.run_cleanup()
+        for cache in caches:
+            self.assertEqual((cache / "keep.txt").read_text(), "preserve this file")
+            self.assertTrue((cache / "artifact").is_file(), result.stdout)
+        self.assertIn("not ignored by its repository", result.stdout)
+        self.assertIn("contains tracked source files", result.stdout)
+
     def test_open_file_skips_busy_cache_and_continues_with_idle_cache(self) -> None:
         busy = self.cache(".cache/busy-target")
         idle = self.cache(".cache/idle-target")

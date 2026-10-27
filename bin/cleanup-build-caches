@@ -320,15 +320,26 @@ def inspect(cache: Cache) -> tuple[int, tuple[int, int]]:
         )
         if tracked.stdout:
             raise OSError("contains tracked source files")
-        ignored = subprocess.run(
-            ["git", "-C", str(cache.repository), "check-ignore", "-q", "--", relative],
+        # Tool caches can ignore their contents without ignoring the directory.
+        unignored = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(cache.repository),
+                "ls-files",
+                "--others",
+                "--exclude-standard",
+                "-z",
+                "--",
+                relative,
+            ],
             env=env,
             capture_output=True,
             timeout=30,
-            check=False,
+            check=True,
         )
-        if ignored.returncode:
-            raise OSError("not ignored by its repository")
+        if unignored.stdout:
+            raise OSError("contains files not ignored by its repository")
     size = 0
     hardlinks: set[tuple[int, int]] = set()
 
