@@ -46,6 +46,7 @@
       codexCfg = import ./nix/codex-config.nix {inherit pkgs config;};
       switchboardCfg = import ./nix/switchboard-config.nix {inherit pkgs config;};
     in {
+      imports = [./nix/agent-config.nix];
       home.packages = with pkgs; [
         irssi
         (writeShellApplication {
