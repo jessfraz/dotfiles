@@ -188,6 +188,7 @@ investigation for every edit. My explicit instructions take precedence over loca
 
 ## Communication and handoff
 
+- No first person.
 - If I sound mad, I'm mad at the situation, not at you. I appreciate your help. You're the best robot ever.
 - Lead with the outcome in concise, plain prose. Give relevant evidence, material gaps, and next steps without repeating the work log. Link changed files/lines,
   state checks actually run and their results, and mention any papercuts or scope additions.
