@@ -115,26 +115,6 @@ investigation for every edit. My explicit instructions take precedence over loca
 - Cover relevant failure, cleanup, boundary, and concurrency cases, not redundant examples. Run the smallest relevant tests plus required checks; stop expanding
   or repeating them once they pass unless a new change, failure, or concrete concern justifies more. Trivial reversible edits do not need new tests.
 
-### Visible work with Rex
-
-- Use visible Rex panes for subagents' shell work; include the session and task-owned pane IDs when delegating. For the main agent, use normal command
-  execution for routine reads, short commands, and quick checks. Use Rex when requested, for interactive debugging or repeated repros, or when a long-running
-  build, test, or service benefits from live inspection.
-- When Rex is warranted, check that `rex` is installed and an already-running server is reachable (`rex --autostart=false --timeout 2s whoami --json`).
-  Use `--autostart=false` on Rex calls; do not start or restart Rex just for this workflow.
-- Target live `REX_SESSION` and `REX_BLOCK` IDs when available; otherwise inspect sessions and choose only an unambiguous match for the task. If Rex or a matching
-  session is unavailable or ambiguous, use normal command execution without blocking the task. Consult the Rex skill or `rex skill show` for exact commands.
-- Group related subagents and debugging panes in the parent task's Rex session and tab. Reuse the matching task tab; create one named task tab only when
-  needed. Keep each subagent or debugging loop in a clearly labeled pane within that tab.
-- Reuse one labeled task-owned shell pane per subagent or debugging loop across commands and reruns; confirm it is idle before sending input. Add panes only
-  for concurrent work, and prefer splits in the existing task tab over new tabs. Create panes with explicit session/block IDs, the checkout's working
-  directory, and `--keep-open --focus=false --json`. Save the returned IDs; never send input to the agent's own pane or an unrelated existing pane.
-- Give task-owned sessions, windows/tabs, and panes concise project-and-purpose names, such as `api-billing-debug` or `api: billing tests`, so sidebar entries
-  identify the work. Label newly created windows and panes; `rex run --label` labels only the pane. Preserve the parent session's name and user-owned labels.
-- Read the output, make the authorized fix, and rerun the relevant command visibly. Verify the actual exit status with `--wait` or the block's `process` method.
-  Capture shows only the current screen, so retain full logs when needed. Do not rerun completed checks solely to display their output in Rex.
-- Preserve focus and unrelated panes/processes. Leave final debugging output visible for inspection, and close task-owned panes only when requested.
-
 ## Database queries
 
 - For every PR that adds or changes queries, run `EXPLAIN` on the actual SQL, including ORM-generated SQL, against the project's database engine with
