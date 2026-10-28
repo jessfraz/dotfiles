@@ -64,8 +64,9 @@ investigation for every edit. My explicit instructions take precedence over loca
 - When using the Chrome extension, track task-created tabs and groups. At task
   completion, remove any task-owned tab group and close its disposable tabs,
   preserving needed work and all pre-existing user tabs and groups.
-- Route configured providers through Switchboard and the namespaces in `~/.config/switchboard/config.toml`. Use its `gh`/`gws` adapters or raw passthrough for
-  GitHub/Google Workspace, not GitHub MCP servers.
+- Route configured providers through Switchboard. Discover unknown accounts and
+  namespaces with `switchboard ns list`. Use its `gh`/`gws` adapters or raw
+  passthrough for GitHub/Google Workspace, not GitHub MCP servers.
 - Run familiar commands directly. Discover unfamiliar commands with filtered `tools list` or `tools describe TOOL`; add `--full` for schemas/native fallback
   details. Use `doctor` for an actual setup failure.
 - Prefer bounded context: `google.mail.search --hydrate`, `google.mail.thread`, and GitHub issue/PR `context`. Select fields with `--fields`; batch independent
@@ -81,7 +82,6 @@ investigation for every edit. My explicit instructions take precedence over loca
   not verified; missing readback does not prove nothing happened.
 - Use `with-credentials PROFILE -- COMMAND` or `fetch-* COMMAND`; credentials belong to the child. Do not source/eval wrapper output or expect parent-shell
   exports.
-- If a command runs longer than five minutes, stop it, capture context, and discuss the timeout before retrying.
 - Use Nix locally. If the environment is broken, add/update `flake.nix` and a missing `flake.lock`, exposing `devShells.default`. Nix commands that change or
   activate the environment require my authorization. Check shell PATH ordering before diagnosing missing Nix tools or libraries.
 
