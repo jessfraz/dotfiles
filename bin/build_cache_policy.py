@@ -14,7 +14,9 @@ MANIFEST_OUTPUTS = {
     ),
     "pyproject.toml": (".venv", ".pytest_cache", ".ruff_cache", ".mypy_cache"),
 }
-CACHE_NAMES = frozenset(name for names in MANIFEST_OUTPUTS.values() for name in names)
+CACHE_NAMES = frozenset(
+    {"__pycache__"} | {name for names in MANIFEST_OUTPUTS.values() for name in names}
+)
 CACHE_TAG = b"Signature: 8a477f597d28d172789f06886806bc55"
 
 
@@ -35,6 +37,10 @@ def generated(path: Path, *, preserved: bool = False) -> bool:
     if path.name not in CACHE_NAMES:
         return False
     if preserved:
+        return True
+    # Python writes bytecode beside imported modules, including below src/ and
+    # in repositories without a Python project manifest.
+    if path.name == "__pycache__":
         return True
     if path.name in MANIFEST_OUTPUTS["Cargo.toml"]:
         return (path.parent / "Cargo.toml").is_file() or cargo_cache(path)

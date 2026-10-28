@@ -1,6 +1,7 @@
 """Exercise cleanup against disposable repositories and real open files."""
 
 import os
+import py_compile
 import runpy
 import shutil
 import subprocess
@@ -170,6 +171,65 @@ class CleanupTests(unittest.TestCase):
             self.assertTrue((cache / "artifact").is_file(), result.stdout)
         self.assertIn("not ignored by its repository", result.stdout)
         self.assertIn("contains tracked source files", result.stdout)
+
+    def test_nested_python_bytecode_is_previewed_and_removed_without_a_manifest(
+        self,
+    ) -> None:
+        repo = self.home / "project"
+        subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        (repo / ".gitignore").write_text("__pycache__/\n")
+        sources = []
+        caches = []
+        for relative in ("module.py", "src/package/module.py"):
+            source = repo / relative
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text("value = 42\n")
+            bytecode = Path(py_compile.compile(str(source), doraise=True))
+            self.assertTrue(bytecode.is_file())
+            sources.append(source)
+            caches.append(bytecode.parent)
+
+        preview = self.run_cleanup("--dry-run")
+        for cache in caches:
+            self.assertTrue(cache.exists(), preview.stdout)
+            self.assertIn(f"WOULD REMOVE {cache}", preview.stdout)
+
+        result = self.run_cleanup()
+        for cache in caches:
+            self.assertFalse(cache.exists(), result.stdout)
+        for source in sources:
+            self.assertEqual(source.read_text(), "value = 42\n")
+
+    def test_python_bytecode_caches_preserve_unignored_tracked_and_linked_files(
+        self,
+    ) -> None:
+        repo = self.home / "project"
+        subprocess.run(["git", "init", "-q", str(repo)], check=True)
+        (repo / ".gitignore").write_text("tracked/__pycache__/\nshared/__pycache__/\n")
+        bytecodes = {}
+        for name in ("unignored", "tracked", "shared"):
+            source = repo / name / "module.py"
+            source.parent.mkdir()
+            source.write_text("value = 42\n")
+            bytecodes[name] = Path(py_compile.compile(str(source), doraise=True))
+        subprocess.run(
+            ["git", "-C", str(repo), "add", "-f", str(bytecodes["tracked"])],
+            check=True,
+        )
+        link = repo / "shared-bytecode"
+        link.symlink_to(bytecodes["shared"].parent, target_is_directory=True)
+        root_link = repo / "__pycache__"
+        root_link.symlink_to(bytecodes["shared"].parent, target_is_directory=True)
+
+        result = self.run_cleanup()
+        for bytecode in bytecodes.values():
+            self.assertTrue(bytecode.is_file(), result.stdout)
+        self.assertTrue(link.is_dir())
+        self.assertTrue(root_link.is_symlink())
+        self.assertIn("not ignored by its repository", result.stdout)
+        self.assertIn("contains tracked source files", result.stdout)
+        self.assertIn("referenced by symlink", result.stdout)
+        self.assertIn("symlink root", result.stdout)
 
     def test_open_file_skips_busy_cache_and_continues_with_idle_cache(self) -> None:
         busy = self.cache(".cache/busy-target")
