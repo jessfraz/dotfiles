@@ -61,9 +61,10 @@ investigation for every edit. My explicit instructions take precedence over loca
 ## Tools and authentication
 
 - Prefer APIs, CLIs, and MCP tools; ask before using Computer Use. Report missing CLIs instead of installing replacements or guessing.
-- When using the Chrome extension, track task-created tabs and groups. At task
-  completion, remove any task-owned tab group and close its disposable tabs,
-  preserving needed work and all pre-existing user tabs and groups.
+- Whenever using Chrome, track the IDs of all task-created tabs and groups, regardless of the browser tool. Close those tabs and remove those groups as
+  soon as browser work ends, including after errors or abandoned attempts; cleanup is part of the task and needs no separate permission. Preserve
+  pre-existing user tabs and groups and unsaved user work. Keep task-created tabs open only when explicitly requested. Before final handoff, verify no
+  task-created tabs or groups remain, except those explicitly requested; report any cleanup that could not be completed.
 - Route configured providers through Switchboard. Discover unknown accounts and
   namespaces with `switchboard ns list`. Use its `gh`/`gws` adapters or raw
   passthrough for GitHub/Google Workspace, not GitHub MCP servers.
