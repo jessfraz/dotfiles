@@ -6,7 +6,6 @@
 }: let
   cfg = config.programs.agent;
   tomlFormat = pkgs.formats.toml {};
-  homeDir = config.home.homeDirectory;
   configPath = "${config.xdg.configHome}/agent/config.toml";
   defaults = lib.optionalAttrs (cfg.role == "coordinator") {
     model = {
@@ -25,7 +24,7 @@
       {
         provider = "slack";
         account = "work";
-        command = ["uv" "run" "--project" "${homeDir}/life" "python" "${homeDir}/life/scripts/slack_read.py"];
+        command = ["with-credentials" "slack.work" "--" "slack" "api" "--skip-update"];
       }
     ];
   };
