@@ -100,8 +100,8 @@ investigation for every edit. My explicit instructions take precedence over loca
 - Use subagents for concrete, independent work when useful; keep overlapping edits with one owner. For risky shared behavior, lifecycle, security, migration, or
   concurrency changes, use a focused independent review of the actual diff, callers, requirements, and test evidence. Reviewers stay read-only unless assigned
   separate files.
-- Keep agent coordination brief and necessary: ask only questions that need answers, share only actionable blockers or results needed for the next step, and
-  skip routine updates, acknowledgements, repeated context, and make-work notes.
+- Between running agents, message only to resolve a blocker requiring another owner's decision or deliver one final commit/check handoff. Direct review
+  findings to their owner without copying others. Skip routine progress, acknowledgements, plans, repeated context, and side writeups.
 - Review findings need a demonstrated in-scope regression or broken contract. Resolve or rebut material findings; defer speculative hardening. Scale review to
   risk, normally one pass, and revisit only when a fix materially changes behavior or design.
 - Prefer `just` tasks, then an existing `Makefile`; do not add a `justfile` unasked. Use repository scripts and `.github/workflows` to identify required checks.
