@@ -38,7 +38,8 @@ cleanup() {
         return 0
     fi
     echo "Cleaning up uv cache…"
-    uv cache clean
+    # Long-running uv jobs can hold the cache lock for hours.
+    UV_LOCK_TIMEOUT=0 uv cache clean || echo "Skipping uv cache cleanup; continuing."
     echo "Cleaning up npm cache…"
     npm cache clean --force
     echo "Cleaning up yarn cache…"

@@ -3,7 +3,9 @@
 import os
 import py_compile
 import runpy
+import select
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -103,7 +105,9 @@ class CleanupTests(unittest.TestCase):
         self.assertIn(f"WOULD REMOVE {idle}", preview.stdout)
         result = self.run_cleanup(*arguments)
         for cache in (held, nested, linked):
-            self.assertEqual((cache / "artifact").read_bytes(), b"compiled output" * 1024)
+            self.assertEqual(
+                (cache / "artifact").read_bytes(), b"compiled output" * 1024
+            )
             self.assertIn(f"SKIP {cache}", result.stdout)
         self.assertTrue(link.is_file())
         self.assertEqual(source.read_text(), "source")
@@ -563,6 +567,114 @@ class CleanupTests(unittest.TestCase):
         self.assertTrue(cache.exists(), result.stdout)
         self.assertFalse((self.home / "package-cleanup-called").exists())
         self.assertIn("WOULD REMOVE", result.stdout)
+
+    @unittest.skipUnless(
+        shutil.which("uv"), "uv is required to exercise its cache lock"
+    )
+    def test_package_cleanup_skips_busy_uv_cache_and_continues(self) -> None:
+        commands = self.home / "commands"
+        commands.mkdir()
+        for name in (
+            "cleanup-build-caches",
+            "cleanup-worktrees",
+            "npm",
+            "yarn",
+            "go",
+            "sudo",
+        ):
+            command = commands / name
+            command.write_text(
+                '#!/bin/sh\nprintf "%s\\n" "${0##*/}" >> "$HOME/cleanup-steps"\n'
+            )
+            command.chmod(0o755)
+        cache = self.home / "uv-cache"
+        env = dict(
+            self.env,
+            PATH=f"{commands}:{os.environ['PATH']}",
+            UV_CACHE_DIR=str(cache),
+            UV_LOCK_TIMEOUT="300",
+        )
+        cleanup = [
+            "bash",
+            "--noprofile",
+            "--norc",
+            "-ec",
+            'source "$1"; cleanup',
+            "bash",
+            str(ROOT / ".functions"),
+        ]
+        with subprocess.Popen(
+            [
+                "uv",
+                "run",
+                "--offline",
+                "--no-project",
+                "--no-sync",
+                "--no-python-downloads",
+                "--python",
+                sys.executable,
+                "python",
+                "-c",
+                "import sys; print('ready', flush=True); sys.stdin.read()",
+            ],
+            env=env,
+            cwd=self.home,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        ) as holder:
+            self.assertIsNotNone(holder.stdout)
+            readable, _, _ = select.select([holder.stdout], [], [], 10)
+            self.assertTrue(readable, "uv run did not start its child")
+            self.assertEqual(holder.stdout.readline().strip(), "ready")
+            artifact = cache / "artifact"
+            artifact.write_text("keep while uv is running")
+            with subprocess.Popen(
+                cleanup,
+                env=env,
+                cwd=self.home,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                start_new_session=True,
+            ) as cleaner:
+                try:
+                    stdout, stderr = cleaner.communicate(timeout=5)
+                finally:
+                    if cleaner.poll() is None:
+                        os.killpg(cleaner.pid, signal.SIGKILL)
+                        cleaner.communicate()
+                self.assertEqual(cleaner.returncode, 0, stdout + stderr)
+            self.assertIn("Skipping uv cache cleanup", stdout)
+            self.assertTrue(artifact.is_file())
+            expected = [
+                "cleanup-build-caches",
+                "cleanup-worktrees",
+                "npm",
+                "yarn",
+                "yarn",
+                "go",
+                "sudo",
+            ]
+            self.assertEqual(
+                (self.home / "cleanup-steps").read_text().splitlines(), expected
+            )
+
+        result = subprocess.run(
+            cleanup,
+            env=env,
+            cwd=self.home,
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=True,
+        )
+        self.assertNotIn("Skipping uv cache cleanup", result.stdout)
+        self.assertFalse(artifact.exists())
+        self.assertEqual(
+            (self.home / "cleanup-steps").read_text().splitlines(), expected * 2
+        )
 
 
 if __name__ == "__main__":
