@@ -378,7 +378,20 @@ def main() -> int:
     parser.add_argument(
         "--dry-run", action="store_true", help="Show caches without deleting anything"
     )
+    parser.add_argument(
+        "--exclude",
+        type=Path,
+        action="append",
+        default=[],
+        help="Keep this path and any enclosing cache; repeat for multiple holds",
+    )
     args = parser.parse_args()
+    excluded: set[Path] = set()
+    for value in args.exclude:
+        # A held symlink protects both its containing cache and its target.
+        expanded = value.expanduser()
+        excluded.add(Path(os.path.abspath(expanded)))
+        excluded.add(expanded.resolve())
     opened = OpenFiles()
     roots = cleanup_roots(Path.home().resolve())
     caches, skipped = discover(roots)
@@ -390,6 +403,13 @@ def main() -> int:
         reference_error = f"could not inspect shared cache references: {error}"
     removed, total = 0, 0
     for cache in caches:
+        if any(
+            cache.path.is_relative_to(path) or path.is_relative_to(cache.path)
+            for path in excluded
+        ):
+            skipped += 1
+            report_skip(cache.path, "held by --exclude")
+            continue
         try:
             if reference_error:
                 raise OSError(reference_error)

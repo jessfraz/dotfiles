@@ -78,6 +78,49 @@ class CleanupTests(unittest.TestCase):
         self.assertTrue(runtime.exists())
         self.assertIn("Removed 5 build caches", result.stdout)
 
+    def test_excluded_paths_preserve_their_caches_while_idle_caches_are_removed(
+        self,
+    ) -> None:
+        held = self.cache(".cache/held-project/target")
+        nested = self.cache(".cache/nested-target")
+        linked = self.cache(".cache/linked-target")
+        source = self.home / "source.txt"
+        source.write_text("source")
+        link = linked / "held-link"
+        link.symlink_to(source)
+        idle = self.cache(".cache/idle-target")
+        arguments = (
+            "--exclude",
+            str(held.parent),
+            "--exclude",
+            str(nested / "artifact"),
+            "--exclude",
+            str(link),
+        )
+
+        preview = self.run_cleanup("--dry-run", *arguments)
+        self.assertTrue(idle.exists(), preview.stdout)
+        self.assertIn(f"WOULD REMOVE {idle}", preview.stdout)
+        result = self.run_cleanup(*arguments)
+        for cache in (held, nested, linked):
+            self.assertEqual((cache / "artifact").read_bytes(), b"compiled output" * 1024)
+            self.assertIn(f"SKIP {cache}", result.stdout)
+        self.assertTrue(link.is_file())
+        self.assertEqual(source.read_text(), "source")
+        self.assertFalse(idle.exists(), result.stdout)
+
+    def test_excluded_cache_still_protects_its_shared_target(self) -> None:
+        held = self.cache(".cache/held-target")
+        shared = self.cache(".cache/shared-target")
+        (held / "shared").symlink_to(shared, target_is_directory=True)
+        idle = self.cache(".cache/idle-target")
+
+        result = self.run_cleanup("--exclude", str(held))
+        self.assertTrue(held.exists(), result.stdout)
+        self.assertTrue(shared.exists(), result.stdout)
+        self.assertTrue((held / "shared" / "artifact").is_file())
+        self.assertFalse(idle.exists(), result.stdout)
+
     def test_next_builds_are_previewed_and_removed_without_unignored_or_tracked_files(
         self,
     ) -> None:
