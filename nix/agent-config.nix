@@ -29,7 +29,7 @@
     ];
   };
   settingsFile = tomlFormat.generate "agent-managed-settings.toml" cfg.settings;
-  apply = "${cfg.package}/bin/agent --config ${lib.escapeShellArg configPath} --json config apply ${settingsFile}";
+  apply = "${cfg.package}/bin/beep-boop --config ${lib.escapeShellArg configPath} --json config apply ${settingsFile}";
 in {
   options.programs.agent = {
     enable = lib.mkEnableOption "declarative non-secret agent preferences";
