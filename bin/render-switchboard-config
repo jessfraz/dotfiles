@@ -4,6 +4,7 @@
 import argparse
 import json
 import os
+import re
 import stat
 import subprocess
 import sys
@@ -58,6 +59,64 @@ def render(template: Path, bindings: Path) -> str:
     return contents
 
 
+def preserve_delegation(contents: str, original: bytes | None) -> str:
+    """Nix owns bindings; completed native auth setup owns its fixed delegation."""
+    if original is None:
+        return contents
+    try:
+        current = tomllib.loads(original.decode())
+    except (UnicodeError, tomllib.TOMLDecodeError):
+        if b"google_delegated" in original:
+            raise ConfigError("Saved Gmail settings are invalid; the current configuration was retained.") from None
+        return contents
+    candidate = tomllib.loads(contents)
+    additions: list[str] = []
+    fields = {"project", "service_account", "domain", "subject", "signer_account", "signer_state_dir"}
+    for role in ("personal", "work"):
+        old_namespace = current.get("namespace", {}).get("google", {}).get(role, {})
+        auth_ref = old_namespace.get("auth")
+        old_auth = current.get("auth", {}).get(auth_ref, {})
+        if old_auth.get("kind") != "google_delegated":
+            continue
+        namespace = candidate["namespace"]["google"][role]
+        base_ref = namespace["auth"]
+        base = candidate["auth"][base_ref]
+        delegation = old_auth.get("delegation")
+        account = base["account"]
+        if (
+            auth_ref != base_ref + "_gmail_settings"
+            or base.get("kind") != "google_cli"
+            or old_auth.get("provider") != "google"
+            or old_auth.get("account") != account
+            or old_namespace.get("account") != account
+            or old_namespace.get("state_dir") != namespace.get("state_dir")
+            or not isinstance(delegation, dict)
+            or set(delegation) != fields
+            or any(not isinstance(value, str) for value in delegation.values())
+            or delegation["subject"] != account
+            or delegation["signer_account"] != account
+            or delegation["signer_state_dir"] != namespace.get("state_dir")
+            or auth_ref in candidate["auth"]
+        ):
+            raise ConfigError("Saved Gmail settings no longer match this account or namespace; the current configuration was retained.")
+        # Rewrite only this generated namespace's pointer. Keep ordinary OAuth
+        # and other namespaces unchanged; the native CLI validates the result.
+        section = re.compile(r"(?ms)^(\[namespace\.google\." + role + r"\]\n)(.*?)(?=^\[|\Z)")
+        matches = list(section.finditer(contents))
+        if len(matches) != 1:
+            raise ConfigError("The generated Google namespace could not retain its Gmail settings.")
+        match = matches[0]
+        body, count = re.subn(r"(?m)^([ \t]*auth[ \t]*=[ \t]*)" + re.escape(json.dumps(base_ref)) + r"([ \t]*(?:#[^\n]*)?)$",
+                             lambda item: item[1] + json.dumps(auth_ref) + item[2], match[2])
+        if count != 1:
+            raise ConfigError("The generated Google auth pointer could not retain its Gmail settings.")
+        contents = contents[:match.start(2)] + body + contents[match.end(2):]
+        additions.append(f"\n[auth.{auth_ref}]\nprovider = \"google\"\nkind = \"google_delegated\"\naccount = {json.dumps(account)}\n")
+        additions.append(f"[auth.{auth_ref}.delegation]\n")
+        additions.extend(f"{name} = {json.dumps(delegation[name])}\n" for name in sorted(fields))
+    return contents + "".join(additions)
+
+
 def install(template: Path, bindings: Path, destination: Path, switchboard: str) -> None:
     contents = render(template, bindings)
     try:
@@ -67,6 +126,7 @@ def install(template: Path, bindings: Path, destination: Path, switchboard: str)
     if before is not None and (not stat.S_ISREG(before.st_mode) or before.st_uid != os.getuid()):
         raise ConfigError("The existing Switchboard configuration must be an owned regular file.")
     original = destination.read_bytes() if before is not None else None
+    contents = preserve_delegation(contents, original)
     temporary: Path | None = None
     try:
         with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=destination.parent, prefix=".switchboard-", suffix=".toml", delete=False) as stream:

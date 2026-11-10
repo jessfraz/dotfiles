@@ -1,5 +1,6 @@
 """Exercise private account rendering and native Switchboard validation."""
 
+import json
 import shutil
 import stat
 import subprocess
@@ -111,6 +112,53 @@ class SwitchboardConfigTests(unittest.TestCase):
     @unittest.skipUnless(SWITCHBOARD, "native Switchboard is required")
     def test_native_config_rejection_preserves_the_destination(self) -> None:
         self.template.write_text(TEMPLATE.replace('provider = "google"', 'provider = "invalid"', 1))
+        self.assert_retained(self.render(SWITCHBOARD))
+
+    def configured_delegation(self) -> dict[str, str]:
+        personal_dir = str(self.root / "personal")
+        template = TEMPLATE.replace('auth = "google_personal"', 'auth = "google_personal"\nstate_dir = ' + json.dumps(personal_dir))
+        self.template.write_text(template)
+        contents = template
+        for role, account in tomllib.loads(BINDINGS)["google"].items():
+            contents = contents.replace(json.dumps(f"@google.{role}@"), json.dumps(account))
+        contents = contents.replace('auth = "google_personal"', 'auth = "google_personal_gmail_settings"')
+        delegation = {
+            "project": "example-project",
+            "service_account": "settings@example-project.iam.gserviceaccount.com",
+            "domain": "example.invalid",
+            "subject": "private-person@example.invalid",
+            "signer_account": "private-person@example.invalid",
+            "signer_state_dir": personal_dir,
+        }
+        contents += '\n[auth.google_personal_gmail_settings]\nprovider = "google"\nkind = "google_delegated"\naccount = "private-person@example.invalid"\n'
+        contents += "[auth.google_personal_gmail_settings.delegation]\n"
+        contents += "".join(f"{name} = {json.dumps(value)}\n" for name, value in delegation.items())
+        self.destination.write_text(contents)
+        self.original = self.destination.read_bytes()
+        self.inode = self.destination.stat().st_ino
+        return delegation
+
+    @unittest.skipUnless(SWITCHBOARD, "native Switchboard is required")
+    def test_rebuild_keeps_completed_delegation_and_normal_oauth_separate(self) -> None:
+        delegation = self.configured_delegation()
+        result = self.render(SWITCHBOARD)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        native = subprocess.run([SWITCHBOARD, "--config", str(self.destination), "ns", "list", "--json"],
+                                capture_output=True, text=True, timeout=30, check=True)
+        namespaces = {item["id"]: item for item in json.loads(native.stdout)["namespaces"]}
+        self.assertEqual(namespaces["google.personal"]["auth_kind"], "google_delegated")
+        self.assertEqual(namespaces["google.work"]["auth_kind"], "google_cli")
+        parsed = tomllib.loads(self.destination.read_text())
+        self.assertEqual(parsed["auth"]["google_personal_gmail_settings"]["delegation"], delegation)
+        self.assertEqual(parsed["auth"]["google_personal"]["kind"], "google_cli")
+        installed = self.destination.read_bytes()
+        self.assertEqual(self.render(SWITCHBOARD).returncode, 0)
+        self.assertEqual(self.destination.read_bytes(), installed)
+
+    @unittest.skipUnless(SWITCHBOARD, "native Switchboard is required")
+    def test_changed_binding_cannot_reassign_an_existing_delegation(self) -> None:
+        self.configured_delegation()
+        self.accounts.write_text(BINDINGS.replace("private-person", "different-person"))
         self.assert_retained(self.render(SWITCHBOARD))
 
 
