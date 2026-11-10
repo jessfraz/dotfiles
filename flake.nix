@@ -25,6 +25,14 @@
         })
         supportedSystems);
   in {
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = pkgs.mkShell {
+        packages = [pkgs.python3 pkgs.gnumake];
+      };
+    });
+
     homeManagerModules.default = {
       pkgs,
       config,
