@@ -83,8 +83,9 @@ investigation for every edit. My explicit instructions take precedence over loca
   not verified; missing readback does not prove nothing happened.
 - Use `with-credentials PROFILE -- COMMAND` or `fetch-* COMMAND`; credentials belong to the child. Do not source/eval wrapper output or expect parent-shell
   exports.
-- Use Nix locally. If the environment is broken, add/update `flake.nix` and a missing `flake.lock`, exposing `devShells.default`. Nix commands that change or
-  activate the environment require my authorization. Check shell PATH ordering before diagnosing missing Nix tools or libraries.
+- Use Nix for local development, compilation, linting, and tests. In any repository being worked on, `nix develop` and commands inside its development shell
+  are already authorized; do not ask again. Fix missing or broken repository development environments as needed, including adding or updating `flake.nix`
+  and `flake.lock` with `devShells.default`; these environment repairs are also authorized. Check shell PATH ordering before diagnosing missing Nix tools or libraries.
 
 ## Implementation and validation
 
