@@ -92,6 +92,9 @@ investigation for every edit. My explicit instructions take precedence over loca
 
 ## Implementation and validation
 
+- Follow [Apple’s Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/) for UI/UX work. Validate alignment, spacing,
+  consistent controls, and accessibility across device sizes and orientations.
+
 - Work from first principles: verify the underlying evidence and constraints,
   distinguish facts from assumptions, and trace problems to their root cause.
   Choose the simplest justified solution rather than accumulating workarounds.
