@@ -10,7 +10,7 @@
   defaults = lib.optionalAttrs (cfg.role == "coordinator") {
     model = {
       provider = "openai";
-      model_id = "gpt-6.1-sol";
+      model_id = "gpt-6.2-sol";
       reasoning = "high";
       fast = false;
     };
